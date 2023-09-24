@@ -377,6 +377,7 @@ contract RampHelper {
     uint256 private oracleUpdateAllowance = 86400;
     address private contractAddress;
     mapping(address => bool) public trustWorthyAuditors;
+    mapping(address => bool) public isPayswapRamp;
     uint collectionId;
     
     event AddToken(address dtoken);
@@ -590,13 +591,20 @@ contract RampHelper {
         emit RemoveToken(_dtoken);
     }
 
+    function updateIsPayswapRamp(address _ramp, bool _add) external {
+        require(IAuth(contractAddress).devaddr_() == msg.sender);
+        isPayswapRamp[_ramp] = _add;
+    }
+
     function checkBounty(address _user, uint _bountyId) external {
         require(gauges.contains(msg.sender));
-        (address owner,address token,,address claimableBy,,,uint endTime,,,) = 
-        ITrustBounty(IContract(contractAddress).trustBounty()).bountyInfo(_bountyId);
-        require(owner == _user && nativeCoin == token && claimableBy == address(this));
-        require(endTime >= block.timestamp + bufferTime);
-        ITrustBounty(IContract(contractAddress).trustBountyHelper()).attach(_bountyId);
+        if (!isPayswapRamp[msg.sender]) {
+            (address owner,address token,,address claimableBy,,,uint endTime,,,) = 
+            ITrustBounty(IContract(contractAddress).trustBounty()).bountyInfo(_bountyId);
+            require(owner == _user && nativeCoin == token && claimableBy == address(this));
+            require(endTime >= block.timestamp + bufferTime);
+            ITrustBounty(IContract(contractAddress).trustBountyHelper()).attach(_bountyId);
+        }
     }
     
     function updateOracle(address _token, address _oracle, bool _add) external onlyAdmin {
@@ -958,6 +966,10 @@ contract RampAds is ERC721Pausable {
             status = CollateralStatus.OverCollateralized;
         } else {
             status = CollateralStatus.UnderCollateralized;
+        }
+        if (IRamp(rampHelper).isPayswapRamp(_ramp)) {
+            mintable = Math.max(1000000e18, mintable);
+            status = CollateralStatus.OverCollateralized;
         }
     }
     

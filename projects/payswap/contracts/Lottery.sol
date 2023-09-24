@@ -322,12 +322,12 @@ contract LotteryContract {
      * @param _lotteryId: lottery id
      * @dev Callable by operator
      */
-    function closeLottery(uint256 _lotteryId, uint _tokenId) external {
+    function closeLottery(uint256 _lotteryId) external {
         require(_lotteries[_lotteryId].status == LotteryStatus.Open, "L16");
         require(
             block.timestamp > _lotteries[_lotteryId].endTime ||
             (   _lotteries[_lotteryId].endAmount > 0 &&
-                amountCollected[_lotteryId][_lotteryTokens[_lotteryId].at(_tokenId)] >= _lotteries[_lotteryId].endAmount), 
+                amountCollected[_lotteryId][_lotteryTokens[_lotteryId].at(0)] >= _lotteries[_lotteryId].endAmount), 
             "L17"
         );
         ILottery(randomGenerator).getRandomNumber(_lotteryId);
@@ -473,18 +473,20 @@ contract LotteryContract {
         address _marketTrades = IContract(contractAddress).marketTrades();
         address _paywallMarketTrades = IContract(contractAddress).paywallMarketTrades();
         address _nftMarketTrades = IContract(contractAddress).nftMarketTrades();
-        uint _amount = IMarketPlace(_marketTrades).lotteryRevenue(_token);
-        _amount += IMarketPlace(_paywallMarketTrades).lotteryRevenue(_token);
-        _amount += IMarketPlace(_nftMarketTrades).lotteryRevenue(_token);
+        uint _amount;
+        if (_lotteryId == 1) {
+            _amount = IMarketPlace(_marketTrades).lotteryRevenue(_token);
+            _amount += IMarketPlace(_paywallMarketTrades).lotteryRevenue(_token);
+            _amount += IMarketPlace(_nftMarketTrades).lotteryRevenue(_token);
         
-        IMarketPlace(_marketTrades).claimLotteryRevenue(_token);
-        IMarketPlace(_paywallMarketTrades).claimLotteryRevenue(_token);
-        IMarketPlace(_nftMarketTrades).claimLotteryRevenue(_token);
+            IMarketPlace(_marketTrades).claimLotteryRevenue(_token);
+            IMarketPlace(_paywallMarketTrades).claimLotteryRevenue(_token);
+            IMarketPlace(_nftMarketTrades).claimLotteryRevenue(_token);
 
-        require(IMarketPlace(_marketTrades).lotteryRevenue(_token) == 0);
-        require(IMarketPlace(_paywallMarketTrades).lotteryRevenue(_token) == 0);
-        require(IMarketPlace(_nftMarketTrades).lotteryRevenue(_token) == 0);
-        
+            require(IMarketPlace(_marketTrades).lotteryRevenue(_token) == 0);
+            require(IMarketPlace(_paywallMarketTrades).lotteryRevenue(_token) == 0);
+            require(IMarketPlace(_nftMarketTrades).lotteryRevenue(_token) == 0);
+        }
         if (amountCollected[_lotteryId][_token] + _amount >= MINIMUM_REWARD) {
             _lotteryTokens[_lotteryId].add(_token);
         }
@@ -495,10 +497,12 @@ contract LotteryContract {
         require(_lotteries[_lotteryId].status == LotteryStatus.Open, "L22");
         address nfticketHelper = IContract(contractAddress).nfticketHelper();
         address _token = IMarketPlace(nfticketHelper).token();
-        uint _amount = IMarketPlace(nfticketHelper).lottery();
-        IMarketPlace(nfticketHelper).claimLotteryRevenue();
-        require(IMarketPlace(nfticketHelper).lottery() == 0);
-        
+        uint _amount;
+        if (_lotteryId == 1) {
+            _amount = IMarketPlace(nfticketHelper).lottery();
+            IMarketPlace(nfticketHelper).claimLotteryRevenue();
+            require(IMarketPlace(nfticketHelper).lottery() == 0);
+        }
         if (amountCollected[_lotteryId][_token] + _amount >= MINIMUM_REWARD) {
             _lotteryTokens[_lotteryId].add(_token);
         }
@@ -583,7 +587,7 @@ contract LotteryContract {
         address _user
     ) public view returns (uint256 _price,uint256 _lotteryCredits,address _token) {
         uint256 _discountDivisor = _lotteries[_lotteryId].discountDivisor;
-        if (_lotteries[_lotteryId].treasury.useNFTicket) {
+        if (_lotteries[_lotteryId].treasury.useNFTicket && _nfticketId > 0) {
             TicketInfo memory _data = INFTicket(IContract(contractAddress).nfticket()).getTicketInfo(_nfticketId);
             _lotteryCredits = IMarketPlace(IContract(contractAddress).nfticketHelper()).lotteryCredits(_user, _data.token);
             _lotteryCredits -= usedLotteryCredits[_user][_data.token];
@@ -634,7 +638,7 @@ contract LotteryHelper {
 
     function _checkParams(address lotteryAddress) internal view {
         uint _collectionId = IMarketPlace(_marketCollections()).addressToCollectionId(msg.sender);
-        Lottery memory _lottery = ILottery(lotteryAddress).viewLottery(currentLotteryId);
+        Lottery memory _lottery = ILottery(lotteryAddress).viewLottery(collectionIdToLotteryId[_collectionId]);
         require(_collectionId > 0, "L23");
         require(
             (_lottery.status == LotteryStatus.Pending) || (_lottery.status == LotteryStatus.Claimable),
@@ -747,7 +751,7 @@ contract LotteryHelper {
         IMarketPlace(IContract(contractAddress).marketHelpers2()).checkPartnerIdentityProof(_collectionId, _identityTokenId, _user);
         _lotteryId = collectionIdToLotteryId[_collectionId];
         Lottery memory _lottery = ILottery(lotteryAddress).viewLottery(_lotteryId);
-        if (_lottery.treasury.useNFTicket) {
+        if (_lottery.treasury.useNFTicket && _nfticketId > 0) {
             require(ve(IContract(contractAddress).nfticketHelper2()).ownerOf(_nfticketId) == _user, "L1");
             TicketInfo memory _data = INFTicket(IContract(contractAddress).nfticket()).getTicketInfo(_nfticketId);
             _merchantId = _data.merchant;
