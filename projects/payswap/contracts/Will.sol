@@ -34,8 +34,8 @@ contract WILL {
     uint private willWithdrawalActivePeriod;
     mapping(address => uint) public willActivePeriod;
     uint private willWithdrawalPeriod = 86400 * 7 * 26;
-    uint private minWithdrawableNow = 2500;
-    uint private minNFTWithdrawableNow = 1;
+    uint private maxWithdrawableNow = 2500;
+    uint private maxNFTWithdrawableNow = 1;
     bool public unlocked = false;
     address private contractAddress;
     address profile;
@@ -79,9 +79,9 @@ contract WILL {
         return (
             updatePeriod,
             activePeriod,
-            minWithdrawableNow,
+            maxWithdrawableNow,
             willWithdrawalPeriod,
-            minNFTWithdrawableNow,
+            maxNFTWithdrawableNow,
             willWithdrawalActivePeriod
         );
     }
@@ -130,15 +130,15 @@ contract WILL {
     function updateParameters(
         uint _profileId,
         uint _updatePeriod,
-        uint _minWithdrawableNow,
-        uint _minNFTWithdrawableNow,
+        uint _maxWithdrawableNow,
+        uint _maxNFTWithdrawableNow,
         uint _willWithdrawalPeriod
     ) external onlyAdmin {
         if (activePeriod == 0 || activePeriod < block.timestamp) {
             updatePeriod = _updatePeriod;
             willWithdrawalPeriod = _willWithdrawalPeriod;
-            minWithdrawableNow = _minWithdrawableNow;
-            minNFTWithdrawableNow = _minNFTWithdrawableNow;
+            maxWithdrawableNow = _maxWithdrawableNow;
+            maxNFTWithdrawableNow = _maxNFTWithdrawableNow;
         } else {
             activePeriod = (block.timestamp + updatePeriod) / activePeriod * activePeriod;
         }
@@ -150,8 +150,8 @@ contract WILL {
         IWill(_note()).emitUpdateParameters(
             _profileId,
             _updatePeriod,
-            _minWithdrawableNow,
-            _minNFTWithdrawableNow,
+            _maxWithdrawableNow,
+            _maxNFTWithdrawableNow,
             _willWithdrawalPeriod
         );
     }
@@ -218,8 +218,7 @@ contract WILL {
 
     function updateActivePeriod(address _token) public onlyAdmin {
         if (block.timestamp >= willActivePeriod[_token]) {
-            uint _minWithdrawable = _token == address(this) ? minNFTWithdrawableNow : minWithdrawableNow;
-            willActivePeriod[_token] = (block.timestamp + _minWithdrawable) / _minWithdrawable * _minWithdrawable;
+            willActivePeriod[_token] = (block.timestamp + updatePeriod) / updatePeriod * updatePeriod;
             totalRemoved[_token] = 0;
         }
     }
@@ -227,7 +226,7 @@ contract WILL {
     function removeBalance(address _token, uint _value) external onlyAdmin {
         require(lockedBalance[_token][1] + _value <= balanceOf[_token]);
         updateActivePeriod(_token);
-        require(totalRemoved[_token] + _value <= balanceOf[_token] * minWithdrawableNow / 10000);
+        require(totalRemoved[_token] + _value <= balanceOf[_token] * maxWithdrawableNow / 10000);
         address note = _note();
         if (tokenType[_token] == NFTYPE.not) {
             uint payswapFees = Math.min(
@@ -256,7 +255,7 @@ contract WILL {
         require(lockedBalance[_token][_value] != _value);
         updateActivePeriod(address(this));
         require(tokenType[_token] != NFTYPE.not);
-        require(totalRemoved[address(this)] < 1);
+        require(totalRemoved[address(this)] < maxNFTWithdrawableNow);
         address note = _note();
         IWill(note).notifyNFTFees(msg.sender);
         if (tokenType[_token] == NFTYPE.erc721) {
@@ -448,8 +447,8 @@ contract WILLNote is ERC721Pausable {
         address will,
         uint profileId,
         uint updatePeriod,
-        uint minWithdrawableNow,
-        uint minNFTWithdrawableNow,
+        uint maxWithdrawableNow,
+        uint maxNFTWithdrawableNow,
         uint willWithdrawalPeriod
     );
     event UpdateProtocol(
@@ -645,8 +644,8 @@ contract WILLNote is ERC721Pausable {
     function emitUpdateParameters(
         uint _profileId,
         uint _updatePeriod,
-        uint _minWithdrawableNow,
-        uint _minNFTWithdrawableNow,
+        uint _maxWithdrawableNow,
+        uint _maxNFTWithdrawableNow,
         uint _willWithdrawalPeriod
     ) external {
         require(gauges.contains(msg.sender));
@@ -654,8 +653,8 @@ contract WILLNote is ERC721Pausable {
             msg.sender,
             _profileId,
             _updatePeriod,
-            _minWithdrawableNow,
-            _minNFTWithdrawableNow,
+            _maxWithdrawableNow,
+            _maxNFTWithdrawableNow,
             _willWithdrawalPeriod
         );
     }

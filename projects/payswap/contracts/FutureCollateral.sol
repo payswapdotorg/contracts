@@ -50,7 +50,7 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     mapping(uint => uint) private profileIdToTokenId;
     mapping(uint => uint[WEEKS_PER_YEAR]) public estimationTable;
     COLOR updateColor = COLOR.GOLD;
-    COLOR minColor = COLOR.GOLD;
+    COLOR minColor = COLOR.BLACK;
     uint public minToBlacklist;
     uint constant FC_IDX = 3;
     mapping(uint => uint) public channels;

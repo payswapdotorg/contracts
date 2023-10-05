@@ -199,18 +199,18 @@ contract Betting {
             protocolInfo[_currentBettingId].adminShare = _values[0];
             protocolInfo[_currentBettingId].referrerShare = _values[1];
             protocolInfo[_currentBettingId].bracketDuration = _values[2];
-            protocolInfo[_currentBettingId].pricePerTicket = _values[3];
-            protocolInfo[_currentBettingId].discountDivisor = _values[4];
-            protocolInfo[_currentBettingId].numberOfPeriods = _numberOfPeriods;
-            protocolInfo[_currentBettingId].alphabetEncoding = _alphabetEncoding;
-            protocolInfo[_currentBettingId].ticketRange = TICKET_RANGE;
-            protocolInfo[_currentBettingId].minTicketNumber = MIN_TICKET_NUMBER;
-            ticketSizes[_currentBettingId] = TICKET_SIZE;
             rewardsBreakdown[_currentBettingId] = _rewardsBreakdown;
             partnerEvent[_currentBettingId] = _currentBettingId;
             require(_sumArr(_rewardsBreakdown) == 10000, "B02");
         }
         _startTime = block.timestamp + _startTime;
+        ticketSizes[_currentBettingId] = TICKET_SIZE;
+        protocolInfo[_currentBettingId].ticketRange = TICKET_RANGE;
+        protocolInfo[_currentBettingId].pricePerTicket = _values[3];
+        protocolInfo[_currentBettingId].discountDivisor = _values[4];
+        protocolInfo[_currentBettingId].minTicketNumber = MIN_TICKET_NUMBER;
+        protocolInfo[_currentBettingId].alphabetEncoding = _alphabetEncoding;
+        protocolInfo[_currentBettingId].numberOfPeriods = _numberOfPeriods;
         if (
             protocolInfo[_currentBettingId].startTime == 0 || 
             protocolInfo[_currentBettingId].startTime > block.timestamp

@@ -414,6 +414,15 @@ async function main() {
   const card = Card.attach(cardAddress)
   const feeTo = FeeTo.attach(feeToAddress)
   // console.log("prov=============>", (ethers.Wallet.createRandom())._signingKey())
+  // console.log("prov=============>", (ethers.Wallet.createRandom())._signingKey())
+  // console.log("prov=============>", (ethers.Wallet.createRandom())._signingKey())
+  // console.log("prov=============>", (ethers.Wallet.createRandom())._signingKey())
+  // console.log("prov=============>", (ethers.Wallet.createRandom())._signingKey())
+  // console.log("prov=============>", (ethers.Wallet.createRandom())._signingKey())
+  // console.log("prov=============>", (ethers.Wallet.createRandom())._signingKey())
+  // console.log("prov=============>", (ethers.Wallet.createRandom())._signingKey())
+  // console.log("prov=============>", (ethers.Wallet.createRandom())._signingKey())
+  // console.log("prov=============>", (ethers.Wallet.createRandom())._signingKey())
   const privateKeys = [
     "0x91686b7acddb4d1b8417ccfbd72b9f8425d9ddb2993c90ed8f0545a368d4d5ea",
     "0xbd6a130a0a72bee361623ef466f5ca99c5eeb3c21ff73fc59de2b2740821757f",
@@ -843,6 +852,16 @@ async function main() {
     "0x4b35be21c3e8671ccc680d15a9e4fb72c9a7ec2bccdf5a123d99f9e6477b893f",
     "0xdc42c692bd74a336dd1af566ceabfca88dc7b635c737f97dfb39ecb0e9e5e1fd",
     "0x06be1ce8ed948a8703fe3f6acd4e77c34741a3c87f23385930b2512077b8d85b",
+    "0xeae1f25e86c0039873414744e0b40e1cfde941b49fbcfe7d32053fb69121edbf",
+    "0xdb7a1d90a8de4c09b211199f218386f2afa7175fd4d5019b112f39dbe09adc4b",
+    "0x59f794596fc74a4e8d88e5b4c109c7026c538570f10ae136f52c2e1e17f57f15",
+    "0x71bf27f51d796dc3400c3edaa2da525f6443692e8e9dcfd4e867a84e8910b610",
+    "0xe5ee6ba73053b04ffb8e053ace482c113ab185f2928a6755102dc5f54e38253e",
+    "0x1efacc13d856aba5cf1ea5cfa1a21b3fa25bb3260f1d988ee1cf248fd8878d4a",
+    "0xdeba4a5da26478ebc69f6912a71c58da990fb081a78cd4e356fa726101611784",
+    "0xdd3878c7f3ff0d606836f8e426a353cdf1b5da4c820dcc90d87e214ac6b0a980",
+    "0x09c1ac721760705674e83bcef653c134927e4c739c9fa38ecf8cbaf2df1f88c9",
+    "0x6f493b44dd5c1f1ccd88c9275cbb80dc8467e8ca534485db73a19c40a5699b88",
   ]
   let wallets = [] as any;
   const k=0
@@ -852,15 +871,17 @@ async function main() {
       // const wallet = ethers.Wallet.createRandom();
       let wallet = new ethers.Wallet(privateKeys[i], ethers.provider);
       // wallet =  wallet.connect(ethers.provider);
-        // await deployer.sendTransaction({to: wallet.address, value: ethers.utils.parseEther("0.03")});
-        // await profile.shareEmail(wallet.address)
+      // if (i > 427) { 
+      //   await deployer.sendTransaction({to: wallet.address, value: ethers.utils.parseEther("0.03")});
+      //   await profile.shareEmail(wallet.address)
+      // }
         // ethers.provider.getBalance(wallet.address).then((balance) => {
         //   // convert a currency unit from wei to ether
         //   const balanceInEth = ethers.utils.formatEther(balance)
         //   console.log(`balance: ${balanceInEth} ETH`)
         // })
       wallets.push(wallet)
-      console.log("wallet=============>", i
+      console.log("wallet=============>", i, privateKeys[i]
       //, wallet._signingKey()
       )
   }
@@ -1278,7 +1299,10 @@ async function main() {
   // console.log("tFiat balance=============>", await tFiat.balanceOf(deployer.address))
 
   // await card.updateVe(veAddress)
-  // console.log("card.updateVe============> Done!")
+  // console.log("card.updateVe============> Done!", await card._ve(), veAddress, await ve.ownerOf(1))
+
+  // await card.setContractAddress(contractAddress)
+  // console.log("card.setContractAddress===========> Done!")
 
   // await feeTo.setContractAddress(contractAddresses.address)
   // console.log("feeTo.setContractAddress===========> Done!")
@@ -4766,7 +4790,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[104]).updateCollection(
   //   "LostAndFound",
-  //   "Introducing LostAndFound: Your Ultimate Lost Item Reunification Platform! Have you ever lost something valuable and wished there was an easy way to find it? Or perhaps you've found a lost item and wanted to help return it to its rightful owner. Look no further than LostAndFound, your go-to platform for reconnecting lost items, including beloved pets and, most importantly, missing loved ones!",
+  //   "Introducing LostAndFound: Your Ultimate Lost Item Reunification Platform! Have you ever lost something valuable and wished there was an easy way to find it? Or perhaps you've found a lost item and wanted to help return it to its rightful owner. Look no further than LostAndFound, your go-to platform for reconnecting lost items, including beloved pets and, most importantly, missing loved ones! This site can also be used to find someone you met but lost contacts with.",
   //   "https://i.ibb.co/m5Phkz0/394.jpg",
   //   "https://i.ibb.co/m5Phkz0/394.jpg",
   //   "https://i.ibb.co/2t8FF7W/296.jpg",
@@ -4838,7 +4862,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[108]).updateCollection(
   //   "RoamHub",
-  //   "Introducing RoamHub, the innovative platform that simplifies the way you discover and rent flexible living and working spaces for your team. Whether it's a short-term project, a remote work arrangement, or team-building in unique locations, RoamHub connects you with a curated selection of inspiring spaces worldwide. From cozy cottages in the countryside to urban lofts in bustling cities, we offer diverse accommodations with dedicated workspaces to enhance productivity and foster creativity. With RoamHub, finding the perfect blend of work and life has never been easier.",
+  //   "Introducing RoamHub, the innovative platform that simplifies the way you discover and rent flexible living and working spaces for your team or farmlands. Whether it's a short-term project, a remote work arrangement, or team-building in unique locations, RoamHub connects you with a curated selection of inspiring spaces worldwide. From cozy cottages in the countryside to urban lofts in bustling cities, we offer diverse accommodations with dedicated workspaces to enhance productivity and foster creativity. With RoamHub, finding the perfect blend of work and life has never been easier.",
   //   "https://i.ibb.co/TY9QCMV/404.jpg",
   //   "https://i.ibb.co/TY9QCMV/404.jpg",
   //   "https://i.ibb.co/mSjmYFK/300.jpg",
@@ -4856,7 +4880,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[109]).updateCollection(
   //   "InfluenceGame",
-  //   "Introducing InfluenceGame, the groundbreaking platform where influencers (on platforms such as YouTube, Instagram, Snapchat, Twitter, Substack, etc.)can level up their engagement by participating in exciting games that allow users to bet on the growth of their social media metrics, from new subscribers and likes to comments and more. InfluenceGame not only turns content creation into a thrilling competition but also offers a unique opportunity for influencers and their fans to interact in a whole new way, making the journey to online stardom even more exhilarating and rewarding. Join us today and let the games begin!",
+  //   "Introducing InfluenceGame, the groundbreaking platform where influencers (on platforms such as YouTube, Instagram, Snapchat, Twitter, Substack, etc.) can level up their engagement by participating in exciting games that allow users to bet on the growth of their social media metrics, from new subscribers and likes to comments and more. InfluenceGame not only turns content creation into a thrilling competition but also offers a unique opportunity for influencers and their fans to interact in a whole new way, making the journey to online stardom even more exhilarating and rewarding. Join us today and let the games begin!",
   //   "https://i.ibb.co/CPHh1XP/407.jpg",
   //   "https://i.ibb.co/CPHh1XP/407.jpg",
   //   "https://i.ibb.co/7Smyk24/301.jpg",
@@ -4928,7 +4952,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[113]).updateCollection(
   //   "FoodSub",
-  //   "Introducing FoodSub, your gateway to discovering and subscribing to specialized paywalls that deliver a regular supply of fresh, locally sourced crops, fish, meat, and more right to your doorstep. Say goodbye to supermarket runs and hello to convenience as you explore a variety of subscription options from trusted producers. With FoodSub Subscriptions, you can enjoy the finest, sustainably harvested goods, directly supporting local farmers and fishermen while ensuring your kitchen is always stocked with the best nature has to offer. Subscribe today and elevate your dining experience with quality you can taste, delivered on your schedule.",
+  //   "Introducing FoodSub, your gateway to discovering and subscribing to specialized paywalls that deliver a regular supply of fresh, locally sourced crops, fish, meat, and more right to your doorstep. Say goodbye to supermarket runs and hello to convenience as you explore a variety of subscription options from trusted producers. With FoodSub Subscriptions, you can enjoy the finest, sustainably harvested goods, fruits, etc, directly supporting local farmers and fishermen while ensuring your kitchen is always stocked with the best nature has to offer. You can also subscribe to courses offered by the fishermen/farmers/etc. that produce items you are willing to learn how to produce yourself. Subscribe today and elevate your dining experience with quality you can taste, delivered on your schedule.",
   //   "https://i.ibb.co/vXJyJn5/415.jpg",
   //   "https://i.ibb.co/vXJyJn5/415.jpg",
   //   "https://i.ibb.co/5LqVjTh/203.jpg",
@@ -6206,7 +6230,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[184]).updateCollection(
   //   "AgriFeed",
-  //   "Introducing AgriFeed: Your One-Stop Platform for Discovering, Buying, and Subscribing to Trusted Agricultural Feed Suppliers. AgriFeed revolutionizes the way farmers and livestock owners source feed, offering a comprehensive digital marketplace where users can effortlessly explore, purchase, or subscribe to a wide range of high-quality agricultural feed products. From grains to supplements, our platform connects you with reliable suppliers, providing transparency, convenience, and competitive pricing, ultimately ensuring the health and productivity of your agricultural endeavors. Join AgriFeed today and streamline your feed procurement process while nurturing the growth of your agricultural business.",
+  //   "Introducing AgriFeed: Your One-Stop Platform for Discovering, Buying, and Subscribing to Trusted Agricultural Feed Suppliers. AgriFeed revolutionizes the way farmers and livestock owners source feed, offering a comprehensive digital marketplace where users can effortlessly explore, purchase, or subscribe to a wide range of high-quality agricultural feed products. From grains to supplements, our platform connects you with reliable suppliers, providing transparency, convenience, and competitive pricing, ultimately ensuring the health and productivity of your agricultural endeavors. AgriFeed also enables you to find and book farmers/fishermen to work for you as contractors. Join AgriFeed today and streamline your feed procurement process while nurturing the growth of your agricultural business.",
   //   "https://i.ibb.co/gjGqhGc/321.jpg",
   //   "https://i.ibb.co/gjGqhGc/321.jpg",
   //   "https://i.ibb.co/KD398kB/220.jpg",
@@ -6800,7 +6824,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[218]).updateCollection(
   //   "GamersMap",
-  //   "Find gamers nearby to challenge to a duel. All challenges are streamed or posted on the platform and players get to bet on ongoing games. Non-livestreamed games don't get betting events but count in the player classification.  Any game is eligible from team games like tug of war and soccer to individual games like tennis, poker, or some video games.",
+  //   "Find gamers nearby to challenge to a duel or create/apply to a request to meet at a specific date for a session of video game or IRL game (football, soccer, tennis, etc.). All challenges are streamed or posted on the platform and players get to bet on ongoing games. Non-livestreamed games don't get betting events but count in the player classification.  Any game is eligible from team games like tug of war and soccer to individual games like tennis, poker, or some video games. The venues, equipments, etc can be rented straight from the platform from other users.",
   //   "https://i.ibb.co/nrYP5cc/444.jpg",
   //   "https://i.ibb.co/nrYP5cc/444.jpg",
   //   "https://i.ibb.co/rm9ghLY/254.jpg",
@@ -8312,8 +8336,8 @@ async function main() {
   // await marketPlaceCollection.connect(wallets[303]).addCollection(0, 0, 0, 0, 0, 0, "0xd1a7aB1a1E1aaDD5CD51F51570885c7896bb3139", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[303]).updateCollection(
-  //   "PowerOptix",
-  //   "Introducing PowerOptix, the groundbreaking platform that revolutionizes the way you manage and optimize your energy consumption. By seamlessly connecting users with top-tier companies specializing in energy-efficient solutions, PowerOptix empowers you to take control of your energy usage like never before. Whether you're a homeowner, a business owner, or an industry professional, our platform offers tailored recommendations and expert services to reduce costs, enhance sustainability, and unlock unprecedented efficiency in your energy consumption. Say goodbye to wasted energy and hello to a brighter, more sustainable future with PowerOptix. Join us today and embark on a journey towards a greener, more cost-effective energy landscape.",
+  //   "Greenify",
+  //   "Introducing Greenify, the groundbreaking platform that democratizes incentive programs for planting trees or venturing in any green project. Through Greenify, anyone that has started a green project, can create a paywall in order to enable users to subscribe to the project. Upon subscription, users get a receipt which is proof of their participation in a green project. Auditors authenticate the carbon credits generated by the various projects so that subscribers can know exactly how much carbon credits they are individually responsible of generating. Greenify provides a simple, transparent and effective way for ordinary people to participate in the green transition by making it as simple as a NetFlix subscription.",
   //   "https://i.ibb.co/c3RVkx1/533.jpg",
   //   "https://i.ibb.co/c3RVkx1/533.jpg",
   //   "https://i.ibb.co/nBNqDxJ/265.jpg",
@@ -10581,7 +10605,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[231]).updateCollection(
   //   "Customersist",
-  //   "Find and book a professional to help you assist your customers with disabilities, navigate your services whether you are an airport, hospital, bank, etc.",
+  //   "Find and book a professional to help you assist your customers with disabilities, navigate your services whether you are an airport, hospital, bank, etc. People with disabilities can book their own personal assistant as well.",
   //   "https://i.ibb.co/wwc5D0Y/324.jpg",
   //   "https://i.ibb.co/wwc5D0Y/324.jpg",
   //   "https://i.ibb.co/bdtXHnV/405-2.jpg",
@@ -10593,6 +10617,132 @@ async function main() {
   //   ""
   // );
   // console.log("430marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 431
+  // await marketPlaceCollection.connect(wallets[428]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[428]).updateCollection(
+  //   "Distraid",
+  //   "Do you have an aid to distribute? Partner with the channel and post information about the aid as well as the type of collateral you can accept from the field agents you are willing to work with for the distribution. Receive agent applications on your channel, pick the right field agents and distribute away in a transparent, trustless & traceable manner. The channel also enables you to document the lives of people in need for aid so the channel's valuepool can vote on ways to help them out.",
+  //   "https://i.ibb.co/m5qT51p/325.jpg",
+  //   "https://i.ibb.co/m5qT51p/325.jpg",
+  //   "https://i.ibb.co/NNZVjBf/406-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("431marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 432
+  // await marketPlaceCollection.connect(wallets[429]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[429]).updateCollection(
+  //   "HomeSchool",
+  //   "Find parents to home-school your kids with.",
+  //   "https://i.ibb.co/bNhCCCW/326.jpg",
+  //   "https://i.ibb.co/bNhCCCW/326.jpg",
+  //   "https://i.ibb.co/nzgT3nX/431-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("432marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 433
+  // await marketPlaceCollection.connect(wallets[430]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[430]).updateCollection(
+  //   "InvestaWed",
+  //   "Do you plan to start a business, find a user willing to become your wife, and pitch your business idea to channel's valuepool so its members can vote to fund your business or not. If funded you get to start the business, the valuepool holds 100% ownership but you become the CEO of the business and get performance based bonuses. Your wife that you must have found on the platform works for you in the business. You as the guy are subject to the channel's male terms and she is subject to the channel's female terms. If any of you violates the terms or you don't have kids after 5 years, you get replaced in the business by the next mate your partner picks (also from the channel).",
+  //   "https://i.ibb.co/RcWFFwR/327.jpg",
+  //   "https://i.ibb.co/RcWFFwR/327.jpg",
+  //   "https://i.ibb.co/p222Jr2/432-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("433marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 434
+  // await marketPlaceCollection.connect(wallets[431]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[431]).updateCollection(
+  //   "FitMe",
+  //   "Find and book experts to help you pick an outfit for an event you're going to.",
+  //   "https://i.ibb.co/nmSRk3f/328.jpg",
+  //   "https://i.ibb.co/nmSRk3f/328.jpg",
+  //   "https://i.ibb.co/VSkbQTj/433-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("434marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 435
+  // await marketPlaceCollection.connect(wallets[432]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[432]).updateCollection(
+  //   "AnimalControl",
+  //   "Find and book experts to help you get rid of rats, mosquitoes, bed bugs, or other insects or wild animals that invade your home, office or community. You can also buy some pets (cats, dogs, etc.) trained to rid you of these wild life creatures.",
+  //   "https://i.ibb.co/tPvcZyT/329.jpg",
+  //   "https://i.ibb.co/tPvcZyT/329.jpg",
+  //   "https://i.ibb.co/Mc1WdgB/434-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("435marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 436
+  // await marketPlaceCollection.connect(wallets[433]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[433]).updateCollection(
+  //   "Pegasus",
+  //   "Pegasus is your platform of choice to access a comprehensive database of all business divisions in the medical filed, equipped with a mapping system that allows entities to easily map their products and services. This platform will serve as a gateway for customers and interested parties to easily access the products and services of various divisions.",
+  //   "https://i.ibb.co/dJfDszD/330.jpg",
+  //   "https://i.ibb.co/dJfDszD/330.jpg",
+  //   "https://i.ibb.co/Hdz5c4Y/435-2.jpg",
+  //   "",
+  //   "",
+  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("436marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 437
+  // await marketPlaceCollection.connect(wallets[434]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[434]).updateCollection(
+  //   "DateFeedback",
+  //   "Find a love consultant for your couple that you can both talk to either one at a time or both at the same time. If you have a feedback to give to your partner that you do not want to say to them yourself, you can talk to your consultant who in turn will find a way to communicate that to your partner in a way not to reveal the feedback might be coming from you. Some love consultants might be a little more traditional than others and that is disclosed in their products descriptions. You can vote for/against them and leave a review to share your impressions of their competencies when dealing with them.",
+  //   "https://i.ibb.co/28RKFKc/331.jpg",
+  //   "https://i.ibb.co/28RKFKc/331.jpg",
+  //   "https://i.ibb.co/PTzWnV4/436-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("437marketPlaceCollection.updateCollection===========> Done!")
 
   }
   

@@ -9,7 +9,6 @@ contract Sponsor {
     using EnumerableSet for EnumerableSet.UintSet;
     
     address public _ve;
-    bool public bountyRequired;
     uint public lastProtocolId = 1;
     address public devaddr_;
     address private helper;
@@ -74,12 +73,10 @@ contract Sponsor {
     }
 
     function updateParameters(
-        bool _bountyRequired,
         address __ve,
         uint _maxNotesPerProtocol
     ) external onlyAdmin {
         _ve = __ve;
-        bountyRequired = _bountyRequired;
         maxNotesPerProtocol = _maxNotesPerProtocol;
     }
 

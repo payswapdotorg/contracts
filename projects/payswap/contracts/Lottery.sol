@@ -294,18 +294,19 @@ contract LotteryContract {
                 uint256 rewardForTicketId = ILottery(lotteryHelper).calculateRewardsForTicketId(_lotteryId, thisTicketId, _brackets[i], _token);
 
                 // Check user is claiming the correct bracket
-                require(rewardForTicketId != 0, "L14");
+                if(rewardForTicketId != 0) {
 
-                if (_brackets[i] != 5) {
-                    require(
-                        ILottery(lotteryHelper).calculateRewardsForTicketId(_lotteryId, thisTicketId, _brackets[i] + 1, _token) == 0,
-                        "L15"
-                    );
+                    if (_brackets[i] != 5) {
+                        require(
+                            ILottery(lotteryHelper).calculateRewardsForTicketId(_lotteryId, thisTicketId, _brackets[i] + 1, _token) == 0,
+                            "L15"
+                        );
+                    }
+                    // Transfer money to msg.sender
+                    pendingReward[msg.sender][keccak256(abi.encodePacked(_lotteryId, _token))] += rewardForTicketId;
+                    
+                    emit TicketsClaim(msg.sender, _token, rewardForTicketId, _lotteryId, thisTicketId);
                 }
-                // Transfer money to msg.sender
-                pendingReward[msg.sender][keccak256(abi.encodePacked(_lotteryId, _token))] += rewardForTicketId;
-                
-                emit TicketsClaim(msg.sender, _token, rewardForTicketId, _lotteryId, thisTicketId);
             }
         }
     }
