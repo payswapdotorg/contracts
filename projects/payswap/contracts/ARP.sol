@@ -48,6 +48,8 @@ contract ARP {
     address public devaddr_;
     address private helper;
     uint public collectionId;
+    uint public numProtocol;
+    uint public maxNumberOfProtocol;
     mapping(uint => uint) public optionId;
     mapping(uint => string) public description;
     mapping(uint => string) public media;
@@ -121,7 +123,8 @@ contract ARP {
         uint _adminBountyRequired,
         uint _adminCreditShare,
         uint _adminDebitShare,
-        uint _period
+        uint _period,
+        uint _maxNumberOfProtocol
     ) external onlyAdmin {
         require(adminCreditShare + IARP(_note()).tradingFee(true) <= 10000);
         require(adminDebitShare + IARP(_note()).tradingFee(false) <= 10000);
@@ -131,6 +134,7 @@ contract ARP {
         bountyRequired = _bountyRequired;
         bufferTime = _bufferTime;
         profileRequired = _profileRequired;
+        if (maxNumberOfProtocol == 0) maxNumberOfProtocol = _maxNumberOfProtocol;
         if (_adminBountyRequired > adminBountyRequired) {
             adminBountyRequired = _adminBountyRequired;
         }
@@ -179,7 +183,7 @@ contract ARP {
             .checkUserIdentityProof(collectionId, _identityTokenId, _owner);
         }
     }
-
+    
     function updateProtocol(
         address _owner,
         address _token,
@@ -190,6 +194,7 @@ contract ARP {
         string memory _media,
         string memory _description
     ) external onlyAdmin {
+        require(numProtocol < maxNumberOfProtocol || maxNumberOfProtocol == 0);
         if(_protocolId == 0) {
             _checkIdentityProof(_owner, _identityTokenId);
             _protocolId = IARP(helper).mint(_owner);
@@ -203,6 +208,7 @@ contract ARP {
             userBountyRequired[_protocolId] = Math.max(bountyRequired, _bankInfo[6]);
             optionId[_protocolId] = _optionId;
             addressToProtocolId[_owner] = _protocolId;
+            numProtocol += 1;
         }
         media[_protocolId] = _media;
         description[_protocolId] = _description;
@@ -288,6 +294,7 @@ contract ARP {
 
     function autoCharge(uint[] memory _tokenIds, uint _numPeriods) public lock {
         for (uint i = 0; i < _tokenIds.length; i++) {
+            if (profileRequired) require(protocolInfo[_tokenIds[i]].profileId > 0);
             if (isAdmin[msg.sender]) require(isAutoChargeable[_tokenIds[i]], "ARP4");
             (uint _price, uint _due) = getReceivable(_tokenIds[i], _numPeriods);
             address token = protocolInfo[_tokenIds[i]].token;
@@ -329,11 +336,11 @@ contract ARP {
         );
         address note = _note();
         address token = protocolInfo[_protocolId].token;
-        (uint duePayable,,) = IARP(note).getDuePayable(address(this), _protocolId, _numPeriods);
+        (uint duePayable,,) = IARP(note).getDuePayable(address(this), _protocolId, isAdmin[msg.sender] ? _numPeriods : 0);
         uint _balanceOf = erc20(token).balanceOf(address(this));
         if (isAdmin[msg.sender] && _balanceOf < duePayable) {
             IERC20(token).safeTransferFrom(msg.sender, address(this), duePayable - _balanceOf);
-            _balanceOf = erc20(token).balanceOf(address(this));
+            _balanceOf += duePayable - _balanceOf;
         }
         uint _toPay = _balanceOf < duePayable ? _balanceOf : duePayable;
         protocolInfo[_protocolId].paidPayable += _toPay;
@@ -345,7 +352,7 @@ contract ARP {
         }
         _processAdminFees(_protocolId, adminFees, token);
         IERC20(token).safeTransfer(helper, payswapFees);
-        IWorld(helper).notifyFees(token, payswapFees);
+        IARP(helper).notifyFees(token, payswapFees);
         _toPay -= (adminFees + payswapFees);
         erc20(token).approve(note, _toPay);
         IARP(note).safeTransferWithBountyCheck(
@@ -445,9 +452,9 @@ contract ARP {
     }
 
     function notifyRewardAmount(address _token, address _from, uint _amount) public {
-        if (IERC721(_token).supportsInterface(0x80ac58cd)) {
+        try IERC721(_token).supportsInterface(0x80ac58cd) {
             IERC721(_token).safeTransferFrom(msg.sender, devaddr_, _amount);
-        } else {
+        } catch{
             IERC20(_token).safeTransferFrom(_from, address(this), _amount);
             reward[_token] += _amount;
         }
@@ -891,7 +898,7 @@ contract ARPNote is ERC721Pausable {
         uint _minAdminPeriod,
         uint _bufferTime
     ) external {
-        require(msg.sender == IAuth(contractAddress).devaddr_(), "ARPH12");
+        require(msg.sender == IAuth(contractAddress).devaddr_());
         tradingFeeCredit = _tradingFeeCredit;
         tradingFeeDebit = _tradingFeeDebit;
         bufferTime = _bufferTime;
@@ -914,51 +921,51 @@ contract ARPNote is ERC721Pausable {
         ARPInfo memory p = IARP(_arp).protocolInfo(_protocolId);
         uint due;
         uint amountReceivable = p.amountReceivable;
-        uint numPeriods = getNumPeriods(p.startReceivable, block.timestamp, p.periodReceivable);
+        uint shiftedBlockTimestamp = block.timestamp + _numExtraPeriods * p.periodReceivable;
+        uint numPeriods = getNumPeriods(p.startReceivable, shiftedBlockTimestamp, p.periodReceivable);
         // uint numPeriods = Math.max(1, p.paidReceivable / amountReceivable);
-        uint nextDue = p.startReceivable + p.periodReceivable * numPeriods;
+        uint dueDate = p.startReceivable + p.periodReceivable * (numPeriods + 1);
         if (IARP(_arp).percentages()) {
             if (IARP(_arp).automatic()) {
                 amountReceivable = _getUserPercentile(_arp, p.token, p.tokenId);
             }
-            due = _getDue(IARP(_arp).debt(p.token), nextDue, amountReceivable, p.paidReceivable);
+            due = _getDue(IARP(_arp).debt(p.token), dueDate, amountReceivable, p.paidReceivable, shiftedBlockTimestamp);
         } else {
-            numPeriods += _numExtraPeriods;
-            due = nextDue < block.timestamp ? amountReceivable * numPeriods - p.paidReceivable : 0;
+            due = dueDate < shiftedBlockTimestamp ? amountReceivable * numPeriods - p.paidReceivable : 0;
         }
         return (
             due, // due
-            nextDue, // next
-            int(block.timestamp) - int(nextDue) //late or seconds in advance
+            dueDate, // next
+            int(block.timestamp) - int(dueDate) //late seconds or seconds in advance
         );
     }
 
-    function _getDue(uint total, uint nextDue, uint amount, uint paid) internal view returns(uint) {
-        return nextDue < block.timestamp ? (total * amount / 10000) - paid : 0;
+    function _getDue(uint total, uint dueDate, uint amount, uint paid, uint shiftedBlockTimestamp) internal pure returns(uint) {
+        return dueDate < shiftedBlockTimestamp && (total * amount / 10000) > paid ? (total * amount / 10000) - paid : 0;
     }
 
     function getDuePayable(address _arp, uint _protocolId, uint _numExtraPeriods) public view returns(uint, uint, int) {
         // (address token,,,uint _tokenId,uint amountPayable,,uint paidPayable,,uint periodPayable,,uint startPayable,) = 
         ARPInfo memory p = IARP(_arp).protocolInfo(_protocolId);
         uint amountPayable = p.amountPayable;
-        uint nextDue;
+        uint dueDate;
         uint due;
-        uint numPeriods = getNumPeriods(p.startPayable, block.timestamp, p.periodPayable);
+        uint shiftedBlockTimestamp = block.timestamp + _numExtraPeriods * p.periodPayable;
+        uint numPeriods = getNumPeriods(p.startPayable, shiftedBlockTimestamp, p.periodPayable);
         // uint numPeriods = p.paidPayable / amountPayable;
-        nextDue = p.startPayable + p.periodPayable * Math.min(1, numPeriods);
+        dueDate = p.startPayable + p.periodPayable * (numPeriods + 1);
         if (IARP(_arp).percentages()) {
             if (IARP(_arp).automatic()) {
                 amountPayable = _getUserPercentile(_arp, p.token, p.tokenId);
             }
-            due = _getDue(IARP(_arp).reward(p.token), nextDue, amountPayable, p.paidPayable);
+            due = _getDue(IARP(_arp).reward(p.token), dueDate, amountPayable, p.paidPayable, shiftedBlockTimestamp);
         } else {
-            numPeriods += _numExtraPeriods;
-            due = nextDue < block.timestamp ? amountPayable * numPeriods - p.paidPayable : 0;
+            due = dueDate < shiftedBlockTimestamp ? amountPayable * numPeriods - p.paidPayable : 0;
         }
         return (
             due, // due
-            nextDue, // next
-            int(block.timestamp) - int(nextDue) //late or seconds in advance
+            dueDate, // next
+            int(block.timestamp) - int(dueDate) //late seconds or seconds in advance
         );
     }
     

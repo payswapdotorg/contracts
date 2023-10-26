@@ -1123,7 +1123,7 @@ async function main() {
   // await profileHelper.deployed()
   // console.log("profileHelper============>", profileHelper.address)
 
-  // const stakeMarket = await StakeMarket.deploy()
+  // const stakeMarket = await StakeMarket.deploy(contractAddresses.address)
   // await stakeMarket.deployed()
   // console.log("stakeMarket============>", stakeMarket.address)
 
@@ -1433,9 +1433,6 @@ async function main() {
   // await bettingFactory.setContractAddress(contractAddresses.address)
   // console.log("bettingFactory.setContractAddress===========> Done!")
 
-  // await stakeMarket.setContractAddress(contractAddresses.address)
-  // console.log("stakeMarket.setContractAddress===========> Done!")
-
   // await stakeMarketNote.setContractAddress(contractAddresses.address)
   // console.log("stakeMarketNote.setContractAddress===========> Done!")
 
@@ -1662,7 +1659,7 @@ async function main() {
   // await trustBountiesHelper.updateVes("0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62", true)
   // console.log("trustBountiesHelper.updateVes===========> Done!")
 
-  // await trustBountiesHelper.updateWhitelistedTokens([futureCollateral.address, tFiat.address], true)
+  // await trustBountiesHelper.updateWhitelistedTokens([futureCollateral.address, tFiat.address, nfticketHelper2.address], true)
   // console.log("trustBountiesHelper.updateWhitelistedTokens===========> Done!")
 
   // await trustBountiesHelper.updateCanAttach(marketPlaceEvents.address, true)
@@ -2384,12 +2381,21 @@ async function main() {
     // console.log("lotteryRandomNumberGenerator.setNextRandomResult=================>Done!")
 
     // // paywallARP
-    // let paywallAddress = (await paywallARPHelper.getAllARPs(0))[0]
-    // paywallARP = Paywall.attach(paywallAddress)
-    // console.log("paywallARP===>", paywallAddress, paywallARP.address)
+  // let paywallAddress = "0x238d804fbbe6c45836085890c42701beb08c81ca" // (await paywallARPHelper.getAllARPs(0))[0]
+  //   let paywallARP = Paywall.attach(paywallAddress)
+  //   console.log("paywallARP===>", paywallAddress, paywallARP.address)
 
     // await paywallARP.partner(1,"uber","uber",2592000)
     // console.log("partner==========>", await paywallARP.partners(1,"uber"))
+
+  // await paywallARP.updateProtocol(5, 0, [deployer.address])
+  // console.log("referrer==================>", await nfticket.referrer(5))
+  // console.log("getTicketInfo==================>", await nfticket.getTicketInfo(5))
+  // console.log("userTokenId==================>", await nfticket.userTokenId(5))
+  // console.log("getTicketPaywallOptions==================>", await nfticketHelper2.getTicketPaywallOptions(5))
+  // console.log("ongoing==================>", await nfticketHelper2.ownerOf(5))
+  // console.log("ongoing==================>", await paywallARP.lastProtocolId()) //, await paywallARP.protocolInfo(5))
+  // console.log("ongoing==================>", await paywallARP.ongoingSubscription("0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA", 4, "netflix"))
 
     // // create future collateral
     // await trustBounties.createBounty(
@@ -2742,7 +2748,7 @@ async function main() {
     // )
     // console.log("vavaFactory.createValuePool===============>Done")
     // console.log("vavaHelper.getAllVavas===============>",await vavaHelper.getAllVavas(0))
-    // let vavaAddress = (await vavaHelper.getAllVavas(0))[0]
+  // let vavaAddress = (await vavaHelper.getAllVavas(0))[0]
 
     // // const vava =  await Vava.deploy(
     // //   tFiat.address,
@@ -2751,8 +2757,8 @@ async function main() {
     // //   contractAddresses.address
     // // )
     // // await vava.deployed()
-    // // console.log("vava.deployed===============>Done")
-    // vava = Vava.attach(vavaAddress)
+    // let vava = Vava.attach(vavaAddress)
+  // console.log("vava.deployed===============>Done")
     // console.log("vava===>", vava.address, await vava.token(), await vavaHelper.getSupplyAvailable(vava.address))
     // // await veFactory.createVe(tFiat.address, vava.address, false)
     // // console.log("veFactory.createVe===============>Done", await veFactory.last_ve())
@@ -4124,7 +4130,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[67]).updateCollection(
   //   "DisasterDeals",
-  //   "Introducing DisasterDeals: Transforming Disaster Response into Sustainable Reconstruction! DisasterDeals is revolutionizing the way we respond to natural disasters by turning crisis into opportunity. Our platform empowers construction companies and skilled professionals to make a positive impact in disaster-stricken areas while securing long-term business stability.",
+  //   "Introducing DisasterDeals: Transforming Disaster Response into Sustainable Reconstruction! DisasterDeals is revolutionizing the way we respond to natural disasters by turning crisis into opportunity. Our platform empowers construction companies and skilled professionals to make a positive impact in disaster-stricken areas while securing long-term business stability. In addition to that, our auditors can deliver badges to companies (for either helping out during a disaster or helping to prevent one) which they can display on their product pages in order to make more sales. We also partner with any such companies to enable them to list their products on our channel.",
   //   "https://i.ibb.co/bWGzycj/117.jpg",
   //   "https://i.ibb.co/bWGzycj/117.jpg",
   //   "https://i.ibb.co/ZHzpFpB/235.jpg",
@@ -4700,7 +4706,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[99]).updateCollection(
   //   "ConnectPro",
-  //   "ConnectPro: Your Ultimate Professional Networking Platform! Welcome to ConnectPro, where professional networking meets innovation. Just like LinkedIn, ConnectPro offers a wide array of services to help you build and grow your career. Whether you're looking for new job opportunities, seeking to expand your professional network, or aiming to stay updated on industry trends, ConnectPro has you covered.",
+  //   "ConnectPro: Your Ultimate Professional Networking Platform! Welcome to ConnectPro, where professional networking meets innovation. Just like LinkedIn, ConnectPro offers a wide array of services to help you build and grow your career. Whether you're looking for new job opportunities, seeking to expand your professional network, or aiming to stay updated on industry trends, ConnectPro has you covered. ConnectPro also help you discover experts to help you write and tailor your resume/cover letter to specific positions/companies.",
   //   "https://i.ibb.co/R6WwBSw/521.jpg",
   //   "https://i.ibb.co/R6WwBSw/521.jpg",
   //   "https://i.ibb.co/HCqK6C9/224.jpg",
@@ -4898,7 +4904,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[110]).updateCollection(
   //   "StayLink",
-  //   "Welcome to StayLink, your premier platform for accommodation rentals worldwide. With StayLink, you can discover a vast array of unique, comfortable, and conveniently located places to stay during your travels. Our user-friendly platform connects you with hospitable hosts, ensuring memorable and authentic travel experiences wherever you go. Whether it's for a short city break or an extended adventure, StayLink is your trusted companion in finding the perfect place to call home while you explore the world.",
+  //   "Welcome to StayLink, your premier platform for accommodation rentals worldwide. With StayLink, you can discover a vast array of unique, comfortable, and conveniently located places to stay during your travels. Our user-friendly platform connects you with hospitable hosts, ensuring memorable and authentic travel experiences wherever you go. Whether it's for a short city break or an extended adventure, StayLink is your trusted companion in finding the perfect place to call home while you explore the world. With StayLink, you can also subscribe to a catalog of rentals such that, as long as you're paying your subscription, you can move from any of the rentals to another as long as you agree with the current owner of the rental you are moving to. There are multiple schemes like 3-way swaps involving 3 rentals or x-way swaps involving x rentals that could help you get access to any rental you want.",
   //   "https://i.ibb.co/TmVdG2C/409.jpg",
   //   "https://i.ibb.co/TmVdG2C/409.jpg",
   //   "https://i.ibb.co/HCqK6C9/224.jpg",
@@ -6572,7 +6578,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[203]).updateCollection(
   //   "WorkConnect",
-  //   "Introducing WorkConnect, the innovative platform designed to bridge the gap between busy professionals who struggle to find time for dating or making friends. On WorkConnect, users can connect with like-minded individuals who understand the demands of a hectic work life. They can choose to work side by side at co-working spaces or engage in ongoing virtual work sessions via video calls, fostering both productivity and meaningful connections. And for those who find a deeper connection through working together, WorkConnect offers the opportunity to evolve their relationship beyond the professional realm, making it the ideal platform for those seeking companionship amidst their busy schedules.",
+  //   "Introducing WorkConnect, the innovative platform designed to bridge the gap between work from home professionals who find themselves isolated from the world. On WorkConnect, users can discover and connect with people nearby that also work from home so they can work from home but side by side. WorkConnect seeks to end the isolation that often comes from working from home by connecting you with people in the same situation so you all can work side by side just like you would with your collegues if you were in a normal work environment with the exception that each one of you will be working remotely for a different company.",
   //   "https://i.ibb.co/h7dRnbb/482.jpg",
   //   "https://i.ibb.co/h7dRnbb/482.jpg",
   //   "https://i.ibb.co/dgG19rS/240.jpg",
@@ -6770,7 +6776,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[215]).updateCollection(
   //   "SkillSwap",
-  //   "Introducing SkillSwap: The innovative platform that enables you to seamlessly connect with experienced tutors to learn technical skills while fostering a culture of reciprocity. With SkillSwap, you can create requests to find a tutor for the skill you're eager to acquire, and in exchange, offer them an IOU which they can use to get other users to them something valuable in return. It's a dynamic marketplace where the pursuit of knowledge meets the spirit of collaboration, allowing you to expand your skill set while contributing your own expertise to a community of lifelong learners. After all, in SkillSwap's belief, all hard skills are both teachable and learnable, creating a vibrant ecosystem of skill sharing and personal growth. Join SkillSwap today and embark on a journey of skill development and mutual empowerment!",
+  //   "Introducing SkillSwap: The innovative platform that enables you to seamlessly connect with experienced tutors to learn technical skills while fostering a culture of reciprocity. With SkillSwap, you can create requests to find a tutor for the skill you're eager to acquire, and in exchange, offer them an IOU which they can use to get other users to teach them something valuable in return. It's a dynamic marketplace where the pursuit of knowledge meets the spirit of collaboration, allowing you to expand your skill set while contributing your own expertise to a community of lifelong learners. After all, in SkillSwap's belief, all hard skills are both teachable and learnable, creating a vibrant ecosystem of skill sharing and personal growth. Join SkillSwap today and embark on a journey of skill development and mutual empowerment!",
   //   "https://i.ibb.co/DMZDx4j/450.jpg",
   //   "https://i.ibb.co/DMZDx4j/450.jpg",
   //   "https://i.ibb.co/Ky6gWQn/251.jpg",
@@ -6878,7 +6884,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[221]).updateCollection(
   //   "TerraToken",
-  //   "Introducing TerraToken: TerraToken is your gateway to the future of real estate investment. We offer a cutting-edge platform where you can discover, invest in, and trade tokenized real-world lands seamlessly. Harnessing the power of blockchain technology, TerraToken empowers you to diversify your portfolio by owning fractions of prime properties, making real estate accessible and liquid like never before. Whether you're a seasoned investor or just entering the world of real estate, TerraToken provides a secure and user-friendly environment to explore and acquire a stake in the most coveted lands on the planet. Join us in reshaping the way you think about real estate investment with TerraToken.",
+  //   "Introducing TerraToken: TerraToken is your gateway to the future of real estate investment. We offer a cutting-edge platform where you can discover, invest in, and trade tokenized real-world lands, houses, or any other real estate seamlessly. Harnessing the power of blockchain technology, TerraToken empowers you to diversify your portfolio by owning fractions of prime properties, making real estate accessible and liquid like never before. Whether you're a seasoned investor or just entering the world of real estate, TerraToken provides a secure and user-friendly environment to explore and acquire a stake in the most coveted lands on the planet. Join us in reshaping the way you think about real estate investment with TerraToken.",
   //   "https://i.ibb.co/txG1bCK/123.jpg",
   //   "https://i.ibb.co/txG1bCK/123.jpg",
   //   "https://i.ibb.co/Gs7g9dw/439-2.jpg",
@@ -7129,8 +7135,8 @@ async function main() {
   // await marketPlaceCollection.connect(wallets[236]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[236]).updateCollection(
-  //   "DanceToDate",
-  //   "DanceToDate: Elevate your dating game while having a blast! DanceToDate is the ultimate platform where you can find exciting dates who are as eager to learn the art of dance as you are. Whether you're a seasoned dancer or a complete beginner, our platform connects you with compatible partners for dance lessons, making your dating experience not only enjoyable but also an opportunity for personal growth. From salsa to tango, swing to ballroom, you'll not only share unforgettable moments but also acquire impressive dance moves, ensuring your dates are filled with rhythm, laughter, and connection. Join DanceToDate today, where finding love and dancing your way into someone's heart has never been more exhilarating.",
+  //   "AdaLunch",
+  //   "Find and subscribe to paywalls that curate for you a list of current ongoing purchases of high end products/services as well as contact information about the buyers so you can swoop in and make a better offer for the same products/services. There is a paywall for various industries: real estate, transportation, energy, b2b sales, nsfw, finding a better",
   //   "https://i.ibb.co/6mDHT9d/412.jpg",
   //   "https://i.ibb.co/6mDHT9d/412.jpg",
   //   "https://i.ibb.co/0CYF5Jy/425-2.jpg",
@@ -7472,7 +7478,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[255]).updateCollection(
   //   "HeartConnect",
-  //   "Introducing HeartConnect, a dynamic platform designed to bring people together, whether it's for finding meaningful relationships, making new friends, or exploring exciting connections. With a user-friendly interface, advanced matchmaking algorithms, and a diverse user base, HeartConnect offers a seamless and enjoyable experience for anyone looking to meet like-minded individuals, fostering connections that truly matter.",
+  //   "Introducing HeartConnect, a dynamic platform designed to bring people together, whether it's for finding meaningful relationships, making new friends, or exploring exciting connections. With a user-friendly interface, and a diverse user base, HeartConnect offers a seamless and enjoyable experience for anyone looking to meet like-minded individuals, fostering connections that truly matter.",
   //   "https://i.ibb.co/t23Stdg/379.jpg",
   //   "https://i.ibb.co/t23Stdg/379.jpg",
   //   "https://i.ibb.co/bdtXHnV/405-2.jpg",
@@ -7900,17 +7906,17 @@ async function main() {
   // console.log("278marketPlaceCollection.updateCollection===========> Done!")
 
   // // 279
-  // await marketPlaceCollection.connect(wallets[279]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[279]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[279]).updateCollection(
-  //   "CoupleGame",
-  //   "Buy minutes and get an auditor to audit your couple and rate it. You make money when your rating is above average. The score is based on factors from the duration of your couple, the submissiveness of the woman to the guy, the number of kids wrt to the level of life (having more or fewer kids than you can financially handle penalizes you. You can make up for your biological kids with adoption), cheating penalizes the woman, conjugal violence or criminal activities penalizes both.",
+  //   "XPromo",
+  //   "Users create bounties with a balance of at least $100 US to be able to partner with the channel and be able to post content they have produced with adult content creators who are trying to advertise their channels/paywalls. Partners' bounties must state the terms of the channel which are: they cannot have a content up for more than 24hrs, they cannot post the same content more than once, they cannot advertise their own platforms, they cannot post non adult content (only nudes, oral sex or intercourse). The more viewers this platform gets, the more adult content creators will contact our partners for content and anyone with the right bounty setup can become a partner. So REGISTER NOW to increase the channel's user count and you might be contacted by an adult content creator looking to create content with you to advertise her channel.",
   //   "https://i.ibb.co/Smr3X1b/204.jpg",
   //   "https://i.ibb.co/Smr3X1b/204.jpg",
   //   "https://i.ibb.co/ZKp73zV/212.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
   //   "All",
   //   "",
   //   ""
@@ -9147,7 +9153,7 @@ async function main() {
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[349]).updateCollection(
   //    "Energify",
-  //    "Energize your world with Energify, the cutting-edge platform connecting households and businesses with top-notch energy providers across various regions. Our mission is to help you break free from traditional utility monopolies and switch to cleaner, more efficient alternatives offered by local entrepreneurs. By browsing our extensive database of vetted companies, you can compare features, pricing, and green credentials before making informed decisions. Once you select your preferred energy plan, simply sign up for automatic monthly billing and start enjoying hassle-free services tailored to fit your lifestyle. Join the growing movement towards sustainable energy independence with Energify – let’s energize the planet together!",
+  //    "Energize your world with Energify, the cutting-edge platform connecting households and businesses with top-notch energy providers (mini grid operators, etc.) across various regions. Our mission is to help you break free from traditional utility monopolies and switch to cleaner, more efficient alternatives offered by local entrepreneurs. By browsing our extensive database of vetted companies, you can compare features, pricing, and green credentials before making informed decisions. Once you select your preferred energy plan, simply sign up for automatic monthly billing and start enjoying hassle-free services tailored to fit your lifestyle. Join the growing movement towards sustainable energy independence with Energify – let’s energize the planet together!",
   //    "https://i.ibb.co/19nqzFv/69.jpg",
   //    "https://i.ibb.co/19nqzFv/69.jpg",
   //    "https://i.ibb.co/GT87pBX/219.jpg",
@@ -9327,7 +9333,7 @@ async function main() {
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[359]).updateCollection(
   //    "MedsOnDemand",
-  //    "Meet MedsOnDemand, the game-changing platform transforming the way people access medication. Our easy-to-use app connects patients with licensed pharmacies, enabling on-demand delivery of prescription drugs straight to their doorstep. No longer do individuals need to waste valuable time waiting in line or traveling to pick up their necessary medications. Instead, they can focus on managing their health and improving their quality of life. With MedsOnDemand, convenience and safety come together seamlessly, offering peace of mind and greater control over medical care. Try out our service today and experience the future of medicine right away!",
+  //    "Meet MedsOnDemand, the game-changing platform transforming the way people access medication. Our easy-to-use app connects people in need of medication with other people that have them and are ready to exchange it for money, other medecines or IOUs.",
   //    "https://i.ibb.co/Wz5WyyQ/80.jpg",
   //    "https://i.ibb.co/Wz5WyyQ/80.jpg",
   //    "https://i.ibb.co/RvSSybP/209.jpg",
@@ -9813,7 +9819,7 @@ async function main() {
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[386]).updateCollection(
   //    "VisaExpert",
-  //    "VisaExpert is an online platform designed to assist individuals seeking guidance in navigating the complex process of obtaining a visa for their desired country. Our network of experienced immigration consultants offers customized advice and support tailored to each client's unique situation. Whether you require assistance with documentation preparation, interview coaching, or simply need clarification on visa regulations, our experts are ready to lend their expertise. With VisaExpert, you can rest assured that you'll receive professional, reliable assistance every step of the way. Start your visa application journey with ease – sign up now and discover why we're the go-to resource for successful visa acquisition.",
+  //    "VisaExpert is an online platform designed to assist individuals seeking guidance in navigating the complex process of obtaining a visa for their desired country. Our network of experienced immigration consultants offers customized advice and support tailored to each client's unique situation. Whether you require assistance with documentation preparation, interview coaching, or simply need clarification on visa regulations, our experts are ready to lend their expertise. With VisaExpert, you can rest assured that you'll receive professional, reliable assistance every step of the way. Start your visa application journey with ease – sign up now and discover why we're the go-to resource for successful visa acquisition. The channel also has various country specific Valuepools to help migrants in those countries share or purchase resources they need together. Users are also advised to document their personal experience as a migrant on their own channels.",
   //    "https://i.ibb.co/Gc7d5kQ/119.jpg",
   //    "https://i.ibb.co/Gc7d5kQ/119.jpg",
   //    "https://i.ibb.co/tBdXyV1/421-2.jpg",
@@ -10010,8 +10016,8 @@ async function main() {
   //  await marketPlaceCollection.connect(wallets[397]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[397]).updateCollection(
-  //    "SexVacation",
-  //    "Rent a villa with others willing to have fun and casual sex, make friends and maybe have memorable sexual experiences.",
+  //    "Sexperience",
+  //    "Event organizers organize and sell tickets to experiences that are designed to get people laid. They are rated on the percentage of guys that attend their experiences that they are able to get laid without violating platform terms (no illegal substance, no underage person, no paying for sex, safety precautions are taken to prevent rape or false rape allegations). The experiences can be anything from parties, or yatch parties to trips; anything that will create circumstances that will get the guys laid. The guys pay for the tickets and the girls do not have to pay for most experiences. The girls are rated on 3 metrics (sexiness, promiscuity level, femininity) and the more they score on any of those metrics, the higher their chances of getting invited to most luxurious experiences. As for event organizers, the more guys they are able to get laid (this has to be verified by an auditor), the more tickets they can sell and the more expensive experiences they can organize.",
   //    "https://i.ibb.co/r7YNgnH/131.jpg",
   //    "https://i.ibb.co/r7YNgnH/131.jpg",
   //    "https://i.ibb.co/cXxSVLC/410-2.jpg",
@@ -10743,6 +10749,43 @@ async function main() {
   //   ""
   // );
   // console.log("437marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 438
+  // await marketPlaceCollection.connect(wallets[435]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[435]).updateCollection(
+  //   "Neibor",
+  //   "To join the platform, users need at least 2 profiles, theirs and that of their neighbor(s). Guys' neighbors must be females but there is no requirement on the gender of the girls' neighbors. Every profile must be that of a single person. Whenever you find someone you like, you can get his/her neighbor to swap appartment with you for at least 1 week so you can become neighbor with the person you like and get the chance to know him/her better. If things work out between you two, the channel's bank will accompany your couple and help it acquire a house, transportation, etc.",
+  //   "https://i.ibb.co/jkLL2Qn/332.jpg",
+  //   "https://i.ibb.co/jkLL2Qn/332.jpg",
+  //   "https://i.ibb.co/7YLFb81/437-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("438marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 439
+  // await marketPlaceCollection.connect(wallets[436]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[436]).updateCollection(
+  //   "GigDate",
+  //   "On GigDate, users market their dating profile with things they are ready to do in exchange for one or multiple dates with other users, this can be anything from delivering items, ridehailing, or coding, to helping out with taxes/administrative procedures, etc. Both party can agree of how many dates a service is worth. At GigDate, we beleive in the idea of being useful to one another as a good foundation for a relationship, so we launched a platform through which users pick their dates based on how useful they can be to them. Each user has a bounty to guarantee trustworthiness.",
+  //   "https://i.ibb.co/f2xhTGn/333.jpg",
+  //   "https://i.ibb.co/f2xhTGn/333.jpg",
+  //   "https://i.ibb.co/k11SX3n/438-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("439marketPlaceCollection.updateCollection===========> Done!")
+
 
   }
   

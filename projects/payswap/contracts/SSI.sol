@@ -126,17 +126,17 @@ contract SSI is Ownable, ERC721Pausable {
     }
     
     function createAccount(
-        uint profileId,
+        uint _profileId,
         string memory publicKey,
         string memory encryptedPrivateKey
     ) external {
-        require(IProfile(_profile()).addressToProfileId(msg.sender) == profileId && profileId > 0);
+        require(IProfile(_profile()).addressToProfileId(msg.sender) == _profileId && _profileId > 0);
 
-        profileToAccount[profileId].publicKey = publicKey;
-        profileToAccount[profileId].encryptedPrivateKey = encryptedPrivateKey;
+        profileToAccount[_profileId].publicKey = publicKey;
+        profileToAccount[_profileId].encryptedPrivateKey = encryptedPrivateKey;
 
         emit CreateAccount(
-            profileId,
+            _profileId,
             msg.sender,
             publicKey,
             encryptedPrivateKey
@@ -144,7 +144,7 @@ contract SSI is Ownable, ERC721Pausable {
     }
 
     function createData(
-        uint profileId,
+        uint _profileId,
         uint auditorProfileId,
         address owner,
         address auditor, 
@@ -157,7 +157,7 @@ contract SSI is Ownable, ERC721Pausable {
     ) external {
         require(IProfile(_profile()).addressToProfileId(msg.sender) == auditorProfileId && auditorProfileId > 0);
         emit DataCreated(
-            profileId, 
+            _profileId, 
             auditorProfileId,
             owner,
             auditor, 
@@ -170,24 +170,24 @@ contract SSI is Ownable, ERC721Pausable {
         );
     }
 
-    function activateData(uint profileId, uint _auditorProfileId, string memory question, string memory answer) external {
+    function activateData(uint _profileId, uint _auditorProfileId, string memory question, string memory answer) external {
         require(msg.sender == IAuth(contractAddress).devaddr_() || 
             (IProfile(_profile()).addressToProfileId(msg.sender) == _auditorProfileId && _auditorProfileId > 0)
         );
-        emit ActivateData(profileId, _auditorProfileId, question, answer);
+        emit ActivateData(_profileId, _auditorProfileId, question, answer);
     }
     
-    function deleteData(uint profileId, string memory question) external {
-        require(IProfile(_profile()).addressToProfileId(msg.sender) == profileId && profileId > 0);
-        emit DataDeleted(profileId, question);
+    function deleteData(uint _profileId, string memory question) external {
+        require(IProfile(_profile()).addressToProfileId(msg.sender) == _profileId && _profileId > 0);
+        emit DataDeleted(_profileId, question);
     }
 
-    function updateAuthorization(uint profileId, uint _auditorProfileId, bool _add) external {
-        require(IProfile(_profile()).addressToProfileId(msg.sender) == profileId  && profileId > 0);
+    function updateAuthorization(uint _profileId, uint _auditorProfileId, bool _add) external {
+        require(IProfile(_profile()).addressToProfileId(msg.sender) == _profileId  && _profileId > 0);
         if (_add) {
-            _authorizations[profileId].add(_auditorProfileId);
+            _authorizations[_profileId].add(_auditorProfileId);
         } else {
-            _authorizations[profileId].remove(_auditorProfileId);
+            _authorizations[_profileId].remove(_auditorProfileId);
         }
     }
 

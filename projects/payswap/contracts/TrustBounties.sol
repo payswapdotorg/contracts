@@ -142,7 +142,7 @@ contract TrustBounties {
     }
     
     function updateOwner(uint _bountyId) external {
-        require(profileId[_bountyId] == IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender));
+        require(profileId[_bountyId] != 0 && profileId[_bountyId] == IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender));
         bountyInfo[_bountyId].owner = msg.sender;
     }
     
@@ -808,7 +808,7 @@ contract TrustBountiesHelper {
     }
 
     function isWhiteListed(address _token) external view returns(bool) {
-        return whitelistedTokens.contains(_token);
+        return whitelistedTokens.contains(_token) || (IERC721(_token).supportsInterface(0x80ac58cd) || IERC721(_token).supportsInterface(0xd9b67a26));
     }
 
     function isAuthorizedSourceFactories(address _token) external view returns(bool) {

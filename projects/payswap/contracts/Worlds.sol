@@ -8,7 +8,7 @@ contract World {
     using SafeERC20 for IERC20;
     using EnumerableSet for EnumerableSet.UintSet;
 
-    bool public bountyRequired;
+    // bool public bountyRequired;
     uint public collectionId;
     uint public totalSupply;
     address private contractAddress;
@@ -97,9 +97,9 @@ contract World {
         }    
     }
 
-    function updateParameters(bool _bountyRequired) external onlyAdmin {
-        bountyRequired = _bountyRequired;
-    }
+    // function updateParameters(bool _bountyRequired) external onlyAdmin {
+    //     bountyRequired = _bountyRequired;
+    // }
 
     function updateDiscountDivisor(uint _optionId, uint _factor, uint _period, uint _cap) external onlyAdmin {
         discountDivisor[_optionId] = Divisor({
@@ -262,9 +262,9 @@ contract World {
             protocolInfo[_protocolId].periodReceivable = _bankInfo[1];
             protocolInfo[_protocolId].token = _token;
             protocolInfo[_protocolId].optionId = _bankInfo[3];
+            addressToProtocolId[_owner] = _protocolId;
+            protocolInfo[_protocolId].owner = _owner;
         }
-        addressToProtocolId[_owner] = _protocolId;
-        protocolInfo[_protocolId].owner = _owner;
         protocolInfo[_protocolId].rating = _rating;
         media[_protocolId] = _media;
         description[_protocolId] = _description;

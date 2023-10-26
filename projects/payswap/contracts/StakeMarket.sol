@@ -58,6 +58,9 @@ contract StakeMarket {
         string paramValue5
     );
 
+    constructor(address _contractAddress) {
+        contractAddress = _contractAddress;
+    }
     // simple re-entrancy check
     uint internal _unlocked = 1;
     modifier lock() {
@@ -67,10 +70,10 @@ contract StakeMarket {
         _unlocked = 1;
     }
 
-    function setContractAddress(address _contractAddress) external {
-        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
-        contractAddress = _contractAddress;
-    }
+    // function setContractAddress(address _contractAddress) external {
+    //     require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
+    //     contractAddress = _contractAddress;
+    // }
 
     function _profile() internal view returns(address) {
         return IContract(contractAddress).profile();
@@ -306,6 +309,8 @@ contract StakeMarket {
         IStakeMarket(noteContract).checkIdentityProof(_partnerStakeId, _identityTokenId, msg.sender);
         require(isStake[_stakeId] && isStake[_partnerStakeId] && !closedStake[_partnerStakeId]);
         require(stakes[_partnerStakeId].bank.stakeRequired <= stakes[_stakeId].bank.amountReceivable);
+        if (stakes[_partnerStakeId].profileRequired) require(stakes[_stakeId].profileId > 0);
+        if (stakes[_partnerStakeId].bountyRequired) require(stakes[_stakeId].bountyId > 0);
         stakes[_partnerStakeId].ve = stakes[_stakeId].ve;
         stakes[_partnerStakeId].token = stakes[_stakeId].token;
         stakes[_partnerStakeId].bank.startPayable = stakes[_stakeId].bank.startReceivable;

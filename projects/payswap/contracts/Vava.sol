@@ -779,7 +779,7 @@ contract ValuepoolHelper {
         return (_totalSupply - _treasury) * IVava(_vava).maxWithdrawable() / 10000;
     }
 
-    function updateMarketPlace(address _marketPlace, bool _add) external {
+    function updateIsMarketPlace(address _marketPlace, bool _add) external {
         require(msg.sender == IAuth(contractAddress).devaddr_());
         isMarketPlace[_marketPlace] = _add;
     }

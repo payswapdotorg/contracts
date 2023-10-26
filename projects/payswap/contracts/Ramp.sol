@@ -156,7 +156,7 @@ contract Ramp {
         protocolInfo[_token].profileId = _profileId;
     }
 
-    function updateTokenId(address _token, uint _tokenId) public {
+    function _updateTokenId(address _token, uint _tokenId) internal {
         require(ve(_ve).ownerOf(_tokenId) == msg.sender);
         if (AllProtocols.contains(_token)) {
             protocolInfo[_token].tokenId = _tokenId;
@@ -192,7 +192,7 @@ contract Ramp {
         protocolInfo[_token].salePrice = 0;
         soldAccounts += 1;
         _updateBounty(_token, _bountyId);
-        updateTokenId(_token, _tokenId);
+        _updateTokenId(_token, _tokenId);
     }
 
     function buyRamp(address __ve, uint _tokenId, uint[] memory _bountyIds) external {
@@ -217,7 +217,7 @@ contract Ramp {
         if(!AllProtocols.contains(_token)) {
             AllProtocols.add(_token);
             protocolInfo[_token].status = RampStatus.Open;
-            if (_tokenId > 0) updateTokenId(_token, _tokenId);
+            if (_tokenId > 0) _updateTokenId(_token, _tokenId);
 
             IRamp(helper).emitCreateProtocol(msg.sender, _token);
         }
@@ -525,7 +525,7 @@ contract RampHelper {
         require(IAuth(_ramp).isAdmin(msg.sender));
         require(IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender) == _profileId && _profileId > 0);
         SSIData memory metadata = ISSI(IContract(contractAddress).ssi()).getSSID(_profileId);
-        require(keccak256(abi.encodePacked(metadata.answer)) != keccak256(abi.encodePacked("")), "NTH4");
+        require(keccak256(abi.encodePacked(metadata.answer)) != keccak256(abi.encodePacked("")));
 
         emit UpdateRampInfo(
             _ramp,
@@ -609,7 +609,7 @@ contract RampHelper {
     
     function updateOracle(address _token, address _oracle, bool _add) external onlyAdmin {
         if (_add) {
-            require(_oracle != address(0x0), "Cannot be zero address");
+            require(_oracle != address(0x0));
             oracleLatestRoundId[_oracle] = 0;
             tokenToOracle[_token] = _oracle;
             // Dummy check to make sure the interface implements this function properly
@@ -641,7 +641,7 @@ contract RampHelper {
     function updateExtraOracle(address _token, address _oracle, bool _add) external {
         require(trustWorthyAuditors[msg.sender] && !_dtokenSet.contains(_token));
         if (_add) {
-            require(_oracle != address(0x0), "Cannot be zero address");
+            require(_oracle != address(0x0));
             oracleLatestRoundId[_oracle] = 0;
             tokenToOracle[_token] = _oracle;
             // Dummy check to make sure the interface implements this function properly
@@ -746,10 +746,10 @@ contract RampHelper {
         uint _identityTokenId,
         string memory _sessionId
     ) external {
-        require(gauges.contains(msg.sender), "RH1");
-        require(_dtokenSet.contains(_token) || _extraSet[msg.sender].contains(_token), "RH2");
-        require(activeSession[keccak256(abi.encodePacked(_sessionId))], "RH3");
-        require(!isBlacklisted[msg.sender][_user], "RH4");
+        require(gauges.contains(msg.sender));
+        require(_dtokenSet.contains(_token) || _extraSet[msg.sender].contains(_token));
+        require(activeSession[keccak256(abi.encodePacked(_sessionId))]);
+        require(!isBlacklisted[msg.sender][_user]);
         IMarketPlace(IContract(contractAddress).marketHelpers2())
         .checkUserIdentityProof(collectionId, _identityTokenId, IAuth(msg.sender).devaddr_());
 
@@ -782,15 +782,15 @@ contract RampHelper {
         address _ramp, 
         address _token,
         uint amount,
+        uint _bountyId,
         bool _lockBounty,
         string memory _title, 
         string memory _content,
         string memory _tags
     ) external payable {
-        RampInfo memory protocolInfo = IRamp(_ramp).protocolInfo(_token);
         ITrustBounty(IContract(contractAddress).trustBounty()).createClaim(
             msg.sender, 
-            protocolInfo.bountyId, 
+            _bountyId, 
             amount,
             _lockBounty,
             _title,
@@ -1205,10 +1205,9 @@ contract ExtraTokenFactory {
         contractAddress = _contractAddress;
     }
 
-    function mintExtraToken(string memory _name, string memory _symbol, address _devaddr) external returns(address) {
+    function mintExtraToken(string memory _name, string memory _symbol, address _devaddr) external {
         require(IRamp(IContract(contractAddress).rampHelper()).trustWorthyAuditors(msg.sender));
-        address _newToken = address(new ExtraToken(_name, _symbol, _devaddr, contractAddress));
-        return _newToken;
+        address(new ExtraToken(_name, _symbol, _devaddr, contractAddress));
     }
 }
 

@@ -5026,7 +5026,7 @@ contract Paywall {
         PaywallOption[] memory _options = INFTicket(nfticketHelper2).getTicketPaywallOptions(_nfticketId);
         for (uint i = 0; i < _options.length; i++) {
             if (
-                _pickedOption > 0 && _options[i].id == _pickedOption - 1 || _pickedOption == 0
+                _pickedOption == 0 || _pickedOption > 0 && _options[i].id == _pickedOption - 1
             ) {
                 if (_users.length == _options.length) {
                     addressToProtocolId[_users[i]] = lastProtocolId;
