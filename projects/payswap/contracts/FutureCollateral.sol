@@ -732,7 +732,7 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
         // Bounty checks
         address trustBounty = _trustBounty();
         (address _owner,address _token,,address claimableBy,,,,,,) = ITrustBounty(trustBounty).bountyInfo(_userBountyId);
-        require(_owner == _user && _token == address(this) && claimableBy == _auditor);
+        require(_owner == _user && _token == address(this));
         // bounty actually contains requested token id
         _auditorBountyCheck(_auditorBountyId, _tokenId, _auditor);
         ITrustBounty(IContract(contractAddress).trustBountyHelper()).attach(_auditorBountyId);

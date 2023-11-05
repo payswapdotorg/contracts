@@ -457,25 +457,25 @@ contract NFTicketHelper {
     mapping(uint => mapping(string => EnumerableSet.UintSet)) private _scheduledMedia;
     mapping(uint => mapping(string => bool)) public tagRegistrations;
     uint public adminFee = 100;
+    uint public adminFeeOnMarketWideAds = 1000;
     uint public lotteryFee = 1000;
     uint public firstCollectionId = 1;
     uint public treasury;
     uint public lottery;
     struct ScheduledMedia {
         uint amount;
+        uint expires;
         string message;
     }
     mapping(uint => uint) public pricePerAttachMinutes;
     mapping(uint => ScheduledMedia) public scheduledMedia;
     mapping(uint => uint) public pendingRevenue;
-    uint internal minute = 3600; // allows minting once per week (reset every Thursday 00:00 UTC)
     uint public currentMediaIdx = 1;
     uint public maxNumMedia = 3;
     struct Channel {
         string message;
         uint active_period;
     }
-    mapping(uint => mapping(string => Channel)) public channels;
     mapping(bytes32 => uint) private itemTimeEstimate;
     mapping(bytes32 => mapping(uint => uint)) private timeEstimates;
     struct Vote {
@@ -597,7 +597,7 @@ contract NFTicketHelper {
             }
         } else {
             _media = new string[](_scheduledMedia[_merchantId][_tag].length());
-            for (uint i = 0; i < _scheduledMedia[_merchantId][_tag].length(); i++) {
+            for (uint i = _scheduledMedia[_merchantId][_tag].length() - 1; i <= _scheduledMedia[_merchantId][_tag].length() - 3; i--) {
                 uint _currentMediaIdx = _scheduledMedia[_merchantId][_tag].at(i);
                 _media[i] = scheduledMedia[_currentMediaIdx].message;
             }
@@ -645,6 +645,7 @@ contract NFTicketHelper {
     function updateAdminNLotteryFee(
         uint _pricePerAttachMinutes, 
         uint _adminFee,
+        uint _adminFeeOnMarketWideAds,
         uint _lotteryFee,
         uint _maxNumMedia,
         uint _firstCollectionId
@@ -652,6 +653,7 @@ contract NFTicketHelper {
         require(msg.sender == IAuth(contractAddress).devaddr_(), "NTH7");
         require(adminFee + lotteryFee <= 10000, "NTH8");
         adminFee = _adminFee;
+        adminFeeOnMarketWideAds = _adminFeeOnMarketWideAds;
         lotteryFee = _lotteryFee;
         maxNumMedia = _maxNumMedia;
         firstCollectionId = _firstCollectionId;
@@ -660,7 +662,8 @@ contract NFTicketHelper {
     
     function sponsorTag(
         address _sponsor,
-        uint _merchantId, 
+        uint _merchantId,
+        uint _referrerId, 
         uint _amount, 
         string memory _tag, 
         string memory _message
@@ -668,22 +671,44 @@ contract NFTicketHelper {
         require(IAuth(_sponsor).isAdmin(msg.sender), "NTH9");
         require(!ISponsor(_sponsor).contentContainsAny(getExcludedContents(_merchantId, _tag)), "NTH10");
         uint _pricePerAttachMinutes = pricePerAttachMinutes[_merchantId];
+        _tag = keccak256(abi.encodePacked(tags[_merchantId][_tag])) == keccak256(abi.encodePacked("")) ? "" : _tag;
         if (_pricePerAttachMinutes > 0) {
             uint price = _amount * _pricePerAttachMinutes;
             _safeTransferFrom(IContract(contractAddress).token(), address(msg.sender), address(this), price);
             lottery += price * lotteryFee / 10000;
-            if (_merchantId > 0) {
+            if (_merchantId > 1) {
                 treasury += price * adminFee / 10000;
                 pendingRevenue[_merchantId] += price * (10000 - adminFee - lotteryFee) / 10000;
             } else {
-                treasury += price * (10000 - lotteryFee) / 10000;
+                treasury += price * adminFeeOnMarketWideAds / 10000;
+                pendingRevenue[_referrerId] += price * (10000 - adminFeeOnMarketWideAds - lotteryFee) / 10000;
             }
             scheduledMedia[currentMediaIdx] = ScheduledMedia({
                 amount: _amount,
+                expires: block.timestamp + _amount * 60,
                 message: _message
             });
             _scheduledMedia[_merchantId][_tag].add(currentMediaIdx++);
             updateSponsorMedia(_merchantId, _tag);
+        }
+    }
+
+     function updateSponsorMedia(uint _merchantId, string memory _tag) public returns(bool) {
+        if (_scheduledMedia[_merchantId][_tag].length() >= maxNumMedia) {
+            uint idx = _scheduledMedia[_merchantId][_tag].at(0);
+            uint idx2 = _scheduledMedia[_merchantId][_tag].at(1);
+            uint idx3 = _scheduledMedia[_merchantId][_tag].at(2);
+            if (scheduledMedia[idx].expires < block.timestamp) {
+                _scheduledMedia[_merchantId][_tag].remove(idx);
+                return true;
+            }
+            if (scheduledMedia[idx2].expires < block.timestamp) {
+                _scheduledMedia[_merchantId][_tag].remove(idx2);
+                return true;
+            }
+            require(scheduledMedia[idx3].expires < block.timestamp, "NFT12");
+            _scheduledMedia[_merchantId][_tag].remove(idx3);
+            return true;
         }
     }
 
@@ -705,16 +730,6 @@ contract NFTicketHelper {
         require(msg.sender == lotteryAddress, "NTH11");
         IERC20(IContract(contractAddress).token()).safeTransfer(msg.sender, lottery);
         lottery = 0;
-    }
-
-    function updateSponsorMedia(uint _merchantId, string memory _tag) public {
-        require(channels[_merchantId][_tag].active_period < block.timestamp, "NTH12");
-        uint idx = _scheduledMedia[_merchantId][_tag].at(0);
-        channels[_merchantId][_tag].active_period = block.timestamp + scheduledMedia[idx].amount*minute / minute * minute;
-        channels[_merchantId][_tag].message = scheduledMedia[idx].message;
-        if (_scheduledMedia[_merchantId][_tag].length() > maxNumMedia) {
-            _scheduledMedia[_merchantId][_tag].remove(idx);
-        }
     }
 
     function setContractAddress(address _contractAddress) external {

@@ -194,6 +194,17 @@ contract Profile {
 
         emit AddAccount(_profileId, _account);
     }
+
+    function addAccountFromSSID(uint _profileId, uint _tokenId) external {
+        require(ve(_ssi()).ownerOf(_tokenId) == msg.sender);
+        SSIData memory metadata = ISSI(_ssi()).getSSIData(_tokenId);
+        require(keccak256(abi.encodePacked(profileInfo[_profileId].ssid)) == keccak256(abi.encodePacked(metadata.answer)));
+        accounts[_profileId].add(msg.sender);
+        addressToProfileId[msg.sender] = _profileId;
+        addressToSSIDDeadline[_profileId][msg.sender] = metadata.deadline;
+
+        emit AddAccount(_profileId, msg.sender);
+    }
     
     function removeAccount(uint _profileId, address _account) external respectTimeConstraint {
         require(addressToProfileId[msg.sender] == _profileId, "P9");

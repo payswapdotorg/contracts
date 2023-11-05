@@ -9,10 +9,12 @@ contract BusinessMinter {
     using EnumerableSet for EnumerableSet.AddressSet;
 
     uint internal constant week = 86400 * 7; // allows minting once per week (reset every Thursday 00:00 UTC)
+    uint internal constant year = 52*week;
     mapping(address => uint) public currentDebt;
     address public contractAddress;
     uint public weekly = 1000000e18; // 1000000 initial tokens
     uint public active_period;
+    uint public next_window;
     EnumerableSet.AddressSet private _ves;
     EnumerableSet.AddressSet private _ve_dists;
     uint internal constant lock = 86400 * 7 * 52 * 4;
@@ -24,7 +26,7 @@ contract BusinessMinter {
     mapping(address => uint) acceleratorPercent;
     mapping(address => uint) contributorsPercent;
     uint public teamPercent = 100;
-    uint public burnPercent = 9000;
+    uint public burnPercent = 900;
     mapping(address => uint) public burnFees;
     mapping(address => uint) public treasuryFees;
     address internal initializer;
@@ -35,6 +37,7 @@ contract BusinessMinter {
     constructor() {
         initializer = msg.sender;
         active_period = (block.timestamp + (2*week)) / week * week;
+        next_window = (block.timestamp + (2*year)) / year * year;
     }
 
     function initialize() external {
@@ -49,6 +52,7 @@ contract BusinessMinter {
         }
         initializer = address(0);
         active_period = (block.timestamp + week) / week * week;
+        next_window = (block.timestamp + year) / year * year;
     }
 
     function updateParameters(uint _teamPercent, uint _burnPercent) external {
@@ -145,6 +149,17 @@ contract BusinessMinter {
         _amount = treasuryFees[_token];
         require(underlying(_token).transfer(address(team), _amount));
         treasuryFees[_token] = 0;
+        return _amount;
+    }
+
+    // If all is well, the admin can send the burnFees to the Leviathan once a year
+    function withdrawBurnFees(address _token, address _leviathan) external returns(uint _amount) {
+        address team = IAuth(contractAddress).devaddr_();
+        require(msg.sender == team && next_window < block.timestamp);
+        _amount = burnFees[_token];
+        require(underlying(_token).transfer(address(_leviathan), _amount));
+        burnFees[_token] = 0;
+        next_window = (block.timestamp + year) / year * year;
         return _amount;
     }
 

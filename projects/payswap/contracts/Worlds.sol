@@ -906,7 +906,7 @@ contract WorldHelper2 is ERC721Pausable {
     uint private timeframe = 26;
     uint public minBounty;
     mapping(address => uint) public bounties;
-    COLOR public minColor = COLOR.BLACK;
+    COLOR public minColor = COLOR.BROWN;
     mapping(address => address) private uriGenerator;
     
     constructor() ERC721("PlusCode", "PlusCode")  {}

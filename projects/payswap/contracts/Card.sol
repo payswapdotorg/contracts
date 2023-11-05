@@ -8,29 +8,36 @@ contract Card {
     using SafeERC20 for IERC20;
     using EnumerableSet for EnumerableSet.AddressSet;
     
-    address public _ve;
+    uint public adminFee = 100;
     address public contractAddress;
-    mapping(uint => EnumerableSet.AddressSet) private _tokens;
-    mapping(address => uint) public tokenIds;
-    mapping(address => mapping(address => uint)) public balance;
-    mapping(address => string) public passwords;
-    
-    event UpdatePassword(address owner, string password);
-    event TransferBalance(uint from, address to, address token, uint amount);
-    event AddBalance(address owner, address token, uint amount);
-    event RemoveBalance(address owner, address token, uint amount);
+    address public rampAddress;
+    mapping(string => EnumerableSet.AddressSet) private _tokens;
+    mapping(string => mapping(address => uint)) public balance;
+    mapping(string => string) public accounts;
+    mapping(address => uint) public treasury;
+
+    event UpdatePassword(string _username, string _password);
+    event TransferBalance(string from, string to, address token, uint amount);
+    event AddBalance(string _username, address token, uint amount);
+    event NotifyAddBalance(string _username, string _sessionId, address token, uint amount);
+    event RemoveBalance(string _username, address operator, address token, uint amount);
     event ExecutePurchase(
         address collection,
-        address owner,
         address token,
+        string _username,
         string productId,
         uint isPaywall,
         uint price,
-        uint tokenId,
         uint userTokenId,
         uint identityTokenId,
         uint[] options
     );
+    mapping(string => mapping(address => uint)) public toBurn;
+    event NotifyBurn(string username, address token, uint amount, bool clear);
+
+    constructor(address _rampAddress) {
+        rampAddress = _rampAddress;
+    }
 
     // simple re-entrancy check
     uint internal _unlocked = 1;
@@ -51,70 +58,129 @@ contract Card {
         contractAddress = _contractAddress;
     }
 
-    function getAllTokens(address _owner, uint _start) external view returns(address[] memory _allTokens) {
-        _allTokens = new address[](_tokens[tokenIds[_owner]].length() - _start);
-        for (uint i = _start; i < _tokens[tokenIds[_owner]].length(); i++) {
-            _allTokens[i] = _tokens[tokenIds[_owner]].at(i);
-        }
+    function setRampAddress(address _rampAddress) external {
+        require(IAuth(contractAddress).devaddr_() == msg.sender);
+        rampAddress = _rampAddress;
+    }
+
+    function createAccount(string memory _username, string memory _password) external {
+        require(_isEmpty(accounts[_username]));
+        accounts[_username] = _password;
+        emit UpdatePassword(_username, _password);
+    }
+
+    function updatePassword(string memory _username, string memory _oldPassword, string memory _password) external onlyAdmin {
+        require(_isAccountOwner(_username, _oldPassword), "C5");
+        accounts[_username] = _password;
+        emit UpdatePassword(_username, _password);
+    }
+
+    function _isEmpty(string memory val) internal pure returns(bool) {
+        return keccak256(abi.encodePacked(val)) == keccak256(abi.encodePacked(""));
+    }
+
+    function _isAccountOwner(string memory _username, string memory _password) internal view returns(bool) {
+        return !_isEmpty(accounts[_username]) && keccak256(abi.encodePacked(accounts[_username])) == keccak256(abi.encodePacked(_password));
     }
     
-    function addBalance(address _owner, address _token, uint _amount) external lock {
-        require(tokenIds[_owner] > 0, "C6");
+    function notifyAddBalance(
+        string memory _username, 
+        string memory _sessionId, 
+        address _token, 
+        uint _amount, 
+        uint _identityTokenId
+    ) external onlyAdmin {
+        require(!_isEmpty(accounts[_username]), "C4");
+        IRamp(rampAddress).mint(_token, address(this), _amount, _identityTokenId, _sessionId);
+        if (balance[_username][_token] == 0) {
+            _tokens[_username].add(_token);
+        }
+        balance[_username][_token] += _amount;
+        IRamp(IContract(contractAddress).rampHelper()).postMint(_sessionId);
+        emit NotifyAddBalance(_username, _sessionId, _token, _amount);
+    }
+    
+    function notifyBurn(string memory _username, address _token, uint _amount, bool _clear) external onlyAdmin {
+        if (_clear) {
+            toBurn[_username][_token] -= _amount;
+        } else {
+            balance[_username][_token] -= _amount;
+            toBurn[_username][_token] += _amount;
+        }
+        emit NotifyBurn(_username, _token, _amount, _clear);
+    }
+
+    function addBalance(string memory _username, address _token, uint _amount) external lock {
+        require(!_isEmpty(accounts[_username]), "C6");
         IERC20(_token).safeTransferFrom(msg.sender, address(this), _amount);
-        if (balance[msg.sender][_token] == 0) {
-            _tokens[tokenIds[_owner]].add(_token);
+        if (balance[_username][_token] == 0) {
+            _tokens[_username].add(_token);
         }
-        balance[_owner][_token] += _amount;
+        balance[_username][_token] += _amount * (10000 - adminFee) / 10000;
+        treasury[_token] += _amount * adminFee / 10000;
 
-        emit AddBalance(_owner, _token, _amount);
+        emit AddBalance(_username, _token, _amount);
     }
 
-    function removeBalance(address _token, uint _amount) external lock {
-        require(tokenIds[msg.sender] > 0, "C6");
-        if (balance[msg.sender][_token] == _amount) {
-            _tokens[tokenIds[msg.sender]].remove(_token);
+    function removeBalance(string memory _username, string memory _password, address _token, address _recipient, uint _amount) public lock onlyAdmin {
+        require(_isAccountOwner(_username, _password), "C7");
+        if (balance[_username][_token] == _amount || _amount == 0) {
+            _tokens[_username].remove(_token);
+            IERC20(_token).safeTransfer(_recipient, balance[_username][_token]);
+            balance[_username][_token] = 0;
+        } else {
+            balance[_username][_token] -= _amount;
+            IERC20(_token).safeTransfer(_recipient, _amount);
         }
-        balance[msg.sender][_token] -= _amount;
-        IERC20(_token).safeTransfer(msg.sender, _amount);
 
-        emit RemoveBalance(msg.sender, _token, _amount);
+        emit RemoveBalance(_username, _recipient, _token, _amount);
     }
 
-    function transferBalance(uint from, address to, address _token, uint _amount) external onlyAdmin {
-        balance[ve(_ve).ownerOf(from)][_token] -= _amount;
-        balance[to][_token] += _amount;
+    function transferBalance(
+        string memory _username, 
+        string memory _password, 
+        string memory _recipientUsername, 
+        address _token, 
+        uint _amount
+    ) external onlyAdmin {
+        require(_isAccountOwner(_username, _password), "C8");
+        if (balance[_username][_token] == _amount || _amount == 0) {
+            _tokens[_username].remove(_token);
+            balance[_recipientUsername][_token] += balance[_username][_token];
+            balance[_username][_token] = 0;
+        } else {
+            balance[_recipientUsername][_token] += _amount;
+            balance[_username][_token] -= _amount;
+        }
 
-        emit TransferBalance(from, to, _token, _amount);
+        emit TransferBalance(_username, _recipientUsername, _token, _amount);
     }
 
     function executePurchase(
         address _collection,
         address _referrer,
         address _token,
+        string memory _username,
         string memory _productId,
         uint _isPaywall,
         uint _price,
-        uint _tokenId,
         uint _userTokenId,
         uint _identityTokenId,
         uint[] memory _options
     ) external onlyAdmin {
-        address _owner = ve(_ve).ownerOf(_tokenId);
         address marketPlace = _isPaywall == 2 
         ? IContract(contractAddress).paywallMarketTrades()
         : _isPaywall == 1
         ? IContract(contractAddress).nftMarketTrades()
         : IContract(contractAddress).marketTrades();
-        if (balance[_owner][_token] >= _price) {
-            balance[_owner][_token] -= _price;
-        } else {
-            IERC20(_token).safeTransferFrom(_owner, address(this), _price - balance[_owner][_token]);
-            balance[_owner][_token] = 0;
-        }
+        require(balance[_username][_token] > _price);
+
+        balance[_username][_token] -= _price;
+
         erc20(_token).approve(marketPlace, _price);
         IMarketPlace(marketPlace).buyWithContract(
             _collection, 
-            _owner,
+            address(this),
             _referrer,
             _productId, 
             _userTokenId, 
@@ -123,40 +189,27 @@ contract Card {
         );
         emit ExecutePurchase(
             _collection,
-            _owner,
             _token,
+            _username,
             _productId,
             _isPaywall,
             _price,
-            _tokenId,
             _userTokenId,
             _identityTokenId,
             _options
         );
     }
 
-    function updateVe(address __ve) external onlyAdmin {
-        _ve = __ve;
-    }
-
-    function updateTokenId(uint _tokenId) external {
-        require(ve(_ve).ownerOf(_tokenId) == msg.sender, "C1");
-        tokenIds[msg.sender] = _tokenId;
-    }
-    
-    function updatePassword(string memory _password) external {
-        passwords[msg.sender] = _password;
-        emit UpdatePassword(msg.sender, _password);
-    }
-
-    function updateOwner(address _prevOwner, uint _tokenId) external {
-        require(ve(_ve).ownerOf(_tokenId) == msg.sender, "C2");
-        require(tokenIds[_prevOwner] == _tokenId, "C3");
-        tokenIds[msg.sender] == _tokenId;
-        for (uint i = 0; i < _tokens[_tokenId].length(); i++) {
-            address _token = _tokens[_tokenId].at(i);
-            balance[msg.sender][_token] += balance[_prevOwner][_token];
-            balance[_prevOwner][_token] = 0;
+    function getAllTokens(string memory _username, uint _start) external view returns(address[] memory _allTokens) {
+        _allTokens = new address[](_tokens[_username].length() - _start);
+        for (uint i = _start; i < _tokens[_username].length(); i++) {
+            _allTokens[i] = _tokens[_username].at(i);
         }
     }
+
+    function withdrawTreasury(address _token, uint _amount) external onlyAdmin {
+        treasury[_token] -= _amount;
+        IERC20(_token).safeTransfer(msg.sender, _amount);
+    }
+    
 }

@@ -5478,6 +5478,8 @@ interface INFTMarketPlace {
 
 interface IRamp {
     function endBounty(uint) external;
+    function postMint(string memory) external;
+    function mint(address,address,uint,uint,string memory) external;
     function isPayswapRamp(address) external view returns(bool);
     function checkAuditor(address) external view returns(bool);
     function emitClaimPendingRevenue(address,address,address,uint) external;
