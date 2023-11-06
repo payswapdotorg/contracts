@@ -239,7 +239,7 @@ async function main() {
   const auditorFactoryAddress = "0xa78F0762FAFd64B90B2F8fb52A8aF923cD399ddD"
   const acceleratorVoterAddress = "0x84779D6bCf31E90DE81Ac4155EFA9A725a60B7f9"
   const futureCollateralAddress = "0xD2b2435aa749E42F3523033Fe167Ae543082375F"
-  const cardAddress = "0xD0078eF9956917698A3A5B7d1314AEc7E16e2683"
+  const cardAddress = "0x97b9795Dc1375EAA8B657cdc3c008B14b5A6F2C0"
   const contributorVoterAddress = "0xBCb2E030953dC9f2E68C179C19C2C121aF348Abb"
   const vavaFactoryAddress = "0x183D70a3cf5e467049A82e79f7C50B488A46D477"
   const vavaHelperAddress = "0x350499C782d15Df1839E74A3E8999FbC86A49c33"
@@ -897,9 +897,10 @@ async function main() {
 
   // const card = await Card.deploy("0x384582a8d93e91dbf6a399cd8241d374da2d7095");
   // await card.deployed()
-  console.log("card============>", card.address, await tFiat.balanceOf(card.address), await card.balance(
-    'bXtvzJS/MsPkW4IH30dLcpfN9rkLoiIdmC4XQt1E9uEWOPPqyRbQjblrzW8qR2F/IfKOw6iM2AgiD9OqdoVje1Sapvv3fRgNTd94bBTkI0h9RzwbgD1DGY7WRCVhb6arrUY9sYT/6/e9RsvwG9TIM6vzRClK2snKIMBB0/OLAAjehIvyldg5U7nn2wttJtFXXJUkdzwLPwBr558UmeAWcaZmPj/seEjbQlc34kjVjnzJESd9xAky5O/DE0CXDB2zFLqgxdvyyKKhiPuL84x6XrwxGh3jAqdoKt B91cEi/M6KOY0qA0AKzADYp8MUm1rIiwmCEcXXrSXSFZw9Kh6JQ==',
-    tFiat.address))
+  // console.log("card============>", card.address) 
+  // await tFiat.balanceOf(card.address), await card.balance(
+  //   'bXtvzJS/MsPkW4IH30dLcpfN9rkLoiIdmC4XQt1E9uEWOPPqyRbQjblrzW8qR2F/IfKOw6iM2AgiD9OqdoVje1Sapvv3fRgNTd94bBTkI0h9RzwbgD1DGY7WRCVhb6arrUY9sYT/6/e9RsvwG9TIM6vzRClK2snKIMBB0/OLAAjehIvyldg5U7nn2wttJtFXXJUkdzwLPwBr558UmeAWcaZmPj/seEjbQlc34kjVjnzJESd9xAky5O/DE0CXDB2zFLqgxdvyyKKhiPuL84x6XrwxGh3jAqdoKt B91cEi/M6KOY0qA0AKzADYp8MUm1rIiwmCEcXXrSXSFZw9Kh6JQ==',
+  //   tFiat.address))
 
   // const feeTo = await FeeTo.deploy();
   // await feeTo.deployed()
@@ -2477,8 +2478,8 @@ async function main() {
     // )
     // await ramp.deployed()
     // console.log("ramp==============>", ramp.address)
-    // let rampAddress = (await rampHelper.getAllRamps(0))[0]
-    // let ramp = Ramp.attach(rampAddress)
+  // let rampAddress = "0x384582a8d93e91dbf6a399cd8241d374da2d7095" // (await rampHelper.getAllRamps(0))[0]
+  //   let ramp = Ramp.attach(rampAddress)
     // console.log("ramp===>", rampAddress, ramp.address)
     // console.log("ramp.protocolInfo============>", await ramp.protocolInfo(tFiat.address))
     // console.log("getParams===============>", await ramp.getParams())

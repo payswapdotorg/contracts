@@ -15,6 +15,7 @@ contract Card {
     mapping(string => mapping(address => uint)) public balance;
     mapping(string => string) public accounts;
     mapping(address => uint) public treasury;
+    mapping(string => uint) public profileId;
 
     event UpdatePassword(string _username, string _password);
     event TransferBalance(string from, string to, address token, uint amount);
@@ -53,6 +54,12 @@ contract Card {
         _;
     }
 
+    modifier onlyAuth(string memory _username) {
+        require(IAuth(contractAddress).devaddr_() == msg.sender || 
+        profileId[_username] > 0 && profileId[_username] == IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender));
+        _;
+    }
+
     function setContractAddress(address _contractAddress) external {
         require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
         contractAddress = _contractAddress;
@@ -71,6 +78,21 @@ contract Card {
 
     function updatePassword(string memory _username, string memory _oldPassword, string memory _password) external onlyAdmin {
         require(_isAccountOwner(_username, _oldPassword), "C5");
+        accounts[_username] = _password;
+        emit UpdatePassword(_username, _password);
+    }
+
+    function updateProfileId(string memory _username, string memory _password, address _owner) external onlyAdmin {
+        require(_isAccountOwner(_username, _password), "C3");
+        uint _profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(_owner);
+        require(IProfile(IContract(contractAddress).profile()).isUnique(_profileId), "C2");
+        profileId[_username] = _profileId;
+    }
+
+    function updatePasswordWithProfile(string memory _username, string memory _password) external {
+        require(_isEmpty(accounts[_username]));
+        uint _profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender);
+        require(profileId[_username] == _profileId && _profileId > 0);
         accounts[_username] = _password;
         emit UpdatePassword(_username, _password);
     }
@@ -122,7 +144,7 @@ contract Card {
         emit AddBalance(_username, _token, _amount);
     }
 
-    function removeBalance(string memory _username, string memory _password, address _token, address _recipient, uint _amount) public lock onlyAdmin {
+    function removeBalance(string memory _username, string memory _password, address _token, address _recipient, uint _amount) public lock onlyAuth(_username) {
         require(_isAccountOwner(_username, _password), "C7");
         if (balance[_username][_token] == _amount || _amount == 0) {
             _tokens[_username].remove(_token);
@@ -142,7 +164,7 @@ contract Card {
         string memory _recipientUsername, 
         address _token, 
         uint _amount
-    ) external onlyAdmin {
+    ) external onlyAuth(_username) {
         require(_isAccountOwner(_username, _password), "C8");
         if (balance[_username][_token] == _amount || _amount == 0) {
             _tokens[_username].remove(_token);
@@ -167,7 +189,7 @@ contract Card {
         uint _userTokenId,
         uint _identityTokenId,
         uint[] memory _options
-    ) external onlyAdmin {
+    ) external onlyAuth(_username) {
         address marketPlace = _isPaywall == 2 
         ? IContract(contractAddress).paywallMarketTrades()
         : _isPaywall == 1
