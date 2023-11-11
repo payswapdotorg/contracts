@@ -137,7 +137,7 @@ contract StakeMarket {
         bool _requireUpfrontPayment
     ) public returns (uint) {
         uint _fees;
-        if (_requireUpfrontPayment) {
+        if (_requireUpfrontPayment && _bankInfo[6] < 3600 * 24) {
             IERC20(_addrs[1]).safeTransferFrom(msg.sender, address(this), _bankInfo[1]);
             _fees = _bankInfo[1] * _tradingFee() / 10000;
             treasuryFees[_addrs[1]] += _fees;

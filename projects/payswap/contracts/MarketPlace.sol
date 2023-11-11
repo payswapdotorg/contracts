@@ -3016,12 +3016,12 @@ contract MarketPlaceCollection is Auth {
 }
 
 contract MarketPlaceOrders {
-    mapping(uint => mapping(bytes32 => Ask)) private _askDetails; // Ask details (price + seller address) for a given collection and a tokenId
+    mapping(uint => mapping(bytes32 => Ask)) internal _askDetails; // Ask details (price + seller address) for a given collection and a tokenId
     mapping(address => mapping(string => uint)) internal paymentCredits;
-    address public contractAddress;
+    address internal contractAddress;
 
     function setContractAddress(address _contractAddress) external {
-        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender, "PMO2");
+        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
         contractAddress = _contractAddress;
     }
 
@@ -3052,6 +3052,10 @@ contract MarketPlaceOrders {
 
     function getAskDetails(uint _collectionId, bytes32 _tokenId) external view returns(Ask memory) {
         return _askDetails[_collectionId][_tokenId];
+    }
+
+    function getAskOrder(uint _collectionId, string memory _tokenId) external view returns(Ask memory) {
+        return _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))];
     }
 
     function updateAfterSale(
@@ -4084,16 +4088,12 @@ contract MarketPlaceHelper {
         if(ask.lastBidTime != 0) {
             IERC20(_token).safeTransferFrom(marketTrades, ask.lastBidder, ask.price);
         }
-        ask.price = _askPrice;
-        ask.lastBidder = _user;
-        ask.lastBidTime = block.timestamp;
-
         IMarketPlace(marketOrders).updateAfterSale(
             _collectionId,
             _tokenId,
-            ask.price, 
-            ask.lastBidTime,
-            ask.lastBidder
+            _askPrice, 
+            block.timestamp,
+            _user
         );
     }
 

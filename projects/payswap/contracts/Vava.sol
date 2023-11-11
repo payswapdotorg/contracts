@@ -46,7 +46,7 @@ contract Valuepool {
     mapping(address => SponsorInfo) public sponsors;
     mapping(uint => address) private sponsorIds;
     EnumerableSet.AddressSet private sponsorAddresses;
-    EnumerableSet.AddressSet private latestPayingSponsors;
+    mapping(address => uint) private payingSponsors;
     mapping(uint => bool) private usedTickets;
     uint public epoch;
     uint private queueDuration = 86400 * 7; // 1 week
@@ -179,8 +179,9 @@ contract Valuepool {
     function addSponsor(address _card, uint _cardId, uint _geoTag) external {
         CardInfo memory _cardInfo = ISponsorCard(_card).protocolInfoCard(_cardId);
         uint _sponsorId = IMarketPlace(_marketCollections()).addressToCollectionId(msg.sender);
-        require(_cardInfo.owner == address(this) && _cardInfo.amountPayable > minReceivable, "Va5");
+        require(_cardInfo.owner == address(this) && _cardInfo.amountPayable >= minReceivable);
         require(msg.sender == ISponsorCard(_card).devaddr_() && _sponsorId > 0);
+        notifyPayment(_card);
         sponsors[_card].cardId = _cardId;
         sponsors[_card].geoTag = _geoTag;
         sponsorAddresses.add(_card);
@@ -191,14 +192,27 @@ contract Valuepool {
     function removeSponsorAt(address _card) external onlyAdmin {
         address owner = ISponsorCard(_card).devaddr_();
         uint _sponsorId = IMarketPlace(_marketCollections()).addressToCollectionId(owner);
-        delete sponsors[_card];
         sponsorAddresses.remove(_card);
+        delete sponsors[_card];
         delete sponsorIds[_sponsorId];
-        if (latestPayingSponsors.contains(_card)) latestPayingSponsors.remove(_card);
+        delete payingSponsors[_card];
         IValuePool(helper).emitRemoveSponsor(_card);
     }
 
-    function notifyPayment(address _card) external nonreentrant {
+    function removeNonPayingSponsors(uint _start) external {
+        uint _length = sponsorAddresses.length();
+        for (uint i = _start; i < _length; i++) {
+            address _card = sponsorAddresses.at(i);
+            if (!isPayingSponsor(_card)) {
+                sponsorAddresses.remove(_card);
+                delete sponsors[_card];
+                delete sponsorIds[IMarketPlace(_marketCollections()).addressToCollectionId(ISponsorCard(_card).devaddr_())];
+                delete payingSponsors[_card];
+            }
+        }
+    }
+
+    function notifyPayment(address _card) public nonreentrant {
         uint _amount = ISponsorCard(_card).payInvoicePayable(address(this));
         if (_amount > 0) {
             (uint percentile, uint sods) = Percentile.computePercentileFromData(
@@ -212,18 +226,15 @@ contract Valuepool {
             sum_of_diff_squared = sods;
             uint _percentile = _computePercentile(sponsors[_card].percentile, percentile);
             sponsors[_card].percentile = _percentile;
-            if (sponsors[_card].percentile >= minimumSponsorPercentile) {
-                if (latestPayingSponsors.length() >= IContract(contractAddress).maximumSize()) {
-                    latestPayingSponsors.remove(latestPayingSponsors.at(0));
-                }
-                latestPayingSponsors.add(_card);
+            if (_percentile >= minimumSponsorPercentile) {
+                payingSponsors[_card] = block.timestamp + 4 * 86400 * 7;
             }
             IValuePool(helper).emitNotifyPayment(_card, _amount, _percentile);
         }
     }
 
-    function isPayingSponsor(address _card) external view returns(bool) {
-        return latestPayingSponsors.contains(_card);
+    function isPayingSponsor(address _card) public view returns(bool) {
+        return payingSponsors[_card] > block.timestamp;
     }
 
     function _computePercentile(uint _old, uint _new) internal pure returns(uint) {
@@ -233,9 +244,9 @@ contract Valuepool {
     function addCredit(uint _tokenId) external {
         address nfticket = IContract(contractAddress).nfticket();
         TicketInfo memory _ticketInfo = INFTicket(nfticket).ticketInfo_(_tokenId);
-        require(ve(nfticket).ownerOf(_tokenId) == msg.sender, "Va7");
+        require(ve(nfticket).ownerOf(_tokenId) == msg.sender);
         address _sponsor = sponsorIds[_ticketInfo.merchant];
-        require(sponsorAddresses.contains(_sponsor) && !usedTickets[_tokenId], "Va8");
+        require(sponsorAddresses.contains(_sponsor) && !usedTickets[_tokenId]);
         usedTickets[_tokenId] = true;
         (uint percentile, uint sods) = Percentile.computePercentileFromData(
             false,
@@ -257,19 +268,13 @@ contract Valuepool {
     
     function getAllSponsors(uint _start, uint _geoTag, bool _onlyPaying) external view returns(address[] memory _sponsors) {
         _sponsors = new address[](sponsorAddresses.length() - _start);
-         if (_onlyPaying) {
-            for (uint i = _start; i < latestPayingSponsors.length(); i++) {
-                if (sponsors[sponsorAddresses.at(i)].geoTag == _geoTag) {
+        for (uint i = _start; i < sponsorAddresses.length(); i++) {
+            if (sponsors[sponsorAddresses.at(i)].geoTag == _geoTag) {
+                if (_onlyPaying && isPayingSponsor(sponsorAddresses.at(i)) || !_onlyPaying) {
                     _sponsors[i] = sponsorAddresses.at(i);
                 }
-            }    
-         } else {
-            for (uint i = _start; i < sponsorAddresses.length(); i++) {
-                if (sponsors[sponsorAddresses.at(i)].geoTag == _geoTag) {
-                    _sponsors[i] = sponsorAddresses.at(i);
-                }  
             }  
-         }
+        }  
     }
 
     function updateParameters(
@@ -875,7 +880,8 @@ contract ValuepoolHelper2 {
     using EnumerableSet for EnumerableSet.UintSet;
 
     address public contractAddress;
-    uint private maxNumMedia = 2;
+    uint private maxNumMedia = 3;
+    uint seed = (block.timestamp + block.difficulty) % 100;
     mapping(address => bool) public autoUpdateTag;
     mapping(address => mapping(uint => uint)) public geoTag;
     mapping(address => EnumerableSet.AddressSet) private merchantTrustWorthyAuditors;
@@ -1043,14 +1049,14 @@ contract ValuepoolHelper2 {
     }
 
     function getMedia(address _vava, uint _tokenId) external view returns(string[] memory mediaData) {
-        address[] memory _sponsors = IValuePool(_vava).getAllSponsors(0,geoTag[_vava][_tokenId],true);
-        uint _maxMedia = Math.min(maxNumMedia, _sponsors.length);
+        address[] memory _sponsors = IValuePool(_vava).getAllSponsors(0, geoTag[_vava][_tokenId], true);
+        uint _maxMedia =  Math.min(maxNumMedia, _sponsors.length);
         mediaData = new string[](Math.max(1, _maxMedia));
         uint idx;
+        uint randomHash = uint(seed + block.timestamp + block.difficulty);
         for (uint i = 0; i < _maxMedia; i++) {
-            string memory _mediaData = media[_vava][_sponsors[i]];
             // if (!_isEmpty(_mediaData)) {
-                mediaData[idx++] = _mediaData;
+                mediaData[idx++] = media[_vava][_sponsors[randomHash++ % _sponsors.length]];
             // }
         }
     }
@@ -2460,31 +2466,25 @@ contract Ve {
     }
 
     function _populate(uint _tokenId) internal view returns(string[] memory optionNames,string[] memory optionValues) {
-        optionNames = new string[](12);
-        optionValues = new string[](12);
+        optionNames = new string[](8);
+        optionValues = new string[](8);
         uint idx;
         (uint _percentile,) = IValuePool(valuepool).userInfo(_tokenId);
-        optionNames[idx] = "Type";
-        optionValues[idx++] = riskpool ? "RiskPool" : "ValuePool"; 
         optionValues[idx++] = string(abi.encodePacked(name, ", ", symbol));
         optionNames[idx] = "Balance";
         optionValues[idx++] = toString(_balanceOfNFT(_tokenId, block.timestamp) / 10**decimals);
         optionNames[idx] = "Locked";
         optionValues[idx++] = toString(uint(int256(locked[_tokenId].amount)) / 10**decimals);
-        optionNames[idx] = "Ending";
+        optionNames[idx] = string(abi.encodePacked(riskpool ? "RiskPool" : "ValuePool", " Ending"));
         optionValues[idx++] = toString(locked[_tokenId].end);
-        optionNames[idx] = "Vested Percentile";
-        optionValues[idx++] = string(abi.encodePacked(toString(percentiles[_tokenId]), " %"));
-        optionNames[idx] = "Credit Percentile";
-        optionValues[idx++] = string(abi.encodePacked(toString(_percentile), " %"));
-        optionNames[idx] = "Sponsor Supply";
-        optionValues[idx++] = toString(erc20(token).balanceOf(valuepool) / 10**decimals);
-        optionNames[idx] = "Attachments";
-        optionValues[idx++] = string(abi.encodePacked("# ", toString(attachments[_tokenId])));
-        optionNames[idx] = "Min Ticket Price";
-        optionValues[idx++] = toString(minTicketPrice / 10**decimals);
-        optionNames[idx] = "Ve Supply";
-        optionValues[idx++] = toString(supply / 10**decimals);
+        optionNames[idx] = "Vested/Credit Percentile";
+        optionValues[idx++] = string(abi.encodePacked(toString(percentiles[_tokenId]), "%, ", toString(_percentile), "%"));
+        optionNames[idx] = "Sponsor/Ve Supply";
+        optionValues[idx++] = string(abi.encodePacked(toString(erc20(token).balanceOf(valuepool) / 10**decimals), ", ", toString(supply / 10**decimals)));
+        optionNames[idx] = "Attachments/MTP";
+        optionValues[idx++] = string(abi.encodePacked("#", toString(attachments[_tokenId]), ", ", toString(minTicketPrice / 10**decimals)));
+        // optionNames[idx] = "Ve Supply";
+        // optionValues[idx++] = toString(supply / 10**decimals);
         optionNames[idx] = "Min To Switch";
         optionValues[idx++] = toString(minToSwitch / 10**decimals);
     }
@@ -2695,7 +2695,7 @@ contract veFactory {
 }
 
 contract ValuepoolFactory {
-    address contractAddress;
+    address public contractAddress;
 
     constructor(address _contractAddress) {
         contractAddress = _contractAddress;

@@ -163,8 +163,8 @@ contract Sponsor {
         }
     }
 
-    function depositDue(address _protocol) external lock {
-        (uint duePayable,,) = ISponsor(helper).getDuePayable(address(this), _protocol, 0);
+    function depositDue(address _protocol, uint _numPeriods) external lock {
+        (uint duePayable,,) = ISponsor(helper).getDuePayable(address(this), _protocol, _numPeriods);
         duePayable += pendingFromNote[addressToProtocolId[_protocol]];
         IERC20(protocolInfo[addressToProtocolId[_protocol]].token)
         .safeTransferFrom(msg.sender, address(this), duePayable);

@@ -55,8 +55,9 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     uint constant FC_IDX = 3;
     mapping(uint => uint) public channels;
     mapping(uint => EnumerableSet.UintSet) private isBlacklisted;
-    mapping(uint => bool) public isValidChannel;
-
+    uint public nextChannelId = 1;
+    mapping(uint => uint) public channelStartTime;
+    
     event Mint (
         address _auditor,
         address _to, 
@@ -429,22 +430,23 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
         isAdmin[_devaddr] = _add;
     }
     
-    function updateEstimationTable(uint _channel, uint[WEEKS_PER_YEAR] memory _table) external {
+    function updateEstimationTable(uint[WEEKS_PER_YEAR] memory _table) external {
         address profile = IContract(contractAddress).profile();
         uint _auditorId = IProfile(profile).addressToProfileId(msg.sender);
         (address gauge,,COLOR _badgeColor) = IAuditor(IContract(contractAddress).auditorNote()).getGaugeNColor(_auditorId);
         uint _category = IAuditor(IContract(contractAddress).auditorHelper()).categories(gauge);
         require(isAdmin[msg.sender] || (_category == FC_IDX && _badgeColor >= updateColor));
-        require(IProfile(profile).isUnique(_auditorId) && isValidChannel[_channel]);
+        require(IProfile(profile).isUnique(_auditorId));
         require(isBlacklisted[_auditorId].length() < minToBlacklist);
-        estimationTable[_channel] = _table;
+        estimationTable[nextChannelId] = _table;
+        channelStartTime[nextChannelId] = block.timestamp;
 
-        emit UpdateEstimationTable(_channel, _table);
+        emit UpdateEstimationTable(nextChannelId++, _table);
     }
 
     function addToChannel(uint _profileId, uint _channel) external checkMinAuditor {
         require(IProfile(IContract(contractAddress).profile()).isUnique(_profileId));
-        require(isValidChannel[_channel]);
+        require(_channel < nextChannelId && _channel > 0);
         channels[_profileId] = _channel;
 
         emit AddToChannel(_profileId, _channel);
@@ -481,18 +483,9 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
         IERC20(token).safeTransfer(msg.sender, treasury);
         treasury = 0;
     }
-    
-    /**
-        This function returns whether the previous channel has reached a price
-        high enough to unlock the requested channel
-    */ 
-    function updateValidChannel(uint _channel, bool _add) public {
-        require(IAuth(contractAddress).devaddr_() == msg.sender);
-        isValidChannel[_channel] = _add;
-    }
 
     function getPriceAt(uint _tokenId, uint _time) public view returns(uint _price) {
-        uint _numOfWeeks = (block.timestamp + _time - collateral[_tokenId].startTime)/ week;
+        uint _numOfWeeks = (block.timestamp + _time - channelStartTime[collateral[_tokenId].channel])/ week;
         _price = estimationTable[collateral[_tokenId].channel][_numOfWeeks % WEEKS_PER_YEAR];
         _price += estimationTable[collateral[_tokenId].channel][WEEKS_PER_YEAR-1] * _numOfWeeks / WEEKS_PER_YEAR;
     }

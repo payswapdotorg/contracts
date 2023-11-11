@@ -241,11 +241,11 @@ async function main() {
   const futureCollateralAddress = "0xD2b2435aa749E42F3523033Fe167Ae543082375F"
   const cardAddress = "0x97b9795Dc1375EAA8B657cdc3c008B14b5A6F2C0"
   const contributorVoterAddress = "0xBCb2E030953dC9f2E68C179C19C2C121aF348Abb"
-  const vavaFactoryAddress = "0x183D70a3cf5e467049A82e79f7C50B488A46D477"
-  const vavaHelperAddress = "0x350499C782d15Df1839E74A3E8999FbC86A49c33"
-  const vavaHelper2Address = "0x55B4098BF974fec1387aBE50329027142Bf1f7c9"
-  const veFactoryAddress = "0xd01A8bb066Ee9cb795366b91a632eFD492B200Bc"
-  const valuepoolVoterAddress = "0x312B3E91e01D87F46B45A23368B0fDE988aFdddD"
+  const vavaFactoryAddress = "0x7ecd58472cD0AED5614238a5D4C90E599755Edd4"
+  const vavaHelperAddress = "0x787035b034BB23ad71d50742845672d01CE26b7e"
+  const vavaHelper2Address = "0x85b1B94201c5e84c352f62c9Ee7313f721D7e282"
+  const veFactoryAddress = "0xF3F37fBB361210ecBaCB6e748c9D550dE4db1175"
+  const valuepoolVoterAddress = "0x971928CB7F42EC1F0C34e2C68C7bb0E7Ec17c586"
   const businessBribeFactoryAddress = "0xee1388EeFb6F9206836eB6C64F12bFBAEa14d9Cd"
   const businessGaugeFactoryAddress = "0x3a5F4F01Bbe5729b8EC35f453d4a92A364F9eF66"
   const referralBribeFactoryAddress = "0x3D262AD24C4ff3F8598367a23bA5288Df3581da2"
@@ -897,7 +897,7 @@ async function main() {
 
   // const card = await Card.deploy("0x384582a8d93e91dbf6a399cd8241d374da2d7095");
   // await card.deployed()
-  // console.log("card============>", card.address) 
+  // console.log("card============>", card.address)
   // await tFiat.balanceOf(card.address), await card.balance(
   //   'bXtvzJS/MsPkW4IH30dLcpfN9rkLoiIdmC4XQt1E9uEWOPPqyRbQjblrzW8qR2F/IfKOw6iM2AgiD9OqdoVje1Sapvv3fRgNTd94bBTkI0h9RzwbgD1DGY7WRCVhb6arrUY9sYT/6/e9RsvwG9TIM6vzRClK2snKIMBB0/OLAAjehIvyldg5U7nn2wttJtFXXJUkdzwLPwBr558UmeAWcaZmPj/seEjbQlc34kjVjnzJESd9xAky5O/DE0CXDB2zFLqgxdvyyKKhiPuL84x6XrwxGh3jAqdoKt B91cEi/M6KOY0qA0AKzADYp8MUm1rIiwmCEcXXrSXSFZw9Kh6JQ==',
   //   tFiat.address))
@@ -1412,14 +1412,14 @@ async function main() {
   // await sponsorNote.setContractAddress(contractAddresses.address)
   // console.log("sponsorNote.setContractAddress===========> Done!")
 
-  // await valuepoolVoter.setContractAddress(contractAddresses.address)
-  // console.log("valuepoolVoter.setContractAddress===========> Done!")
+  await valuepoolVoter.setContractAddress(contractAddresses.address)
+  console.log("valuepoolVoter.setContractAddress===========> Done!")
 
-  // await vavaHelper2.setContractAddress(contractAddresses.address)
-  // console.log("vavaHelper2.setContractAddress===========> Done!")
+  await vavaHelper2.setContractAddress(contractAddresses.address)
+  console.log("vavaHelper2.setContractAddress===========> Done!")
 
-  // await vavaHelper.setContractAddress(contractAddresses.address)
-  // console.log("vavaHelper.setContractAddress===========> Done!")
+  await vavaHelper.setContractAddress(contractAddresses.address)
+  console.log("vavaHelper.setContractAddress===========> Done!")
 
   // await ssi.setContractAddress(contractAddresses.address)
   // console.log("ssi.setContractAddress===========> Done!")
@@ -1703,20 +1703,20 @@ async function main() {
   // await contractAddresses.setSponsorNote(sponsorNote.address)
   // console.log("contractAddresses.setSponsorNote===========> Done!")
 
-  // await contractAddresses.setValuepoolFactory(vavaFactory.address)
-  // console.log("contractAddresses.setVavaFactory===========> Done!")
+  await contractAddresses.setValuepoolFactory(vavaFactory.address)
+  console.log("contractAddresses.setVavaFactory===========> Done!")
 
-  // await contractAddresses.setValuepoolHelper(vavaHelper.address)
-  // console.log("contractAddresses.setValuepoolHelper===========> Done!")
+  await contractAddresses.setValuepoolHelper(vavaHelper.address)
+  console.log("contractAddresses.setValuepoolHelper===========> Done!")
 
-  // await contractAddresses.setValuepoolHelper2(vavaHelper2.address)
-  // console.log("contractAddresses.setValuepoolHelper2===========> Done!")
+  await contractAddresses.setValuepoolHelper2(vavaHelper2.address)
+  console.log("contractAddresses.setValuepoolHelper2===========> Done!")
 
-  // await contractAddresses.setVeFactory(veFactory.address)
-  // console.log("contractAddresses.setVeFactory===========> Done!")
+  await contractAddresses.setVeFactory(veFactory.address)
+  console.log("contractAddresses.setVeFactory===========> Done!")
 
-  // await contractAddresses.setValuepoolVoter(valuepoolVoter.address)
-  // console.log("contractAddresses.setValuepoolVoter===========> Done!")
+  await contractAddresses.setValuepoolVoter(valuepoolVoter.address)
+  console.log("contractAddresses.setValuepoolVoter===========> Done!")
 
   // await contractAddresses.setSSI(ssi.address)
   // console.log("contractAddresses.setSSI===========> Done!")
@@ -2748,34 +2748,34 @@ async function main() {
     //   false
     // )
     // console.log("vavaFactory.createValuePool===============>Done")
-    // console.log("vavaHelper.getAllVavas===============>",await vavaHelper.getAllVavas(0))
-  // let vavaAddress = (await vavaHelper.getAllVavas(0))[0]
+  //   console.log("vavaHelper.getAllVavas===============>",await vavaHelper.getAllVavas(0))
+  // let vavaAddress =  (await vavaHelper.getAllVavas(0))[0]
 
-    // // const vava =  await Vava.deploy(
-    // //   tFiat.address,
-    // //   deployer.address,
-    // //   vavaHelper.address,
-    // //   contractAddresses.address
-    // // )
-    // // await vava.deployed()
-    // let vava = Vava.attach(vavaAddress)
-  // console.log("vava.deployed===============>Done")
-    // console.log("vava===>", vava.address, await vava.token(), await vavaHelper.getSupplyAvailable(vava.address))
-    // // await veFactory.createVe(tFiat.address, vava.address, false)
-    // // console.log("veFactory.createVe===============>Done", await veFactory.last_ve())
-    // // const va = await Va.deploy(
-    // //   tFiat.address,
-    // //   vava.address,
-    // //   // contractAddresses.address,
-    // //   false
-    // // );
-    // // await va.deployed()
+  //   // // const vava =  await Vava.deploy(
+  //   // //   tFiat.address,
+  //   // //   deployer.address,
+  //   // //   vavaHelper.address,
+  //   // //   contractAddresses.address
+  //   // // )
+  //   // // await vava.deployed()
+  // let vava = Vava.attach(vavaAddress)
+  // console.log("vava.deployed===============>Done", vavaAddress)
+  //   console.log("vava===>", vava.address, await vava.token(), await vavaHelper.getSupplyAvailable(vava.address))
+  //   // await veFactory.createVe(tFiat.address, vava.address, false)
+  //   // console.log("veFactory.createVe===============>Done")
+  //   // // const va = await Va.deploy(
+  //   // //   tFiat.address,
+  //   // //   vava.address,
+  //   // //   // contractAddresses.address,
+  //   // //   false
+  //   // // );
+  //   // // await va.deployed()
     // let vaAddress = await vava._ve()
-    // va = Va.attach(vaAddress)
+    // let va = Va.attach(vaAddress)
     // console.log("va.deployed==============>", va.address, await vava._ve())
-    // // await va.setContractAddress(contractAddresses.address)
-    // // console.log("va.setContractAddress===============>Done")
-    // // console.log("va===>", vaAddress, va.address, await va.getParams(), await va.ownerOf(1))
+    // await va.setContractAddress(contractAddresses.address)
+    // console.log("va.setContractAddress===============>Done")
+    // console.log("va===>", vaAddress, va.address, await va.getParams(), await va.ownerOf(1))
     // await va.setParams(
     //   "vaNFT",
     //   "vaNFT",
@@ -2787,8 +2787,10 @@ async function main() {
     //   true
     // )
     // console.log("va.setParams===============>Done", await va.getParams())
-    // // console.log("vava.getAllSponsors===============>", await vava.getAllSponsors(0,0,true))
-    // // console.log("vavaHelper2.getMedia===============>", await vavaHelper2.getMedia(vava.address, 1))
+    // console.log("vava.getAllSponsors|false===============>", await vava.getAllSponsors(0, 0, false))
+    // console.log("vava.getAllSponsors|true===============>", await vava.getAllSponsors(0, 0, true))
+    // await vavaHelper2.updateMaxNumMedia(3)
+    // console.log("va.tokenURI===============>", await va.ownerOf(1))
     // // await valuepoolVoter.addVa(
     // //   vavaAddress,
     // //   1,
@@ -2808,7 +2810,48 @@ async function main() {
     // console.log("va.balanceOfNFT===============>",await va.balanceOfNFT(1), await va.ownerOf(1))
     // console.log("vavaHelper.getDescription===============>",await vavaHelper.getDescription(vava.address))
     // // // console.log("va._populate===============>",await va._populate(1))
-    // console.log("va.tokenURI(1)===============>", await va.tokenURI(1))
+  //   // await vava.notifyPayment("0x68abb07f652d58077f323beda3dd783fd1991e5b")
+  // await vava.addSponsor(
+  //   "0x68abb07f652d58077f323beda3dd783fd1991e5b",
+  //   9,
+  //   0
+  // )
+  // await vava.addSponsor(
+  //   "0x8346da1db5924abb113d8044bbd07a5cbf971487",
+  //   4,
+  //   0
+  // )
+  // await vava.addSponsor(
+  //   "0xfd0d24dA222543d1416E0BB517776E37f023b499",
+  //   4,
+  //   0
+  // )
+  // await vavaHelper2.updateMedia(
+  //   "0x8346da1db5924aBb113D8044BbD07A5CBF971487",
+  //   vavaAddress,
+  //   "https://www.youtube.com/embed/c3NWlIJu6PY"
+  // )
+  // await vavaHelper2.updateMedia(
+  //   "0xfd0d24dA222543d1416E0BB517776E37f023b499",
+  //   vavaAddress,
+  //   "https://www.youtube.com/embed/3EFk40AbO94"
+  // )
+  // await vavaHelper2.updateMedia(
+  //   "0x68abb07f652d58077f323beda3dd783fd1991e5b",
+  //   vavaAddress,
+  //   "https://www.youtube.com/embed/KRG8229tKeI"
+  // )
+  // console.log("isPayingSponsor==============>", await vava.isPayingSponsor("0x68abb07f652d58077f323beda3dd783fd1991e5b"))
+  // console.log("isPayingSponsor==============>", await vava.isPayingSponsor("0x8346da1db5924abb113d8044bbd07a5cbf971487"))
+  // console.log("isPayingSponsor==============>", await vava.isPayingSponsor("0xfd0d24da222543d1416e0bb517776e37f023b499"))
+  // // 90 character count
+  // await nftSvg.updateDescription(
+  //   va.address,
+  //   "USD Valuepool USD Valuepool USD Valuepool USD Valuepool USD Valuepool USD Valuepool USD US"
+  // )
+  // console.log("vavaHelper2.geoTag===============>", await vavaHelper2.geoTag(vava.address, 1))
+  // console.log("vavaHelper2.getMedia===============>", await vavaHelper2.getMedia(vava.address, 0))
+  // console.log("va.tokenURI(1)===============>", await va.tokenURI(1))
     // console.log("getSupplyAvailable================>", await vavaHelper.getSupplyAvailable(vava.address))
     // console.log("scheduledPurchases================>", await vava.scheduledPurchases(1, 1))
     // await tFiat.transfer(vava.address, ethers.BigNumber.from("10000000000000000000"))
@@ -3810,7 +3853,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[49]).updateCollection(
   //   "ShopSwift",
-  //   "Introducing ShopSwift: Your Ultimate Grocery Delivery Partner! ShopSwift is your one-stop platform for all your grocery shopping and delivery needs. We're here to make your life easier by bringing your favorite groceries right to your doorstep. Whether you're too busy to hit the store or simply prefer the convenience of online shopping, ShopSwift has you covered.",
+  //   "Introducing ShopSwift: Your Ultimate Delivery Partner! ShopSwift is your one-stop platform for all your shopping and delivery needs. We're here to make your life easier, our delivery agents specialize in helping you buy items online and then bringing them right to your doorstep. You can even pick an agent based on body or foot size if you're buying apparel and you need them to try it on, to see how well it will fit you. Whether you're too busy to hit the store or simply prefer the convenience of online shopping, ShopSwift has you covered. Our delivery agents are here to satisfy your every request, whether you want a specific meal no matter where it is bought at or you want it to be bought at a specific store.",
   //   "https://i.ibb.co/YTBHrkf/309.jpg",
   //   "https://i.ibb.co/YTBHrkf/309.jpg",
   //   "https://i.ibb.co/hyQ4xjW/253.jpg",
@@ -4728,7 +4771,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[100]).updateCollection(
   //   "SalesMap",
-  //   "Introducing SalesMap: Your Personal Shopping Concierge! Tired of running errands and wish you had a convenient way to get the items you need without leaving your home? Meet SalesMap, the innovative platform that connects you with nomad sellers who can bring your desired items right to your doorstep.",
+  //   "Introducing SalesMap: Your Personal Shopping Concierge! Tired of running errands and wish you had a convenient way to get the items you need without leaving your home? Meet SalesMap, the innovative platform that connects you with nomad sellers who can bring your desired items right to your doorstep. You can even pick someone with the same size as you in case you are going to be buying apparel and you would like them to try it on for you before buying the right one.",
   //   "https://i.ibb.co/Dg5Lgf5/523.jpg",
   //   "https://i.ibb.co/Dg5Lgf5/523.jpg",
   //   "https://i.ibb.co/tJ0GsZg/201.jpg",
@@ -10165,7 +10208,7 @@ async function main() {
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[404]).updateCollection(
   //    "SurveillanceGuard",
-  //    "Introducing SurveillanceGuard – the groundbreaking solution for individuals and business owners seeking reliable remote monitoring assistance. Our intuitive platform connects users with trained security specialists who can remotely view live footage, detect anomalies, and promptly alert you of any suspicious activities. By leveraging state-of-the-art technologies and human vigilance, we offer unparalleled protection against burglaries, property damage, and other safety threats. Sign up now to gain instant access to our pool of qualified guardians, ensuring round-the-clock coverage and total piece of mind. Join the ranks of satisfied customers safeguarded by SurveillanceGuard.",
+  //    "Introducing SurveillanceGuard – the groundbreaking solution for individuals and business owners seeking reliable remote monitoring assistance. Our intuitive platform connects users with trained security specialists who can remotely view live footage, detect anomalies, and promptly alert you of any suspicious activities or write reports on the content of the footages. By leveraging state-of-the-art technologies and human vigilance, we offer unparalleled protection against burglaries, property damage, and other safety threats as well as a good way to detect a fix inefficiencies in your processes. Sign up now to gain instant access to our pool of qualified guardians, ensuring round-the-clock coverage and total piece of mind. Join the ranks of satisfied customers safeguarded by SurveillanceGuard.",
   //    "https://i.ibb.co/gJqYQV7/141.jpg",
   //    "https://i.ibb.co/gJqYQV7/141.jpg",
   //    "https://i.ibb.co/wyWRV09/320-2.jpg",
@@ -10789,6 +10832,24 @@ async function main() {
   //   ""
   // );
   // console.log("439marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 440
+  // await marketPlaceCollection.connect(wallets[437]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[437]).updateCollection(
+  //   "Leviathana",
+  //   "The Leviathana is the philosophy that governs members of the Leviathans' communities. It is not a religion and it accepts any member of any religion, race, gender or ethnic background. Members of all 12 Leviathans that adhere to the Leviathana are called leviats.",
+  //   "https://i.ibb.co/f2xhTGn/333.jpg",
+  //   "https://i.ibb.co/f2xhTGn/333.jpg",
+  //   "https://i.ibb.co/k11SX3n/438-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("440marketPlaceCollection.updateCollection===========> Done!")
 
 
   }
