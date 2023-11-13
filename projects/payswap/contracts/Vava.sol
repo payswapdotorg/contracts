@@ -1103,12 +1103,13 @@ contract ValuepoolVoter {
     event UpdateTags(
         address ve,
         address pool,
+        string title,
         string countries,
         string cities,
         string products
     );
     event AddVa(
-        address vava, 
+        address va, 
         uint period, 
         uint minPeriod, 
         uint minDifference,
@@ -1117,8 +1118,8 @@ contract ValuepoolVoter {
         uint minimumLockValue,
         VoteOption voteOption
     );
-    event Voted(address indexed ve, address indexed pool, uint tokenId, uint profileId, uint _identityTokenId, uint weight, bool like);
-    event Abstained(address indexed ve, uint tokenId, int256 weight);
+    event Voted(address indexed ve, address indexed pool, uint tokenId, uint profileId, uint _identityTokenId, uint weight, bool like, string title);
+    event Abstained(address indexed ve, uint tokenId, int256 weight, string title);
 
     // simple re-entrancy check
     uint internal _unlocked = 1;
@@ -1144,7 +1145,7 @@ contract ValuepoolVoter {
     //     ve(_ve).abstain(_tokenId);
     // }
 
-    function _reset(address _ve, uint _tokenId, uint _profileId) internal {
+    function _reset(address _ve, uint _tokenId, uint _profileId, string memory _title) internal {
         address[] storage _poolVote = poolVote[_ve][_tokenId];
         uint _poolVoteCnt = _poolVote.length;
         require(IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender) == _profileId && _profileId > 0, "VaV2");
@@ -1163,7 +1164,7 @@ contract ValuepoolVoter {
                 } else {
                     _totalWeight -= _votes;
                 }
-                emit Abstained(_ve, _tokenId, _votes);
+                emit Abstained(_ve, _tokenId, _votes, _title);
             }
             totalWeight[_ve][_pool] -= uint256(_totalWeight);
         }
@@ -1189,11 +1190,10 @@ contract ValuepoolVoter {
         uint _tokenId, 
         uint _profileId,
         uint _identityTokenId,
-        bool _like
+        bool _like,
+        string memory _title
     ) internal {
-        _reset(_ve, _tokenId, _profileId);
-        int _totalWeight = 0;
-        int _usedWeight = 0;
+        _reset(_ve, _tokenId, _profileId, _title);
         uint _weight = voteOption[_ve] == VoteOption.VotingPower ? 
         ve(_ve).balanceOfNFT(_tokenId) :
         voteOption[_ve] == VoteOption.Percentile ? 
@@ -1217,20 +1217,18 @@ contract ValuepoolVoter {
             weights[_ve][_pool] += _poolWeight * int(_weight);
             votes[va_tokenId][_pool] += _poolWeight * int(_weight);
             
-            emit Voted(_ve, _pool, _tokenId, _profileId, _identityTokenId, _weight, _like);
-            _usedWeight += _poolWeight * int(_weight);
-            _totalWeight += _poolWeight * int(_weight);
+            emit Voted(_ve, _pool, _tokenId, _profileId, _identityTokenId, _weight, _like, _title);
+            totalWeight[_ve][_pool] += uint256(_poolWeight * int(_weight));
+            usedWeights[_ve][_tokenId] = uint256(_poolWeight * int(_weight));
         }
-        totalWeight[_ve][_pool] += uint256(_totalWeight);
-        usedWeights[_ve][_tokenId] = uint256(_usedWeight);
     }
 
     // identitytokenId can be required when info like the distribution of voters per country/gender,etc. is needed
-    function vote(address _ve, address _pool, uint _tokenId, uint _profileId, uint _identityTokenId, bool _like) external {
+    function vote(address _ve, address _pool, uint _tokenId, uint _profileId, uint _identityTokenId, bool _like, string memory _title) external {
         require(ve(_ve).isApprovedOrOwner(msg.sender, _tokenId), "VaV7");
         require(period[_ve] >= block.timestamp - gauges[_ve][_pool].start, "VaV07");
         _checkIdentityProof(_ve, msg.sender, _identityTokenId);
-        _vote(_ve, _pool, _tokenId, _profileId, _identityTokenId, _like);
+        _vote(_ve, _pool, _tokenId, _profileId, _identityTokenId, _like, _title);
     }
 
     function _checkIdentityProof(address _ve, address _owner, uint _identityTokenId) internal {
@@ -1263,7 +1261,7 @@ contract ValuepoolVoter {
             .addressToCollectionId(msg.sender);
         }
         emit AddVa(
-            _vava, 
+            _ve, 
             _period, 
             _minPeriod, 
             _minDifference,
@@ -1315,6 +1313,7 @@ contract ValuepoolVoter {
     function updateTags(
         address _ve,
         address _pool,
+        string memory _title,
         string memory _countries,
         string memory _cities,
         string memory _products
@@ -1323,6 +1322,7 @@ contract ValuepoolVoter {
         emit UpdateTags(
             _ve,
             _pool,
+            _title,
             _countries,
             _cities,
             _products

@@ -10,7 +10,6 @@ contract Card {
     
     uint public adminFee = 100;
     address public contractAddress;
-    address public rampAddress;
     mapping(string => EnumerableSet.AddressSet) private _tokens;
     mapping(string => mapping(address => uint)) public balance;
     mapping(string => string) public accounts;
@@ -36,10 +35,6 @@ contract Card {
     mapping(string => mapping(address => uint)) public toBurn;
     event NotifyBurn(string username, address token, uint amount, bool clear);
 
-    constructor(address _rampAddress) {
-        rampAddress = _rampAddress;
-    }
-
     // simple re-entrancy check
     uint internal _unlocked = 1;
     modifier lock() {
@@ -63,11 +58,6 @@ contract Card {
     function setContractAddress(address _contractAddress) external {
         require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
         contractAddress = _contractAddress;
-    }
-
-    function setRampAddress(address _rampAddress) external {
-        require(IAuth(contractAddress).devaddr_() == msg.sender);
-        rampAddress = _rampAddress;
     }
 
     function createAccount(string memory _username, string memory _password) external {
@@ -106,6 +96,7 @@ contract Card {
     }
     
     function notifyAddBalance(
+        address _rampAddress,
         string memory _username, 
         string memory _sessionId, 
         address _token, 
@@ -113,7 +104,7 @@ contract Card {
         uint _identityTokenId
     ) external onlyAdmin {
         require(!_isEmpty(accounts[_username]), "C4");
-        IRamp(rampAddress).mint(_token, address(this), _amount, _identityTokenId, _sessionId);
+        IRamp(_rampAddress).mint(_token, address(this), _amount, _identityTokenId, _sessionId);
         if (balance[_username][_token] == 0) {
             _tokens[_username].add(_token);
         }

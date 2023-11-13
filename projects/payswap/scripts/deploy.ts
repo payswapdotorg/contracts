@@ -245,7 +245,7 @@ async function main() {
   const vavaHelperAddress = "0x787035b034BB23ad71d50742845672d01CE26b7e"
   const vavaHelper2Address = "0x85b1B94201c5e84c352f62c9Ee7313f721D7e282"
   const veFactoryAddress = "0xF3F37fBB361210ecBaCB6e748c9D550dE4db1175"
-  const valuepoolVoterAddress = "0x971928CB7F42EC1F0C34e2C68C7bb0E7Ec17c586"
+  const valuepoolVoterAddress = "0x2B2Bb6Adda65bB3a748B798320d54317780d27e8"
   const businessBribeFactoryAddress = "0xee1388EeFb6F9206836eB6C64F12bFBAEa14d9Cd"
   const businessGaugeFactoryAddress = "0x3a5F4F01Bbe5729b8EC35f453d4a92A364F9eF66"
   const referralBribeFactoryAddress = "0x3D262AD24C4ff3F8598367a23bA5288Df3581da2"
@@ -1412,14 +1412,14 @@ async function main() {
   // await sponsorNote.setContractAddress(contractAddresses.address)
   // console.log("sponsorNote.setContractAddress===========> Done!")
 
-  await valuepoolVoter.setContractAddress(contractAddresses.address)
-  console.log("valuepoolVoter.setContractAddress===========> Done!")
+  // await valuepoolVoter.setContractAddress(contractAddresses.address)
+  // console.log("valuepoolVoter.setContractAddress===========> Done!")
 
-  await vavaHelper2.setContractAddress(contractAddresses.address)
-  console.log("vavaHelper2.setContractAddress===========> Done!")
+  // await vavaHelper2.setContractAddress(contractAddresses.address)
+  // console.log("vavaHelper2.setContractAddress===========> Done!")
 
-  await vavaHelper.setContractAddress(contractAddresses.address)
-  console.log("vavaHelper.setContractAddress===========> Done!")
+  // await vavaHelper.setContractAddress(contractAddresses.address)
+  // console.log("vavaHelper.setContractAddress===========> Done!")
 
   // await ssi.setContractAddress(contractAddresses.address)
   // console.log("ssi.setContractAddress===========> Done!")
@@ -1703,20 +1703,20 @@ async function main() {
   // await contractAddresses.setSponsorNote(sponsorNote.address)
   // console.log("contractAddresses.setSponsorNote===========> Done!")
 
-  await contractAddresses.setValuepoolFactory(vavaFactory.address)
-  console.log("contractAddresses.setVavaFactory===========> Done!")
+  // await contractAddresses.setValuepoolFactory(vavaFactory.address)
+  // console.log("contractAddresses.setVavaFactory===========> Done!")
 
-  await contractAddresses.setValuepoolHelper(vavaHelper.address)
-  console.log("contractAddresses.setValuepoolHelper===========> Done!")
+  // await contractAddresses.setValuepoolHelper(vavaHelper.address)
+  // console.log("contractAddresses.setValuepoolHelper===========> Done!")
 
-  await contractAddresses.setValuepoolHelper2(vavaHelper2.address)
-  console.log("contractAddresses.setValuepoolHelper2===========> Done!")
+  // await contractAddresses.setValuepoolHelper2(vavaHelper2.address)
+  // console.log("contractAddresses.setValuepoolHelper2===========> Done!")
 
-  await contractAddresses.setVeFactory(veFactory.address)
-  console.log("contractAddresses.setVeFactory===========> Done!")
+  // await contractAddresses.setVeFactory(veFactory.address)
+  // console.log("contractAddresses.setVeFactory===========> Done!")
 
-  await contractAddresses.setValuepoolVoter(valuepoolVoter.address)
-  console.log("contractAddresses.setValuepoolVoter===========> Done!")
+  // await contractAddresses.setValuepoolVoter(valuepoolVoter.address)
+  // console.log("contractAddresses.setValuepoolVoter===========> Done!")
 
   // await contractAddresses.setSSI(ssi.address)
   // console.log("contractAddresses.setSSI===========> Done!")
@@ -3060,7 +3060,7 @@ async function main() {
   // await marketPlaceCollection.connect(wallets[5]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[5]).updateCollection(
-  //   "Paypal Bridge",
+  //   "PaypalBridge",
   //   "Introducing PayPal Bridge: Your Solution to PayPal Withdrawals in Restricted Countries! Are you frustrated by the limitations of PayPal withdrawals in your country? Look no further, because PayPal Bridge is here to bridge the gap and provide you with the financial freedom you deserve.",
   //   "https://i.ibb.co/SxBzDyr/34.jpg",
   //   "https://i.ibb.co/SxBzDyr/34.jpg",
@@ -4011,17 +4011,17 @@ async function main() {
   // console.log("57marketPlaceCollection.updateCollection===========> Done!")
 
   // // 58
-  // await marketPlaceCollection.connect(wallets[58]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  // await marketPlaceCollection.connect(wallets[58]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[58]).updateCollection(
-  //   "ColdStorage",
-  //   "Introducing ColdStorage: Your Solution for Cold Storage Space Needs! Are you in the business of perishable goods and need a reliable cold storage solution? Look no further than ColdStorage, your go-to platform for discovering, booking, and managing cold storage spaces with ease.",
+  //   "MovingIn",
+  //   "users buy subscriptions to promotions and start meeting each other with the goal of finding a boyfriend/girlfriend they can move in together with for at least one year. The promotion ends when everybody has met everybody. Each promotion has 50 men and 50 women. At the end of the promotion, the people that have found each other create requests to let the community know. Depending on the type of the promotion, only the first couple, the first 10, 20, 30, etc, will get to be part of the platform's couples' program. During that program, all the funds from the subscription to the promotion are used to provide a living space and other amenities to all the winning couples. All couples must live together as real couples for at least a year. Some promotions have a reality TV component which might add to the rewards the winning couples get to enjoy. After the year of living together, couples that are willing to get pay-married, are followed by the channel's valuepool which helps them financially.",
   //   "https://i.ibb.co/phdPk9Z/310.jpg",
   //   "https://i.ibb.co/phdPk9Z/310.jpg",
   //   "https://i.ibb.co/Khhk0wg/244.jpg",
   //   "",
   //   "",
-  //   "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
   //   "All",
   //   "",
   //   ""
@@ -4717,7 +4717,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[97]).updateCollection(
   //   "MarriageGuard",
-  //   "Introducing MarriageGuard: Redefining Matrimony with Trust and Accountability! Are you looking to embark on the journey of marriage with transparency, trust, and shared responsibility? Welcome to MarriageGuard, a revolutionary platform that reimagines the institution of marriage, allowing couples to create bounty contracts to safeguard their commitments.",
+  //   "Introducing MarriageGuard: Redefining Matrimony with Trust and Accountability! Are you looking to embark on the journey of marriage with transparency, trust, and shared responsibility? Welcome to MarriageGuard, a revolutionary platform that reimagines the institution of marriage, allowing couples to create bounty contracts to safeguard their commitments. Those contracts are called pay-marriage contracts.",
   //   "https://i.ibb.co/Srp8W0d/514.jpg",
   //   "https://i.ibb.co/Srp8W0d/514.jpg",
   //   "https://i.ibb.co/Smr3X1b/204.jpg",
@@ -5202,8 +5202,8 @@ async function main() {
   // await marketPlaceCollection.connect(wallets[124]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[124]).updateCollection(
-  //   "FixIT",
-  //   "Introducing FixIT, the all-in-one platform for tech enthusiasts and DIY repair experts! At FixIT, you can discover a wide range of gadgets in need of repair, access comprehensive courses on how to fix them like a pro, watch detailed repair tutorials, and even embark on a hands-on journey. Here's how it works: Owners in need of gadget repairs post their devices, and you can choose one that piques your interest. Once it arrives at your doorstep, you document every step of the repair process through video tutorials, gaining valuable experience and sharing your expertise with the community. After the successful repair, send the gadget back to its owner, knowing you've made a difference. FixIT is where gadget repair meets education and community, connecting tech enthusiasts worldwide in the spirit of innovation and DIY excellence.",
+  //   "NetLove",
+  //   "Find and pay for somebody to be your virtual boyfriend/girlfriend. The duration of the relationship, its character (romantic, sexual, submission, etc) as well as whether it will be exclusive or not will be options you can pick. All partners will have bounties to guarantee they will offer nothing less than the experience their user(s) paid for",
   //   "https://i.ibb.co/Wn6fgwb/437.jpg",
   //   "https://i.ibb.co/Wn6fgwb/437.jpg",
   //   "https://i.ibb.co/0Q7YJBC/214.jpg",
@@ -5328,8 +5328,8 @@ async function main() {
   // await marketPlaceCollection.connect(wallets[131]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[131]).updateCollection(
-  //   "CollegeFunds",
-  //   "Introducing CollegeFunds, your gateway to discovering and participating in ValuePools dedicated to funding cutting-edge research projects in educational institutions worldwide. With CollegeFunds, you can explore a diverse range of research initiatives spanning colleges, schools, universities, and more. Whether you're a passionate supporter of academic innovation or an institution seeking funding for groundbreaking research, our platform connects you with like-minded individuals and organizations, fostering collaboration and empowering the global pursuit of knowledge and discovery. Join us today and be a part of shaping the future of education and research on a global scale.",
+  //   "GroupHacks",
+  //   "Find and join valuepools of people that attempt multiple system hacks and distribute the proceeds through a lottery to the members. Examples of hacks: make a YouTube video/Spotify album viral, create a star, etc. Sponsorship funds of the valuepools are also distributed through lotteries",
   //   "https://i.ibb.co/zhpJsh4/449.jpg",
   //   "https://i.ibb.co/zhpJsh4/449.jpg",
   //   "https://i.ibb.co/bs9B2mg/221.jpg",
@@ -5652,8 +5652,8 @@ async function main() {
   // await marketPlaceCollection.connect(wallets[149]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[149]).updateCollection(
-  //   "ShipWithUs",
-  //   "Introducing ShipWithUs, the innovative platform that seamlessly connects users looking to ship items with fellow users who are traveling to the same destination. Whether you need to send a package across the country or simply want to take advantage of available luggage space, ShipWithUs simplifies the process by matching travelers with shipping needs. Say goodbye to shipping hassles and high costs; ShipWithUs harnesses the power of shared journeys to make shipping reliable, cost-effective, and eco-friendly. Join our community today and embark on a new era of collaborative shipping convenience.",
+  //   "Desh",
+  //   "Introducing Desh -Decentralized Shipping-, the innovative platform that seamlessly connects users looking to ship items with fellow users who are traveling to the same destination. Whether you need to send a package across the country or simply want to take advantage of available luggage space, Desh simplifies the process by matching travelers with shipping needs. Say goodbye to shipping hassles and high costs; Desh harnesses the power of shared journeys to make shipping reliable, cost-effective, and eco-friendly. Join our community today and embark on a new era of collaborative shipping convenience.",
   //   "https://i.ibb.co/51rvjgk/513.jpg",
   //   "https://i.ibb.co/51rvjgk/513.jpg",
   //   "https://i.ibb.co/dgG19rS/240.jpg",
@@ -5941,7 +5941,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[165]).updateCollection(
   //   "SchoolFunds",
-  //   "Introducing SchoolFunds, the innovative platform that unites school communities in a shared mission to foster entrepreneurship among their own members. Here, users come together to participate in ValuePools, collaborative financial resources designed to empower fellow students and alumni who are launching their own businesses. Through a transparent and democratic process of proposal votes, SchoolFunds ensures that every member has a say in supporting and shaping the entrepreneurial ventures within their school ecosystem, fostering a dynamic environment of innovation, support, and collective success.",
+  //   "Introducing SchoolFunds, the innovative platform that unites school or college communities in a shared mission to foster entrepreneurship among their own members. Here, users come together to participate in ValuePools, collaborative financial resources designed to empower fellow students and alumni who are launching their own businesses. Through a transparent and democratic process of proposal votes, SchoolFunds ensures that every member has a say in supporting and shaping the entrepreneurial ventures within their school ecosystem, fostering a dynamic environment of innovation, support, and collective success.",
   //   "https://i.ibb.co/D1gfXVX/357.jpg",
   //   "https://i.ibb.co/D1gfXVX/357.jpg",
   //   "https://i.ibb.co/tJ0GsZg/201.jpg",
@@ -6012,8 +6012,8 @@ async function main() {
   // await marketPlaceCollection.connect(wallets[169]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[169]).updateCollection(
-  //   "DIYRepairs",
-  //   "Introducing DIYRepairs: DIYRepairs is your go-to platform for aspiring mechanics, electricians, carpenters, plumbers, and more. Here, users can seamlessly discover items in need of repair, access comprehensive repair courses, watch instructional videos of others fixing similar items, and even get hands-on by receiving the actual item from its owner. You'll document every step of the repair process via video, ensuring a complete learning experience, and then send the item back, all while gaining invaluable repair skills and helping people reclaim their treasured possessions. Join DIYRepairs today and be part of a thriving community dedicated to mastering the art of fixing and making a real difference, one repair at a time.",
+  //   "FixIT",
+  //   "Introducing FixIT: FixIT is your go-to platform for aspiring mechanics, electricians, carpenters, plumbers, and more. Here, users can seamlessly discover items in need of repair, access comprehensive repair courses, watch instructional videos of others fixing similar items, and even get hands-on by receiving the actual item from its owner. You'll document every step of the repair process via video, ensuring a complete learning experience, and then send the item back, all while gaining invaluable repair skills and helping people reclaim their treasured possessions. Join FixIT today and be part of a thriving community dedicated to mastering the art of fixing and making a real difference, one repair at a time.",
   //   "https://i.ibb.co/S0DHC0S/348.jpg",
   //   "https://i.ibb.co/S0DHC0S/348.jpg",
   //   "https://i.ibb.co/nRY33tn/205.jpg",
@@ -6138,8 +6138,8 @@ async function main() {
   // await marketPlaceCollection.connect(wallets[176]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[176]).updateCollection(
-  //   "SimplyExpense",
-  //   "Introducing SimplyExpense, your all-in-one platform for effortless expense management and financial tracking. Just like Easy Expense, we offer user-friendly tools and features to simplify your expense reporting, budgeting, and financial planning. With SimplyExpense, you can streamline your expense tracking process, gain valuable insights into your spending habits, and take control of your financial well-being, all in one convenient place. Say goodbye to the hassle of manual expense management and hello to financial simplicity with SimplyExpense.",
+  //   "Amegle",
+  //   "Meet strangers and have fun interactions with them on Paychat video chat and post it on the platform as well as on any other video platform. Users can buy tickets to it to participate in the associated game. A video ticket's score= video weight/total videos weight. Video weight= ticket weight * number of likes of interaction on the platform where it got the most likes. Ticket weight= number of days since the ticket was purchased",
   //   "https://i.ibb.co/f2xhTGn/333.jpg",
   //   "https://i.ibb.co/f2xhTGn/333.jpg",
   //   "https://i.ibb.co/ZKp73zV/212.jpg",
@@ -6171,17 +6171,17 @@ async function main() {
   // console.log("177marketPlaceCollection.updateCollection===========> Done!")
 
   // // 178
-  // await marketPlaceCollection.connect(wallets[178]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  // await marketPlaceCollection.connect(wallets[178]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[178]).updateCollection(
-  //   "FreshFood",
-  //   "Introducing FreshFood: Revolutionizing the Way You Access Food! FreshFood is your innovative platform where you can purchase food directly from farmers, fishermen, and producers even before it's harvested or caught, ensuring the freshest, tastiest, and most sustainable ingredients. Say goodbye to food waste and lengthy supply chains. With FreshFood's unique paywall system, you can subscribe to receive your chosen foods periodically as they become available, guaranteeing a constant supply of farm-to-table goodness. Join us in reshaping the future of food consumption, reducing waste, and supporting local agriculture—all while enjoying the freshest ingredients imaginable.",
+  //   "Heaven",
+  //   "Memorialization platform where you can share memories of loved ones so that people that may have known them can leave a review with their Paychat handle, their own memories of the person along with possible pictures or videos. This will help connect all the people that knew your loved ones to you and to each other.",
   //   "https://i.ibb.co/d26cRSR/494.jpg",
   //   "https://i.ibb.co/d26cRSR/494.jpg",
   //   "https://i.ibb.co/0Q7YJBC/214.jpg",
   //   "",
   //   "",
-  //   "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
   //   "All",
   //   "",
   //   ""
@@ -6247,7 +6247,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[182]).updateCollection(
   //   "GiftCrafter",
-  //   "Introducing GiftCrafter, the ultimate gifting subscription platform that empowers you to effortlessly send joy-packed surprises to your loved ones or even treat yourself, all with just a few clicks. With GiftCrafter, you can choose from an array of personalized options, from gourmet treats to curated gift boxes, and set the frequency of deliveries to perfectly suit your needs, ensuring that thoughtful gifts arrive at your doorstep or that of your chosen recipients like clockwork, making every month or year filled with heartwarming surprises. Say goodbye to gift-giving stress and hello to the convenience of GiftCrafter, where thoughtful gifting is made easy, ensuring smiles and appreciation abound.",
+  //   "Introducing GiftCrafter, the ultimate gifting subscription platform that empowers you to effortlessly send joy-packed surprises to your loved ones or even treat yourself, all with just a few clicks. With GiftCrafter, you can choose from an array of personalized options, from gourmet treats to curated gift boxes, and set the frequency of deliveries to perfectly suit your needs, ensuring that thoughtful gifts arrive at your doorstep or that of your chosen recipients like clockwork, making every month or year filled with heartwarming surprises. You can even book consultations with gift experts to figure out the appropriate gift to give. Say goodbye to gift-giving stress and hello to the convenience of GiftCrafter, where thoughtful gifting is made easy, ensuring smiles and appreciation abound.",
   //   "https://i.ibb.co/m5qT51p/325.jpg",
   //   "https://i.ibb.co/m5qT51p/325.jpg",
   //   "https://i.ibb.co/D1Q5Zbk/218.jpg",
@@ -7308,7 +7308,7 @@ async function main() {
   // await marketPlaceCollection.connect(wallets[243]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[243]).updateCollection(
-  //   "FuckForCredit",
+  //   "Sex4Loans",
   //   "Find people willing to lend you money if you have sex (oral, anal, with pets, etc.), the intercourse is filmed and posted on their paywalls or entered in betting events in case you fail to reimburse.",
   //   "https://i.ibb.co/XV03hfN/395.jpg",
   //   "https://i.ibb.co/XV03hfN/395.jpg",
@@ -7520,12 +7520,12 @@ async function main() {
   // );
   // console.log("254marketPlaceCollection.updateCollection===========> Done!")
 
-  // // 255
+  // 255
   // await marketPlaceCollection.connect(wallets[255]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[255]).updateCollection(
-  //   "HeartConnect",
-  //   "Introducing HeartConnect, a dynamic platform designed to bring people together, whether it's for finding meaningful relationships, making new friends, or exploring exciting connections. With a user-friendly interface, and a diverse user base, HeartConnect offers a seamless and enjoyable experience for anyone looking to meet like-minded individuals, fostering connections that truly matter.",
+  //   "Playbook",
+  //   "Find and subscribe to partners to get access to their playbooks which are extensive step by step guidelines on how to do a specific thing like have a night out with your friends tailored to residents of specific locations, how to have the perfect date or get a new girlfriend tailored to specific types of people living in specific locations, etc Basically a good playbook is like a good recipe, you blindly follow a step by step instructions and you get the promised result at the end.",
   //   "https://i.ibb.co/t23Stdg/379.jpg",
   //   "https://i.ibb.co/t23Stdg/379.jpg",
   //   "https://i.ibb.co/bdtXHnV/405-2.jpg",
@@ -7574,12 +7574,12 @@ async function main() {
   // );
   // console.log("257marketPlaceCollection.updateCollection===========> Done!")
 
-  // // 258
+  // 258
   // await marketPlaceCollection.connect(wallets[258]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[258]).updateCollection(
   //   "SplitIf",
-  //   "Dating site where users need bounties, if after a date, the girl is not willing to go to a second one, the guy can claim half the amount he spent on the date. This is only valid if the guy is willing to go on an additional date and the girl does not want to and only the previous date is elligible",
+  //   "Dating site where users need bounties, if after a date, the girl is not willing to go to a second one, the guy can claim half the amount he spent on the date. This is only valid if the guy is willing to go on an additional date and the girl does not want to and only the previous date is elligible. On the other side, if the date goes well and there is intercourse and the guy is not willing to keep dating the girl for at least one year, the girl can claim his bounty provided she's willing to date him for that long and has been faithful to him",
   //   "https://i.ibb.co/vZ1KnKd/375.jpg",
   //   "https://i.ibb.co/vZ1KnKd/375.jpg",
   //   "https://i.ibb.co/DfVRgnH/293.jpg",
@@ -7646,12 +7646,12 @@ async function main() {
   // );
   // console.log("261marketPlaceCollection.updateCollection===========> Done!")
 
-  // // 262
+  // 262
   // await marketPlaceCollection.connect(wallets[262]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[262]).updateCollection(
-  //   "DateToLearn",
-  //   "Meet and go on learning dates with people. A learning date is a date during which you learn to fish/sail/hunt/box/do martial arts/mathematics/ride a horse/drive a car/a truck/etc. either from your date or a date facilitator",
+  //   "ExpertCourse",
+  //   "Find and partner with experts at specific skills that do not have time to create a course to create course together where you will do all the heavy lifting",
   //   "https://i.ibb.co/XsBVWWp/367.jpg",
   //   "https://i.ibb.co/XsBVWWp/367.jpg",
   //   "https://i.ibb.co/djCTcQy/297.jpg",
@@ -8245,8 +8245,8 @@ async function main() {
   // await marketPlaceCollection.connect(wallets[295]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[295]).updateCollection(
-  //   "ExploreLocal",
-  //   "Introducing ExploreLocal, your all-in-one platform for discovering and reviewing local businesses. With an extensive database of restaurants, shops, services, and more, ExploreLocal empowers users to explore their neighborhoods, find top-rated businesses, read and write detailed reviews, and make informed decisions about where to dine, shop, and seek services. Whether you're looking for a cozy café, a trusted mechanic, or the latest hotspots in your city, ExploreLocal is your go-to destination for uncovering the best local experiences and sharing your insights with the community. Discover, review, and support local businesses with ExploreLocal today.",
+  //   "SpotMap",
+  //   "Introducing SpotMap, your all-in-one platform for discovering and reviewing local businesses. With an extensive database of restaurants, shops, services, and more, SpotMap empowers users to explore their neighborhoods, find top-rated businesses, read and write detailed reviews, and make informed decisions about where to dine, shop, and seek services. Whether you're looking for a cozy café, a trusted mechanic, or the latest hotspots in your city, SpotMap is your go-to destination for uncovering the best local experiences and sharing your insights with the community. Discover, review, and support local businesses with SpotMap today.",
   //   "https://i.ibb.co/99sGyNv/525.jpg",
   //   "https://i.ibb.co/99sGyNv/525.jpg",
   //   "https://i.ibb.co/wgF98tj/263.jpg",
@@ -8264,7 +8264,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[296]).updateCollection(
   //   "HelpRise",
-  //   "Introducing HelpRise, a compassionate platform dedicated to empowering individuals and communities in times of need. Much like GoFundMe, HelpRise offers a seamless and user-friendly experience for creating personal fundraising campaigns. Whether it's for medical emergencies, educational pursuits, community projects, or any other worthy cause, HelpRise provides a supportive space for users to share their stories and mobilize support. With secure payment processing and transparent communication tools, HelpRise ensures that every campaign has the potential to make a real impact. Join us in making a difference today, because together, we rise.",
+  //   "Introducing HelpRise, a compassionate platform dedicated to empowering individuals and communities in times of need. Much like GoFundMe, HelpRise offers a seamless and user-friendly experience for creating personal fundraising campaigns. Whether it's for medical emergencies, educational pursuits, community projects, or any other worthy cause, HelpRise provides a supportive space for users to share their stories and mobilize support. With a trustworthy community of auditors that can testify to fund raisers genuine need for the funds they are raising, HelpRise ensures that every campaign has the potential to make a real impact. Someone's big problem can be an easy fix for a community. Join us in making a difference today, because together, we rise.",
   //   "https://i.ibb.co/vLc3vkV/526.jpg",
   //   "https://i.ibb.co/vLc3vkV/526.jpg",
   //   "https://i.ibb.co/z7sMPYC/264.jpg",
@@ -9915,12 +9915,12 @@ async function main() {
   //  );
   //  console.log("389marketPlaceCollection.updateCollection===========> Done!")
 
-  //  // 390
-  //  await marketPlaceCollection.connect(wallets[389]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+   // 390
+  // await marketPlaceCollection.connect(wallets[389]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[389]).updateCollection(
-  //    "Sex4Loans",
-  //    "Find people willing to lend you money in exchange of sexual favors",
+  //    "XChats",
+  //    "Find and subscribe to nsfw group chats animated by models who share photos of themselves IRL or do video conferencing, etc. you can request for anything and they will do it if you are a subscriber. Add your Paychat handle to the notes section when subscribing so they can send you an invitation link to their chat group",
   //    "https://i.ibb.co/SwsSNbx/122.jpg",
   //    "https://i.ibb.co/SwsSNbx/122.jpg",
   //    "https://i.ibb.co/T16vJ2w/418-2.jpg",
@@ -10545,12 +10545,12 @@ async function main() {
   //  );
   //  console.log("423marketPlaceCollection.updateCollection===========> Done!")
 
-  //  // 424
+   // 424
   // await marketPlaceCollection.connect(wallets[423]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[423]).updateCollection(
-  //    "SpotMap",
-  //    "List a place (clinic, hospital, restaurant, school, mobile agent, etc.) with its plus code so other users can find places nearby they are looking for or review those places",
+  //   "PayrollDates",
+  //   "Guys create payrolls that program monthly payments over a minimum period of 2 years for a girl they will match with on the platform. Girls apply to the payrolls of the guys the want to their boyfriends. If the guy agrees, they have a first date and if they are willing to move forward, they girl must also invest either the same amount as the guy in a bounty or have sex with the guy and skip the first month of payment. If after the 2 years they are willing to get married, they can join the community of couples that were created due to the platform and benefit from its valuepool",
   //   "https://i.ibb.co/Lnpcxhm/319.jpg",
   //   "https://i.ibb.co/Lnpcxhm/319.jpg",
   //    "https://i.ibb.co/1zR3Kc1/301-2.jpg",
@@ -10850,7 +10850,6 @@ async function main() {
   //   ""
   // );
   // console.log("440marketPlaceCollection.updateCollection===========> Done!")
-
 
   }
   
