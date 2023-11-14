@@ -111,7 +111,6 @@ contract StakeMarketVoter {
     function reset(address _ve, uint _tokenId, uint _profileId) external {
         require(ve(_ve).isApprovedOrOwner(msg.sender, _tokenId), "SV4");
         _reset(_ve, _tokenId, _profileId);
-        ve(_ve).abstain(_tokenId);
     }
 
     function _reset(address _ve, uint _tokenId, uint _profileId) internal {
@@ -128,11 +127,11 @@ contract StakeMarketVoter {
                 weights[_ve][_pool] -= _votes;
                 votes[ve_tokenId][_pool] -= _votes;
                 if (_votes > 0) {
-                    IStakeMarketBribe(_bribe())._withdraw(_ve, uint256(_votes), _tokenId);
                     _totalWeight += _votes;
                 } else {
                     _totalWeight -= _votes;
                 }
+                IStakeMarketBribe(_bribe())._withdraw(_ve, uint256(_votes), _tokenId);
                 emit Abstained(_ve, _tokenId, _votes);
             }
         }
@@ -178,11 +177,10 @@ contract StakeMarketVoter {
             weights[_ve][_pool] += _poolWeight;
             votes[ve_tokenId][_pool] += _poolWeight;
             emit Voted(_litigationId, _ve, msg.sender, _tokenId, _poolWeight);
-            if (_poolWeight > 0) {
-                IStakeMarketBribe(_bribe())._deposit(_ve, uint256(_poolWeight), _tokenId);
-            } else {
+            if (_poolWeight <= 0) {
                 _poolWeight = -_poolWeight;
             }
+            IStakeMarketBribe(_bribe())._deposit(_ve, uint256(_poolWeight), _tokenId);
             _usedWeight += _poolWeight;
             _totalWeight += _poolWeight;
         }
@@ -190,9 +188,10 @@ contract StakeMarketVoter {
         usedWeights[_ve][_tokenId] = uint256(_usedWeight);
     }
 
-    function vote(uint _litigationId, address _ve, uint tokenId, uint _profileId, uint _pool, int256 _weight) external {
-        require(ve(_ve).isApprovedOrOwner(msg.sender, tokenId), "SV10");
-        _vote(_litigationId, _ve, tokenId, _profileId, _pool, _weight);
+    function vote(uint _litigationId, address _ve, uint _tokenId, uint _profileId, uint _pool, int256 _weight) external {
+        require(ve(_ve).isApprovedOrOwner(msg.sender, _tokenId), "SV10");
+        _vote(_litigationId, _ve, _tokenId, _profileId, _pool, _weight);
+        try ve(_ve).attach(_tokenId, 86400*7) {} catch{}
     }
     
     function createGauge(

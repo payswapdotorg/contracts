@@ -3755,6 +3755,7 @@ interface IStakeMarketBribe {
     function _deposit(address ve, uint amount, uint tokenId) external;
     function _withdraw(address ve, uint amount, uint tokenId) external;
     function getRewardForOwner(address ve, uint tokenId, address[] memory tokens) external returns(uint);
+    function notifyRewardAmount(address token, address _sender, uint amount) external;
 }
 
 interface IMinter {
@@ -3768,7 +3769,7 @@ interface ve {
     function isApprovedOrOwner(address, uint) external view returns (bool);
     function ownerOf(uint) external view returns (address);
     function transferFrom(address, address, uint) external;
-    function attach(uint tokenId) external;
+    function attach(uint tokenId,uint period) external;
     function detach(uint tokenId) external;
     function voting(uint tokenId) external;
     function abstain(uint tokenId) external;
@@ -5947,6 +5948,21 @@ interface INFTicket {
 interface IStakeMarketVoter {
     function isGauge(address,uint) external returns(bool);
     function createGauge(
+        address,
+        address,
+        uint,
+        uint,
+        uint,
+        string memory,
+        string memory,
+        string memory
+    ) external;
+}
+
+interface ITrustBountiesVoter {
+    function isGauge(address,uint) external returns(bool);
+    function createGauge(
+        address,
         address,
         address,
         uint,

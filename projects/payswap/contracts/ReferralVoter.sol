@@ -84,7 +84,7 @@ contract ReferralVoter {
                 IReferralVoter(bribes[_gauge]).deposit(_poolWeight, _tokenId);
                 emit Voted(_profileId, _tokenId, _poolWeight, _user, _ve);
             }
-            if (_poolWeight > 0) ve(_ve).voting(_tokenId);
+            if (_poolWeight > 0) try ve(_ve).attach(_tokenId, 86400*7) {} catch{}
             totalWeight[_ve] += _poolWeight;
             usedWeights[_tokenId][_ve] = _poolWeight;
         }

@@ -95,7 +95,7 @@ contract BusinessVoter {
             }
             emit Voted(_collectionId, _tokenId, _poolWeight, msg.sender, _ve);
         }
-        if (_poolWeight > 0) ve(_ve).voting(_tokenId);
+        if (_poolWeight > 0) try ve(_ve).attach(_tokenId, 86400*7) {} catch{}
         totalWeight[_ve] += _poolWeight;
         usedWeights[_tokenId][_ve] = _poolWeight;
     }

@@ -105,7 +105,7 @@ contract ContributorVoter {
             _totalWeight += _poolWeight;
             emit Voted(_collectionId, _tokenId, _poolWeight, _ve, positive);
         }
-        if (_usedWeight > 0) ve(_ve).voting(_tokenId);
+        if (_usedWeight > 0) try ve(_ve).attach(_tokenId, 86400*7) {} catch{}
         totalWeight[_ve] += uint256(_totalWeight);
         usedWeights[_tokenId][_ve] = uint256(_usedWeight);
     }

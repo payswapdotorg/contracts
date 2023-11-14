@@ -259,7 +259,7 @@ async function main() {
   const stakeMarketAddress = "0xe11515741E0048914Fccb80a2C700d41b757F60A"
   const stakeMarketNoteAddress = "0x1697d2E8c40c3f7c437934fce8FcC37f18B88cdd"
   const stakeMarketHelperAddress = "0x4aFde7B1E5Eb048fdd7dA0253F1461fB59Fb2D1C"
-  const stakeMarketBribeAddress = "0xa4Cd94FA5d590f8B8cA844C6B7FFD347c5443Ce4"
+  const stakeMarketBribeAddress = "0xeFA1F1eD1a5B01a37ef5eA3eA87943B685209c9A"
   const stakeMarketVoterAddress = "0x9E41eB6e4082643E6Aa50bD3126D38798644e261"
   const contractAddress = "0x214Cb0c088D0992d5ba36Cff283CB1333149E1e7" //"0x997068BaD1417e1d7Be77CFC9123B40a3D9Bdb92"
   const nftsvgAddress = "0x36D1257A7E29E73A345D01F1e5F81d424C12a2c7"
@@ -286,9 +286,9 @@ async function main() {
   const paywallARPFactoryAddress = "0xA732c57C3DA59aE51Eb04A842569eb4Ae15B3A0f"
   const paywallARPHelperAddress = "0x5877de59AAf11794396e9bB5950CE58E06557cC3"
   const minterFactoryAddress = "0x5Ed7ae0A1f29389295f4F25A1A679Bc051ae6aD4"
-  const trustBountiesAddress = "0xb93E4F7ea004A644a5521E5877B5d5ba851Bb45f"
-  const trustBountiesHelperAddress = "0x1AA7C08cfA80Ef06Ac5bB3F4b6Ea6D6bCC8Ce8b5"
-  const trustBountiesVoterAddress = "0xf94e32A706470af60a752C2167444D5218B1cF77"
+  const trustBountiesAddress = "0x7C694B1A87f56e47b0011fD1CbAEa3cC1974Ef09"
+  const trustBountiesHelperAddress = "0x6c9676258026dc4Ce9B55bB8Ad0282e831262897"
+  const trustBountiesVoterAddress = "0x3b5E302517DCD59FCeF19b287255b3D68f57A956"
   const customMinterAddress = "0xB6c2E68a43a092973512a9C154D81C5559B5eBbA"
   const arpFactoryAddress = "0xbfD75c6C25B6045e24a5C446dE04A70c99C76f70"
   const arpMinterAddress = "0x1996caA9a6CDe7CE28D0690B2C0dC37Fd77b6447"
@@ -1657,6 +1657,7 @@ async function main() {
   // await trustBountiesHelper.updateVes("0x86130B7eec5561706Ac18877D19ee7D1A584E807", true)
   // await trustBountiesHelper.updateVes("0xb55A821877d473D972B4ECBB18E41739687c539f", true)
   // await trustBountiesHelper.updateVes("0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62", true)
+  // await trustBountiesHelper.updateVes("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", true)
   // console.log("trustBountiesHelper.updateVes===========> Done!")
 
   // await trustBountiesHelper.updateWhitelistedTokens([futureCollateral.address, tFiat.address, nfticketHelper2.address], true)
@@ -1878,6 +1879,13 @@ async function main() {
   // await marketPlaceHelper3.addVetoken("0xb55A821877d473D972B4ECBB18E41739687c539f")
   // await marketPlaceHelper3.addVetoken("0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62")
   // console.log("marketPlaceHelper3.addVetoken==========>", await marketPlaceHelper3.veTokenSetContains(ve.address))
+  
+  // await trustBountiesVoter.vote(1,"0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41",1,1,1,1)
+  // await trustBountiesVoter.reset("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41",1,1)
+  console.log("totalSupply====================>", await stakeMarketBribe.totalSupply("0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe"))
+  console.log("balanceOf====================>", await tFiat.balanceOf(stakeMarketBribe.address))
+  console.log("weights====================>", await trustBountiesVoter.weights("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", "1"))
+  console.log("earned====================>", await stakeMarketBribe.earned("0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe", 1))
 
   // await rampHelper.addDtoken(veAddress)
   // console.log("rampHelper.addDtoken==========>Done")
@@ -2770,8 +2778,8 @@ async function main() {
   //   // //   false
   //   // // );
   //   // // await va.deployed()
-    // let vaAddress = await vava._ve()
-    // let va = Va.attach(vaAddress)
+    let vaAddress = "0x6f491e004df2e5797f9355f89e4fa4ae6592e89f" //await vava._ve()
+    let va = Va.attach(vaAddress)
     // console.log("va.deployed==============>", va.address, await vava._ve())
     // await va.setContractAddress(contractAddresses.address)
     // console.log("va.setContractAddress===============>Done")
@@ -2805,6 +2813,8 @@ async function main() {
     // await tFiat.approve(va.address, ethers.BigNumber.from("100000000000000000"));
     // await va.create_lock_for(ethers.BigNumber.from("100000000000000000"), 4 * 365 * 86400, 0, deployer.address)
     // console.log("va.create_lock_for===============>Done")
+    // console.log("va.isApprovedOrOwner==============>", await va.ownerOf(1), await va.balanceOfNFT(1), await va.isApprovedOrOwner(deployer.address, 1))
+
     // // console.log("vavaHelper================>", await vava.contractAddress())
     // // console.log("va================>", await va.valuepoolHelper())
     // console.log("va.balanceOfNFT===============>",await va.balanceOfNFT(1), await va.ownerOf(1))

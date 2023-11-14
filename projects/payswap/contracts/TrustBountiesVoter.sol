@@ -10,6 +10,7 @@ contract TrustBountiesVoter {
     uint public period = 7 days;
     
     mapping(address => uint) public totalWeight; // total voting weight
+    mapping(address => address) public veToken;
     struct Gauge {
         uint endTime;
         uint percentile;
@@ -111,7 +112,6 @@ contract TrustBountiesVoter {
     function reset(address _ve, uint _tokenId, uint _profileId) external {
         require(ve(_ve).isApprovedOrOwner(msg.sender, _tokenId), "TB4");
         _reset(_ve, _tokenId, _profileId);
-        ve(_ve).abstain(_tokenId);
     }
 
     function _reset(address _ve, uint _tokenId, uint _profileId) internal {
@@ -128,11 +128,11 @@ contract TrustBountiesVoter {
                 weights[_ve][_pool] -= _votes;
                 votes[ve_tokenId][_pool] -= _votes;
                 if (_votes > 0) {
-                    IStakeMarketBribe(_bribe())._withdraw(_ve, uint256(_votes), _tokenId);
                     _totalWeight += _votes;
                 } else {
                     _totalWeight -= _votes;
                 }
+                IStakeMarketBribe(_bribe())._withdraw(veToken[_ve], uint256(_votes), _tokenId);
                 emit Abstained(_ve, _tokenId, _votes);
             }
         }
@@ -178,11 +178,10 @@ contract TrustBountiesVoter {
             weights[_ve][_pool] += _poolWeight;
             votes[ve_tokenId][_pool] += _poolWeight;
             emit Voted(_litigationId, _ve, msg.sender, _tokenId, _poolWeight);
-            if (_poolWeight > 0) {
-                IStakeMarketBribe(_bribe())._deposit(_ve, uint256(_poolWeight), _tokenId);
-            } else {
+            if (_poolWeight <= 0) {
                 _poolWeight = -_poolWeight;
             }
+            IStakeMarketBribe(_bribe())._deposit(veToken[_ve], uint256(_poolWeight), _tokenId);
             _usedWeight += _poolWeight;
             _totalWeight += _poolWeight;
         }
@@ -190,12 +189,14 @@ contract TrustBountiesVoter {
         usedWeights[_ve][_tokenId] = uint256(_usedWeight);
     }
 
-    function vote(uint _litigationId, address _ve, uint tokenId, uint _profileId, uint _pool, int256 _weight) external {
-        require(ve(_ve).isApprovedOrOwner(msg.sender, tokenId), "TB10");
-        _vote(_litigationId, _ve, tokenId, _profileId, _pool, _weight);
+    function vote(uint _litigationId, address _ve, uint _tokenId, uint _profileId, uint _pool, int256 _weight) external {
+        require(ve(_ve).isApprovedOrOwner(msg.sender, _tokenId), "TB10");
+        _vote(_litigationId, _ve, _tokenId, _profileId, _pool, _weight);
+        try ve(_ve).attach(_tokenId, 86400*7) {} catch{}
     }
     
     function createGauge(
+        address _attacker, 
         address _ve, 
         address _token, 
         uint _attackerId, 
@@ -207,7 +208,8 @@ contract TrustBountiesVoter {
     ) external {
         require(IContract(contractAddress).trustBounty() == msg.sender, "TB11");
         require(!isGauge[_ve][_attackerId] && !isGauge[_ve][_defenderId], "TB12");
-        _safeTransferFrom(_token, msg.sender, _bribe(), _gas);
+        veToken[_ve] = _token;
+        IStakeMarketBribe(_bribe()).notifyRewardAmount(_token, _attacker, _gas);
         uint percentile = _updateValues(_ve, _attackerId, _defenderId, _gas);
         emit GaugeCreated(
             litigationId++,
@@ -282,11 +284,6 @@ contract TrustBountiesVoter {
 
     function length(address _ve) external view returns (uint) {
         return pools[_ve].length;
-    }
-
-    function claimBribes(address _ve, address[] memory _tokens, uint _tokenId) external {
-        require(ve(_ve).isApprovedOrOwner(msg.sender, _tokenId));
-        IStakeMarketBribe(_bribe()).getRewardForOwner(_ve, _tokenId, _tokens);
     }
 
     function _safeTransferFrom(address token, address from, address to, uint256 value) internal {

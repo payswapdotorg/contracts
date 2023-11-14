@@ -1229,6 +1229,7 @@ contract ValuepoolVoter {
         require(period[_ve] >= block.timestamp - gauges[_ve][_pool].start, "VaV07");
         _checkIdentityProof(_ve, msg.sender, _identityTokenId);
         _vote(_ve, _pool, _tokenId, _profileId, _identityTokenId, _like, _title);
+        ve(_ve).attach(_tokenId, period[_ve]);
     }
 
     function _checkIdentityProof(address _ve, address _owner, uint _identityTokenId) internal {
@@ -1814,7 +1815,7 @@ contract Ve {
         uint _tokenId,
         address _sender
     ) internal {
-        require(attachments[_tokenId] == 0 && !voted[_tokenId]);
+        require(attachments[_tokenId] < block.timestamp);
         // Check requirements
         require(_isApprovedOrOwner(_sender, _tokenId));
         // Clear approval. Throws if `_from` is not the current owner
@@ -2167,28 +2168,15 @@ contract Ve {
         voters[_voter] = true;
     }
 
-    function voting(uint _tokenId) external {
+    function attach(uint _tokenId, uint _period) external {
         require(voters[msg.sender]);
-        voted[_tokenId] = true;
+        if (attachments[_tokenId] < block.timestamp + _period) {
+            attachments[_tokenId] = block.timestamp + _period;
+        }
     }
-
-    function abstain(uint _tokenId) external {
-        require(voters[msg.sender]);
-        voted[_tokenId] = false;
-    }
-
-    // function attach(uint _tokenId) external {
-    //     require(voters[msg.sender]);
-    //     attachments[_tokenId] = attachments[_tokenId]+1;
-    // }
-
-    // function detach(uint _tokenId) external {
-    //     require(voters[msg.sender]);
-    //     attachments[_tokenId] = attachments[_tokenId]-1;
-    // }
 
     function merge(uint _from, uint _to) external {
-        require(attachments[_from] == 0 && !voted[_from]);
+        require(attachments[_from] < block.timestamp);
 
         require(_from != _to);
         require(_isApprovedOrOwner(msg.sender, _from));
@@ -2359,7 +2347,7 @@ contract Ve {
     function withdraw(uint _tokenId) external nonreentrant {
         assert(_isApprovedOrOwner(msg.sender, _tokenId));
         assert(!riskpool);
-        require(attachments[_tokenId] == 0 && !voted[_tokenId]);
+        require(attachments[_tokenId] < block.timestamp);
         
         LockedBalance memory _locked = locked[_tokenId];
         uint value = getWithdrawable(_tokenId);
@@ -2652,6 +2640,8 @@ contract Ve {
         contractAddress = _contractAddress;
         valuepoolHelper = IContract(_contractAddress).valuepoolHelper();
         voters[IContract(_contractAddress).valuepoolVoter()] = true;
+        voters[IContract(_contractAddress).stakeMarketVoter()] = true;
+        voters[IContract(_contractAddress).trustBountyVoter()] = true;
     }
 
     // function _valuepoolHelper() internal view returns(address) {

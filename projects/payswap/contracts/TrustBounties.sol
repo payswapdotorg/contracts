@@ -306,9 +306,10 @@ contract TrustBounties {
         }
         address trustBountyHelper = _trustBountyHelper();
         address trustBountyVoter = _trustBountyVoter();
-        require(!IStakeMarketVoter(trustBountyVoter).isGauge(bountyInfo[_bountyId].ve, _bountyId));    
-        uint _minToClaim = _amountToClaim * ITrustBounty(trustBountyHelper).minToClaim() / 10000;
-        ITrustBounty(trustBountyHelper).safeTransferFrom(_bountyId, _attacker, address(this), _minToClaim);
+        require(!ITrustBountiesVoter(trustBountyVoter).isGauge(bountyInfo[_bountyId].ve, _bountyId));    
+        // address _token = bountyInfo[_bountyId].isNFT == NFTYPE.not ? bountyInfo[_bountyId].token : IContract(contractAddress).token();
+        uint _minToClaim = bountyInfo[_bountyId].isNFT == NFTYPE.not ? _amountToClaim * ITrustBounty(trustBountyHelper).minToClaim() / 10000
+        : ITrustBounty(trustBountyHelper).tradingNFTFee() * _amountToClaim;
         claims[_bountyId].push(Claim({
             bountyId: _bountyId,
             hunter: _attacker,
@@ -319,10 +320,11 @@ contract TrustBounties {
             status: StakeStatusEnum.AtWar
         }));
         lockedBounties[_bountyId] = _lockBounty;
-        erc20(bountyInfo[_bountyId].token).approve(trustBountyVoter, _minToClaim);
-        IStakeMarketVoter(trustBountyVoter).createGauge(
+        // erc20(_token).approve(trustBountyVoter, _minToClaim);
+        ITrustBountiesVoter(trustBountyVoter).createGauge(
+            _attacker,
             bountyInfo[_bountyId].ve, 
-            bountyInfo[_bountyId].token, 
+            bountyInfo[_bountyId].isNFT == NFTYPE.not ? bountyInfo[_bountyId].token : IContract(contractAddress).token(), 
             claims[_bountyId].length,
             _bountyId, 
             _minToClaim,
