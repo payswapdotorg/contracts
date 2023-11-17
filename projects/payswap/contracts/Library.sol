@@ -5109,6 +5109,7 @@ interface ITrustBounty {
 }
 
 interface IProfile {
+    function emitAddAccount(uint,address) external;
     function emitUpdateMiscellaneous(uint,uint,string memory,string memory,uint,uint,address,string memory) external;
     function sum_of_diff_squared(address) external view returns(uint);
     function total(address) external view returns(uint);

@@ -57,7 +57,7 @@ contract TrustBountiesVoter {
     );
     event GaugeClosed(uint indexed litigationId, bool vetoed);
     event Voted(uint indexed litigationId, address ve, address voter, uint tokenId, int256 weight);
-    event Abstained(address ve, uint tokenId, int256 weight);
+    event Abstained(address ve, uint litigationId, uint tokenId, int256 weight);
     event Deposit(address indexed lp, address indexed gauge, uint tokenId, uint amount);
     event Withdraw(address indexed lp, address indexed gauge, uint tokenId, uint amount);
     event NotifyReward(address indexed sender, address indexed reward, uint amount);
@@ -109,12 +109,12 @@ contract TrustBountiesVoter {
         emit UpdateDefenderContent(_litigationId, _content);
     }
 
-    function reset(address _ve, uint _tokenId, uint _profileId) external {
+    function reset(address _ve, uint _litigationId, uint _tokenId, uint _profileId) external {
         require(ve(_ve).isApprovedOrOwner(msg.sender, _tokenId), "TB4");
-        _reset(_ve, _tokenId, _profileId);
+        _reset(_ve, _litigationId, _tokenId, _profileId);
     }
 
-    function _reset(address _ve, uint _tokenId, uint _profileId) internal {
+    function _reset(address _ve, uint _litigationId, uint _tokenId, uint _profileId) internal {
         uint[] storage _poolVote = poolVote[_ve][_tokenId];
         uint _poolVoteCnt = _poolVote.length;
         int256 _totalWeight = 0;
@@ -133,7 +133,7 @@ contract TrustBountiesVoter {
                     _totalWeight -= _votes;
                 }
                 IStakeMarketBribe(_bribe())._withdraw(veToken[_ve], uint256(_votes), _tokenId);
-                emit Abstained(_ve, _tokenId, _votes);
+                emit Abstained(_ve, _litigationId, _tokenId, _votes);
             }
         }
         totalWeight[_ve] -= uint256(_totalWeight);
@@ -154,7 +154,7 @@ contract TrustBountiesVoter {
     }
 
     function _vote(uint _litigationId, address _ve, uint _tokenId, uint _profileId, uint _pool, int256 _weightFactor) internal {
-        _reset(_ve, _tokenId, _profileId);
+        _reset(_ve, _litigationId, _tokenId, _profileId);
         int256 _totalWeight = 0;
         int256 _usedWeight = 0;
         require(IProfile(_profile()).addressToProfileId(msg.sender) == _profileId && _profileId > 0, "TB6");
@@ -220,7 +220,7 @@ contract TrustBountiesVoter {
             _attackerId, 
             _defenderId,
             block.timestamp,
-            block.timestamp + period / period * period,
+            block.timestamp + period,
             _gas,
             _title,
             _content,
@@ -246,7 +246,7 @@ contract TrustBountiesVoter {
         totalGas[_ve] += _gas;
         sum_of_diff_squared[_ve] = sods;
         gauges[_ve][_attackerId].percentile = percentile;
-        gauges[_ve][_attackerId].endTime = block.timestamp + period / period * period;
+        gauges[_ve][_attackerId].endTime = block.timestamp + period;
         return percentile;
     }
 
@@ -284,12 +284,5 @@ contract TrustBountiesVoter {
 
     function length(address _ve) external view returns (uint) {
         return pools[_ve].length;
-    }
-
-    function _safeTransferFrom(address token, address from, address to, uint256 value) internal {
-        require(token.code.length > 0);
-        (bool success, bytes memory data) =
-        token.call(abi.encodeWithSelector(erc20.transferFrom.selector, from, to, value));
-        require(success && (data.length == 0 || abi.decode(data, (bool))));
     }
 }

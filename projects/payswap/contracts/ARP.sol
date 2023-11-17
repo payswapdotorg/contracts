@@ -265,7 +265,7 @@ contract ARP {
             return (dueReceivable + _penalty, dueReceivable);
         } else {
             uint _factor = Math.min(discountDivisor[_optionId].cap, (uint(-secondsReceivable) / Math.max(1,discountDivisor[_optionId].period)) * discountDivisor[_optionId].factor);
-            uint _discount = Math.max(dueReceivable, protocolInfo[_protocolId].amountReceivable) * _factor / 10000; 
+            uint _discount = protocolInfo[_protocolId].amountReceivable * _factor / 10000; 
             return (
                 dueReceivable > _discount ? dueReceivable - _discount : 0,
                 dueReceivable
@@ -299,8 +299,8 @@ contract ARP {
             (uint _price, uint _due) = getReceivable(_tokenIds[i], _numPeriods);
             address token = protocolInfo[_tokenIds[i]].token;
             (uint payswapFees,uint adminFees) = _getFees(_price, token, true);
-            address _user = isAdmin[msg.sender] ? ve(helper).ownerOf(_tokenIds[i]) : msg.sender;
-            IERC20(token).safeTransferFrom(ve(helper).ownerOf(_tokenIds[i]), address(this), _price);
+            address _user = ve(helper).ownerOf(_tokenIds[i]);
+            IERC20(token).safeTransferFrom(_user, address(this), _price);
             IERC20(token).safeTransfer(helper, payswapFees);
             IARP(helper).notifyFees(token, payswapFees);
             totalProcessed[token] += _price;
@@ -912,8 +912,8 @@ contract ARPNote is ERC721Pausable {
 
     function getNumPeriods(uint tm1, uint tm2, uint _period) internal pure returns(uint) {
         // if (tm2 == 0) tm2 = block.timestamp;
-        if (tm1 == 0 || tm2 == 0 || tm2 < tm1) return 0;
-        return _period > 0 ? (tm2 - tm1) / _period : 1;
+        if (tm1 == 0 || tm2 == 0 || tm2 < tm1 || _period == 0) return 0;
+        return (tm2 - tm1) / _period;
     }
 
     function getDueReceivable(address _arp, uint _protocolId, uint _numExtraPeriods) public view returns(uint, uint, int) {

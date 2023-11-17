@@ -381,7 +381,7 @@ contract Profile {
         require(IMarketPlace(_arp).getProfileId(_protocolId) == _profileId, "P28");
         (uint _due,, int lateSeconds) = IMarketPlace(__helper).getDueReceivable(_arp, _protocolId);
         uint due = IRamp(_rampHelper()).convert(IMarketPlace(_arp).getToken(_protocolId), _due);
-        require(lateSeconds > 0, "P29");
+        require(lateSeconds > 0);
         _updateReports(_arp, _profileId);
         _allContracts[_ve].add(_arp);
         (uint _percentile, uint _total, uint sods) = _getPercentile(_ve, _tokenId);
@@ -449,13 +449,18 @@ contract Profile {
         }
     }
 
+    function emitAddAccount(uint _profileId, address _user) external {
+        require(IContract(contractAddress).profileHelper() == msg.sender);
+        emit AddAccount(_profileId, _user);
+    }
+
     function _safeTransfer(address _token, address to, uint256 value) internal {
         uint _profileId = addressToProfileId[to];
         uint _bountyId = bounties[_profileId][_token];
-        require(_profileId > 0 && _bountyId > 0, "P31");
+        require(_profileId > 0 && _bountyId > 0);
         uint _limit = ITrustBounty(_trustBounty()).getBalance(_bountyId);
         (,,,,,,uint endTime,,,) = ITrustBounty(_trustBounty()).bountyInfo(_bountyId);
-        require(endTime > block.timestamp + bufferTime, "P32");
+        require(endTime > block.timestamp + bufferTime);
         uint amount = Math.min(value + profileInfo[_profileId].paidPayable, _limit * limitFactor / 10000);
         IERC20(_token).safeTransfer(to, amount);
     }
@@ -609,13 +614,14 @@ contract ProfileHelper is ERC721Pausable {
         require(bids[_boughtProfileId].lastBidTime + bidDuration < block.timestamp);
         boughtProfile[bids[_boughtProfileId].lastBidder] = _boughtProfileId;
     }
-
+    
     function safeMint(address _user, uint _profileId) external {
         require(msg.sender == IContract(contractAddress).profile());
         _safeMint(_user, _profileId, "");
         createdAt[_profileId] = block.timestamp;
+        IProfile(IContract(contractAddress).profile()).emitAddAccount(_profileId, _user);
     }
-
+    
     function burn(uint _profileId) external {
         require(msg.sender == IContract(contractAddress).profile());
         _burn(_profileId);

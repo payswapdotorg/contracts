@@ -5,7 +5,6 @@ pragma abicoder v2;
 import './Library.sol';
 
 contract Bribe {
-    using SafeERC20 for IERC20;
 
     uint constant DURATION = 7 days; // rewards are released over 7 days
     uint constant PRECISION = 10 ** 18;
@@ -50,7 +49,7 @@ contract Bribe {
         require(ve(_ve).isApprovedOrOwner(msg.sender, tokenId), "SB3");
         for (uint i = 0; i < tokens.length; i++) {
             uint _reward = earned(tokens[i], tokenId);
-            if (_reward > 0) IERC20(tokens[i]).safeTransfer(msg.sender, _reward);
+            if (_reward > 0) _safeTransfer(tokens[i], msg.sender, _reward);
             paidPayable[tokens[i]][tokenId] += _reward;
         }
     }
@@ -74,8 +73,16 @@ contract Bribe {
 
     function _withdraw(address _token, uint amount, uint tokenId) external {
         require(msg.sender == IContract(contractAddress).stakeMarketVoter() || msg.sender == IContract(contractAddress).trustBountyVoter(), "SB4");
-        totalWeight[_token] -= amount;
-        balanceOf[_token][tokenId] -= amount;
+        if (amount < totalWeight[_token]) {
+            totalWeight[_token] -= amount;
+        } else {
+            totalWeight[_token] = 0;
+        }
+        if (amount < balanceOf[_token][tokenId]) {
+            balanceOf[_token][tokenId] -= amount;
+        } else {
+            balanceOf[_token][tokenId] = 0;
+        }
      
         emit Withdraw(_token, tokenId, amount);
     }
@@ -83,7 +90,7 @@ contract Bribe {
     // used to notify a gauge/bribe of a given reward, this can create griefing attacks by extending rewards
     // TODO: rework to weekly resets, _updatePeriod as per v1 bribes
     function notifyRewardAmount(address token, address _sender, uint amount) external lock {
-        IERC20(token).safeTransferFrom(_sender, address(this), amount);
+        _safeTransferFrom(token, _sender, address(this), amount);
         totalSupply[token] += amount;        
 
         // if it is a new incentive, add it to the stack
@@ -91,5 +98,19 @@ contract Bribe {
             isIncentive[token] = true;
         }
         emit NotifyReward(_sender, token, amount);
+    }
+
+    function _safeTransfer(address token, address to, uint256 value) internal {
+        require(token.code.length > 0, "SB10");
+        (bool success, bytes memory data) =
+        token.call(abi.encodeWithSelector(erc20.transfer.selector, to, value));
+        require(success && (data.length == 0 || abi.decode(data, (bool))), "SB11");
+    }
+
+    function _safeTransferFrom(address token, address from, address to, uint256 value) internal {
+        require(token.code.length > 0, "SB12");
+        (bool success, bytes memory data) =
+        token.call(abi.encodeWithSelector(erc20.transferFrom.selector, from, to, value));
+        require(success && (data.length == 0 || abi.decode(data, (bool))), "SB13");
     }
 }

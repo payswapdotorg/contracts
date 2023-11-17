@@ -382,6 +382,8 @@ contract StakeMarket {
         } else {
             stakeStatus[stakes[_winnerId].parentStakeId].winnerId = _winnerId;
             stakeStatus[stakes[_winnerId].parentStakeId].loserId = _loserId;
+            // set appeal time
+            stakeStatus[stakes[_winnerId].parentStakeId].endTime = block.timestamp + _bufferTime();
         }
     }
 
@@ -392,28 +394,28 @@ contract StakeMarket {
         string memory _tags
     ) external {
         if (stakeStatus[stakes[_attackerId].parentStakeId].endTime < block.timestamp) {
+            // update status
             stakeStatus[stakes[_attackerId].parentStakeId].status = StakeStatusEnum.AtPeace;
             uint _winnerId = stakeStatus[stakes[_attackerId].parentStakeId].winnerId;
             uint _loserId = stakeStatus[stakes[_attackerId].parentStakeId].loserId;
             stakes[_winnerId].ownerAgreement = AGREEMENT.good;
+            stakes[_loserId].ownerAgreement = AGREEMENT.good;
             stakes[_loserId].bank.amountPayable = stakes[_winnerId].bank.amountReceivable;
             stakes[_loserId].bank.amountReceivable = stakes[_winnerId].bank.amountPayable;
-            stakes[_loserId].ownerAgreement = AGREEMENT.good;
         } else {
+            // appeal
             require(msg.sender == stakes[_attackerId].owner);
-            require(stakeStatus[stakes[_attackerId].parentStakeId].loserId == _attackerId);
-            stakeStatus[stakes[_attackerId].parentStakeId].endTime = block.timestamp + _bufferTime();
+            require(stakeStatus[stakes[_attackerId].parentStakeId].loserId == _attackerId); // only loser can appeal
             uint _defenderId = stakeStatus[stakes[_attackerId].parentStakeId].winnerId;
             uint _attackerGas = stakes[_attackerId].bank.paidReceivable * stakes[_attackerId].bank.gasPercent / 10000;
             uint _defenderGas = stakes[_defenderId].bank.paidReceivable * stakes[_defenderId].bank.gasPercent / 10000;
-            IERC20(stakes[_attackerId].token).safeTransferFrom(
-                address(msg.sender), 
-                address(this), 
-                _attackerGas + _defenderGas
-            );
-            address voter = _voter();
-            erc20(stakes[_attackerId].token).approve(voter, _attackerGas + _defenderGas);
-            IStakeMarketVoter(voter).createGauge(
+            stakes[_attackerId].bank.paidReceivable -= _attackerGas;
+            stakes[_defenderId].bank.paidReceivable -= _defenderGas;
+            stakesBalances[stakes[_attackerId].parentStakeId] -= (_attackerGas + _defenderGas);
+            stakeStatus[stakes[_attackerId].parentStakeId].winnerId = 0;
+            stakeStatus[stakes[_attackerId].parentStakeId].loserId = 0;
+            erc20(stakes[_attackerId].token).approve(_bribe(), _attackerGas + _defenderGas);
+            IStakeMarketVoter(_voter()).createGauge(
                 stakes[_attackerId].ve,
                 stakes[_attackerId].token,
                 _attackerId,
@@ -424,6 +426,10 @@ contract StakeMarket {
                 _tags
             );
         }
+    }
+
+    function _bribe() internal view returns(address) {
+        return IContract(contractAddress).stakeMarketBribe();
     }
 
     function createGauge(
@@ -440,8 +446,8 @@ contract StakeMarket {
                 !IStakeMarketVoter(voter).isGauge(stakes[_attackerId].ve, _defenderId));
         if (waitingPeriodDeadline[_attackerId] == 0) {
             uint _period = stakes[_attackerId].bank.waitingPeriod;
-            waitingPeriodDeadline[_attackerId] = block.timestamp + _period / Math.max(_period,1) * _period;
-            waitingPeriodDeadline[_defenderId] = block.timestamp + _period / Math.max(_period,1) * _period;
+            waitingPeriodDeadline[_attackerId] = block.timestamp + _period;
+            waitingPeriodDeadline[_defenderId] = block.timestamp + _period;
         } else {
             require(waitingPeriodDeadline[_attackerId] < block.timestamp);
             stakes[_attackerId].ownerAgreement = AGREEMENT.disagreement;
@@ -454,7 +460,7 @@ contract StakeMarket {
             waitingPeriodDeadline[_attackerId] = 0;
             waitingPeriodDeadline[_defenderId] = 0;
             stakeStatus[stakes[_attackerId].parentStakeId].endTime = block.timestamp + _bufferTime();
-            erc20(stakes[_attackerId].token).approve(voter, _attackerGas + _defenderGas);
+            erc20(stakes[_attackerId].token).approve(_bribe(), _attackerGas + _defenderGas);
             IStakeMarketVoter(voter).createGauge(
                 stakes[_attackerId].ve,
                 stakes[_attackerId].token,
@@ -800,41 +806,41 @@ contract StakeMarketNote {
     }
 
     function getNumPeriods(uint tm1, uint tm2, uint _period) public pure returns(uint) {
-        if (tm1 == 0 || tm2 == 0 || tm2 < tm1) return 0;
-        return _period > 0 ? (tm2 - tm1) / _period : 1;
+        if (tm1 == 0 || tm2 == 0 || tm2 < tm1 || _period == 0) return 0;
+        return (tm2 - tm1) / _period;
     }
 
     function getDuePayable(uint _stakeId, uint _numPeriods) external view returns(uint, uint, int) {
         Stake memory stake = IStakeMarket(_stakeMarket()).getStake(_stakeId);
+        uint shiftedBlockTimestamp = block.timestamp + _numPeriods * stake.bank.periodPayable;
         uint numPeriods = getNumPeriods(
             stake.bank.startPayable, 
-            block.timestamp, 
+            shiftedBlockTimestamp, 
             stake.bank.periodPayable
         );
-        numPeriods += _numPeriods;
-        uint nextDue = stake.bank.startPayable + stake.bank.periodPayable * Math.max(1,numPeriods);
-        uint due = nextDue < block.timestamp ? stake.bank.amountPayable * numPeriods - stake.bank.paidPayable : 0;
+        uint dueDate = stake.bank.startPayable + stake.bank.periodPayable * (numPeriods + 1);
+        uint due = dueDate < shiftedBlockTimestamp ? stake.bank.amountPayable * numPeriods - stake.bank.paidPayable : 0;
         return (
             due, // due
-            stake.bank.periodPayable == 0 ? uint(0) : nextDue, // next
-            stake.bank.periodPayable == 0 ? int(0) : int(block.timestamp) - int(nextDue) //late or seconds in advance
+            dueDate, // next
+            int(block.timestamp) - int(dueDate) //late or seconds in advance
         );
     }
     
     function getDueReceivable(uint _stakeId, uint _numPeriods) external view returns(uint, uint, int) {   
         Stake memory stake = IStakeMarket(_stakeMarket()).getStake(_stakeId);
+        uint shiftedBlockTimestamp = block.timestamp + _numPeriods * stake.bank.periodReceivable;
         uint numPeriods = getNumPeriods(
             stake.bank.startReceivable, 
-            block.timestamp, 
+            shiftedBlockTimestamp, 
             stake.bank.periodReceivable
         );
-        numPeriods += _numPeriods;
-        uint nextDue = stake.bank.startReceivable + stake.bank.periodReceivable * Math.max(1,numPeriods);
-        uint due = nextDue < block.timestamp ? stake.bank.amountReceivable * numPeriods - stake.bank.paidReceivable : 0;
+        uint dueDate = stake.bank.startReceivable + stake.bank.periodReceivable * (numPeriods + 1);
+        uint due = dueDate < shiftedBlockTimestamp ? stake.bank.amountReceivable * numPeriods - stake.bank.paidReceivable : 0;
         return (
             due, // due
-            stake.bank.periodReceivable == 0 ? uint(0) : nextDue, // next
-            stake.bank.periodReceivable == 0 ? int(0) : int(block.timestamp) - int(nextDue) //late or seconds in advance
+            dueDate, // next
+            int(block.timestamp) - int(dueDate) //late or seconds in advance
         );
     }
 }

@@ -256,11 +256,11 @@ async function main() {
   const ssiAddress = "0x1de9D006f209E9A7556270cae74D1F0D6864168a" //"0xFEc4d4A1aad9cE28dA66D86609c3B47aaeF5e527"
   const profileAddress = "0x810EBEa7d4330B6A6EFa2f73FF7E7773c57F98CD" //"0x8D531506a9Eb2E5931235a09e5192201B38b12b6"
   const profileHelperAddress = "0xf2Ca8333888cf3C673E81225228a000F9b7b4338" //"0xa71B00c519d6573E0cFC37638FE712aC6dD65a2c"
-  const stakeMarketAddress = "0xe11515741E0048914Fccb80a2C700d41b757F60A"
-  const stakeMarketNoteAddress = "0x1697d2E8c40c3f7c437934fce8FcC37f18B88cdd"
-  const stakeMarketHelperAddress = "0x4aFde7B1E5Eb048fdd7dA0253F1461fB59Fb2D1C"
-  const stakeMarketBribeAddress = "0xeFA1F1eD1a5B01a37ef5eA3eA87943B685209c9A"
-  const stakeMarketVoterAddress = "0x9E41eB6e4082643E6Aa50bD3126D38798644e261"
+  const stakeMarketAddress = "0x0504e8c3c9761B903b6fE45EB7259E69022588a1"
+  const stakeMarketNoteAddress = "0xCC2b099b69717Adb9B86c66F625Ffc2462d56bc9"
+  const stakeMarketHelperAddress = "0xd833E253f55c336F7a770CEb18204723b65D3648"
+  const stakeMarketBribeAddress = "0xE12F90F08916Dd587bb399ea09488ffA36CF17Ab"
+  const stakeMarketVoterAddress = "0xefE0cFd36DFAe4A43f960A1f6865aDCeB60D70cd"
   const contractAddress = "0x214Cb0c088D0992d5ba36Cff283CB1333149E1e7" //"0x997068BaD1417e1d7Be77CFC9123B40a3D9Bdb92"
   const nftsvgAddress = "0x36D1257A7E29E73A345D01F1e5F81d424C12a2c7"
   const nfticketAddress = "0x88db9D87e4D8ecC1f05eA72db52D933E25f88d2A"
@@ -288,7 +288,7 @@ async function main() {
   const minterFactoryAddress = "0x5Ed7ae0A1f29389295f4F25A1A679Bc051ae6aD4"
   const trustBountiesAddress = "0x7C694B1A87f56e47b0011fD1CbAEa3cC1974Ef09"
   const trustBountiesHelperAddress = "0x6c9676258026dc4Ce9B55bB8Ad0282e831262897"
-  const trustBountiesVoterAddress = "0x3b5E302517DCD59FCeF19b287255b3D68f57A956"
+  const trustBountiesVoterAddress = "0xF8E7F4719A66561F613AC1145ae3Be0E0a792005"
   const customMinterAddress = "0xB6c2E68a43a092973512a9C154D81C5559B5eBbA"
   const arpFactoryAddress = "0xbfD75c6C25B6045e24a5C446dE04A70c99C76f70"
   const arpMinterAddress = "0x1996caA9a6CDe7CE28D0690B2C0dC37Fd77b6447"
@@ -862,16 +862,33 @@ async function main() {
     "0xdd3878c7f3ff0d606836f8e426a353cdf1b5da4c820dcc90d87e214ac6b0a980",
     "0x09c1ac721760705674e83bcef653c134927e4c739c9fa38ecf8cbaf2df1f88c9",
     "0x6f493b44dd5c1f1ccd88c9275cbb80dc8467e8ca534485db73a19c40a5699b88",
+    "0x0f2b98093047d7c27fb7255e0b7e6f43b96e5fbd80b8b50a34bd11000f831878",
+    "0xd02e6d3da359be7712538fa1baa39eedb2eb6174642df0a9ce409e7e9dde8a7f",
+    "0x97cd0209a0f0862f67eceabd630c5d50a4b12ddad922fd168c3db4d98a245b30",
+    "0x1c129ce986b17cfcb6e88262b57d606e2c4a8ca51d3e08dab25e5c47a1023881",
+    "0x2bec0758f2d89d79721e411115922809f8592480b51ea177267a151687f7479a",
+    "0x5d886e18f675f7b66b130c7371fa42df31878e3b1fff5a70232b9e3693fa7f7a",
+    "0x1c3a324248ea76ed7f1b913eb32d18e4eac451beb61ecfef6828f99b677014cc",
+    "0x4b639854c710d0ace26ca7d29e77f13f507d8967ec11e854e9658821e55b18ce",
+    "0xd085f1513388ce7309b67a286e0fc08a6d4acb9876163f684423a7a5eacfb4d1",
+    "0x6343ddacf635e8e7e5f6cbfdd554e2976076faa8e0996f1e73f46da311326c01",
+    "0xa00b7f4784c1dbd2548a19026a5fb996ad0ec6c905b9060425b7961124ac947d",
+    "0x89e54346fdb031d1a5f3b97f3a02ebab5fa4e18245decdc8fa2f3b0eaa1ebd29",
+    "0x0c67eebba2feb14bcdcfa5671c5d8bbaea0a61f298b4d4482254f27586c25e8b",
+    "0x8fee587c9510f53b059bc4dcd141b944f7e4a2d945401f520acce275c7d3d10f",
+    "0x892702127a12f0f0ec278bd5c1c4697a4401f029774a3ead725581a394b57327",
+    "0x43fae28e75d40bfcee549c6938b653c883e22d7959e76e561edd3ebde84c9c36",
+    "0xde6a8f50f408dee3c8c2f8f1e5d12bb6708b4dfb9327bf5064bdc611a0d1d461",
   ]
   let wallets = [] as any;
   const k=0
   const nb = privateKeys.length
-  for( let i=k; i < nb; i++){
+  for(let i=k; i < nb; i++){
       // Get a new wallet
       // const wallet = ethers.Wallet.createRandom();
       let wallet = new ethers.Wallet(privateKeys[i], ethers.provider);
       // wallet =  wallet.connect(ethers.provider);
-      // if (i > 427) { 
+      // if (i > 447) { 
       //   await deployer.sendTransaction({to: wallet.address, value: ethers.utils.parseEther("0.03")});
       //   await profile.shareEmail(wallet.address)
       // }
@@ -885,6 +902,11 @@ async function main() {
       //, wallet._signingKey()
       )
   }
+  // for (let i = 0; i < 10; i++) {
+  //   const wallet = ethers.Wallet.createRandom();
+  //   console.log("7wallet=============>", i, wallet._signingKey())
+
+  // }
 
   // const futureCollateral = await FutureCollateral.deploy(
   //   "Future Collateral",
@@ -1879,13 +1901,24 @@ async function main() {
   // await marketPlaceHelper3.addVetoken("0xb55A821877d473D972B4ECBB18E41739687c539f")
   // await marketPlaceHelper3.addVetoken("0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62")
   // console.log("marketPlaceHelper3.addVetoken==========>", await marketPlaceHelper3.veTokenSetContains(ve.address))
-  
+
   // await trustBountiesVoter.vote(1,"0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41",1,1,1,1)
   // await trustBountiesVoter.reset("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41",1,1)
-  console.log("totalSupply====================>", await stakeMarketBribe.totalSupply("0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe"))
-  console.log("balanceOf====================>", await tFiat.balanceOf(stakeMarketBribe.address))
-  console.log("weights====================>", await trustBountiesVoter.weights("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", "1"))
-  console.log("earned====================>", await stakeMarketBribe.earned("0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe", 1))
+  // console.log("totalSupply====================>", await stakeMarketBribe.totalSupply("0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe"))
+  // console.log("balance====================>", await tFiat.balanceOf(stakeMarketBribe.address))
+  // // console.log("weights====================>", await trustBountiesVoter.weights("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", "1"))
+
+  // // await stakeMarketVoter.vote(1,"0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41",1,1,11,-1)
+  // // await stakeMarketVoter.reset("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41",1,1,1)
+  // console.log("weights====================>", await stakeMarketVoter.weights("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", "11"))
+  // console.log("weights====================>", await stakeMarketVoter.weights("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", "10"))
+  // console.log("totalWeight====================>", await stakeMarketVoter.totalWeight("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41"))
+  // console.log("earned====================>", await stakeMarketBribe.earned("0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe", 1))
+  // console.log("paidPayable====================>", await stakeMarketBribe.paidPayable("0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe", 1))
+  // console.log("balanceOf, totalWeight====================>", await stakeMarketBribe.balanceOf("0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe", 1), await stakeMarketBribe.totalWeight("0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe"))
+  console.log("stakeMarketVoter.period====================>", await stakeMarketVoter.period())
+  console.log("stakeMarketVoter.period====================>", await stakeMarketVoter.gauges("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", 15))
+  // console.log("stakeMarketVoter.period====================>", await stakeMarketVoter.gauges("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", 10))
 
   // await rampHelper.addDtoken(veAddress)
   // console.log("rampHelper.addDtoken==========>Done")
@@ -3754,8 +3787,8 @@ async function main() {
   // await marketPlaceCollection.connect(wallets[43]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[43]).updateCollection(
-  //   "TrainingHouses",
-  //   "Welcome to TrainingHouses: Where Education Meets Innovation! Are you tired of traditional educational models that focus solely on lectures and exams? Do you crave hands-on learning experiences and an educational model that does not seperate learning from working ? Look no further than TrainingHouses, the new way to do Universities.",
+  //   "Bogetta",
+  //   "Welcome to Bogetta: Where Education Meets Innovation! Are you tired of traditional educational models that focus solely on lectures and exams? Do you crave hands-on learning experiences and an educational model that does not seperate learning from working ? Look no further than Bogettas, the new way to do Universities.",
   //   "https://i.ibb.co/ThsBzLC/82.jpg",
   //   "https://i.ibb.co/ThsBzLC/82.jpg",
   //   "https://i.ibb.co/ZMnLyS1/259.jpg",
@@ -3791,7 +3824,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[45]).updateCollection(
   //   "RealEstateTontines",
-  //   "Welcome to RealEstateTontines: Revolutionizing Real Estate Investment! Are you looking for a fresh, innovative way to invest in real estate? Look no further than RealEstateTontines – your gateway to a new era of collaborative real estate investment.",
+  //   "Welcome to RealEstateTontines: Revolutionizing Real Estate Investment! Are you looking for a fresh, innovative way to invest in real estate? Look no further than RealEstateTontines – your gateway to a new era of collaborative real estate investment. You pool funds together with other members to purchase a real estate property that you rent out and you take turns in collecting the rent each end of month until you decide to resell the property.",
   //   "https://i.ibb.co/CQJb4c9/304.jpg",
   //   "https://i.ibb.co/CQJb4c9/304.jpg",
   //   "https://i.ibb.co/0qS11Tt/257.jpg",
@@ -3827,7 +3860,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[47]).updateCollection(
   //   "RentalMap",
-  //   "Discover Your Next Home with RentalMap: Your Ultimate Rental Destination! Are you on the hunt for the perfect place to call home? Welcome to RentalMap, your go-to platform for discovering rental properties in your desired location. Whether you're a landlord, real estate agent, or someone who's simply spotted a 'For Rent' sign, RentalMap enables you to list it",
+  //   "Discover Your Next Home with RentalMap: Your Ultimate Rental Destination! Are you on the hunt for the perfect place to call home? Welcome to RentalMap, your go-to platform for discovering rental properties in your desired location. Whether you're a landlord, real estate agent, or someone who's simply spotted a 'For Rent' sign, RentalMap enables you to list it. Partners need a bounty to guarantee the places they advertise are just like in the pictures/videos",
   //   "https://i.ibb.co/vQc1JSr/307.jpg",
   //   "https://i.ibb.co/vQc1JSr/307.jpg",
   //   "https://i.ibb.co/YcxgXf6/255.jpg",
@@ -4925,7 +4958,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[108]).updateCollection(
   //   "RoamHub",
-  //   "Introducing RoamHub, the innovative platform that simplifies the way you discover and rent flexible living and working spaces for your team or farmlands. Whether it's a short-term project, a remote work arrangement, or team-building in unique locations, RoamHub connects you with a curated selection of inspiring spaces worldwide. From cozy cottages in the countryside to urban lofts in bustling cities, we offer diverse accommodations with dedicated workspaces to enhance productivity and foster creativity. With RoamHub, finding the perfect blend of work and life has never been easier.",
+  //   "Introducing RoamHub, the innovative platform that simplifies the way you discover and rent flexible living and working spaces for your team or farmlands. Whether it's a short-term project, a remote work arrangement, or team-building in unique locations, RoamHub connects you with a curated selection of inspiring spaces worldwide. From cozy cottages in the countryside to urban lofts in bustling cities, we offer diverse accommodations with dedicated workspaces to enhance productivity and foster creativity. With RoamHub, finding the perfect blend of work and life has never been easier. Partners need a bounty to guarantee the places they advertise are just like in the pictures/videos",
   //   "https://i.ibb.co/TY9QCMV/404.jpg",
   //   "https://i.ibb.co/TY9QCMV/404.jpg",
   //   "https://i.ibb.co/mSjmYFK/300.jpg",
@@ -4961,7 +4994,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[110]).updateCollection(
   //   "StayLink",
-  //   "Welcome to StayLink, your premier platform for accommodation rentals worldwide. With StayLink, you can discover a vast array of unique, comfortable, and conveniently located places to stay during your travels. Our user-friendly platform connects you with hospitable hosts, ensuring memorable and authentic travel experiences wherever you go. Whether it's for a short city break or an extended adventure, StayLink is your trusted companion in finding the perfect place to call home while you explore the world. With StayLink, you can also subscribe to a catalog of rentals such that, as long as you're paying your subscription, you can move from any of the rentals to another as long as you agree with the current owner of the rental you are moving to. There are multiple schemes like 3-way swaps involving 3 rentals or x-way swaps involving x rentals that could help you get access to any rental you want.",
+  //   "Welcome to StayLink, your premier platform for accommodation rentals worldwide. With StayLink, you can discover a vast array of unique, comfortable, and conveniently located places to stay during your travels. Our user-friendly platform connects you with hospitable hosts, ensuring memorable and authentic travel experiences wherever you go. Whether it's for a short city break or an extended adventure, StayLink is your trusted companion in finding the perfect place to call home while you explore the world. With StayLink, you can also subscribe to a catalog of rentals such that, as long as you're paying your subscription, you can move from any of the rentals to another as long as you agree with the current owner of the rental you are moving to. There are multiple schemes like 3-way swaps involving 3 rentals or x-way swaps involving x rentals that could help you get access to any rental you want. Partners need a bounty to guarantee the places they advertise are just like in the pictures/videos",
   //   "https://i.ibb.co/TmVdG2C/409.jpg",
   //   "https://i.ibb.co/TmVdG2C/409.jpg",
   //   "https://i.ibb.co/HCqK6C9/224.jpg",
@@ -5447,7 +5480,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[137]).updateCollection(
   //   "ThriftWise",
-  //   "Introducing ThriftWise, the innovative platform that transforms budgeting into an engaging game. ThriftWise not only helps you discover valuable tips and tricks for budgeting effectively but also turns your financial journey into a rewarding challenge. By gamifying the budgeting process and providing personalized scores based on your ability to save and budget over time, ThriftWise motivates you to achieve your financial goals while making the path to financial stability both fun and educational. Join ThriftWise today and level up your budgeting skills while securing your financial future!",
+  //   "Introducing ThriftWise, the innovative platform that transforms budgeting into an engaging game. ThriftWise not only helps you discover valuable tips and tricks for budgeting effectively but also turns your financial journey into a rewarding challenge. Thanks to the way valuepools work, the more you use our valuepools to save, the more power you have as the member of the valuepool. Depending on the valuepool, you might be able to use that power to retreive more funds from the valuepool or have more weight when voting on various proposals from valuepools. This gamifies the budgeting process and provides you with a personalized score (your valuepool percentile),  based on your ability to save and budget over time, ThriftWise motivates you to achieve your financial goals while making the path to financial stability both fun and educational. Join ThriftWise today and level up your budgeting skills while securing your financial future!",
   //   "https://i.ibb.co/5nr9C1m/466.jpg",
   //   "https://i.ibb.co/5nr9C1m/466.jpg",
   //   "https://i.ibb.co/sRwTxr5/228.jpg",
@@ -6329,7 +6362,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[186]).updateCollection(
   //   "StayShare",
-  //   "Introducing StayShare, a revolutionary platform that transforms your hospitality into a valuable currency. With StayShare, you can earn IOUs by offering your home for accommodation, whether you're there or not. These IOUs can then be used to request stays at other users' places, creating a unique network of trust and shared experiences. It's a win-win for travelers and hosts, where your extra space becomes a gateway to new adventures, and your wanderlust knows no bounds. Join StayShare today and unlock a world of limitless, reciprocal hospitality.",
+  //   "Introducing StayShare, a revolutionary platform that transforms your hospitality into a valuable currency. With StayShare, you can earn IOUs by offering your home for accommodation, whether you're there or not. These IOUs can then be used to request stays at other users' places, creating a unique network of trust and shared experiences. It's a win-win for travelers and hosts, where your extra space becomes a gateway to new adventures, and your wanderlust knows no bounds. Join StayShare today and unlock a world of limitless, reciprocal hospitality. Partners need a bounty to guarantee the places they advertise are just like in the pictures/videos",
   //   "https://i.ibb.co/Z1Cqvj8/317.jpg",
   //   "https://i.ibb.co/Z1Cqvj8/317.jpg",
   //   "https://i.ibb.co/HFrZnbw/222.jpg",
@@ -6779,7 +6812,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[211]).updateCollection(
   //   "EduStream",
-  //   "Introducing EduStream, your gateway to a global classroom. EduStream is a groundbreaking platform where educators worldwide record their live lectures, making them accessible for eager learners like you. With EduStream, you can effortlessly search for specific teachers, courses, schools, and more to discover a wealth of educational content. Whether you're seeking in-depth knowledge or looking to explore diverse subjects, our platform offers both free and premium content, ensuring that quality education is just a click away. Join EduStream today and unlock a world of learning opportunities at your fingertips.",
+  //   "Introducing EduStream, your gateway to a global classroom. EduStream is a groundbreaking platform where educators worldwide record their live lectures, making them accessible for eager learners like you. With EduStream, you can effortlessly search for specific teachers, courses, schools, and more to discover a wealth of educational content. Whether you're seeking in-depth knowledge or looking to explore diverse subjects, our platform offers both free and premium content, ensuring that quality education is just a click away. EduStream also offers educators, a decent source of revenue since they can sell subscriptions to their classes, offer them for free but accept tips or sell ad-spots to sponsors. The more popular their classes become, the more they can monetize. Join EduStream today and unlock a world of learning opportunities at your fingertips.",
   //   "https://i.ibb.co/m5KVj72/457.jpg",
   //   "https://i.ibb.co/m5KVj72/457.jpg",
   //   "https://i.ibb.co/G3Q4jgY/248.jpg",
@@ -7535,7 +7568,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[255]).updateCollection(
   //   "Playbook",
-  //   "Find and subscribe to partners to get access to their playbooks which are extensive step by step guidelines on how to do a specific thing like have a night out with your friends tailored to residents of specific locations, how to have the perfect date or get a new girlfriend tailored to specific types of people living in specific locations, etc Basically a good playbook is like a good recipe, you blindly follow a step by step instructions and you get the promised result at the end.",
+  //   "Find and subscribe to partners to get access to their playbooks which are extensive step by step guidelines on how to do a specific thing like have a night out with your friends tailored to residents of specific locations, how to have the perfect date or get a new girlfriend tailored to specific types of people living in specific locations, scripts to create specific ChatGPT apps, Stable Diffusion images, etc Basically a good playbook is like a good recipe, you blindly follow a step by step instructions and you get the promised result at the end.",
   //   "https://i.ibb.co/t23Stdg/379.jpg",
   //   "https://i.ibb.co/t23Stdg/379.jpg",
   //   "https://i.ibb.co/bdtXHnV/405-2.jpg",
@@ -9750,7 +9783,7 @@ async function main() {
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[379]).updateCollection(
   //    "HourRoom",
-  //    "Looking for a convenient and affordable way to host small gatherings, conduct private meetings, or simply escape the bustle of daily life? Check out HourRoom - the innovative platform connecting users with available rooms and house rentals for short periods ranging from a couple of hours to full days. With our user-friendly interface, you can quickly search for suitable spaces based on location, size, amenities, and pricing. From cozy apartments to spacious event venues, we cater to diverse needs and budgets. So whether you require an intimate setting for a baby shower or a professional environment for client presentations, HourRoom has got you covered. Try us out today and rediscover the joy of flexible and adaptable living arrangements.",
+  //    "Looking for a convenient and affordable way to host small gatherings, conduct private meetings, or simply escape the bustle of daily life? Check out HourRoom - the innovative platform connecting users with available rooms and house rentals for short periods ranging from a couple of hours to full days. With our user-friendly interface, you can quickly search for suitable spaces based on location, size, amenities, and pricing. From cozy apartments to spacious event venues, we cater to diverse needs and budgets. So whether you require an intimate setting for a baby shower or a professional environment for client presentations, HourRoom has got you covered. Try us out today and rediscover the joy of flexible and adaptable living arrangements. Partners need a bounty to guarantee the places they advertise are just like in the pictures/videos",
   //    "https://i.ibb.co/4N0hjN7/110.jpg",
   //    "https://i.ibb.co/4N0hjN7/110.jpg",
   //    "https://i.ibb.co/TPdRtjB/428-2.jpg",
@@ -9786,7 +9819,7 @@ async function main() {
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[381]).updateCollection(
   //    "FlexClass",
-  //    "Meet FlexClass - the dynamic platform connecting passionate instructors with eager students seeking fun and engaging ways to stay active. Our disciplines span a wide range of interests, including yoga, swimming, gym training, dancing, and even LARPing (Live Action Role Playing) under the guidance of certified teachers. Instructors list two types of tickets for each class: Girl Tickets and Boy Tickets, ensuring a balanced gender ratio and promoting inclusivity. During classes, exercises are performed in pairs, giving participants the opportunity to interact and potentially form connections. If they wish, students can swap partners throughout the session or choose to stick with their initial pair if the chemistry is right. Join FlexClass today and embark on a journey towards improved physical and mental wellness while meeting like-minded individuals. Discover new hobbies, challenge yourself, and foster lasting relationships through shared passions. Sign up now and unlock a world of possibilities!",
+  //    "Meet FlexClass - the dynamic platform connecting passionate instructors with single students seeking fun and engaging ways to stay active and date. Our disciplines span a wide range of interests, including yoga, swimming, gym training, dancing, and even LARPing (Live Action Role Playing) under the guidance of certified teachers. Instructors list two types of tickets for each class: Girl Tickets and Boy Tickets, ensuring a balanced gender ratio so there is a guy for each girl and vice versa. During classes, exercises are performed in boy-girl pairs, giving participants the opportunity to interact and potentially form connections. If they wish, students can swap partners throughout the sessions or choose to stick with their initial pair if the chemistry is right. Join FlexClass today and embark on a journey towards improved physical and mental wellness while meeting possible girlfriends/boyfriends. Discover new hobbies, challenge yourself, and foster lasting relationships through shared passions. Sign up now and unlock a world of possibilities!",
   //    "https://i.ibb.co/RbbhBjt/112.jpg",
   //    "https://i.ibb.co/RbbhBjt/112.jpg",
   //    "https://i.ibb.co/6gNvDMd/426-2.jpg",
@@ -10860,6 +10893,240 @@ async function main() {
   //   ""
   // );
   // console.log("440marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 441
+  // await marketPlaceCollection.connect(wallets[438]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[438]).updateCollection(
+  //   "JobBet",
+  //   "Companies partner with the channel to post jobs; applicants register to the channel and post their professional profiles on their channels. Whenever a company posts a job, there is a betting event created for it so users of the platform can bet on the profiles of the applicants they think will get the job. Part of the proceeds will be used to collateralize the job of the candidate that ends up getting it meaning in the event, that turned out to be a bad recruit, the collateralized funds are used to compensate the recruiting company. Notice that applicants never actually have to specifically apply for a job, they just need to publish their professional profiles on their own channels and then register to the channel. Users of the platform will try and match the best profile to the job that's posted by betting on the profile they think is the best fit for a certain job. Applicants can publish multiple profiles on their channels, each targeted for a different type of job. ",
+  //   "https://i.ibb.co/7zKbx3s/447.jpg",
+  //   "https://i.ibb.co/7zKbx3s/447.jpg",
+  //   "https://i.ibb.co/mRryjPD/217.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("441marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 442
+  // await marketPlaceCollection.connect(wallets[439]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[439]).updateCollection(
+  //   "ResCoach",
+  //   "Find and subscribe to coaches that will regularly have consultations with you in order to coach you out of a certain habit. You can find a coach for basically anything: losing weight, stopping alcohol/procrastination, etc.",
+  //   "https://i.ibb.co/yNzXTCm/499.jpg",
+  //   "https://i.ibb.co/yNzXTCm/499.jpg",
+  //   "https://i.ibb.co/0Q7YJBC/214.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("442marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 443
+  // await marketPlaceCollection.connect(wallets[440]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[440]).updateCollection(
+  //   "LovePromotions",
+  //   "Users buy subscriptions to promotions and start meeting each other with the goal of finding a boyfriend/girlfriend they can move in together with for at least one year. The promotion ends when everybody has met everybody. Each promotion has 50 men and 50 women. At the end of the promotion, the people that have found each other create requests to let the community know. Depending on the type of the promotion, only the first couple, the first 10, 20, 30, etc, will get to be part of the platform's couples' program. During that program, all the funds from the subscription to the promotion are used to provide a living space and other amenities to all the winning couples. All couples must live together as real couples for at least a year. Some promotions have a reality TV component which might add to the rewards the winning couples get to enjoy. After the year of living together, couples that are willing to get pay-married, are followed by the channel's valuepool which helps them financially.",
+  //   "https://i.ibb.co/Wn6fgwb/437.jpg",
+  //   "https://i.ibb.co/Wn6fgwb/437.jpg",
+  //   "https://i.ibb.co/vj7vcSh/213.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("443marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 444
+  // await marketPlaceCollection.connect(wallets[441]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[441]).updateCollection(
+  //   "StableGram",
+  //   "Find and subscribe to artists that create images using AI models like stabe diffusion; some artists offer subscriptions to their catalogs or to a course in creating the same type of catalog yourself",
+  //   "https://i.ibb.co/nMHRVdn/435.jpg",
+  //   "https://i.ibb.co/nMHRVdn/435.jpg",
+  //   "https://i.ibb.co/ZKp73zV/212.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("444marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 445
+  // await marketPlaceCollection.connect(wallets[442]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[442]).updateCollection(
+  //   "FutureBrokers",
+  //   "Tokenize the right to be the broker on the future sale of your house/car/etc and sell those tokenized rights to brokers",
+  //   "https://i.ibb.co/s2mxrc8/433.jpg",
+  //   "https://i.ibb.co/s2mxrc8/433.jpg",
+  //   "https://i.ibb.co/Pw5GB8c/211.jpg",
+  //   "",
+  //   "",
+  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("445marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 446
+  // await marketPlaceCollection.connect(wallets[443]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[443]).updateCollection(
+  //   "Securitize",
+  //   "Find and join various valuepools that buy loans on various assets such as real estate, vehicles, etc. This process is called securitization.",
+  //   "https://i.ibb.co/s2mxrc8/433.jpg",
+  //   "https://i.ibb.co/s2mxrc8/433.jpg",
+  //   "https://i.ibb.co/Pw5GB8c/211.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("446marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 446
+  // await marketPlaceCollection.connect(wallets[443]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[443]).updateCollection(
+  //   "Tontines",
+  //   "Find and join various tontines.  A tontine is a joint financial arrangement whereby a group of people contribute equally to a prize that is awarded entirely to one of them every payment cycle (which is typically a month). Each tontine has its prize amount and the higher the prize amount, the more each participant has to contribute. There are two ways to get into a tontine: either get admitted at the start (which requires you to prove trustworthiness is some way) or take the place of a participant that's unable to keep paying. Participants in a tontine are rewarded the tontine's prize in a decreasing order of their credit worthiness such that the less credit worthy participants are incentivized to keep paying their dues (if they get their prizes too early, they might not be willing to keep paying their dues). Participants can apply to get a credit worthiness check to any auditor of the channel their tontine deems trustworthy. Though every auditor has a different way to determine credit worthiness, you can build up your credit worthiness by participating in multiple smaller tontines, making purchases on CanCan, being a member of a Leviathan, having a decent trustBounty setup, etc.",
+  //   "https://i.ibb.co/CQJb4c9/304.jpg",
+  //   "https://i.ibb.co/CQJb4c9/304.jpg",
+  //   "https://i.ibb.co/0Jg0twR/258.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("446marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 447
+  // await marketPlaceCollection.connect(wallets[444]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[444]).updateCollection(
+  //   "BNPL",
+  //   "Find and join various BNPL valuepools where members pool resources together to be able to offer themselves a BNPL system.",
+  //   "https://i.ibb.co/nQtDzNq/385.jpg",
+  //   "https://i.ibb.co/nQtDzNq/385.jpg",
+  //   "https://i.ibb.co/X7Ws5pg/413-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("447marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 448
+  // await marketPlaceCollection.connect(wallets[445]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[445]).updateCollection(
+  //   "GiveBets",
+  //   "The platforms launched multiple giveaway bets to give away food, water and other amenities to members of its valuepool. During a giveaway bet, the platform will offer to give away some resource and have users bet on how many of the resource the platform will be able to give away. If for instance a giveaway bet offers to give away an item worth 10 USD, it will have an associated bet where users will purchase betting tickets worth 10 USD each to bet on how many items the channel will be able to give away. Proceeds from the bets are used to purchase more items to give away, so the more users bet, the more we can give away.",
+  //   "https://i.ibb.co/G74TW6m/383.jpg",
+  //   "https://i.ibb.co/G74TW6m/383.jpg",
+  //   "https://i.ibb.co/cXxSVLC/410-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("448marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 449
+  // await marketPlaceCollection.connect(wallets[446]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[446]).updateCollection(
+  //   "DiaryGram",
+  //   "Find partners' blog like diaries where they document everything they do each day from waking up to going to bed. They write one article for each day and an article can contain as many images or videos as they want to include or just text. Some diaries are not behind paywalls whist others can be depending on the creators. Creators have bounties to guarantee they are as honest as possible, they do not have to include everything in their days but they cannot lie on anything either.",
+  //   "https://i.ibb.co/9cY2Y0B/47.jpg",
+  //   "https://i.ibb.co/9cY2Y0B/47.jpg",
+  //   "https://i.ibb.co/8DgzGWJ/291.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("449marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 450
+  // await marketPlaceCollection.connect(wallets[447]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[447]).updateCollection(
+  //   "Tutorly",
+  //   "Find and book tutors to help you learn a specific skill or join a tutor's study group to take part in your tutor's classes either virtually or in-person.",
+  //   "https://i.ibb.co/qshPWWJ/541.jpg",
+  //   "https://i.ibb.co/qshPWWJ/541.jpg",
+  //   "https://i.ibb.co/0Jg0twR/258.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("450marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 451
+  // await marketPlaceCollection.connect(wallets[448]).addCollection(0, 0, 0, 0, 0, 0, "0xd17C814f5609889609720D95e1A7369f9F798aB4", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[448]).updateCollection(
+  //   "Tattoo",
+  //   "Find and book a tattoo artist nearby. Some artists offer home services whereas others have you come to their shops",
+  //   "https://i.ibb.co/RCnyDsg/78.jpg",
+  //   "https://i.ibb.co/RCnyDsg/78.jpg",
+  //   "https://i.ibb.co/ZKp73zV/212.jpg",
+  //   "",
+  //   "",
+  //   "0xC853D1c9B60962a5CDB361379595BC6400aaE722",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("451marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 452
+  // await marketPlaceCollection.connect(wallets[449]).addCollection(0, 0, 0, 0, 0, 0, "0xd17C814f5609889609720D95e1A7369f9F798aB4", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[449]).updateCollection(
+  //   "Jewel",
+  //   "Find and purchase the best jewelry, diamond piece, high-end watch, high-end bag or any other luxury item from trusted sellers. Some might even offer subscriptions to give subscribers dibs on certain items when they acquire or manufacture them.",
+  //   "https://i.ibb.co/RPTsx1P/316.jpg",
+  //   "https://i.ibb.co/RPTsx1P/316.jpg",
+  //   "https://i.ibb.co/mbFz3yP/311-2.jpg",
+  //   "",
+  //   "",
+  //   "0xC853D1c9B60962a5CDB361379595BC6400aaE722",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("452marketPlaceCollection.updateCollection===========> Done!")
 
   }
   
