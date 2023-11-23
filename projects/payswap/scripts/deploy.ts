@@ -256,11 +256,11 @@ async function main() {
   const ssiAddress = "0x1de9D006f209E9A7556270cae74D1F0D6864168a" //"0xFEc4d4A1aad9cE28dA66D86609c3B47aaeF5e527"
   const profileAddress = "0x810EBEa7d4330B6A6EFa2f73FF7E7773c57F98CD" //"0x8D531506a9Eb2E5931235a09e5192201B38b12b6"
   const profileHelperAddress = "0xf2Ca8333888cf3C673E81225228a000F9b7b4338" //"0xa71B00c519d6573E0cFC37638FE712aC6dD65a2c"
-  const stakeMarketAddress = "0x0504e8c3c9761B903b6fE45EB7259E69022588a1"
-  const stakeMarketNoteAddress = "0xCC2b099b69717Adb9B86c66F625Ffc2462d56bc9"
-  const stakeMarketHelperAddress = "0xd833E253f55c336F7a770CEb18204723b65D3648"
+  const stakeMarketAddress = "0xbf877500681AF64f10F6C3E92fA9946f800804ea"
+  const stakeMarketNoteAddress = "0x2596c9eA9473AE8B1F8EB08019CD8e9844Cea34a"
+  const stakeMarketHelperAddress = "0xf178d8A6661aBA43bEaFe98080e47CD213c2FC34"
   const stakeMarketBribeAddress = "0xE12F90F08916Dd587bb399ea09488ffA36CF17Ab"
-  const stakeMarketVoterAddress = "0xefE0cFd36DFAe4A43f960A1f6865aDCeB60D70cd"
+  const stakeMarketVoterAddress = "0xeAf2c655581C83D47497D9D0C68dE09b1B32Fa55"
   const contractAddress = "0x214Cb0c088D0992d5ba36Cff283CB1333149E1e7" //"0x997068BaD1417e1d7Be77CFC9123B40a3D9Bdb92"
   const nftsvgAddress = "0x36D1257A7E29E73A345D01F1e5F81d424C12a2c7"
   const nfticketAddress = "0x88db9D87e4D8ecC1f05eA72db52D933E25f88d2A"
@@ -286,18 +286,18 @@ async function main() {
   const paywallARPFactoryAddress = "0xA732c57C3DA59aE51Eb04A842569eb4Ae15B3A0f"
   const paywallARPHelperAddress = "0x5877de59AAf11794396e9bB5950CE58E06557cC3"
   const minterFactoryAddress = "0x5Ed7ae0A1f29389295f4F25A1A679Bc051ae6aD4"
-  const trustBountiesAddress = "0x7C694B1A87f56e47b0011fD1CbAEa3cC1974Ef09"
-  const trustBountiesHelperAddress = "0x6c9676258026dc4Ce9B55bB8Ad0282e831262897"
-  const trustBountiesVoterAddress = "0xF8E7F4719A66561F613AC1145ae3Be0E0a792005"
+  const trustBountiesAddress = "0x12feADd609596cf4f441920AF561ad80bD9c1be7"
+  const trustBountiesHelperAddress = "0xD4c16ADB9E07ADF9Aef50376888BFbD8690e06A5"
+  const trustBountiesVoterAddress = "0x8363970f0cca2Bb19a7717a3DE6bEC5e61f7ec17"
   const customMinterAddress = "0xB6c2E68a43a092973512a9C154D81C5559B5eBbA"
-  const arpFactoryAddress = "0xbfD75c6C25B6045e24a5C446dE04A70c99C76f70"
-  const arpMinterAddress = "0x1996caA9a6CDe7CE28D0690B2C0dC37Fd77b6447"
-  const arpHelperAddress = "0x854059066aD7BDF6d18E069bdC6b2DE477Ba8949"
-  const arpNoteAddress = "0xC429AbCb98f3565af5e051fdC5Ff081a43b6B803"
-  const billFactoryAddress = "0xB061A49504aa7b6DF228E556954bD58A4Cad3574"
-  const billMinterAddress = "0x39d546Ce9737f5B377b703C4fE5Dc621D162540b"
-  const billHelperAddress = "0x995a88e7120fC55a23E82adbdc50a14efA67A2dC"
-  const billNoteAddress = "0xFf3254b1e3980fDA97FD7a4A245dC43FE8B9E53f"
+  const arpFactoryAddress = "0xE9c25b9821D17677081b0099c29382E5a0c3eb40"
+  const arpHelperAddress = "0x79F85d94A346002D55e14bbb115a607A455e6F8f"
+  const arpMinterAddress = "0x2041cd77e870b997D3e035f877bE975E0f2a04ED"
+  const arpNoteAddress = "0x79Eb1063000aA15Ef5B73F182793835749188AcB"
+  const billFactoryAddress = "0xE697b2D4135b14216DB09e379f50E93dd281fD16"
+  const billMinterAddress = "0x90256b159FC802c497b6C2BF7799DE75eAD936F2"
+  const billHelperAddress = "0xbdb2ec1b244ACa734A5dA0ce7cd89d447319a2fA"
+  const billNoteAddress = "0x729124dBeC963b743dfFC8aAA29236d95F1C7a55"
   const extraTokenFactoryAddress = "0x87EDbF47a1e2373282c34298F4041c0c80e328E8"
   const willFactoryAddress = "0x43CeAaa09f54cCd58B29904BAC64dDe058FcBE87"
   const willNoteAddress = "0x86EB24C62635573f0dbc52B1b07660f6B3FA8fdA"
@@ -898,9 +898,9 @@ async function main() {
         //   console.log(`balance: ${balanceInEth} ETH`)
         // })
       wallets.push(wallet)
-      console.log("wallet=============>", i, privateKeys[i]
+      // console.log("wallet=============>", i, privateKeys[i]
       //, wallet._signingKey()
-      )
+      // )
   }
   // for (let i = 0; i < 10; i++) {
   //   const wallet = ethers.Wallet.createRandom();
@@ -1902,12 +1902,24 @@ async function main() {
   // await marketPlaceHelper3.addVetoken("0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62")
   // console.log("marketPlaceHelper3.addVetoken==========>", await marketPlaceHelper3.veTokenSetContains(ve.address))
 
+  // await trustBountiesVoter.updatePeriod(600)
+  // await trustBountiesHelper.updateParameters(
+  //   86400 * 7,
+  //   86400 * 7,
+  //   600,
+  //   100,
+  //   1,
+  //   100
+  // )
+  // console.log("trustBountiesHelper.updateParameters============>Done")
   // await trustBountiesVoter.vote(1,"0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41",1,1,1,1)
   // await trustBountiesVoter.reset("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41",1,1)
   // console.log("totalSupply====================>", await stakeMarketBribe.totalSupply("0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe"))
   // console.log("balance====================>", await tFiat.balanceOf(stakeMarketBribe.address))
   // // console.log("weights====================>", await trustBountiesVoter.weights("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", "1"))
 
+  // await stakeMarketVoter.updatePeriod(600)
+  // await stakeMarketNote.setBufferTime(600)
   // // await stakeMarketVoter.vote(1,"0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41",1,1,11,-1)
   // // await stakeMarketVoter.reset("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41",1,1,1)
   // console.log("weights====================>", await stakeMarketVoter.weights("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", "11"))
@@ -1916,8 +1928,8 @@ async function main() {
   // console.log("earned====================>", await stakeMarketBribe.earned("0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe", 1))
   // console.log("paidPayable====================>", await stakeMarketBribe.paidPayable("0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe", 1))
   // console.log("balanceOf, totalWeight====================>", await stakeMarketBribe.balanceOf("0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe", 1), await stakeMarketBribe.totalWeight("0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe"))
-  console.log("stakeMarketVoter.period====================>", await stakeMarketVoter.period())
-  console.log("stakeMarketVoter.period====================>", await stakeMarketVoter.gauges("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", 15))
+  // console.log("stakeMarketVoter.period====================>", await stakeMarketVoter.period())
+  // console.log("stakeMarketVoter.period====================>", await stakeMarketVoter.gauges("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", 15))
   // console.log("stakeMarketVoter.period====================>", await stakeMarketVoter.gauges("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", 10))
 
   // await rampHelper.addDtoken(veAddress)
@@ -2469,9 +2481,17 @@ async function main() {
     //   "1"
     // )
     // console.log("bountyInfo(1)===========>", await trustBounties.bountyInfo(1))
-    // console.log("bountyInfo(2)===========>", await trustBounties.bountyInfo(2))
+  // console.log("bountyInfo(2)===========>", await trustBounties.bountyInfo(2))
+  // console.log("bountyInfo(2)===========>", await trustBountiesVoter.isGauge("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", 2))
+  // console.log("trustBounties.claims=================>", await trustBounties.claims(3, 0))
+  // console.log("trustBounties.claims=================>", await trustBounties.claims(3, 1))
+  // console.log("tFiat.balanceOf=================>", await tFiat.balanceOf(trustBounties.address))
+  // console.log("tFiat.balanceOf=================>", await tFiat.balanceOf(trustBountiesHelper.address))
+  // console.log("trustBounties.getBalance=================>", await trustBounties.getBalance(1))
+  // console.log("trustBounties.balances=================>", await trustBounties.balances(1, trustBounties.address))
+  // console.log("trustBountiesHelper.balances=================>", await trustBounties.balances(1, trustBountiesHelper.address))
 
-    // await futureCollateral.updateValidChannel(1, true)
+  // await futureCollateral.updateValidChannel(1, true)
     // await futureCollateral.addToChannel(1, 1)
 
     // await tFiat.approve(stakeMarket.address, 10)
@@ -2645,7 +2665,7 @@ async function main() {
     // await bill.deployed()
 
     // let billAddress = (await billMinter.getAllBills(0))[0]
-    // bill = BILL.attach(billAddress)
+    // let bill = BILL.attach(billAddress)
     // console.log("bill===>", billAddress, bill.address)
 
     // await bill.updateProtocol(
@@ -2658,7 +2678,8 @@ async function main() {
     //   "link_to_media",
     //   "description"
     // )
-    // console.log("protocolInfo============>", await bill.protocolInfo(1))
+  // console.log("protocolInfo============>", await bill.protocolInfo(2))
+  // console.log("addressToProtocolId============>", await bill.addressToProtocolId('0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA'))
     // console.log("description============>", await bill.description(1))
     // console.log("billHelper.getMedia============>", await billHelper.getMedia(bill.address,1))
     // console.log("billMinter._getOptions============>", await billMinter._getOptions(bill.address,1,1))
@@ -2682,20 +2703,36 @@ async function main() {
     // await arp.deployed()
 
     // let arpAddress = (await arpHelper.getAllARPs(0))[0]
-    // arp = ARP.attach(arpAddress)
+    // let arp = ARP.attach(arpAddress)
     // console.log("arp===>", arpAddress, arp.address)
 
-    // await arp.updateProtocol(
-    //   deployer.address,
-    //   tFiat.address,
-    //   [1000,3000,0,2000,3000,0,0],
-    //   0,
-    //   0,
-    //   0,
-    //   "link_to_media",
-    //   "description"
-    // )
-    // console.log("protocolInfo============>", await arp.protocolInfo(1))
+  // await arp.updateProtocol(
+  //   deployer.address,
+  //   tFiat.address,
+  //   [1000,100,0,2000,100,0,0],
+  //   0,
+  //   0,
+  //   0,
+  //   "link_to_media",
+  //   "description"
+  // )
+  // console.log("protocolInfo============>", await arp.protocolInfo(1))
+  // await nftSvg.updateDescription(arpNote.address, "This note gives you access to revenues of the arp on the specified protocol")
+  // await arp.updateAutoCharge(true, 1)
+  // console.log("arpHelper.isGauge============>", await arpHelper.isGauge(arp.address), await arp.isAutoChargeable(1))
+  // console.log("arpNote.notes============>", await arpNote.notes(2))
+  // console.log("arpNote.adminNotes============>", await arpNote.tokenURI(3))
+  // console.log("arpNote.pendingRevenueFromNote============>", await arpNote.pendingRevenueFromNote(1))
+  // console.log("arp.userBountyRequired============>", await arp.userBountyRequired(1))
+  // console.log("arp.pendingRevenue============>", await arp.pendingRevenue(tFiatAddress))
+  // console.log("arpNote.pendingRevenueFromNote============>", await arpNote.pendingRevenueFromNote(1))
+  // console.log("arpNote.pendingRevenueFromNote============>", await arpNote.pendingRevenueFromNote(2))
+  // console.log("arpNote.pendingRevenueFromNote============>", await arpNote.pendingRevenueFromNote(3))
+  // console.log("arpNote.adminNotes============>", await arpNote.adminNotes(1))
+  // console.log("arpNote.notes============>", (await arpNote.notes(2))[0])
+  // console.log("0arpNote.getDueReceivable============>", await arpNote.getDueReceivable(arp.address, 1, 0))
+  // console.log("1arpNote.getDueReceivable============>", await arpNote.getDueReceivable(arp.address, 1, 1))
+  // console.log("2arpNote.getDueReceivable============>", await arpNote.getDueReceivable(arp.address, 1, 2))
     // console.log("description============>", await arp.description(1))
     // // console.log("arpHelper._getOptions============>", await arpHelper._getOptions(arp.address,1,1))
     // console.log("arpHelper.tokenIdToARP============>", await arpHelper.tokenIdToARP(1))
@@ -2738,7 +2775,14 @@ async function main() {
     // // transfer note
     // await stakeMarket.mintNote(1,0)
     // console.log("stakeMarket.mintNote=================>Done")
-    // // // console.log("stakeMarket.getStake=================>", await stakeMarket.getStake(1))
+  // console.log("stakeMarket.getStake=================>", await stakeMarket.getStake(6))
+  // console.log("stakeMarket.getDuePayable=================>", await stakeMarketNote.getDuePayable(6, 0))
+  // console.log("stakeMarket.getDueReceivable=================>", await stakeMarketNote.getDueReceivable(6, 0))
+  // console.log("stakeMarket.getNumPeriods=================>", await stakeMarketNote.getNumPeriods(
+  //   1700375175,
+  //   1700562365,
+  //   600
+  // ))
     // // // console.log("stakeMarketNote.getDuePayable=================>", await stakeMarketNote.getDuePayable(1, 0))
     // console.log("stakeMarket.notes(1)===========>", await stakeMarket.notes(1))
     // // console.log("stakeMarketHelper._tokenURI(1)===========>", await stakeMarketHelper._tokenURI(1))
@@ -2811,8 +2855,8 @@ async function main() {
   //   // //   false
   //   // // );
   //   // // await va.deployed()
-    let vaAddress = "0x6f491e004df2e5797f9355f89e4fa4ae6592e89f" //await vava._ve()
-    let va = Va.attach(vaAddress)
+    // let vaAddress = "0x6f491e004df2e5797f9355f89e4fa4ae6592e89f" //await vava._ve()
+    // let va = Va.attach(vaAddress)
     // console.log("va.deployed==============>", va.address, await vava._ve())
     // await va.setContractAddress(contractAddresses.address)
     // console.log("va.setContractAddress===============>Done")
@@ -10984,30 +11028,12 @@ async function main() {
   // );
   // console.log("445marketPlaceCollection.updateCollection===========> Done!")
 
-  // // 446
-  // await marketPlaceCollection.connect(wallets[443]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
-  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
-  // await marketPlaceCollection.connect(wallets[443]).updateCollection(
-  //   "Securitize",
-  //   "Find and join various valuepools that buy loans on various assets such as real estate, vehicles, etc. This process is called securitization.",
-  //   "https://i.ibb.co/s2mxrc8/433.jpg",
-  //   "https://i.ibb.co/s2mxrc8/433.jpg",
-  //   "https://i.ibb.co/Pw5GB8c/211.jpg",
-  //   "",
-  //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
-  //   "All",
-  //   "",
-  //   ""
-  // );
-  // console.log("446marketPlaceCollection.updateCollection===========> Done!")
-
-  // // 446
+  // // 447
   // await marketPlaceCollection.connect(wallets[443]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[443]).updateCollection(
   //   "Tontines",
-  //   "Find and join various tontines.  A tontine is a joint financial arrangement whereby a group of people contribute equally to a prize that is awarded entirely to one of them every payment cycle (which is typically a month). Each tontine has its prize amount and the higher the prize amount, the more each participant has to contribute. There are two ways to get into a tontine: either get admitted at the start (which requires you to prove trustworthiness is some way) or take the place of a participant that's unable to keep paying. Participants in a tontine are rewarded the tontine's prize in a decreasing order of their credit worthiness such that the less credit worthy participants are incentivized to keep paying their dues (if they get their prizes too early, they might not be willing to keep paying their dues). Participants can apply to get a credit worthiness check to any auditor of the channel their tontine deems trustworthy. Though every auditor has a different way to determine credit worthiness, you can build up your credit worthiness by participating in multiple smaller tontines, making purchases on CanCan, being a member of a Leviathan, having a decent trustBounty setup, etc.",
+  //   "Find and join various tontines.  A tontine is a joint financial arrangement whereby a group of people contribute equally to a prize that is awarded entirely to one of them every payment cycle (which is typically a month). Each tontine has its prize amount and the higher the prize amount, the more each participant has to contribute. There are two ways to get into a tontine: either get admitted at the start (which requires you to prove trustworthiness is some way) or take the place of a participant that's unable to keep paying. Participants in a tontine are rewarded the tontine's prize in a decreasing order of their credit worthiness so that the less credit worthy participants are incentivized to keep paying their dues (if they get their prizes too early, they might not be willing to keep paying their dues). Participants can apply to get a credit worthiness check to any auditor of the channel their tontine deems trustworthy. Though every auditor has a different way to determine credit worthiness, you can build up your credit worthiness by participating in multiple smaller tontines, making purchases on CanCan, being a member of a Leviathan, having a decent trustBounty setup, etc.",
   //   "https://i.ibb.co/CQJb4c9/304.jpg",
   //   "https://i.ibb.co/CQJb4c9/304.jpg",
   //   "https://i.ibb.co/0Jg0twR/258.jpg",
@@ -11127,6 +11153,79 @@ async function main() {
   //   ""
   // );
   // console.log("452marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 453
+  // await marketPlaceCollection.connect(wallets[450]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[450]).updateCollection(
+  //   "Securitize",
+  //   "Find and join various valuepools that buy loans on various assets such as real estate, vehicles, etc. This process is called securitization. You can also create requests for mortgages on various types of assets or directly contact institutions that issue the type of mortgage you are interested in. These institutions issue the mortgages and sell them back to valuepools who become the owners of your debt and to whom you now have to pay the mortgage. Mortgages can be created either as paywalls or as accounts on ARP contracts. This channel's associated betting events let you bet on whether anything will happen to various assets that have mortgages on them or not. 10% of all betting ticket sales go to the channel's valuepool which also purchases loans/mortgages.",
+  //   "https://i.ibb.co/s2mxrc8/433.jpg",
+  //   "https://i.ibb.co/s2mxrc8/433.jpg",
+  //   "https://i.ibb.co/Pw5GB8c/211.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("453marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 454
+  // await marketPlaceCollection.connect(wallets[451]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[451]).updateCollection(
+  //   "Futures",
+  //   "Find and buy futures/options on various assets or create requests to find users that will hedge against the volatility of various assets (bitcoin, ether, etc.)",
+  //   "https://i.ibb.co/sFF74VP/134.jpg",
+  //   "https://i.ibb.co/sFF74VP/134.jpg",
+  //   "https://i.ibb.co/44SXFQM/223.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("454marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 455
+  // await marketPlaceCollection.connect(wallets[452]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[452]).updateCollection(
+  //   "BookClub",
+  //   "Find and join a group club near you or a virtual book club. You can also list your books for sale, buy, rent or borrow new books.",
+  //   "https://i.ibb.co/BrLzdYN/132.jpg",
+  //   "https://i.ibb.co/BrLzdYN/132.jpg",
+  //   "https://i.ibb.co/44SXFQM/223.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("455marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 456
+  // await marketPlaceCollection.connect(wallets[453]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[453]).updateCollection(
+  //   "DollarShop",
+  //   "Find and buy items you can purchase for 1 dollar or less. You can also partner with the channel and list products that cost 1 dollar or less.",
+  //   "https://i.ibb.co/jyGLD7k/133.jpg",
+  //   "https://i.ibb.co/jyGLD7k/133.jpg",
+  //   "https://i.ibb.co/HCqK6C9/224.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("456marketPlaceCollection.updateCollection===========> Done!")
+
 
   }
   

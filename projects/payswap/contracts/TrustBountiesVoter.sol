@@ -161,7 +161,7 @@ contract TrustBountiesVoter {
         SSIData memory metadata = ISSI(IContract(contractAddress).ssi()).getSSID(_profileId);
         require(keccak256(abi.encodePacked(metadata.answer)) != keccak256(abi.encodePacked("")), "TB7");
         int256 _weight = int256(gauges[_ve][_pool].percentile + ve(_ve).percentiles(_tokenId)) / 2;
-        if (isGauge[_ve][_pool]) {
+        if (isGauge[_ve][litigations[_litigationId].defenderId]) {
             int256 _poolWeight;
             if(_weightFactor > 0) {
                 _poolWeight = _weight * _weightFactor / _weightFactor;
@@ -207,7 +207,7 @@ contract TrustBountiesVoter {
         string memory _tags
     ) external {
         require(IContract(contractAddress).trustBounty() == msg.sender, "TB11");
-        require(!isGauge[_ve][_attackerId] && !isGauge[_ve][_defenderId], "TB12");
+        require(!isGauge[_ve][_defenderId], "TB12");
         veToken[_ve] = _token;
         IStakeMarketBribe(_bribe()).notifyRewardAmount(_token, _attacker, _gas);
         uint percentile = _updateValues(_ve, _attackerId, _defenderId, _gas);
@@ -229,7 +229,6 @@ contract TrustBountiesVoter {
     }
 
     function _updateValues(address _ve, uint _attackerId, uint _defenderId, uint _gas) internal returns(uint) {
-        isGauge[_ve][_attackerId] = true;
         isGauge[_ve][_defenderId] = true;
         pools[_ve].push(_attackerId);
         litigations[litigationId].attackerId = _attackerId;
@@ -256,8 +255,7 @@ contract TrustBountiesVoter {
             _winnerId, 
             _loserId
         );
-        isGauge[_ve][_winnerId] = false;
-        isGauge[_ve][_loserId] = false;
+        isGauge[_ve][litigations[_litigationId].defenderId] = false;
         delete gauges[_ve][_attackerId];
         delete litigations[_litigationId];
         delete weights[_ve][_winnerId];
@@ -272,7 +270,6 @@ contract TrustBountiesVoter {
             weights[_ve][litigations[_litigationId].attackerId] > 0 ? litigations[_litigationId].attackerId : litigations[_litigationId].defenderId, 
             weights[_ve][litigations[_litigationId].attackerId] > 0 ? litigations[_litigationId].defenderId : litigations[_litigationId].attackerId
         );
-        isGauge[_ve][litigations[_litigationId].attackerId] = false;
         isGauge[_ve][litigations[_litigationId].defenderId] = false;
         delete gauges[_ve][litigations[_litigationId].attackerId];
         delete litigations[_litigationId];

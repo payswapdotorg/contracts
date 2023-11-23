@@ -1086,11 +1086,31 @@ contract ValuepoolVoter {
         uint start;
         address token;
     }
+    struct Bribe {
+        uint amount;
+        address token;
+        NFTYPE isNFT;
+    }
     mapping(address => mapping(address => Gauge)) public gauges;
     mapping(address => mapping(address => bool)) public isGauge;
     mapping(address => mapping(address => bool)) public isBlacklisted;
+    mapping(address => mapping(address => Bribe)) public bribe;
     mapping(address => uint) public minDifference;
+    mapping(address => bool) public bribesDisabled;
+    mapping(address => address) public veToVava;
     
+    event LockBribe(
+        address ve, 
+        address pool, 
+        address token, 
+        uint amount,
+        uint _isNFT
+    );
+    event UnlockBribe(
+        address ve, 
+        address pool, 
+        address operator
+    );
     event GaugeCreated(
         address user, 
         address ve, 
@@ -1201,7 +1221,6 @@ contract ValuepoolVoter {
         uint(1);
         address profile = IContract(contractAddress).profile();
         require(IProfile(profile).addressToProfileId(msg.sender) == _profileId && _profileId > 0, "VaV3");
-        SSIData memory metadata = ISSI(IContract(contractAddress).ssi()).getSSID(_profileId);
         if (voteOption[_ve] == VoteOption.Unique) {
             require(IProfile(profile).isUnique(_profileId), "VaV4");
         }
@@ -1251,6 +1270,7 @@ contract ValuepoolVoter {
     ) external {
         require(IAuth(_vava).devaddr_() == msg.sender && _period > 0, "VaV9");
         address _ve = IValuePool(_vava)._ve();
+        veToVava[_ve] = _vava;
         period[_ve] = _period;
         voteOption[_ve] = _voteOption;
         minPeriod[_ve] = _minPeriod;
@@ -1276,6 +1296,11 @@ contract ValuepoolVoter {
     function updateBlacklist(address _vava, address _user, bool _add) external {
         require(IAuth(_vava).devaddr_() == msg.sender, "VaV09");
         isBlacklisted[IValuePool(_vava)._ve()][_user] = _add;
+    }
+
+    function disableBribes(address _vava, bool _disable) external {
+        require(IAuth(_vava).devaddr_() == msg.sender, "VaV19");
+        bribesDisabled[IValuePool(_vava)._ve()] = _disable;
     }
     
     function createGauge(
@@ -1339,15 +1364,71 @@ contract ValuepoolVoter {
         return 0;
     }
 
+    function lockBribe(address _ve, address _pool, address _token, uint _amount, uint _isNFT) external {
+        require(!bribesDisabled[_ve], "VaV18");
+        if (NFTYPE(_isNFT) != NFTYPE.not) {
+            _safeTransferFrom(_token, _pool, address(this), _amount);
+        } else if (NFTYPE(_isNFT) == NFTYPE.erc1155) { 
+            IERC1155(_token).safeTransferFrom(_pool, address(this), _amount, 1, msg.data);
+        } else {
+            IERC721(_token).safeTransferFrom(_pool, address(this), _amount);
+        }
+        bribe[_ve][_pool].amount += _amount;
+        if (bribe[_ve][_pool].token == address(0)) {
+            bribe[_ve][_pool].token = _token;
+            bribe[_ve][_pool].isNFT = NFTYPE(_isNFT);
+        }
+        emit LockBribe(_ve, _pool, _token, _amount, _isNFT);
+    }
+
+    function unlockBribe(address _ve, address _pool) external {
+        Gauge memory _gauge = gauges[_ve][_pool];
+        require(period[_ve] <= block.timestamp - _gauge.start, "VaV20");
+        uint _voteDifference = weights[_ve][_pool] > 0 ? uint(weights[_ve][_pool]) * 10000 / Math.max(1,totalWeight[_ve][_pool]) : 0;
+        if (_voteDifference > minDifference[_ve]) {
+            _safeTransfer(bribe[_ve][_pool].isNFT, bribe[_ve][_pool].token, veToVava[_ve], bribe[_ve][_pool].amount);
+        } else {
+            _safeTransfer(bribe[_ve][_pool].isNFT, bribe[_ve][_pool].token, _pool, bribe[_ve][_pool].amount);
+        }
+        delete bribe[_ve][_pool];
+        
+        emit UnlockBribe(_ve, _pool, msg.sender);
+    }
+
     function length(address _ve) external view returns (uint) {
         return pools[_ve].length;
     }
 
+    function _safeTransfer(NFTYPE _isNFT, address token, address to, uint256 value) internal {
+        if (_isNFT != NFTYPE.not) {
+            require(token.code.length > 0, "VaV14");
+            (bool success, bytes memory data) =
+            token.call(abi.encodeWithSelector(erc20.transfer.selector, to, value));
+            require(success && (data.length == 0 || abi.decode(data, (bool))), "VaV15");
+        } else if (_isNFT == NFTYPE.erc1155) { 
+            IERC1155(token).safeTransferFrom(address(this), to, value, 1, msg.data);
+        } else {
+            IERC721(token).safeTransferFrom(address(this), to, value);
+        }
+    }
+
     function _safeTransferFrom(address token, address from, address to, uint256 value) internal {
-        require(token.code.length > 0, "VaV14");
+        require(token.code.length > 0, "VaV16");
         (bool success, bytes memory data) =
         token.call(abi.encodeWithSelector(erc20.transferFrom.selector, from, to, value));
-        require(success && (data.length == 0 || abi.decode(data, (bool))), "VaV15");
+        require(success && (data.length == 0 || abi.decode(data, (bool))), "VaV17");
+    }
+
+     function onERC721Received(address,address,uint256,bytes memory) public virtual returns (bytes4) {
+        return this.onERC721Received.selector; 
+    }
+
+    function onERC1155Received(address, address, uint256, uint256, bytes memory) public virtual returns (bytes4) {
+        return this.onERC1155Received.selector;
+    }
+
+    function onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory) public virtual returns (bytes4) {
+        return this.onERC1155BatchReceived.selector;
     }
 }
 
@@ -2319,7 +2400,7 @@ contract Ve {
     
     function updateMinimumBalance(address _owner, uint _tokenId, uint _amount, uint _deadline) external {
         require(msg.sender == _trustBounty());
-        // assert(_isApprovedOrOwner(_owner, _tokenId));
+        assert(_isApprovedOrOwner(_owner, _tokenId));
         require(_amount <= getWithdrawable(_tokenId));
         minimumBalance[_tokenId] += _amount;
         deadlines[_tokenId] = _deadline;
@@ -2328,18 +2409,19 @@ contract Ve {
 
     function deleteMinimumBalance(address _owner, uint _tokenId, uint _amount) external {
         require(msg.sender == _trustBounty());
-        // assert(_isApprovedOrOwner(_owner, _tokenId));
-        require(
-            // _amount <= minimumBalance[_tokenId] && 
-        deadlines[_tokenId] < block.timestamp);
+        assert(_isApprovedOrOwner(_owner, _tokenId));
+        require(deadlines[_tokenId] < block.timestamp);
         minimumBalance[_tokenId] -= _amount;
         // IValuePool(_valuepoolHelper()).emitDeleteMinimumBalance(_owner, _tokenId, _amount);
     }
 
-    function withdrawBounty(address _owner, uint _tokenId, uint _amount) external {
+    function withdrawBounty(uint _tokenId, uint _amount) external {
         require(msg.sender == _trustBounty());
-        // assert(_isApprovedOrOwner(_owner, _tokenId));
         minimumBalance[_tokenId] -= _amount;
+        IERC20(token).safeTransfer(
+            IContract(contractAddress).trustBountyHelper(), 
+            _amount
+        );
     }
 
     /// @notice Withdraw all tokens for `_tokenId`

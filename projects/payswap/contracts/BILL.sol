@@ -47,6 +47,7 @@ contract BILL {
     }
     MigrationPoint public migrationPoint;
     mapping(uint => uint) public optionId;
+    mapping(uint => uint) public heir;
     mapping(uint => Divisor) public penaltyDivisor;
     mapping(uint => Divisor) public discountDivisor;
     mapping(uint => uint[]) public parents;
@@ -71,7 +72,7 @@ contract BILL {
     ) {
         collectionId = IMarketPlace(IContract(__contractAddress).marketCollections())
         .addressToCollectionId(_devaddr);
-        require(collectionId > 0, "B01");
+        require(collectionId > 0);
         isPayable = _isPayable;
         helper = _helper;
         devaddr_ = _devaddr;
@@ -147,9 +148,15 @@ contract BILL {
         });
     }
 
-    function migrate(uint _protocolId) public returns (uint) {
+    function migrate(uint _protocolId) external {
+        require(isAdmin[msg.sender] || addressToProtocolId[msg.sender] == _protocolId);
+        _migrate(_protocolId);
+    }
+
+    function _migrate(uint _protocolId) internal returns (uint) {
         if (migrationPoint.version > protocolInfo[_protocolId].version) {
             uint _newProtocolId = _updateProtocol(
+                true,
                 protocolInfo[_protocolId].token,
                 ve(helper).ownerOf(_protocolId),
                 protocolInfo[_protocolId].startReceivable,
@@ -163,6 +170,7 @@ contract BILL {
             );
             parents[_newProtocolId]= parents[_protocolId];
             parents[_newProtocolId].push(_protocolId);
+            heir[_protocolId] = _newProtocolId;
             delete parents[_protocolId];
             return _newProtocolId;
         }
@@ -194,12 +202,26 @@ contract BILL {
             period = _period;
         }
     }
+
+    function _addRemaining(uint _protocolId, uint duePayable) internal returns(uint) {
+        address token = protocolInfo[_protocolId].token;
+        uint _balanceOf = erc20(token).balanceOf(address(this));
+        if (isAdmin[msg.sender] && _balanceOf < duePayable && isPayable) {
+            IERC20(token).safeTransferFrom(msg.sender, address(this), duePayable - _balanceOf);
+            _balanceOf += duePayable - _balanceOf;
+        }
+        return _balanceOf;
+    }
     
     function notifyCredit(address _merchant, address _owner, uint _amount) external lock {
         uint _protocolId = addressToProtocolId[_owner];
-        uint _newProtocolId = migrate(_protocolId);
+        uint _newProtocolId = _migrate(_protocolId);
         require(isAdmin[msg.sender] || (whitelist[_protocolId][msg.sender] && whitelist[_protocolId][_merchant]));
-        _addRemaining(_protocolId, _amount * protocolInfo[_protocolId].creditFactor / 10000);
+        _addRemaining(
+            _protocolId, 
+            protocolInfo[_protocolId].credit + _amount > protocolInfo[_protocolId].debit 
+            ? (protocolInfo[_protocolId].credit + _amount) * protocolInfo[_protocolId].creditFactor / 10000 - protocolInfo[_protocolId].debit * protocolInfo[_protocolId].debitFactor / 10000: 0
+        );
         protocolInfo[_protocolId].credit += _amount;
         _creditTab(_protocolId, _amount);
         IBILL(helper).emitNotifyCredit(
@@ -212,7 +234,7 @@ contract BILL {
 
     function notifyDebit(address _merchant, address _owner, uint _amount) external lock {
         uint _protocolId = addressToProtocolId[_owner];
-        uint _newProtocolId = migrate(_protocolId);
+        uint _newProtocolId = _migrate(_protocolId);
         require(isAdmin[msg.sender] || (whitelist[_protocolId][msg.sender] && whitelist[_protocolId][_merchant]));
         protocolInfo[_protocolId].debit += _amount;
         if (!isPayable) _debitTab(_protocolId, _amount);
@@ -225,10 +247,10 @@ contract BILL {
     }
 
     function _creditTab(uint _protocolId, uint _amount) internal {
-        uint _period = block.timestamp / protocolInfo[_protocolId].periodReceivable * protocolInfo[_protocolId].periodReceivable;
+        uint _period = block.timestamp + protocolInfo[_protocolId].periodReceivable / Math.max(1, protocolInfo[_protocolId].periodReceivable * protocolInfo[_protocolId].periodReceivable);
         uint _currPeriod = _allPeriods[_protocolId].length() > 0 ? _allPeriods[_protocolId].at(0) : _period;
         if (payTab[_protocolId][_currPeriod] <= _amount) {
-            payTab[_protocolId][_currPeriod] = 0; //clears tab 
+            payTab[_protocolId][_currPeriod] = 0; // clears tab 
             _allPeriods[_protocolId].remove(_currPeriod);
         } else {
             payTab[_protocolId][_currPeriod] -= _amount; 
@@ -243,7 +265,7 @@ contract BILL {
     }
 
     function _debitTab(uint _protocolId, uint _amount) internal {
-        uint _period = block.timestamp / protocolInfo[_protocolId].periodReceivable * protocolInfo[_protocolId].periodReceivable;
+        uint _period = block.timestamp + protocolInfo[_protocolId].periodReceivable / Math.max(1, protocolInfo[_protocolId].periodReceivable * protocolInfo[_protocolId].periodReceivable);
         require(_allPeriods[_protocolId].length() < IContract(contractAddress).maximumSize());
         _allPeriods[_protocolId].add(_period);
         payTab[_protocolId][_period] += _amount; 
@@ -267,6 +289,7 @@ contract BILL {
     }
 
     function _updateProtocol(
+        bool _migrate,
         address _token,
         address _owner,
         uint _startReceivable,
@@ -280,8 +303,8 @@ contract BILL {
     ) internal returns(uint _protocolId) {
         _protocolId = IBILL(helper).mint(_owner);
         protocolInfo[_protocolId].token = _token;
-        protocolInfo[_protocolId].startReceivable = block.timestamp + _startReceivable;
-        protocolInfo[_protocolId].startPayable = block.timestamp + _startPayable;
+        protocolInfo[_protocolId].startReceivable = _migrate ? _startReceivable : block.timestamp + _startReceivable;
+        protocolInfo[_protocolId].startPayable = _migrate ? _startPayable : block.timestamp + _startPayable;
         protocolInfo[_protocolId].periodReceivable = _periodReceivable;
         protocolInfo[_protocolId].periodPayable = _periodPayable;
         protocolInfo[_protocolId].version = migrationPoint.version;
@@ -289,6 +312,9 @@ contract BILL {
         protocolInfo[_protocolId].debitFactor = migrationPoint.debitFactor;
         optionId[_protocolId] = _optionId;
         userBountyRequired[_protocolId] = Math.max(bountyRequired, _bountyRequired);
+        addressToProtocolId[_owner] = _protocolId;
+        media[_protocolId] = _media;
+        description[_protocolId] = _description;
 
         IBILL(helper).emitUpdateProtocol(
             _protocolId,
@@ -313,6 +339,7 @@ contract BILL {
         if(_protocolId == 0) {
             _checkIdentityProof(_owner, _userInfo[0]);
             _protocolId = _updateProtocol(
+                false,
                 _token, 
                 _owner, 
                 _userInfo[1],
@@ -354,7 +381,7 @@ contract BILL {
     }
 
     function updateAutoCharge(bool _autoCharge, uint _tokenId) external {
-        require(ve(helper).ownerOf(_tokenId) == msg.sender, "BILL3");
+        require(ve(helper).ownerOf(_tokenId) == msg.sender);
         isAutoChargeable[_tokenId] = _autoCharge;
         IBILL(helper).emitUpdateAutoCharge(
             _tokenId,
@@ -376,7 +403,7 @@ contract BILL {
     }
 
     function updateOwner(address _prevOwner, uint _protocolId) external {
-        require(ve(helper).ownerOf(_protocolId) == msg.sender, "BILL8");
+        require(ve(helper).ownerOf(_protocolId) == msg.sender);
         addressToProtocolId[msg.sender] = _protocolId;
         delete addressToProtocolId[_prevOwner];
     }
@@ -434,13 +461,6 @@ contract BILL {
         );
     }
 
-    function _processCredit(uint _due, uint _protocolId) internal {
-        (uint payswapFees,uint adminFees) = _getFees(_due, protocolInfo[_protocolId].token, true);
-        uint _amount = _due - payswapFees - adminFees;
-        protocolInfo[_protocolId].credit += _amount;
-        _creditTab(_protocolId, _amount);
-    }
-
     function autoCharge(uint[] memory _protocolIds, uint _amount) public lock {
         for (uint i = 0; i < _protocolIds.length; i++) {
             if (isAdmin[msg.sender]) require(isAutoChargeable[_protocolIds[i]], "BILL4");
@@ -452,7 +472,8 @@ contract BILL {
             IERC20(token).safeTransfer(helper, payswapFees);
             IBILL(helper).notifyFees(token, payswapFees);
             totalProcessed[token] += _price;
-            _processCredit(_due, _protocolIds[i]);
+            protocolInfo[_protocolIds[i]].credit += _due;
+            _creditTab(_protocolIds[i], _due - payswapFees - adminFees);
             if(taxContract[_protocolIds[i]] != address(0x0)) {
                 IBILL(taxContract[_protocolIds[i]]).notifyDebit(address(this), ve(helper).ownerOf(_protocolIds[i]), _price);
             }
@@ -468,23 +489,13 @@ contract BILL {
     function _processAdminFees(uint _protocolId, uint _adminFees, address _token) internal {
         address note = _note();
         uint _tokenId = IARP(note).adminNotes(_protocolId);
-        (uint due,,,,) = IBILL(note).notes(_protocolId);
+        (uint due,,,,) = IBILL(note).notes(_tokenId);
         if (due > 0) {
             uint _paid = _adminFees >= due ? due : _adminFees;
             IBILL(note).updatePendingRevenueFromNote(_tokenId, _paid);
         } else {
             pendingRevenue[_token] += _adminFees;
         }
-    }
-
-    function _addRemaining(uint _protocolId, uint duePayable) internal returns(uint) {
-        address token = protocolInfo[_protocolId].token;
-        uint _balanceOf = erc20(token).balanceOf(address(this));
-        if (isAdmin[msg.sender] && _balanceOf < duePayable) {
-            IERC20(token).safeTransferFrom(msg.sender, address(this), duePayable - _balanceOf);
-            _balanceOf = erc20(token).balanceOf(address(this));
-        }
-        return _balanceOf;
     }
 
     function payInvoicePayable(uint _protocolId, uint _amount) external lock {
@@ -837,8 +848,8 @@ contract BILLMinter is ERC721Pausable {
     function _getOptions(address _bill, uint _protocolId, COLOR _color) internal view returns(string[] memory optionNames, string[] memory optionValues) {
         // (address _token,,uint _bountyId,uint _profileId,uint _credit,uint _debit,,,,,uint _creditFactor,uint _debitFactor) = 
         BILLInfo memory _p = IBILL(_bill).protocolInfo(_protocolId);
-        optionNames = new string[](6);
-        optionValues = new string[](6);
+        optionNames = new string[](8);
+        optionValues = new string[](8);
         uint idx;
         uint decimals = uint(IBILL(_p.token).decimals());
         optionNames[idx] = "BILL Color";
@@ -856,9 +867,13 @@ contract BILLMinter is ERC721Pausable {
         optionNames[idx] = "Profile ID";
         optionValues[idx++] = toString(_p.profileId);
         optionNames[idx] = "Credit";
-        optionValues[idx++] = string(abi.encodePacked(toString(_p.credit / decimals), "(", toString(_p.credit * _p.creditFactor / decimals) ,")"));
+        optionValues[idx++] = string(abi.encodePacked(toString(_p.credit), "(", toString(_p.creditFactor/100) ,"%)"));
         optionNames[idx] = "Debit";
-        optionValues[idx++] = string(abi.encodePacked(toString(_p.debit / decimals), "(", toString(_p.debit * _p.debitFactor / decimals) ,")"));
+        optionValues[idx++] = string(abi.encodePacked(toString(_p.debit), "(", toString(_p.debitFactor/100) ,"%)"));
+        optionNames[idx] = "TP/TR";
+        optionValues[idx++] = string(abi.encodePacked(toString(_p.periodPayable), ", " , toString(_p.periodReceivable)));
+        optionNames[idx] = "Decimals, Symbol";
+        optionValues[idx++] = string(abi.encodePacked(toString(decimals), ", " , IMarketPlace(_p.token).symbol()));
     }
 
     function _tokenURI(uint __tokenId) internal view returns(string memory output) {
@@ -954,7 +969,8 @@ contract BILLNote is ERC721Pausable {
 
     function updatePendingRevenueFromNote(uint _tokenId, uint _paid) external {
         require(IBILL(IContract(contractAddress).billMinter()).isGauge(msg.sender), "BILLH5");
-        notes[tokenId].due -= _paid;
+        require(notes[tokenId].due <= _paid);
+        notes[tokenId].due = 0;
         pendingRevenueFromNote[_tokenId] += _paid;
     }
 
@@ -1177,8 +1193,8 @@ contract BILLNote is ERC721Pausable {
 
     function tokenURI(uint _tokenId) public override view returns (string memory output) {
         uint idx;
-        string[] memory optionNames = new string[](5);
-        string[] memory optionValues = new string[](5);
+        string[] memory optionNames = new string[](8);
+        string[] memory optionValues = new string[](8);
         uint decimals = uint(IMarketPlace(notes[_tokenId].token).decimals());
         optionValues[idx++] = toString(_tokenId);
         optionNames[idx] = "PID";
@@ -1186,11 +1202,17 @@ contract BILLNote is ERC721Pausable {
         optionNames[idx] = "End";
         optionValues[idx++] = toString(notes[_tokenId].start);
         optionNames[idx] = "Amount";
-        optionValues[idx++] = string(abi.encodePacked(toString(notes[_tokenId].due/10**decimals), " " ,IMarketPlace(notes[_tokenId].token).symbol()));
-        optionNames[idx] = "Expired";
+        optionValues[idx++] = toString(notes[_tokenId].due);
+        optionNames[idx] = "Admin PR";
+        optionValues[idx++] = toString(pendingRevenueFromNote[_tokenId]);
+        optionNames[idx] = "Decimals, Symbol";
+        optionValues[idx++] = string(abi.encodePacked(toString(decimals), ", " , IMarketPlace(notes[_tokenId].token).symbol()));
+        optionNames[idx] = "Past Due Date";
         optionValues[idx++] = notes[_tokenId].start < block.timestamp ? "Yes" : "No";
+        optionNames[idx] = "Is Admin Note";
+        optionValues[idx++] = adminNotes[notes[_tokenId].protocolId] == _tokenId ? "Yes" : "No";
         string[] memory _description = new string[](1);
-        _description[0] = "This note gives you access to revenues of the bill on the specified protocol";
+        // _description[0] = "This note gives you access to revenues of the bill on the specified protocol";
         output = _constructTokenURI(
             _tokenId, 
             notes[_tokenId].token,

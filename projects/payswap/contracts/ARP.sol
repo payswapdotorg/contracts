@@ -162,11 +162,6 @@ contract ARP {
             cap: _cap == 0 ? 10000 : _cap
         });
     }
-
-    function _minter() internal view returns(address) {
-        return IContract(contractAddress).arpMinter();
-    }
-
     function _trustBounty() internal view returns(address) {
         return IContract(contractAddress).trustBounty();
     }
@@ -174,7 +169,7 @@ contract ARP {
     function setContractAddress(address _contractAddress) external {
         require(contractAddress == address(0x0) || helper == msg.sender);
         contractAddress = _contractAddress;
-        helper = IContract(_contractAddress).arpNote();
+        helper = IContract(_contractAddress).arpHelper();
     }
 
     function _checkIdentityProof(address _owner, uint _identityTokenId) internal {
@@ -238,7 +233,7 @@ contract ARP {
             adminBountyId[_token] = _bountyId;
         } else {
             require(owner == msg.sender && 
-                ve(_minter()).ownerOf(_tokenId) == msg.sender &&
+                ve(helper).ownerOf(_tokenId) == msg.sender &&
                 _token == protocolInfo[_tokenId].token && 
                 claimableBy == devaddr_, 
                 "ARP2"
@@ -248,7 +243,7 @@ contract ARP {
     }
 
     function updateAutoCharge(bool _autoCharge, uint _tokenId) external {
-        require(ve(_minter()).ownerOf(_tokenId) == msg.sender, "ARP3");
+        require(ve(helper).ownerOf(_tokenId) == msg.sender, "ARP3");
         isAutoChargeable[_tokenId] = _autoCharge;
         IARP(helper).emitUpdateAutoCharge(
             _tokenId,
@@ -287,10 +282,10 @@ contract ARP {
         );
     }
 
-    function _processPaid(uint _due, uint _protocolId) internal {
-        (uint payswapFees,uint adminFees) = _getFees(_due, protocolInfo[_protocolId].token, true);
-        protocolInfo[_protocolId].paidReceivable += (_due - payswapFees - adminFees);
-    }
+    // function _processPaid(uint _due, uint _protocolId) internal {
+    //     (uint payswapFees,uint adminFees) = _getFees(_due, protocolInfo[_protocolId].token, true);
+    //     protocolInfo[_protocolId].paidReceivable += (_due - payswapFees - adminFees);
+    // }
 
     function autoCharge(uint[] memory _tokenIds, uint _numPeriods) public lock {
         for (uint i = 0; i < _tokenIds.length; i++) {
@@ -304,9 +299,10 @@ contract ARP {
             IERC20(token).safeTransfer(helper, payswapFees);
             IARP(helper).notifyFees(token, payswapFees);
             totalProcessed[token] += _price;
-            _processPaid(_due, _tokenIds[i]);
+            protocolInfo[_tokenIds[i]].paidReceivable += _due;
+            // _processPaid(_due, _tokenIds[i]);
             if(taxContract[_tokenIds[i]] != address(0x0)) {
-                IBILL(taxContract[_tokenIds[i]]).notifyDebit(address(this), ve(_minter()).ownerOf(_tokenIds[i]), _price);
+                IBILL(taxContract[_tokenIds[i]]).notifyDebit(address(this), ve(helper).ownerOf(_tokenIds[i]), _price);
             }
             _processAdminFees(_tokenIds[i], adminFees, token);
             IARP(helper).emitAutoCharge(
@@ -320,7 +316,7 @@ contract ARP {
     function _processAdminFees(uint _protocolId, uint _adminFees, address _token) internal {
         address note = _note();
         uint _tokenId = IARP(note).adminNotes(_protocolId);
-        (uint due,,,,) = IBILL(note).notes(_protocolId);
+        (uint due,,,,) = IBILL(note).notes(_tokenId);
         if (due > 0) {
             uint _paid = _adminFees >= due ? due : _adminFees;
             IBILL(note).updatePendingRevenueFromNote(_tokenId, _paid);
@@ -348,7 +344,7 @@ contract ARP {
         totalProcessed[token] += _toPay;
         pendingRevenue[token] += adminFees;
         if(taxContract[_protocolId] != address(0x0)) {
-            IBILL(taxContract[_protocolId]).notifyCredit(address(this), ve(_minter()).ownerOf(_protocolId), _toPay);
+            IBILL(taxContract[_protocolId]).notifyCredit(address(this), ve(helper).ownerOf(_protocolId), _toPay);
         }
         _processAdminFees(_protocolId, adminFees, token);
         IERC20(token).safeTransfer(helper, payswapFees);
@@ -395,7 +391,7 @@ contract ARP {
     }
 
     function _updateUserPercentile(uint _tokenId) internal returns(uint) {
-        uint _protocolId = addressToProtocolId[ve(_minter()).ownerOf(_tokenId)];
+        uint _protocolId = addressToProtocolId[ve(helper).ownerOf(_tokenId)];
         uint _userPercentile = IValuePool(valuepool).getUserPercentile(_tokenId);
         if (_userPercentile < totalPercentile[protocolInfo[_protocolId].token]) {
             totalPercentile[protocolInfo[_protocolId].token] -= _userPercentile;
@@ -410,16 +406,16 @@ contract ARP {
     }
 
     function updateOwner(address _prevOwner, uint _protocolId) external {
-        require(ve(_minter()).ownerOf(_protocolId) == msg.sender, "ARP8");
+        require(ve(helper).ownerOf(_protocolId) == msg.sender, "ARP8");
         addressToProtocolId[msg.sender] = _protocolId;
         delete addressToProtocolId[_prevOwner];
     }
 
     function updatePaidPayable(uint _protocolId, uint _num) external {
-        if(msg.sender == helper) {
+        if(msg.sender == _note()) {
             protocolInfo[_protocolId].paidPayable += _num;
             if(taxContract[_protocolId] != address(0x0)) {
-                IBILL(taxContract[_protocolId]).notifyCredit(address(this), ve(_minter()).ownerOf(_protocolId), _num);
+                IBILL(taxContract[_protocolId]).notifyCredit(address(this), ve(helper).ownerOf(_protocolId), _num);
             }
         } else if (isAdmin[msg.sender] && !immutableContract) {
             protocolInfo[_protocolId].paidPayable += protocolInfo[_protocolId].amountPayable * _num;
@@ -507,7 +503,7 @@ contract ARPHelper is ERC721Pausable {
     event NotifyReward(address token, uint amount);
     event DeleteARP(address arp);
 
-    constructor() ERC721("Electronic ARP Cheque", "eaCheque")  {}
+    constructor() ERC721("ARP Account", "arpAccount")  {}
 
     // simple re-entrancy check
     uint internal _unlocked = 1;
@@ -744,8 +740,8 @@ contract ARPHelper is ERC721Pausable {
     function _getOptions(address _arp, uint _protocolId, COLOR _color) internal view returns(string[] memory optionNames, string[] memory optionValues) {
         // (,uint _bountyId,uint _profileId,uint _tokenId,uint _amountPayable,uint _amountReceivable,uint _paidPayable,uint _paidReceivable,uint _periodPayable,uint _periodReceivable,,) = IARP(_arp).protocolInfo(_protocolId);
         ARPInfo memory _p = IARP(_arp).protocolInfo(_protocolId);
-        optionNames = new string[](9);
-        optionValues = new string[](9);
+        optionNames = new string[](10);
+        optionValues = new string[](10);
         uint idx;
         uint decimals = uint(IMarketPlace(_p.token).decimals());
         optionNames[idx] = "ARP Color";
@@ -765,13 +761,15 @@ contract ARPHelper is ERC721Pausable {
         optionNames[idx] = "VeNFT ID";
         optionValues[idx++] = toString(_p.tokenId);
         optionNames[idx] = "Payable";
-        optionValues[idx++] = string(abi.encodePacked(toString(_p.amountPayable/10**decimals), " " , IMarketPlace(_p.token).symbol()));
+        optionValues[idx++] = toString(_p.amountPayable);
         optionNames[idx] = "Receivable";
-        optionValues[idx++] = string(abi.encodePacked(toString(_p.amountReceivable/10**decimals), " " , IMarketPlace(_p.token).symbol()));
+        optionValues[idx++] = toString(_p.amountReceivable);
         optionNames[idx] = "PP/PR";
-        optionValues[idx++] = string(abi.encodePacked(toString(_p.paidPayable/10**decimals), ", " , toString(_p.paidReceivable/10**decimals)));
+        optionValues[idx++] = string(abi.encodePacked(toString(_p.paidPayable / 10**decimals), ", " , toString(_p.paidReceivable / 10**decimals)));
         optionNames[idx] = "TP/TR";
         optionValues[idx++] = string(abi.encodePacked(toString(_p.periodPayable), ", " , toString(_p.periodReceivable)));
+        optionNames[idx] = "Decimals, Symbol";
+        optionValues[idx++] = string(abi.encodePacked(toString(decimals), ", " , IMarketPlace(_p.token).symbol()));
     }
 
     function _tokenURI(uint __tokenId) internal view returns(string memory output) {
@@ -821,7 +819,6 @@ contract ARPHelper is ERC721Pausable {
 
 contract ARPNote is ERC721Pausable {
     using SafeERC20 for IERC20;
-    using EnumerableSet for EnumerableSet.AddressSet;
 
     struct ARPContractNote {
         uint due;
@@ -836,7 +833,7 @@ contract ARPNote is ERC721Pausable {
     mapping(uint => mapping(address => uint)) public balances;
     mapping(uint => ARPContractNote) public notes;
     mapping(uint => uint) public pendingRevenueFromNote;
-    uint public tokenId = 1;
+    uint private tokenId = 1;
     uint private tradingFeeCredit = 100;
     uint private tradingFeeDebit = 100;
     address private contractAddress;
@@ -887,7 +884,8 @@ contract ARPNote is ERC721Pausable {
 
     function updatePendingRevenueFromNote(uint _tokenId, uint _paid) external {
         require(IARP(IContract(contractAddress).arpHelper()).isGauge(msg.sender));
-        notes[tokenId].due -= _paid;
+        require(notes[tokenId].due <= _paid);
+        notes[tokenId].due = 0;
         pendingRevenueFromNote[_tokenId] += _paid;
     }
 
@@ -911,27 +909,24 @@ contract ARPNote is ERC721Pausable {
     }
 
     function getNumPeriods(uint tm1, uint tm2, uint _period) internal pure returns(uint) {
-        // if (tm2 == 0) tm2 = block.timestamp;
         if (tm1 == 0 || tm2 == 0 || tm2 < tm1 || _period == 0) return 0;
         return (tm2 - tm1) / _period;
     }
 
     function getDueReceivable(address _arp, uint _protocolId, uint _numExtraPeriods) public view returns(uint, uint, int) {
-        // (address token,,,uint _tokenId,,uint amountReceivable,,uint paidReceivable,,uint periodReceivable,,uint startReceivable) =
         ARPInfo memory p = IARP(_arp).protocolInfo(_protocolId);
         uint due;
         uint amountReceivable = p.amountReceivable;
         uint shiftedBlockTimestamp = block.timestamp + _numExtraPeriods * p.periodReceivable;
         uint numPeriods = getNumPeriods(p.startReceivable, shiftedBlockTimestamp, p.periodReceivable);
-        // uint numPeriods = Math.max(1, p.paidReceivable / amountReceivable);
-        uint dueDate = p.startReceivable + p.periodReceivable * (numPeriods + 1);
+        uint dueDate = p.startReceivable + p.periodReceivable * ((p.paidReceivable / Math.max(1, p.amountReceivable)) + 1);
         if (IARP(_arp).percentages()) {
             if (IARP(_arp).automatic()) {
                 amountReceivable = _getUserPercentile(_arp, p.token, p.tokenId);
             }
-            due = _getDue(IARP(_arp).debt(p.token), dueDate, amountReceivable, p.paidReceivable, shiftedBlockTimestamp);
+            due = _getDue(IARP(_arp).debt(p.token), amountReceivable, p.paidReceivable, shiftedBlockTimestamp);
         } else {
-            due = dueDate < shiftedBlockTimestamp ? amountReceivable * numPeriods - p.paidReceivable : 0;
+            due = amountReceivable * numPeriods > p.paidReceivable ? amountReceivable * numPeriods - p.paidReceivable : 0;
         }
         return (
             due, // due
@@ -940,27 +935,24 @@ contract ARPNote is ERC721Pausable {
         );
     }
 
-    function _getDue(uint total, uint dueDate, uint amount, uint paid, uint shiftedBlockTimestamp) internal pure returns(uint) {
-        return dueDate < shiftedBlockTimestamp && (total * amount / 10000) > paid ? (total * amount / 10000) - paid : 0;
+    function _getDue(uint total, uint amount, uint paid, uint shiftedBlockTimestamp) internal pure returns(uint) {
+        return (total * amount / 10000) > paid ? (total * amount / 10000) - paid : 0;
     }
 
     function getDuePayable(address _arp, uint _protocolId, uint _numExtraPeriods) public view returns(uint, uint, int) {
-        // (address token,,,uint _tokenId,uint amountPayable,,uint paidPayable,,uint periodPayable,,uint startPayable,) = 
         ARPInfo memory p = IARP(_arp).protocolInfo(_protocolId);
         uint amountPayable = p.amountPayable;
-        uint dueDate;
         uint due;
         uint shiftedBlockTimestamp = block.timestamp + _numExtraPeriods * p.periodPayable;
         uint numPeriods = getNumPeriods(p.startPayable, shiftedBlockTimestamp, p.periodPayable);
-        // uint numPeriods = p.paidPayable / amountPayable;
-        dueDate = p.startPayable + p.periodPayable * (numPeriods + 1);
+        uint dueDate = p.startPayable + p.periodPayable * ((p.paidPayable / Math.max(1, p.amountPayable)) + 1);
         if (IARP(_arp).percentages()) {
             if (IARP(_arp).automatic()) {
                 amountPayable = _getUserPercentile(_arp, p.token, p.tokenId);
             }
-            due = _getDue(IARP(_arp).reward(p.token), dueDate, amountPayable, p.paidPayable, shiftedBlockTimestamp);
+            due = _getDue(IARP(_arp).reward(p.token), amountPayable, p.paidPayable, shiftedBlockTimestamp);
         } else {
-            due = dueDate < shiftedBlockTimestamp ? amountPayable * numPeriods - p.paidPayable : 0;
+            due = amountPayable * numPeriods > p.paidPayable ? amountPayable * numPeriods - p.paidPayable : 0;
         }
         return (
             due, // due
@@ -1020,8 +1012,9 @@ contract ARPNote is ERC721Pausable {
             IContract(contractAddress).cap(p.token) > 0 
             ? IContract(contractAddress).cap(p.token) : type(uint).max
         );
+        require(duePayable > 0);
+        IARP(_arp).updatePaidPayable(_protocolId, duePayable);
         duePayable -= (adminFees + payswapFees);
-        require(duePayable > 0, "ARPH9");
         _beforeTransferCheck(_arp, p.token, _protocolId, duePayable);
         notesPerProtocol[_protocolId] += _numPeriods;
         notes[tokenId] = ARPContractNote({
@@ -1032,7 +1025,6 @@ contract ARPNote is ERC721Pausable {
             arp: _arp,
             protocolId: _protocolId
         });
-        IARP(_arp).updatePaidPayable(_protocolId, duePayable);
         _safeMint(_to, tokenId, msg.data);
         IARP(IContract(contractAddress).arpHelper()).
         emitTransferDueToNote(_arp, _protocolId, tokenId++, duePayable, false);
@@ -1100,7 +1092,7 @@ contract ARPNote is ERC721Pausable {
     }
     
     function updateDueBeforePayable(address _arp, bool _isTrue) external {
-        require(IAuth(_arp).isAdmin(msg.sender), "ARPH17");
+        require(IAuth(_arp).isAdmin(msg.sender));
         dueBeforePayable[_arp] = _isTrue;
     }
 
@@ -1126,8 +1118,8 @@ contract ARPNote is ERC721Pausable {
 
     function tokenURI(uint _tokenId) public override view returns (string memory output) {
         uint idx;
-        string[] memory optionNames = new string[](5);
-        string[] memory optionValues = new string[](5);
+        string[] memory optionNames = new string[](8);
+        string[] memory optionValues = new string[](8);
         uint decimals = uint(IMarketPlace(notes[_tokenId].token).decimals());
         optionValues[idx++] = toString(_tokenId);
         optionNames[idx] = "PID";
@@ -1135,11 +1127,17 @@ contract ARPNote is ERC721Pausable {
         optionNames[idx] = "End";
         optionValues[idx++] = toString(notes[_tokenId].timer);
         optionNames[idx] = "Amount";
-        optionValues[idx++] = string(abi.encodePacked(toString(notes[_tokenId].due/10**decimals), " " ,IMarketPlace(notes[_tokenId].token).symbol()));
-        optionNames[idx] = "Expired";
+        optionValues[idx++] = toString(notes[_tokenId].due);
+        optionNames[idx] = "Admin PR";
+        optionValues[idx++] = toString(pendingRevenueFromNote[_tokenId]);
+        optionNames[idx] = "Decimals, Symbol";
+        optionValues[idx++] = string(abi.encodePacked(toString(decimals), ", " , IMarketPlace(notes[_tokenId].token).symbol()));
+        optionNames[idx] = "Past Due Date";
         optionValues[idx++] = notes[_tokenId].timer < block.timestamp ? "Yes" : "No";
+        optionNames[idx] = "Is Admin Note";
+        optionValues[idx++] = adminNotes[notes[_tokenId].protocolId] == _tokenId ? "Yes" : "No";
         string[] memory _description = new string[](1);
-        _description[0] = "This note gives you access to revenues of the arp on the specified protocol";
+        // _description[0] = "This note gives you access to revenues of the arp on the specified protocol";
         output = _constructTokenURI(
             _tokenId, 
             notes[_tokenId].token,

@@ -3928,7 +3928,7 @@ contract AML is ERC20Votes, Ownable {
     }
 
     function setContractAddress(address __contractAddress) external {
-        require(contractAddress == address(0x0) || platform == msg.sender, "PMC13");
+        require(contractAddress == address(0x0) || platform == msg.sender);
         contractAddress = __contractAddress;
     }
 
@@ -4085,7 +4085,8 @@ contract AML is ERC20Votes, Ownable {
         uint _claimId, 
         uint _amountToClaim,
         string memory _title, 
-        string memory _content
+        string memory _content,
+        string memory _tags
     ) external {
         address trustBounty = IContract(contractAddress).trustBounty();
         ITrustBounty(trustBounty).applyClaimResults(
@@ -4093,7 +4094,8 @@ contract AML is ERC20Votes, Ownable {
             _claimId, 
             _amountToClaim,
             _title, 
-            _content
+            _content,
+            _tags
         );
     }
     
@@ -5066,7 +5068,7 @@ interface ICollectionWhitelistChecker2 {
 
 interface ITrustBounty {
     function emitDeleteBounty(uint) external;
-    function emitUpdateBounty(uint,uint,address,string memory,string memory) external;
+    function emitUpdateBounty(uint,uint,string memory,string memory) external;
     function emitCreateBounty(uint,address,address,uint,uint,string memory,string memory) external;
     function emitAddBalance(uint,address,uint) external;
     function emitDeleteBalance(uint,address) external;
@@ -5087,7 +5089,7 @@ interface ITrustBounty {
     function bountyInfo(uint _bountyId) external view returns(address,address,address,address,uint,uint,uint,uint,NFTYPE,bool);
     function createBounty(address,address,address,address,uint,uint,uint,uint,bool,string memory,string memory) external returns(uint);
     function addBalance(uint,address,uint,uint) external;
-    function applyClaimResults(uint,uint,uint,string memory,string memory) external;
+    function applyClaimResults(uint,uint,uint,string memory,string memory,string memory) external;
     function minToClaim() external view returns(uint);
     function tradingFee() external view returns(uint);
     function tradingNFTFee() external view returns(uint);
@@ -5142,7 +5144,7 @@ interface IProfile {
 interface IGaugeBalance {
     function _ve() external view returns(address);
     function balanceOf(uint) external view returns (uint);
-    function withdrawBounty(address, uint, uint) external;
+    function withdrawBounty(uint, uint) external;
     function updateMinimumBalance(address _owner, uint _tokenId, uint _amount, uint _endTime) external;
     function deleteMinimumBalance(address _owner, uint _tokenId, uint _amount) external;
 }
@@ -5416,6 +5418,7 @@ interface IPaywall {
 interface IBILL {
     function attach(uint) external;
     function detach(uint) external;
+    function getDue(uint,uint,uint,uint) external pure returns(uint);
     function protocolInfo(uint) external view returns(BILLInfo memory);
     function percentiles(address) external view returns(uint);
     function getMedia(address,uint) external view returns(string[] memory);

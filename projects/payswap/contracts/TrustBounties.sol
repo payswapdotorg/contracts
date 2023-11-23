@@ -44,7 +44,7 @@ contract TrustBounties {
         uint tokenId;
         uint amount;
     }
-    mapping(uint => mapping(address => Balance)) private balances;
+    mapping(uint => mapping(address => Balance)) public balances;
     mapping(uint => EnumerableSet.AddressSet) private balanceSources;
     address private contractAddress;
     mapping(uint => bool) public lockedBounties;
@@ -103,7 +103,7 @@ contract TrustBounties {
         string memory _bountySource
     ) external returns(uint) { 
         address trustBountyHelper = _trustBountyHelper();
-        require(ITrustBounty(trustBountyHelper).isVe(_ve),"1");
+        require(ITrustBounty(trustBountyHelper).isVe(_ve) && _claimableBy != _user,"1");
         require(_endTime >= ITrustBounty(trustBountyHelper).minLockPeriod(),"2");
         if (_token == address(0x0)) {
             _token = ITrustBounty(trustBountyHelper).WETH();
@@ -143,6 +143,7 @@ contract TrustBounties {
     
     function updateOwner(uint _bountyId) external {
         require(profileId[_bountyId] != 0 && profileId[_bountyId] == IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender));
+        require(bountyInfo[_bountyId].claimableBy != msg.sender);
         bountyInfo[_bountyId].owner = msg.sender;
     }
     
@@ -155,6 +156,8 @@ contract TrustBounties {
         require(bountyInfo[_bountyId].owner == msg.sender);
         require(_amount <= balances[_bountyId][address(this)].amount);
         require(isApprovedForAmount[_bountyId][_partnerBounty].deadline < block.timestamp + _deadline);
+        require(bountyInfo[_bountyId].token == bountyInfo[_partnerBounty].token);
+
         balances[_bountyId][address(this)].amount -= _amount;
         approvals[_partnerBounty].add(_bountyId);
         isApprovedForAmount[_partnerBounty][_bountyId].amount += _amount;
@@ -188,19 +191,16 @@ contract TrustBounties {
     function updateBounty(
         uint _bountyId,
         uint _collectionId,
-        address _newOwner,
         string memory avatar,
         string memory terms
     ) external {
         require(bountyInfo[_bountyId].owner == msg.sender);
         address trustBountyHelper = _trustBountyHelper();
-        bountyInfo[_bountyId].owner = _newOwner;
         bountyInfo[_bountyId].minToClaim = ITrustBounty(trustBountyHelper).minToClaim();
         
         ITrustBounty(trustBountyHelper).emitUpdateBounty(
             _bountyId, 
             _collectionId,
-            _newOwner, 
             avatar, 
             terms
         );
@@ -231,8 +231,8 @@ contract TrustBounties {
             } else {
                 _fees = ITrustBounty(trustBountyHelper).tradingNFTFee();
                 IERC20(IContract(contractAddress).token()).safeTransferFrom(
-                    bountyInfo[_bountyId].owner,
-                    address(this),
+                    msg.sender,
+                    trustBountyHelper,
                     _fees
                 );
                 ITrustBounty(trustBountyHelper).notifyFees(
@@ -240,7 +240,7 @@ contract TrustBounties {
                     _fees
                 );
             }
-            ITrustBounty(trustBountyHelper).safeTransferFrom(_bountyId, msg.sender, address(this), _amount);
+            ITrustBounty(trustBountyHelper).safeTransferFrom(_bountyId, msg.sender, trustBountyHelper, _amount);
         } else {
             require(ITrustBounty(trustBountyHelper).isAuthorizedSourceFactories(_source));
             require(ve(_source).token() == bountyInfo[_bountyId].token);
@@ -369,9 +369,8 @@ contract TrustBounties {
         uint _bountyId,
         uint _amountToClaim
     ) external {
-        require(bountyInfo[_bountyId].owner != address(0x0));
-        require(bountyInfo[_bountyId].claimableBy == address(0x0) ||
-        bountyInfo[_bountyId].claimableBy == msg.sender);
+        require(bountyInfo[_bountyId].owner != address(0x0) && bountyInfo[_bountyId].owner != msg.sender);
+        require(bountyInfo[_bountyId].claimableBy == msg.sender);
         if (claims[_bountyId].length > 0) {
             require(claims[_bountyId][claims[_bountyId].length - 1].winner != address(0x0));
         }
@@ -396,7 +395,7 @@ contract TrustBounties {
     }
 
     function concede(uint _bountyId) external {
-        uint _lastClaim = claims[_bountyId].length-1;
+        uint _lastClaim = claims[_bountyId].length - 1;
         require(bountyInfo[_bountyId].owner == msg.sender || claims[_bountyId][_lastClaim].hunter == msg.sender);
         address _winner = bountyInfo[_bountyId].owner == msg.sender 
         ? claims[_bountyId][_lastClaim].hunter : bountyInfo[_bountyId].owner;
@@ -418,19 +417,23 @@ contract TrustBounties {
         string memory _tags
     ) external {
         _claimId = _claimId - 1;
-        require(claims[_bountyId][_claimId].winner != address(0x0));
+        require(claims[_bountyId][_claimId].winner != address(0x0) && claims[_bountyId][_claimId].status != StakeStatusEnum.AtPeace);
         address trustBountyHelper = _trustBountyHelper();
-        if (_amountToClaim > 0) {
+        if (_amountToClaim > 0) { // appealing
             require(claims[_bountyId][_claimId].winner != msg.sender);
             address _attacker = claims[_bountyId][_claimId].winner == bountyInfo[_bountyId].owner
             ?  msg.sender : claims[_bountyId][_claimId].hunter;
             createClaim(_attacker, _bountyId, _amountToClaim, lockedBounties[_bountyId], _title, _content, _tags);
         } else if (claims[_bountyId][_claimId].winner == claims[_bountyId][_claimId].hunter) {
             require(claims[_bountyId][_claimId].endTime < block.timestamp);
-            uint _amount = _gatherFunds(_bountyId, claims[_bountyId][_claimId].amountToClaim);
-            uint _fees = _amount * ITrustBounty(trustBountyHelper).tradingFee() / 10000;
+            balances[_bountyId][address(this)].amount -= claims[_bountyId][_claimId].amountToClaim;
+            uint _fees = claims[_bountyId][_claimId].amountToClaim * ITrustBounty(trustBountyHelper).tradingFee() / 10000;
             ITrustBounty(trustBountyHelper).notifyFees(bountyInfo[_bountyId].token, _fees);
-            ITrustBounty(trustBountyHelper).safeTransfer(_bountyId, claims[_bountyId][_claimId].hunter, _amount - _fees);
+            ITrustBounty(trustBountyHelper).safeTransfer(
+                _bountyId, 
+                claims[_bountyId][_claimId].hunter, 
+                claims[_bountyId][_claimId].amountToClaim - _fees
+            );
         } else if (claims[_bountyId][_claimId].winner == bountyInfo[_bountyId].owner) {
             lockedBounties[_bountyId] = false;
         }
@@ -448,51 +451,54 @@ contract TrustBounties {
         contractAddress = _contractAddress;
     }
 
-    function _gatherFunds(uint _bountyId, uint _amount) internal returns(uint _fundsGathered) {
-        for (uint i = 0; i < balanceSources[_bountyId].length(); i++) {
-            if (_amount <= _fundsGathered) break;
-            uint _delta1 = _amount - _fundsGathered;
-            address _source = balanceSources[_bountyId].at(i);
-            if (balances[_bountyId][_source].amount < _delta1) {
-                _fundsGathered += balances[_bountyId][_source].amount;
-                if (_source != address(this)) {
-                    IGaugeBalance(_source).withdrawBounty(
-                        bountyInfo[_bountyId].owner, 
-                        balances[_bountyId][_source].tokenId, 
-                        balances[_bountyId][_source].amount
-                    );
-                }
-                delete balances[_bountyId][_source];
-            } else {
-                _fundsGathered += _delta1;
-                balances[_bountyId][_source].amount -= _delta1;
-                if (_source != address(this)) {
-                    IGaugeBalance(_source).withdrawBounty(
-                        bountyInfo[_bountyId].owner, 
-                        balances[_bountyId][_source].tokenId,
-                        _delta1
-                    );
-                }
-            }
+    function getFundsFromSource(uint _bountyId, uint _position) external {
+        uint _lastClaim = claims[_bountyId].length - 1;
+        address _source = balanceSources[_bountyId].at(_position);
+        if (bountyInfo[_bountyId].owner != msg.sender) {
+            require(
+                balances[_bountyId][address(this)].amount < claims[_bountyId][_lastClaim].amountToClaim &&
+                claims[_bountyId][_lastClaim].winner == claims[_bountyId][_lastClaim].hunter && 
+                claims[_bountyId][_lastClaim].status != StakeStatusEnum.AtPeace
+            );
         }
-        if (_fundsGathered < _amount) {
-            for (uint i = 0; i < approvals[_bountyId].length(); i++) {
-                if (_amount <= _fundsGathered) break;
-                uint _delta = _amount - _fundsGathered;
-                if (isApprovedForAmount[_bountyId][approvals[_bountyId].at(i)].amount < _delta) {
-                    _fundsGathered += isApprovedForAmount[_bountyId][approvals[_bountyId].at(i)].amount;
-                    isApprovedForAmount[_bountyId][approvals[_bountyId].at(i)].amount = 0;
-                } else {
-                    _fundsGathered += _delta;
-                    isApprovedForAmount[_bountyId][approvals[_bountyId].at(i)].amount -= _delta;
-                }
-            }
-            cleanUpApprovals(_bountyId);
-            cleanUpBalances(_bountyId);
+        uint _amount = Math.min(claims[_bountyId][_lastClaim].amountToClaim, balances[_bountyId][_source].amount);
+        IGaugeBalance(_source).withdrawBounty(balances[_bountyId][_source].tokenId, _amount);
+        balances[_bountyId][_source].amount += _amount;
+        if (_amount == balances[_bountyId][_source].amount) {
+            balanceSources[_bountyId].remove(_source);
+            delete balances[_bountyId][_source];
         }
     }
 
-    function cleanUpApprovals(uint _bountyId) public {
+    function getFundsFromApprovals(uint _bountyId, uint _position) external {
+        uint _lastClaim = claims[_bountyId].length - 1;
+        require(
+            balances[_bountyId][address(this)].amount < claims[_bountyId][_lastClaim].amountToClaim &&
+            claims[_bountyId][_lastClaim].winner == claims[_bountyId][_lastClaim].hunter && 
+            claims[_bountyId][_lastClaim].status != StakeStatusEnum.AtPeace
+        );
+        uint _amount = Math.min(
+            claims[_bountyId][_lastClaim].amountToClaim, 
+            isApprovedForAmount[_bountyId][approvals[_bountyId].at(_position)].amount
+        );
+        balances[_bountyId][address(this)].amount += _amount;
+        if (_amount == isApprovedForAmount[_bountyId][approvals[_bountyId].at(_position)].amount) {
+            approvals[_bountyId].remove(approvals[_bountyId].at(_position));
+            delete isApprovedForAmount[_bountyId][approvals[_bountyId].at(_position)];
+        }
+    }
+
+    function cleanUpClaims(uint _bountyId) external {
+        uint _lastClaim = claims[_bountyId].length - 1;
+        require(
+            bountyInfo[_bountyId].owner == msg.sender && 
+            claims[_bountyId][_lastClaim].status == StakeStatusEnum.AtPeace && 
+            _lastClaim >= IContract(contractAddress).maximumSize()
+        );
+        delete claims[_bountyId];
+    }
+
+    function cleanUpApprovals(uint _bountyId) external {
         for (uint i = approvals[_bountyId].length() - 1; i <= 0; i--) {
             if (isApprovedForAmount[_bountyId][approvals[_bountyId].at(i)].amount == 0) {
                 approvals[_bountyId].remove(approvals[_bountyId].at(i));
@@ -501,7 +507,7 @@ contract TrustBounties {
         }
     }
 
-    function cleanUpBalances(uint _bountyId) public {
+    function cleanUpBalances(uint _bountyId) external {
         for (uint i = balanceSources[_bountyId].length() - 1; i <= 0; i--) {
             address _source = balanceSources[_bountyId].at(i);
             if (balances[_bountyId][_source].amount == 0) {
@@ -552,7 +558,6 @@ contract TrustBountiesHelper {
     event UpdateBounty(
         uint indexed bountyId, 
         uint collectionId,
-        address newOwner, 
         string avatar, 
         string terms
     );
@@ -627,7 +632,6 @@ contract TrustBountiesHelper {
     function emitUpdateBounty(
         uint bountyId, 
         uint collectionId,
-        address newOwner, 
         string memory avatar, 
         string memory terms
     ) external {
@@ -635,7 +639,6 @@ contract TrustBountiesHelper {
         emit UpdateBounty(
             bountyId, 
             collectionId,
-            newOwner, 
             avatar, 
             terms
         );
@@ -751,14 +754,16 @@ contract TrustBountiesHelper {
         uint _bountyId, 
         uint _claimId, 
         string memory _title, 
-        string memory _content
+        string memory _content,
+        string memory _tag
     ) external payable {
         ITrustBounty(_trustBounty()).applyClaimResults(
             _bountyId, 
             _claimId, 
             msg.value,
             _title, 
-            _content
+            _content,
+            _tag
         ); 
     }
 
@@ -929,7 +934,6 @@ contract TrustBountiesHelper {
 
     function withdrawFees(address _token) external returns(uint _amount) {
         require(msg.sender == IAuth(contractAddress).devaddr_(), "T41");
-        address trustBounty = IContract(contractAddress).trustBounty();
         _amount = treasuryFees[_token];
         treasuryFees[_token] = 0;
         IERC20(_token).safeTransfer(msg.sender, _amount);

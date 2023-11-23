@@ -13,7 +13,6 @@ contract StakeMarket {
         uint stakeId;
         address token;
     }
-    bool public check;
     mapping(uint => address) private taxContracts;
     mapping(uint => StakeStatus) public stakeStatus;
     mapping(uint => StakeNote) public notes;
@@ -26,6 +25,7 @@ contract StakeMarket {
     mapping(address => uint) public treasuryFees;
     address contractAddress;
     mapping(uint => EnumerableSet.UintSet) internal _stakesApplication;
+    mapping(uint => EnumerableSet.UintSet) internal _cancellationApplication;
     mapping(uint => Application) public stakesApplication;
     mapping(uint => uint) public waitingPeriodDeadline;
     mapping(uint => uint) public stakesBalances;
@@ -43,7 +43,7 @@ contract StakeMarket {
     event LockStake(uint indexed stakeId, uint partnerStakeId, uint time, bool closedStake);
     event ApplyToStake(uint indexed stakeId, address user, uint partnerStakeId, uint time);
     event DeleteApplication(uint indexed stakeId, address user, uint applicationId);
-    event SwitchStake(address indexed user, uint pool, bool closedStake);
+    // event SwitchStake(address indexed user, uint pool, bool closedStake);
     event AddToStake(uint indexed stakeId, address owner, uint amount, uint time);
     event UnlockStake(uint indexed stakeId, address owner, uint amount, uint time);
     event UpdateMiscellaneous(
@@ -137,7 +137,7 @@ contract StakeMarket {
         bool _requireUpfrontPayment
     ) public returns (uint) {
         uint _fees;
-        if (_requireUpfrontPayment && _bankInfo[6] < 3600 * 24) {
+        if (_requireUpfrontPayment && _bankInfo[6] < 86400) {
             IERC20(_addrs[1]).safeTransferFrom(msg.sender, address(this), _bankInfo[1]);
             _fees = _bankInfo[1] * _tradingFee() / 10000;
             treasuryFees[_addrs[1]] += _fees;
@@ -268,7 +268,8 @@ contract StakeMarket {
 
     function cancelStake(uint _stakeId) external lock {
         require(isStake[_stakeId] && stakes[_stakeId].owner == msg.sender);
-        require(stakes[_stakeId].ownerAgreement == AGREEMENT.undefined);
+        require(stakes[_stakeId].ownerAgreement == AGREEMENT.undefined || 
+        _cancellationApplication[stakes[_stakeId].parentStakeId].length() > partners[stakes[_stakeId].parentStakeId].length() - 1);
         IERC20(stakes[_stakeId].token).safeTransfer(
             stakes[_stakeId].owner, 
             stakes[_stakeId].bank.paidReceivable - stakes[_stakeId].bank.paidPayable
@@ -282,7 +283,7 @@ contract StakeMarket {
         require(msg.sender == stakes[_stakeId].owner);
         closedStake[_stakeId] = !closedStake[_stakeId];
 
-        emit SwitchStake(msg.sender, _stakeId, !closedStake[_stakeId]);
+        // emit SwitchStake(msg.sender, _stakeId, !closedStake[_stakeId]);
     }
 
     function getAllApplications(uint _stakeId, uint _start) external view returns(uint[] memory _stakeIds) {
@@ -311,11 +312,10 @@ contract StakeMarket {
         require(stakes[_partnerStakeId].bank.stakeRequired <= stakes[_stakeId].bank.amountReceivable);
         if (stakes[_partnerStakeId].profileRequired) require(stakes[_stakeId].profileId > 0);
         if (stakes[_partnerStakeId].bountyRequired) require(stakes[_stakeId].bountyId > 0);
-        stakes[_partnerStakeId].ve = stakes[_stakeId].ve;
-        stakes[_partnerStakeId].token = stakes[_stakeId].token;
-        stakes[_partnerStakeId].bank.startPayable = stakes[_stakeId].bank.startReceivable;
-        stakes[_partnerStakeId].bank.startReceivable = stakes[_stakeId].bank.startPayable;
-        stakes[_partnerStakeId].bank.waitingPeriod = stakes[_stakeId].bank.waitingPeriod;
+        stakes[_stakeId].ve = stakes[_partnerStakeId].ve;
+        stakes[_stakeId].token = stakes[_partnerStakeId].token;
+        // stakes[_partnerStakeId].bank.startPayable = stakes[_stakeId].bank.startReceivable;
+        // stakes[_partnerStakeId].bank.startReceivable = stakes[_stakeId].bank.startPayable;
         if (IStakeMarket(noteContract).isMarketPlace(stakes[_partnerStakeId].metadata.source)) {
             stakes[_stakeId].metadata.source = stakes[_partnerStakeId].metadata.source;
         }
@@ -347,11 +347,12 @@ contract StakeMarket {
         partners[_stakeId].add(_applicationId);
         stakes[_stakeId].ownerAgreement = AGREEMENT.pending;
         if (_startPayable > 0) {
-            stakes[_stakeId].bank.startPayable = _startPayable;
-            stakes[_applicationId].bank.startReceivable = _startPayable;
+            stakes[_stakeId].bank.startPayable = block.timestamp + _startPayable;
+            stakes[_applicationId].bank.startReceivable = block.timestamp + _startPayable;
         }
         stakes[_applicationId].parentStakeId = _stakeId;
         stakes[_applicationId].ownerAgreement = AGREEMENT.pending;
+        stakes[_stakeId].bank.waitingPeriod = stakes[_applicationId].bank.waitingPeriod;
         stakesBalances[_stakeId] += stakesBalances[_applicationId];
         stakesApplication[_applicationId].status = ApplicationStatus.Accepted;
         _stakesApplication[_stakeId].remove(_applicationId);
@@ -379,6 +380,12 @@ contract StakeMarket {
 
         if (!_fromVote) {
             stakes[_winnerId].ownerAgreement = _agreement;
+            if (_agreement == AGREEMENT.notgood) {
+                _cancellationApplication[stakes[_winnerId].parentStakeId].add(_winnerId);
+            } 
+            // else {
+            //     _cancellationApplication[stakes[_winnerId].parentStakeId].remove(_winnerId);
+            // }
         } else {
             stakeStatus[stakes[_winnerId].parentStakeId].winnerId = _winnerId;
             stakeStatus[stakes[_winnerId].parentStakeId].loserId = _loserId;
@@ -411,16 +418,17 @@ contract StakeMarket {
             uint _defenderGas = stakes[_defenderId].bank.paidReceivable * stakes[_defenderId].bank.gasPercent / 10000;
             stakes[_attackerId].bank.paidReceivable -= _attackerGas;
             stakes[_defenderId].bank.paidReceivable -= _defenderGas;
-            stakesBalances[stakes[_attackerId].parentStakeId] -= (_attackerGas + _defenderGas);
+            uint _gas = _attackerGas + _defenderGas;
+            stakesBalances[stakes[_attackerId].parentStakeId] -= _gas;
             stakeStatus[stakes[_attackerId].parentStakeId].winnerId = 0;
             stakeStatus[stakes[_attackerId].parentStakeId].loserId = 0;
-            erc20(stakes[_attackerId].token).approve(_bribe(), _attackerGas + _defenderGas);
+            erc20(stakes[_attackerId].token).approve(_bribe(), _gas);
             IStakeMarketVoter(_voter()).createGauge(
                 stakes[_attackerId].ve,
                 stakes[_attackerId].token,
                 _attackerId,
                 _defenderId,
-                _attackerGas + _defenderGas,
+                _gas,
                 _title,
                 _content,
                 _tags
@@ -475,20 +483,19 @@ contract StakeMarket {
     }
     
     function addToStake(uint _stakeId, uint _amount) external {
-        if (stakes[_stakeId].ownerAgreement == stakes[stakes[_stakeId].parentStakeId].ownerAgreement) {
-            _amount = _amount > 0 ? _amount : stakes[_stakeId].bank.amountReceivable;
-            (uint dueReceivable,,) = IStakeMarket(_noteContract()).getDueReceivable(_stakeId, 0);
-            _amount = _amount == 0 ? dueReceivable : Math.max(_amount, dueReceivable);
-            IERC20(stakes[_stakeId].token).safeTransferFrom(
-                address(msg.sender), 
-                address(this), 
-                _amount
-            );
-            uint _fees = _amount * _tradingFee() / 10000;
-            treasuryFees[stakes[_stakeId].token] += _fees;
-            stakesBalances[stakes[_stakeId].parentStakeId] += _amount;
-            stakes[_stakeId].bank.paidReceivable += _amount - _fees;
-        }
+        _amount = _amount > 0 ? _amount : stakes[_stakeId].bank.amountReceivable;
+        (uint dueReceivable,,) = IStakeMarket(_noteContract()).getDueReceivable(_stakeId, 0);
+        _amount = _amount == 0 ? dueReceivable : Math.max(_amount, dueReceivable);
+        IERC20(stakes[_stakeId].token).safeTransferFrom(
+            address(msg.sender), 
+            address(this), 
+            _amount
+        );
+        uint _fees = _amount * _tradingFee() / 10000;
+        treasuryFees[stakes[_stakeId].token] += _fees;
+        stakesBalances[stakes[_stakeId].parentStakeId] += _amount;
+        stakes[_stakeId].bank.paidReceivable += _amount;
+
         emit AddToStake(_stakeId, msg.sender, _amount, block.timestamp);
     }
 
@@ -514,7 +521,7 @@ contract StakeMarket {
         ) {
             duePayable = Math.min(duePayable, stakesBalances[stakes[_stakeId].parentStakeId]);
             _amount = _amount == 0 ? duePayable : Math.min(_amount, duePayable);
-            stakesBalances[stakes[_stakeId].parentStakeId] -=  _amount;
+            stakesBalances[stakes[_stakeId].parentStakeId] -= _amount;
             if (_removePartner) {
                 (uint dueReceivable,,) = IStakeMarket(noteContract).getDueReceivable(_stakeId, 0);
                 require(dueReceivable == 0);
@@ -556,6 +563,7 @@ contract StakeMarket {
     function mintNote(uint _stakeId, uint _numPeriods) external {
         require(msg.sender == stakes[_stakeId].owner);
         (uint duePayable, uint nextDue,) = IStakeMarket(_noteContract()).getDuePayable(_stakeId, _numPeriods);
+        stakes[_stakeId].bank.paidPayable += duePayable;
         uint _tokenId = IStakeMarket(IContract(contractAddress).stakeMarketHelper()).safeMint(msg.sender, _stakeId);
         notes[_tokenId] = StakeNote({
             due: duePayable,
@@ -805,7 +813,7 @@ contract StakeMarketNote {
         bufferTime = _bufferTime;
     }
 
-    function getNumPeriods(uint tm1, uint tm2, uint _period) public pure returns(uint) {
+    function getNumPeriods(uint tm1, uint tm2, uint _period) internal pure returns(uint) {
         if (tm1 == 0 || tm2 == 0 || tm2 < tm1 || _period == 0) return 0;
         return (tm2 - tm1) / _period;
     }
@@ -818,8 +826,8 @@ contract StakeMarketNote {
             shiftedBlockTimestamp, 
             stake.bank.periodPayable
         );
-        uint dueDate = stake.bank.startPayable + stake.bank.periodPayable * (numPeriods + 1);
-        uint due = dueDate < shiftedBlockTimestamp ? stake.bank.amountPayable * numPeriods - stake.bank.paidPayable : 0;
+        uint dueDate = stake.bank.startPayable + stake.bank.periodPayable * ((stake.bank.paidPayable / Math.max(1, stake.bank.amountPayable)) + 1);
+        uint due = stake.bank.amountPayable * numPeriods > stake.bank.paidPayable ? stake.bank.amountPayable * numPeriods - stake.bank.paidPayable : 0;
         return (
             due, // due
             dueDate, // next
@@ -835,8 +843,8 @@ contract StakeMarketNote {
             shiftedBlockTimestamp, 
             stake.bank.periodReceivable
         );
-        uint dueDate = stake.bank.startReceivable + stake.bank.periodReceivable * (numPeriods + 1);
-        uint due = dueDate < shiftedBlockTimestamp ? stake.bank.amountReceivable * numPeriods - stake.bank.paidReceivable : 0;
+        uint dueDate = stake.bank.startReceivable + stake.bank.periodReceivable * ((stake.bank.paidReceivable / Math.max(1, stake.bank.amountReceivable)) + 1);
+        uint due = stake.bank.amountReceivable * numPeriods > stake.bank.paidReceivable ? stake.bank.amountReceivable * numPeriods - stake.bank.paidReceivable : 0;
         return (
             due, // due
             dueDate, // next
@@ -965,8 +973,8 @@ contract StakeMarketHelper is ERC721Pausable {
     function _tokenURI(uint _tokenId) internal view returns (string memory output) {
         (uint due, uint nextDue, uint stakeId, address token) = IStakeMarket(_stakeMarket()).notes(_tokenId);
         uint idx;
-        string[] memory optionNames = new string[](6);
-        string[] memory optionValues = new string[](6);
+        string[] memory optionNames = new string[](7);
+        string[] memory optionValues = new string[](7);
         uint decimals = uint(IMarketPlace(token).decimals());
         optionValues[idx++] = toString(_tokenId);
         optionNames[idx] = "Type";
@@ -976,8 +984,10 @@ contract StakeMarketHelper is ERC721Pausable {
         optionNames[idx] = "SID";
         optionValues[idx++] = toString(stakeId);
         optionNames[idx] = "Amount";
-        optionValues[idx++] = string(abi.encodePacked(toString(due/10**decimals), " " ,IMarketPlace(token).symbol()));
-        optionNames[idx] = "Expired";
+        optionValues[idx++] = toString(due);
+        optionNames[idx] = "Decimals, Symbol";
+        optionValues[idx++] = string(abi.encodePacked(toString(decimals), ", ", IMarketPlace(token).symbol()));
+        optionNames[idx] = "Is Past Due Date";
         optionValues[idx++] = nextDue < block.timestamp ? "Yes" : "No";
         string[] memory _description = new string[](1);
         _description[0] = "This note gives you access to revenues of the stake owner on the specified stake";
