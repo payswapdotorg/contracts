@@ -150,10 +150,9 @@ contract Valuepool {
         uint _limit = IValuePool(IContract(contractAddress).valuepoolVoter()).getBalance(_ve, _arp);
         require(_limit >= lenderBalance[_token][_arp] + _amount);
         lenderBalance[_token][_arp] += _amount * lenderFactor / 10000;
-        if (IERC721(_token).supportsInterface(0x80ac58cd) || IERC721(_token).supportsInterface(0xd9b67a26)) {
+        try erc20(_token).approve(_arp, _amount) {
+        } catch {
             IERC721(_token).setApprovalForAll(_arp, true);
-        } else {
-            erc20(_token).approve(_arp, _amount);
         }    
         IARP(_arp).notifyReward(_token, _amount);
         IValuePool(helper).emitNotifyLoan(_arp, _token, _amount * lenderFactor / 10000);
@@ -1072,36 +1071,39 @@ contract ValuepoolVoter {
     mapping(address => VoteOption) public voteOption;
     mapping(address => uint) public minPeriod;
     mapping(address => uint) public minBountyRequired;
-    mapping(address => mapping(address => uint)) public totalWeight; // total voting weight
+    mapping(uint => uint) public totalWeight; // total voting weight
     mapping(address => uint) public period;
     mapping(address => uint) public collectionId;
     mapping(address => address[]) public pools; // all pools viable for incentives
-    mapping(address => mapping(address => int256)) public weights; // pool => weight
-    mapping(string => mapping(address => int256)) public votes; // nft => pool => votes
-    mapping(address => mapping(uint => address[])) public poolVote; // nft => pools
+    mapping(uint => int256) public weights; // pool => weight
+    mapping(uint => mapping(uint =>int256)) public votes; // nft => pool => votes
+    mapping(uint => mapping(uint => address[])) public poolVote; // nft => pools
     mapping(address => mapping(uint => uint)) public usedWeights;  // nft => total voting weight of user
     mapping(address => uint) public minimumLockValue;
     struct Gauge {
         uint amount;
         uint start;
+        uint endTime;
         address token;
+        address ve;
+        address pool;
     }
     struct Bribe {
         uint amount;
         address token;
         NFTYPE isNFT;
     }
-    mapping(address => mapping(address => Gauge)) public gauges;
-    mapping(address => mapping(address => bool)) public isGauge;
+    mapping(uint => Gauge) public gauges;
+    mapping(address => mapping(address => uint)) public isGauge;
     mapping(address => mapping(address => bool)) public isBlacklisted;
-    mapping(address => mapping(address => Bribe)) public bribe;
+    mapping(uint => Bribe) public bribe;
     mapping(address => uint) public minDifference;
     mapping(address => bool) public bribesDisabled;
     mapping(address => address) public veToVava;
+    uint public proposalId = 1;
     
     event LockBribe(
-        address ve, 
-        address pool, 
+        uint proposalId,
         address token, 
         uint amount,
         uint _isNFT
@@ -1112,6 +1114,7 @@ contract ValuepoolVoter {
         address operator
     );
     event GaugeCreated(
+        uint proposalId,
         address user, 
         address ve, 
         address pool, 
@@ -1138,8 +1141,21 @@ contract ValuepoolVoter {
         uint minimumLockValue,
         VoteOption voteOption
     );
-    event Voted(address indexed ve, address indexed pool, uint tokenId, uint profileId, uint _identityTokenId, uint weight, bool like, string title);
-    event Abstained(address indexed ve, uint tokenId, int256 weight, string title);
+    event Voted(
+        uint indexed proposalId, 
+        uint tokenId, 
+        uint profileId, 
+        uint _identityTokenId, 
+        uint weight, 
+        bool like, 
+        string title
+    );
+    event Abstained(
+        uint indexed proposalId, 
+        uint tokenId, 
+        int256 weight, 
+        string title
+    );
 
     // simple re-entrancy check
     uint internal _unlocked = 1;
@@ -1155,41 +1171,34 @@ contract ValuepoolVoter {
         contractAddress = _contractAddress;
     }
 
-    function getTotalWeight(address _ve, address _pool) public view returns(uint) {
-        return totalWeight[_ve][_pool];
-    }
-
     // function reset(address _ve, uint _tokenId, uint _profileId) external {
     //     require(ve(_ve).isApprovedOrOwner(msg.sender, _tokenId), "VaV1");
     //     _reset(_ve, _tokenId, _profileId);
     //     ve(_ve).abstain(_tokenId);
     // }
 
-    function _reset(address _ve, uint _tokenId, uint _profileId, string memory _title) internal {
-        address[] storage _poolVote = poolVote[_ve][_tokenId];
+    function _reset(uint _proposalId, uint _tokenId, string memory _title) internal {
+        address[] storage _poolVote = poolVote[_proposalId][_tokenId];
         uint _poolVoteCnt = _poolVote.length;
-        require(IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender) == _profileId && _profileId > 0, "VaV2");
+        int256 _totalWeight = 0;
         for (uint i = 0; i < _poolVoteCnt; i ++) {
-            int256 _totalWeight = 0;
             address _pool = _poolVote[i];
-            string memory va_tokenId = string(abi.encodePacked(_ve, _profileId, _tokenId));
-            int256 _votes = votes[va_tokenId][_pool];
+            int256 _votes = votes[_proposalId][_tokenId];
 
             if (_votes != 0) {
-                weights[_ve][_pool] -= _votes;
-                votes[va_tokenId][_pool] -= _votes;
+                weights[_proposalId] -= _votes;
+                votes[_proposalId][_tokenId] = 0;
                 if (_votes > 0) {
-                    _totalWeight += _votes;
                     _totalWeight += _votes;
                 } else {
                     _totalWeight -= _votes;
                 }
-                emit Abstained(_ve, _tokenId, _votes, _title);
+                emit Abstained(_proposalId, _tokenId, _votes, _title);
             }
-            totalWeight[_ve][_pool] -= uint256(_totalWeight);
         }
-        usedWeights[_ve][_tokenId] = 0;
-        delete poolVote[_ve][_tokenId];
+        totalWeight[_proposalId] -= uint256(_totalWeight);
+        usedWeights[gauges[_proposalId].ve][_tokenId] = 0;
+        delete poolVote[_proposalId][_tokenId];
     }
 
     // function poke(address _ve, uint _tokenId, uint _profileId, uint _identityTokenId) external {
@@ -1205,50 +1214,56 @@ contract ValuepoolVoter {
     // }
     
     function _vote(
-        address _ve, 
-        address _pool, 
+        uint _proposalId,
         uint _tokenId, 
         uint _profileId,
         uint _identityTokenId,
         bool _like,
         string memory _title
     ) internal {
-        _reset(_ve, _tokenId, _profileId, _title);
-        uint _weight = voteOption[_ve] == VoteOption.VotingPower ? 
+        address _ve = gauges[_proposalId].ve;
+        address _pool = gauges[_proposalId].pool;
+        int256 _weight = int256(voteOption[_ve] == VoteOption.VotingPower ? 
         ve(_ve).balanceOfNFT(_tokenId) :
         voteOption[_ve] == VoteOption.Percentile ? 
-        ve(_ve).percentiles(_tokenId) :
-        uint(1);
+        ve(_ve).percentiles(_tokenId) : 1);
         address profile = IContract(contractAddress).profile();
         require(IProfile(profile).addressToProfileId(msg.sender) == _profileId && _profileId > 0, "VaV3");
         if (voteOption[_ve] == VoteOption.Unique) {
             require(IProfile(profile).isUnique(_profileId), "VaV4");
+            _tokenId = _profileId;
         }
-        if (isGauge[_ve][_pool]) {
+        _reset(_proposalId, _tokenId, _title);
+        if (isGauge[_ve][_pool] > 0) {
             int _poolWeight;
-            _poolWeight = _like ? int(1) : int(-1);
-            string memory va_tokenId = string(abi.encodePacked(_ve, _profileId, _tokenId));
-            require(votes[va_tokenId][_pool] == 0, "VaV5");
+            _poolWeight = _like ? _weight : -_weight;
+            
+            require(votes[_proposalId][_tokenId] == 0, "VaV5");
             require(_poolWeight != 0, "VaV6");
 
-            poolVote[_ve][_tokenId].push(_pool);
+            poolVote[_proposalId][_tokenId].push(_pool);
             
-            weights[_ve][_pool] += _poolWeight * int(_weight);
-            votes[va_tokenId][_pool] += _poolWeight * int(_weight);
-            
-            emit Voted(_ve, _pool, _tokenId, _profileId, _identityTokenId, _weight, _like, _title);
-            totalWeight[_ve][_pool] += uint256(_poolWeight * int(_weight));
-            usedWeights[_ve][_tokenId] = uint256(_poolWeight * int(_weight));
+            weights[_proposalId] += _poolWeight;
+            votes[_proposalId][_tokenId] += _poolWeight;
+            if (_poolWeight <= 0) {
+                _poolWeight = -_poolWeight;
+            }
+            emit Voted(_proposalId, _tokenId, _profileId, _identityTokenId, uint(_weight), _like, _title);
+            totalWeight[_proposalId] += uint256(_poolWeight);
+            usedWeights[_ve][_tokenId] = uint256(_poolWeight);
         }
     }
 
+    //  ['1', '3', '6', '0', true, 'Litig']
+    //  ['1', '3', '6', '0', false, 'Litig']
+
     // identitytokenId can be required when info like the distribution of voters per country/gender,etc. is needed
-    function vote(address _ve, address _pool, uint _tokenId, uint _profileId, uint _identityTokenId, bool _like, string memory _title) external {
-        require(ve(_ve).isApprovedOrOwner(msg.sender, _tokenId), "VaV7");
-        require(period[_ve] >= block.timestamp - gauges[_ve][_pool].start, "VaV07");
-        _checkIdentityProof(_ve, msg.sender, _identityTokenId);
-        _vote(_ve, _pool, _tokenId, _profileId, _identityTokenId, _like, _title);
-        ve(_ve).attach(_tokenId, period[_ve]);
+    function vote(uint _proposalId, uint _tokenId, uint _profileId, uint _identityTokenId, bool _like, string memory _title) external {
+        require(ve(gauges[_proposalId].ve).isApprovedOrOwner(msg.sender, _tokenId), "VaV7");
+        require(block.timestamp < gauges[_proposalId].endTime, "VaV07");
+        _checkIdentityProof(gauges[_proposalId].ve, msg.sender, _identityTokenId);
+        _vote(_proposalId, _tokenId, _profileId, _identityTokenId, _like, _title);
+        try ve(gauges[_proposalId].ve).attach(_tokenId, period[gauges[_proposalId].ve]) {} catch{}
     }
 
     function _checkIdentityProof(address _ve, address _owner, uint _identityTokenId) internal {
@@ -1314,23 +1329,26 @@ contract ValuepoolVoter {
     ) external {
         require(period[_ve] > 0 && !isBlacklisted[_ve][_pool], "VaV10");
         require(_amount == 0 || 
-        IARP(IContract(contractAddress).arpNote()).isLender(_pool, _ve, minPeriod[_ve], minBountyRequired[_ve]), "VaV11");
+        IARP(IContract(contractAddress).arpHelper()).isLender(_pool, _ve, minPeriod[_ve], minBountyRequired[_ve]), "VaV11");
         require(_pool == msg.sender || IAuth(_pool).devaddr_() == msg.sender, "VaV12");
         require(va(_ve).balanceOfNFT(_tokenId) >= minimumLockValue[_ve] && va(_ve).ownerOf(_tokenId) == msg.sender, "VaV13");
-        if (!isGauge[_ve][_pool]) pools[_ve].push(_pool);
-        if (gauges[_ve][_pool].amount <= _amount || gauges[_ve][_pool].token != _token) {
-            gauges[_ve][_pool].start = block.timestamp;
-            gauges[_ve][_pool].token = _token;
-        }
-        gauges[_ve][_pool].amount = _amount;
-        isGauge[_ve][_pool] = true;
+        if(isGauge[_ve][_pool] == 0) pools[_ve].push(_pool);
+        uint _endTime = block.timestamp + period[_ve];
+        gauges[proposalId].start = block.timestamp;
+        gauges[proposalId].endTime = _endTime;
+        gauges[proposalId].token = _token;
+        gauges[proposalId].ve = _ve;
+        gauges[proposalId].pool = _pool;
+        gauges[proposalId].amount = _amount;
+        isGauge[_ve][_pool] = proposalId;
 
         emit GaugeCreated(
+            proposalId++,
             msg.sender, 
             _ve, 
             _pool, 
             _amount,
-            block.timestamp + period[_ve] / period[_ve] * period[_ve],
+            _endTime,
             _title,
             _content
         );
@@ -1356,41 +1374,40 @@ contract ValuepoolVoter {
     }
 
     function getBalance(address _ve, address _pool) external view returns(uint) {
-        Gauge memory _gauge = gauges[_ve][_pool];
-        uint _voteDifference = weights[_ve][_pool] > 0 ? uint(weights[_ve][_pool]) * 10000 / Math.max(1,totalWeight[_ve][_pool]) : 0;
-        if (period[_ve] <= block.timestamp - _gauge.start && _voteDifference > minDifference[_ve]) {
+        Gauge memory _gauge = gauges[isGauge[_ve][_pool]];
+        uint _voteDifference = weights[isGauge[_ve][_pool]] > 0 ? uint(weights[isGauge[_ve][_pool]]) * 10000 / Math.max(1,totalWeight[isGauge[_ve][_pool]]) : 0;
+        if (_gauge.endTime <= block.timestamp && _voteDifference > minDifference[_ve]) {
             return _gauge.amount;
         }
         return 0;
     }
 
-    function lockBribe(address _ve, address _pool, address _token, uint _amount, uint _isNFT) external {
-        require(!bribesDisabled[_ve], "VaV18");
-        if (NFTYPE(_isNFT) != NFTYPE.not) {
-            _safeTransferFrom(_token, _pool, address(this), _amount);
+    function lockBribe(address _token, uint _proposalId, uint _amount, uint _isNFT) external {
+        require(bribe[_proposalId].token == address(0) || bribe[_proposalId].token == _token, "VaV21");
+        require(!bribesDisabled[gauges[_proposalId].ve], "VaV18");
+        if (NFTYPE(_isNFT) == NFTYPE.not) {
+            _safeTransferFrom(_token, msg.sender, address(this), _amount);
         } else if (NFTYPE(_isNFT) == NFTYPE.erc1155) { 
-            IERC1155(_token).safeTransferFrom(_pool, address(this), _amount, 1, msg.data);
+            IERC1155(_token).safeTransferFrom(msg.sender, address(this), _amount, 1, msg.data);
         } else {
-            IERC721(_token).safeTransferFrom(_pool, address(this), _amount);
+            IERC721(_token).safeTransferFrom(msg.sender, address(this), _amount);
         }
-        bribe[_ve][_pool].amount += _amount;
-        if (bribe[_ve][_pool].token == address(0)) {
-            bribe[_ve][_pool].token = _token;
-            bribe[_ve][_pool].isNFT = NFTYPE(_isNFT);
-        }
-        emit LockBribe(_ve, _pool, _token, _amount, _isNFT);
+        bribe[_proposalId].amount += _amount;
+        bribe[_proposalId].token = _token;
+        bribe[_proposalId].isNFT = NFTYPE(_isNFT);
+
+        emit LockBribe(_proposalId, _token, _amount, _isNFT);
     }
 
-    function unlockBribe(address _ve, address _pool) external {
-        Gauge memory _gauge = gauges[_ve][_pool];
-        require(period[_ve] <= block.timestamp - _gauge.start, "VaV20");
-        uint _voteDifference = weights[_ve][_pool] > 0 ? uint(weights[_ve][_pool]) * 10000 / Math.max(1,totalWeight[_ve][_pool]) : 0;
+    function unlockBribe(uint _proposalId, address _ve, address _pool) external {
+        require(block.timestamp > gauges[_proposalId].endTime, "VaV20");
+        uint _voteDifference = weights[_proposalId] > 0 ? uint(weights[_proposalId]) * 10000 / Math.max(1,totalWeight[_proposalId]) : 0;
         if (_voteDifference > minDifference[_ve]) {
-            _safeTransfer(bribe[_ve][_pool].isNFT, bribe[_ve][_pool].token, veToVava[_ve], bribe[_ve][_pool].amount);
+            _safeTransfer(bribe[_proposalId].isNFT, bribe[_proposalId].token, veToVava[_ve], bribe[_proposalId].amount);
         } else {
-            _safeTransfer(bribe[_ve][_pool].isNFT, bribe[_ve][_pool].token, _pool, bribe[_ve][_pool].amount);
+            _safeTransfer(bribe[_proposalId].isNFT, bribe[_proposalId].token, _pool, bribe[_proposalId].amount);
         }
-        delete bribe[_ve][_pool];
+        delete bribe[_proposalId];
         
         emit UnlockBribe(_ve, _pool, msg.sender);
     }
@@ -1400,7 +1417,7 @@ contract ValuepoolVoter {
     }
 
     function _safeTransfer(NFTYPE _isNFT, address token, address to, uint256 value) internal {
-        if (_isNFT != NFTYPE.not) {
+        if (_isNFT == NFTYPE.not) {
             require(token.code.length > 0, "VaV14");
             (bool success, bytes memory data) =
             token.call(abi.encodeWithSelector(erc20.transfer.selector, to, value));

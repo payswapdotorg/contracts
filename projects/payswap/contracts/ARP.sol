@@ -448,8 +448,8 @@ contract ARP {
     }
 
     function notifyRewardAmount(address _token, address _from, uint _amount) public {
-        try IERC721(_token).supportsInterface(0x80ac58cd) {
-            IERC721(_token).safeTransferFrom(msg.sender, devaddr_, _amount);
+        try IERC721(_token).safeTransferFrom(msg.sender, devaddr_, _amount) {
+            reward[_token] = _amount;
         } catch{
             IERC20(_token).safeTransferFrom(_from, address(this), _amount);
             reward[_token] += _amount;

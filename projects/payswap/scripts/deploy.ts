@@ -241,11 +241,11 @@ async function main() {
   const futureCollateralAddress = "0xD2b2435aa749E42F3523033Fe167Ae543082375F"
   const cardAddress = "0x97b9795Dc1375EAA8B657cdc3c008B14b5A6F2C0"
   const contributorVoterAddress = "0xBCb2E030953dC9f2E68C179C19C2C121aF348Abb"
-  const vavaFactoryAddress = "0x7ecd58472cD0AED5614238a5D4C90E599755Edd4"
-  const vavaHelperAddress = "0x787035b034BB23ad71d50742845672d01CE26b7e"
-  const vavaHelper2Address = "0x85b1B94201c5e84c352f62c9Ee7313f721D7e282"
-  const veFactoryAddress = "0xF3F37fBB361210ecBaCB6e748c9D550dE4db1175"
-  const valuepoolVoterAddress = "0x2B2Bb6Adda65bB3a748B798320d54317780d27e8"
+  const vavaFactoryAddress = "0xD2DFBCEc6340182853BA7B454d83B7aB999E91D4"
+  const vavaHelperAddress = "0x5925eE9f895Ce02686ae0cB674421de1D035AD09"
+  const vavaHelper2Address = "0xE5828fE6FCd22AD20915DA44CB61DDCF905a8359"
+  const veFactoryAddress = "0x2b7b92c617609eEb2C2cA78DC2AE918c5E4B798d"
+  const valuepoolVoterAddress = "0xe3152A3E3fFA3F0578c3984aeFE454D3f7D6e04b"
   const businessBribeFactoryAddress = "0xee1388EeFb6F9206836eB6C64F12bFBAEa14d9Cd"
   const businessGaugeFactoryAddress = "0x3a5F4F01Bbe5729b8EC35f453d4a92A364F9eF66"
   const referralBribeFactoryAddress = "0x3D262AD24C4ff3F8598367a23bA5288Df3581da2"
@@ -879,6 +879,16 @@ async function main() {
     "0x892702127a12f0f0ec278bd5c1c4697a4401f029774a3ead725581a394b57327",
     "0x43fae28e75d40bfcee549c6938b653c883e22d7959e76e561edd3ebde84c9c36",
     "0xde6a8f50f408dee3c8c2f8f1e5d12bb6708b4dfb9327bf5064bdc611a0d1d461",
+    "0xd068021004e254f19df83b8bab23c94aa9eb56035ab78bf97fb7882d4c148df0",
+    "0xd8aa055811dd351bb40d6e69b262a0ede97bc1d5b0612a376a89078680f77058",
+    "0xf25e131446fbade094e3c408e78a0930fa990ab8fb3e42e0fb43ce282cb42c83",
+    "0xee0218ea14a62c3fc296d7913178962adf9f65094be368051caf229ee55711e7",
+    "0x8d0ec5299abcae75afe82138c6c886079c25fe2302c3ab9641572cbe83dc58c3",
+    "0x70ce0f5c494b90fb9cdfd642c644892174ea8349f07e225afa3d831e2d0ec71d",
+    "0x2b942a1a745e003238a10d4e3ac006051f2dfeea414322b9e669fef86fdf1655",
+    "0x10f3264c05a2cda2a43640e8ee7ffaefa4c9c77700b5acbcf1785715004c404c",
+    "0x0ab77860738b8f19be0f03bdd34dcf1f2dd518997abec33a4c1d91ce48b6e7e6",
+    "0x04985dd205c87301c7036ac42494d5d4501a8f028a076bf5b6a58d140ecb6cbc",
   ]
   let wallets = [] as any;
   const k=0
@@ -888,7 +898,7 @@ async function main() {
       // const wallet = ethers.Wallet.createRandom();
       let wallet = new ethers.Wallet(privateKeys[i], ethers.provider);
       // wallet =  wallet.connect(ethers.provider);
-      // if (i > 447) { 
+      // if (i > 454) { 
       //   await deployer.sendTransaction({to: wallet.address, value: ethers.utils.parseEther("0.03")});
       //   await profile.shareEmail(wallet.address)
       // }
@@ -905,7 +915,6 @@ async function main() {
   // for (let i = 0; i < 10; i++) {
   //   const wallet = ethers.Wallet.createRandom();
   //   console.log("7wallet=============>", i, wallet._signingKey())
-
   // }
 
   // const futureCollateral = await FutureCollateral.deploy(
@@ -2716,6 +2725,7 @@ async function main() {
   //   "link_to_media",
   //   "description"
   // )
+  // console.log("arpHelper.isLender===================>", await arpHelper.isLender(arpAddress, "0x017aba5f9fe7673a675c9541df0e792d8118fb41", 0, 0))
   // console.log("protocolInfo============>", await arp.protocolInfo(1))
   // await nftSvg.updateDescription(arpNote.address, "This note gives you access to revenues of the arp on the specified protocol")
   // await arp.updateAutoCharge(true, 1)
@@ -2886,8 +2896,14 @@ async function main() {
     // //   0,
     // //   1
     // // )
-    // // // console.log("valuepoolVoter.addVa===============>Done")
-    // await tFiat.approve(va.address, ethers.BigNumber.from("100000000000000000"));
+  // // // console.log("valuepoolVoter.addVa===============>Done")
+  // console.log("valuepoolVoter.collectionId===============>", await valuepoolVoter.collectionId("0x017aba5f9fe7673a675c9541df0e792d8118fb41"))
+  // console.log("marketPlaceHelper2.checkUserIdentityProof===============>", await marketPlaceHelper2.checkUserIdentityProof(290, 0, deployer.address))
+  // console.log("vava._ve==================>", await vava._ve(), await tFiat.balanceOf(vavaAddress))
+  // console.log("lenderBalance==================>", await vava.lenderBalance(tFiat.address, "0x4237d714c33ebaccc45eb51b24f5445a4119f245"))
+  // console.log("getBalance==================>", await valuepoolVoter.getBalance("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", "0x4237d714c33ebaccc45eb51b24f5445a4119f245"))
+
+  // await tFiat.approve(va.address, ethers.BigNumber.from("100000000000000000"));
     // await va.create_lock_for(ethers.BigNumber.from("100000000000000000"), 4 * 365 * 86400, 0, deployer.address)
     // console.log("va.create_lock_for===============>Done")
     // console.log("va.isApprovedOrOwner==============>", await va.ownerOf(1), await va.balanceOfNFT(1), await va.isApprovedOrOwner(deployer.address, 1))
@@ -10961,7 +10977,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[439]).updateCollection(
   //   "ResCoach",
-  //   "Find and subscribe to coaches that will regularly have consultations with you in order to coach you out of a certain habit. You can find a coach for basically anything: losing weight, stopping alcohol/procrastination, etc.",
+  //   "Find and subscribe to coaches/monitoring services that will regularly have check-ins with you in order to either coach you out of a certain bad habit or check your health condition (for patient suffering from mental health issues like schizophrenia for instance). You can find a coach/monitoring service for basically anything: losing weight, stopping alcohol/procrastination, fighting depression, etc.",
   //   "https://i.ibb.co/yNzXTCm/499.jpg",
   //   "https://i.ibb.co/yNzXTCm/499.jpg",
   //   "https://i.ibb.co/0Q7YJBC/214.jpg",
@@ -11051,7 +11067,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[444]).updateCollection(
   //   "BNPL",
-  //   "Find and join various BNPL valuepools where members pool resources together to be able to offer themselves a BNPL system.",
+  //   "Find and join various BNPL valuepools where members pool resources together to be able to offer themselves a BNPL system. There are multiple BNPL pools from those providing SME/Enterprise exporters and importers with the working capital needed to facilitate their cross-border and international transactions to those funding small everyday user purchases.",
   //   "https://i.ibb.co/nQtDzNq/385.jpg",
   //   "https://i.ibb.co/nQtDzNq/385.jpg",
   //   "https://i.ibb.co/X7Ws5pg/413-2.jpg",
@@ -11225,6 +11241,60 @@ async function main() {
   //   ""
   // );
   // console.log("456marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 457
+  // await marketPlaceCollection.connect(wallets[454]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[454]).updateCollection(
+  //   "DeWare",
+  //   "DeWare or Decentralized warehouses is a platoform where users can offer storing spaces for businesses so they can place their products closer to their customers. Any user can partner with the channel and offer storing space to businesses. To increase credibility, users can use tools such as trustBounties or badges from trusted auditors.",
+  //   "https://i.ibb.co/GTfYPyQ/144.jpg",
+  //   "https://i.ibb.co/GTfYPyQ/144.jpg",
+  //   "https://i.ibb.co/BKMrjRm/234.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("457marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 458
+  // await marketPlaceCollection.connect(wallets[455]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[455]).updateCollection(
+  //   "Vanspital",
+  //   "Vanspital uses funds from its valuepool to purchase and finance the operations of health vans across the world. A health van is a van equipped with enough medical supply to enable a healthcare pratictioner to treat patients. Each van operates across multiple communities and is operated by one health practitioner that is paid by Vanspital. Each healthcare practitioner is assigned a set of communities and goes from community to community every single day in order to treat patients from those communities. Vanspital also has doctors that can be contacted at any time by the healthcare practitioners in case they need to.",
+  //   "https://i.ibb.co/BrLzdYN/132.jpg",
+  //   "https://i.ibb.co/BrLzdYN/132.jpg",
+  //   "https://i.ibb.co/0XTcvxJ/226.jpg",
+  //   "",
+  //   "",
+  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("458marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 459
+  // await marketPlaceCollection.connect(wallets[456]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[456]).updateCollection(
+  //   "LivePay",
+  //   "LivePay is a live eCommerce platform. Browse between our merchants and order from our merchants live. If you are a merchant, you can partner with the channel and start live streaming your sale events.",
+  //   "https://i.ibb.co/4FMPtZq/29.jpg",
+  //   "https://i.ibb.co/4FMPtZq/29.jpg",
+  //   "https://i.ibb.co/s6cd4RT/31-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("459marketPlaceCollection.updateCollection===========> Done!")
 
 
   }
