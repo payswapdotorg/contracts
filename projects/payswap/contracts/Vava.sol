@@ -150,10 +150,8 @@ contract Valuepool {
         uint _limit = IValuePool(IContract(contractAddress).valuepoolVoter()).getBalance(_ve, _arp);
         require(_limit >= lenderBalance[_token][_arp] + _amount);
         lenderBalance[_token][_arp] += _amount * lenderFactor / 10000;
-        try erc20(_token).approve(_arp, _amount) {
-        } catch {
-            IERC721(_token).setApprovalForAll(_arp, true);
-        }    
+        try IERC721(_token).setApprovalForAll(_arp, true) {
+        } catch { erc20(_token).approve(_arp, _amount); }    
         IARP(_arp).notifyReward(_token, _amount);
         IValuePool(helper).emitNotifyLoan(_arp, _token, _amount * lenderFactor / 10000);
     }
@@ -1254,9 +1252,6 @@ contract ValuepoolVoter {
         }
     }
 
-    //  ['1', '3', '6', '0', true, 'Litig']
-    //  ['1', '3', '6', '0', false, 'Litig']
-
     // identitytokenId can be required when info like the distribution of voters per country/gender,etc. is needed
     function vote(uint _proposalId, uint _tokenId, uint _profileId, uint _identityTokenId, bool _like, string memory _title) external {
         require(ve(gauges[_proposalId].ve).isApprovedOrOwner(msg.sender, _tokenId), "VaV7");
@@ -1436,7 +1431,7 @@ contract ValuepoolVoter {
         require(success && (data.length == 0 || abi.decode(data, (bool))), "VaV17");
     }
 
-     function onERC721Received(address,address,uint256,bytes memory) public virtual returns (bytes4) {
+    function onERC721Received(address,address,uint256,bytes memory) public virtual returns (bytes4) {
         return this.onERC721Received.selector; 
     }
 

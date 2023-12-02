@@ -561,7 +561,7 @@ contract NFTicketHelper {
         uint _merchantId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
         tags[_merchantId][_tokenId] = _tag;
         IMarketPlace(IContract(contractAddress).marketPlaceEvents()).emitUpdateMiscellaneous(
-            6,
+            12,
             _merchantId,
             _tokenId,
             _tag,
@@ -576,7 +576,7 @@ contract NFTicketHelper {
         uint _merchantId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
         tagRegistrations[_merchantId][_tag] = _add;
         IMarketPlace(IContract(contractAddress).marketPlaceEvents()).emitUpdateMiscellaneous(
-            7,
+            13,
             _merchantId,
             _tag,
             "",
@@ -1149,9 +1149,9 @@ contract MarketPlaceEvents {
     event PaywallVoted(uint indexed collectionId, uint profileId, string tokenId, uint likes, uint disLikes, bool like, address sender);
 
     // Ask order is cancelled
-    event AskCancel(uint256 indexed collection, uint256 indexed tokenId);
+    event AskCancel(uint256 indexed collection, string tokenId);
     
-    event PaywallAskCancel(uint256 indexed collection, uint256 indexed tokenId, address sender);
+    event PaywallAskCancel(uint256 indexed collection, string tokenId, address sender);
     
     event UserRegistration(uint256 indexed collectionId, uint256 userCollectionId, bool active);
 
@@ -1371,7 +1371,7 @@ contract MarketPlaceEvents {
         uint256 netPrice,
         uint256 nfTicketId
     );
-    event CreatePaywallARP(address subscriptionARP, uint collectionId);
+    event CreatePaywallARP(address subscriptionARP, uint collectionId, string tokenId);
     event DeletePaywallARP(uint collectionId);
     event UpdateSubscriptionInfo(uint collectionId, uint optionId, uint freeTrialPeriod);
     
@@ -1500,6 +1500,9 @@ contract MarketPlaceEvents {
         address paramValue4,
         string memory paramValue5
     ) external {
+        if (_idx == 0) {
+            require(IMarketPlace(IContract(contractAddress).paywallARPHelper()).isGauge(msg.sender));
+        }
         emit UpdateMiscellaneous(
             _idx, 
             _collectionId, 
@@ -1614,7 +1617,7 @@ contract MarketPlaceEvents {
         emit CollectionClose(_collectionId);
     }
 
-    function emitAskCancel(uint256 collection, uint256 tokenId) external {
+    function emitAskCancel(uint256 collection, string memory tokenId) external {
         if(msg.sender == IContract(contractAddress).marketOrders()) {
             emit AskCancel(collection, tokenId);
         } else {
@@ -1903,15 +1906,15 @@ contract MarketPlaceEvents {
         uint _optionId,
         uint _freeTrialPeriod
     ) external {
-        require(msg.sender == IContract(contractAddress).paywallMarketHelpers());
+        require(IMarketPlace(IContract(contractAddress).paywallARPHelper()).isGauge(msg.sender));
 
         emit UpdateSubscriptionInfo(_collectionId, _optionId, _freeTrialPeriod);   
     }
 
-    function emitCreatePaywallARP(address _subscriptionARP, uint _collectionId) external {
+    function emitCreatePaywallARP(address _subscriptionARP, uint _collectionId, string memory _tokenId) external {
         require(msg.sender == IContract(contractAddress).paywallARPHelper());
 
-        emit CreatePaywallARP(_subscriptionARP, _collectionId);   
+        emit CreatePaywallARP(_subscriptionARP, _collectionId, _tokenId);   
     }
 
     function emitDeletePaywallARP(uint collectionId) external {
@@ -3222,7 +3225,7 @@ contract PaywallMarketPlaceOrders {
         
         // Emit event
         address marketPlaceEvents = IContract(contractAddress).marketPlaceEvents();
-        IMarketPlace(marketPlaceEvents).emitAskCancel(_collectionId, _tokenId);
+        IMarketPlace(marketPlaceEvents).emitAskCancel(_collectionId, __tokenId);
     }
 
     function modifyAskOrderIdentity(
@@ -3452,7 +3455,7 @@ contract PaywallMarketPlaceOrders {
         _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].minBidIncrementPercentage = _minBidIncrementPercentage;
         _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].transferrable = _transferrable;
         _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].dropinTimer = block.timestamp + _dropinTimer;
-        _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].maxSupply = _maxSupply > 0 ? _maxSupply : type(uint).max;
+        _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].maxSupply = _maxSupply;
         _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].tokenInfo.requireUpfrontPayment = _requireUpfrontPayment;
         
         // Emit event
@@ -3995,7 +3998,7 @@ contract PaywallMarketPlaceHelper {
         uint _price
     ) internal view returns(uint) {
         address _paywallARP = IMarketPlace(IContract(contractAddress).paywallARPHelper())
-        .collectionIdToPaywallARP(_collectionId);
+        .collectionIdToPaywallARP(_collectionId, _tokenId);
         if (_paywallARP != address(0x0)) {
             return IMarketPlace(_paywallARP).getState(_user, _tokenId, _price);
         }
@@ -4849,26 +4852,14 @@ contract PaywallMarketPlaceHelper3 is ERC721Pausable {
 
 contract Paywall {
     using SafeERC20 for IERC20;
+    using EnumerableSet for EnumerableSet.UintSet;
     
     uint public collectionId;
-    mapping(address => uint) private addressToProtocolId;
-    struct ProtocolInfo {
-        uint ticketId;
-        uint startReceivable;
-        uint amountReceivable;
-        uint periodReceivable;
-        uint paidReceivable;
-        uint freeTrialPeriod;
-        uint userTokenId;
-        uint optionId;
-        uint profileId;
-        uint referrerCollectionId;
-        bool autoCharge;
-        string item;
-    }
-    mapping(uint => ProtocolInfo) public protocolInfo;
+    string public tokenId;
+    mapping(address => mapping(string => uint)) public addressToProtocolId;
+    mapping(uint => EnumerableSet.UintSet) private _ticketOptions;
+    mapping(uint => PaywallInfo) public protocolInfo;
     uint public lastProtocolId = 1;
-    mapping(address => uint) public pendingRevenue;
     uint public bufferTime;
     mapping(uint => uint) public freeTrialPeriod;
     address public devaddr_;
@@ -4877,12 +4868,14 @@ contract Paywall {
     bool public paused;
     address public contractAddress;
     uint public pricePerSecond;
+    bool public subscription = true;
     mapping(uint => Divisor) public  penaltyDivisor;
     mapping(uint => Divisor) public discountDivisor;
     mapping(uint => mapping(string => uint)) public partnershipEnds;
 
-    constructor(address _contractAddress, address _devaddr, uint _collectionId) {
+    constructor(address _contractAddress, address _devaddr, uint _collectionId, string memory _tokenId) {
         devaddr_ = _devaddr;
+        tokenId = _tokenId;
         collectionId = _collectionId;
         contractAddress = _contractAddress;
     }
@@ -4951,16 +4944,17 @@ contract Paywall {
     }
 
 
-    function updateProfileId() external {
+    function updateProfileId(string memory _tokenId) external {
         address profile = IContract(contractAddress).profile();
         uint _profileId = IProfile(profile).addressToProfileId(msg.sender);
         require(IProfile(profile).isUnique(_profileId), "Profile is not unique");
-        protocolInfo[addressToProtocolId[msg.sender]].profileId = _profileId;
+        protocolInfo[addressToProtocolId[msg.sender][_tokenId]].profileId = _profileId;
     }
 
     function updateParams(
         uint _bufferTime, 
         uint _pricePerSecond,
+        bool _subscription,
         bool _profileIdRequired,
         bool _paused
     ) external onlyAdmin {
@@ -4968,6 +4962,7 @@ contract Paywall {
         pricePerSecond = _pricePerSecond;
         profileIdRequired = _profileIdRequired;
         paused = _paused;
+        subscription = _subscription;
     }
 
     function updateAutoCharge(uint _protocolId, bool _autoCharge) external {
@@ -5022,6 +5017,11 @@ contract Paywall {
            _referrerCollectionId = IMarketPlace(_marketCollections()).addressToCollectionId(_referrer);
         }
         TicketInfo memory _ticketInfo = INFTicket(nfticket).getTicketInfo(_nfticketId);
+        require(
+            _ticketInfo.merchant == collectionId && 
+            keccak256(abi.encodePacked(_ticketInfo.item)) == keccak256(abi.encodePacked(tokenId)),
+            "P3"
+        );
         uint _userTokenId = INFTicket(nfticket).userTokenId(_nfticketId);
         PaywallOption[] memory _options = INFTicket(nfticketHelper2).getTicketPaywallOptions(_nfticketId);
         for (uint i = 0; i < _options.length; i++) {
@@ -5029,10 +5029,11 @@ contract Paywall {
                 _pickedOption == 0 || _pickedOption > 0 && _options[i].id == _pickedOption - 1
             ) {
                 if (_users.length == _options.length) {
-                    addressToProtocolId[_users[i]] = lastProtocolId;
+                    addressToProtocolId[_users[i]][_ticketInfo.item] = lastProtocolId;
                 } else {
-                    addressToProtocolId[msg.sender] = lastProtocolId;
+                    addressToProtocolId[msg.sender][_ticketInfo.item] = lastProtocolId;
                 }
+                require(!_ticketOptions[_nfticketId].contains(_options[i].id), "P1");
                 uint _startReceivable = block.timestamp + freeTrialPeriod[_options[i].id];
                 protocolInfo[lastProtocolId].amountReceivable = _ticketInfo.price + _options[i].unitPrice;
                 protocolInfo[lastProtocolId].periodReceivable = _options[i].value;
@@ -5043,6 +5044,7 @@ contract Paywall {
                 protocolInfo[lastProtocolId].item = _ticketInfo.item;
                 protocolInfo[lastProtocolId].freeTrialPeriod = freeTrialPeriod[_options[i].id];
                 protocolInfo[lastProtocolId].referrerCollectionId = _referrerCollectionId;
+                _ticketOptions[_nfticketId].add(_options[i].id);
                 IMarketPlace(_marketPlaceEvents()).emitUpdateProtocol(
                     collectionId, 
                     _nfticketId,
@@ -5054,6 +5056,10 @@ contract Paywall {
                     _startReceivable,
                     _ticketInfo.item
                 );
+            }
+            if (_options.length == 0) {
+                require(!_ticketOptions[_nfticketId].contains(0), "P2");
+                _ticketOptions[_nfticketId].add(0);
             }
         }
     }
@@ -5080,6 +5086,9 @@ contract Paywall {
         IMarketPlace(_marketCollections()).getCollection(protocolInfo[_protocolId].referrerCollectionId);
         uint[] memory _option = new uint[](1);
         _option[0] = protocolInfo[_protocolId].optionId;
+        if (subscription) {
+            protocolInfo[_protocolId].startReceivable = block.timestamp;    
+        }
         protocolInfo[_protocolId].paidReceivable += protocolInfo[_protocolId].amountReceivable;
         IMarketPlace(_marketTrades()).buyWithContract(
             devaddr_,
@@ -5114,7 +5123,7 @@ contract Paywall {
         }
         uint _endTime = block.timestamp + _numOfSeconds;   
         partnershipEnds[_partnerCollectionId][_tokenId] = _endTime;
-        address partnerPaywall = IMarketPlace(paywallARPHelper).collectionIdToPaywallARP(_partnerCollectionId);
+        address partnerPaywall = IMarketPlace(paywallARPHelper).collectionIdToPaywallARP(_partnerCollectionId, _tokenId);
         if (!_secondCall) IMarketPlace(partnerPaywall).partner(collectionId, _tokenId, _paywallId, _numOfSeconds, true);
         IMarketPlace(_marketPlaceEvents()).emitUpdateMiscellaneous(
             0,
@@ -5129,13 +5138,12 @@ contract Paywall {
     }
     
     function getState(address _user, string memory _tokenId, uint _price) external view returns(uint) {
-        uint _protocolId = addressToProtocolId[_user];
+        uint _protocolId = addressToProtocolId[_user][_tokenId];
         if (owner(_protocolId) == _user && 
             keccak256(abi.encodePacked(protocolInfo[_protocolId].item)) == keccak256(abi.encodePacked(_tokenId))
         ) {
             uint _optionId = protocolInfo[_protocolId].optionId;
-            (,,int secondsReceivable) = 
-            IMarketPlace(_helper()).getDueReceivable(address(this), addressToProtocolId[_user]);
+            (,,int secondsReceivable) = getDueReceivable(_protocolId);
             if (secondsReceivable > 0) {
                 uint _factor = Math.min(penaltyDivisor[_optionId].cap, (uint(secondsReceivable) / Math.max(1,penaltyDivisor[_optionId].period)) * penaltyDivisor[_optionId].factor);
                 uint _penalty = _price * _factor / 10000; 
@@ -5150,23 +5158,45 @@ contract Paywall {
     }
 
     function ongoingSubscription(address _user, uint _nfticketId, string memory _tokenId) external view returns(bool) {
-        uint _protocolId = addressToProtocolId[_user];
+        if (devaddr_ == _user) return true;
+        uint _protocolId = addressToProtocolId[_user][_tokenId];
         if (owner(_protocolId) == _user && 
             keccak256(abi.encodePacked(protocolInfo[_protocolId].item)) == keccak256(abi.encodePacked(_tokenId))
         ) {
             if (profileIdRequired && protocolInfo[_protocolId].profileId == 0) return false;
-            (uint dueReceivable,,int secondsReceivable) = 
-            IMarketPlace(_helper()).getDueReceivable(address(this), addressToProtocolId[_user]);
+            (uint dueReceivable,,int secondsReceivable) = getDueReceivable(_protocolId);
             return dueReceivable == 0 || secondsReceivable < 0 || uint(secondsReceivable) < bufferTime;
         } else if (_nfticketId > 0) {
-            require(ve(_nfticketHelper2()).ownerOf(_nfticketId) == _user);
+            require(ve(_nfticketHelper2()).ownerOf(_nfticketId) == _user, "PA1");
     
             TicketInfo memory _ticketInfo = INFTicket(_nfticket()).getTicketInfo(_nfticketId);
-            require(partnershipEnds[_ticketInfo.merchant][_tokenId] > block.timestamp);
-            address _partnerPaywall = IMarketPlace(IContract(contractAddress).paywallARPHelper()).collectionIdToPaywallARP(_ticketInfo.merchant);
-            return IMarketPlace(_partnerPaywall).ongoingSubscription(_user, _nfticketId, _tokenId);
+            if (partnershipEnds[_ticketInfo.merchant][_tokenId] > block.timestamp) {
+                address _partnerPaywall = IMarketPlace(IContract(contractAddress).paywallARPHelper()).collectionIdToPaywallARP(_ticketInfo.merchant, _ticketInfo.item);
+                return IMarketPlace(_partnerPaywall).ongoingSubscription(_user, 0, _ticketInfo.item);
+            }
         }
         return false;
+    }
+
+    function getNumPeriods(uint tm1, uint tm2, uint _period) internal pure returns(uint) {
+        if (tm1 == 0 || tm2 == 0 || tm2 < tm1 || _period == 0) return 0;
+        return (tm2 - tm1) / Math.max(1,_period);
+    }
+    
+    function getDueReceivable(uint _protocolId) public view returns(uint, uint, int) {   
+        uint numPeriods = getNumPeriods(protocolInfo[_protocolId].startReceivable, block.timestamp, protocolInfo[_protocolId].periodReceivable);
+        uint dueDate = protocolInfo[_protocolId].startReceivable + protocolInfo[_protocolId].periodReceivable * ((protocolInfo[_protocolId].paidReceivable / Math.max(1, protocolInfo[_protocolId].amountReceivable)) + 1);
+        uint due;
+        if (subscription) {
+            due = protocolInfo[_protocolId].amountReceivable * numPeriods;
+        } else {
+            due = protocolInfo[_protocolId].amountReceivable * numPeriods > protocolInfo[_protocolId].paidReceivable ? protocolInfo[_protocolId].amountReceivable * numPeriods - protocolInfo[_protocolId].paidReceivable : 0;
+        }
+        return (
+            due, // due
+            dueDate, // next
+            int(block.timestamp) - int(dueDate) // late or seconds in advance
+        );
     }
 
     function withdraw(address _token) external onlyAdmin {
@@ -5178,7 +5208,7 @@ contract PaywallARPHelper {
     using EnumerableSet for EnumerableSet.AddressSet;
 
     EnumerableSet.AddressSet private gauges;
-    mapping(uint => address) public collectionIdToPaywallARP;
+    mapping(uint => mapping(string => address)) public collectionIdToPaywallARP;
     address public contractAddress;
     address private factory;
     
@@ -5198,11 +5228,12 @@ contract PaywallARPHelper {
         }    
     }
 
-    function updateGauge(address _last_gauge, uint _collectionId) external {
+    function updateGauge(address _last_gauge, uint _collectionId, string memory _tokenId) external {
         require(IContract(contractAddress).paywallARPFactory() == msg.sender);
+        require(collectionIdToPaywallARP[_collectionId][_tokenId] == address(0), "PH1");
         gauges.add(_last_gauge);
-        collectionIdToPaywallARP[_collectionId] = _last_gauge;
-        IMarketPlace(IContract(contractAddress).marketPlaceEvents()).emitCreatePaywallARP(_last_gauge, _collectionId);
+        collectionIdToPaywallARP[_collectionId][_tokenId] = _last_gauge;
+        IMarketPlace(IContract(contractAddress).marketPlaceEvents()).emitCreatePaywallARP(_last_gauge, _collectionId, _tokenId);
     }
 
     function isGauge(address _gauge) external view returns(bool) {
@@ -5215,25 +5246,22 @@ contract PaywallARPHelper {
         IMarketPlace(IContract(contractAddress).marketPlaceEvents()).emitDeletePaywallARP(IMarketPlace(_arp).collectionId());
     }
 
-    function getNumPeriods(uint tm1, uint tm2, uint _period) public view returns(uint) {
-        if (tm2 == 0) tm2 = block.timestamp;
-        if (tm1 == 0 || tm2 == 0 || tm2 < tm1) return 0;
-        return _period > 0 ? (tm2 - tm1) / _period : 1;
-    }
+    // function getNumPeriods(uint tm1, uint tm2, uint _period) internal pure returns(uint) {
+    //     if (tm1 == 0 || tm2 == 0 || tm2 < tm1 || _period == 0) return 0;
+    //     return (tm2 - tm1) / Math.max(1,_period);
+    // }
     
-    function getDueReceivable(address _arp, uint _protocolId) public view returns(uint, uint, int) {   
-        (,uint startReceivable,uint amountReceivable,uint periodReceivable,uint paidReceivable,,,,,,) 
-        = IMarketPlace(_arp).protocolInfo(_protocolId);
-        // uint numPeriods = paidReceivable / amountReceivable;
-        uint numPeriods = getNumPeriods(startReceivable, block.timestamp, periodReceivable);
-        uint nextDue = startReceivable + periodReceivable * Math.min(1, numPeriods);
-        uint due = amountReceivable * numPeriods > paidReceivable ? amountReceivable * numPeriods - paidReceivable : 0;
-        return (
-            due, // due
-            nextDue, // next
-            int(block.timestamp) - int(nextDue) //late or seconds in advance
-        );
-    }
+    // function getDueReceivable(address _arp, uint _protocolId) public view returns(uint, uint, int) {   
+    //     PaywallInfo memory p = IMarketPlace(_arp).protocolInfo(_protocolId);
+    //     uint numPeriods = getNumPeriods(p.startReceivable, block.timestamp, p.periodReceivable);
+    //     uint dueDate = p.startReceivable + p.periodReceivable * ((p.paidReceivable / Math.max(1, p.amountReceivable)) + 1);
+    //     uint due = p.amountReceivable * numPeriods > p.paidReceivable ? p.amountReceivable * numPeriods - p.paidReceivable : 0;
+    //     return (
+    //         due, // due
+    //         dueDate, // next
+    //         int(block.timestamp) - int(dueDate) // late or seconds in advance
+    //     );
+    // }
 
 }
 
@@ -5244,13 +5272,14 @@ contract PaywallARPFactory {
         contractAddress = _contractAddress;
     }
 
-    function createGauge() external {
+    function createGauge(string memory _tokenId) external {
         uint _collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
         address last_gauge = address(new Paywall(
             contractAddress,
             msg.sender,
-            _collectionId
+            _collectionId,
+            _tokenId
         ));
-        IMarketPlace(IContract(contractAddress).paywallARPHelper()).updateGauge(last_gauge, _collectionId);
+        IMarketPlace(IContract(contractAddress).paywallARPHelper()).updateGauge(last_gauge, _collectionId, _tokenId);
     }
 }

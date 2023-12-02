@@ -6,6 +6,7 @@ pragma experimental ABIEncoderV2;
 import "./Library.sol";
 
 contract NFTicket {
+    using SafeERC20 for IERC20;
     using EnumerableSet for EnumerableSet.UintSet;
 
     mapping(uint => EnumerableSet.UintSet) private merchantMessages;
@@ -296,24 +297,24 @@ contract NFTicket {
     function superChatAll(string memory _message) external {
         address marketCollections = IContract(contractAddress).marketCollections();
         uint _collectionId = IMarketPlace(marketCollections).addressToCollectionId(msg.sender);
-        batchSuperChat(allMerchantTickets_[_collectionId], _message);
+        batchSuperChat(allMerchantTickets_[_collectionId], 0, _message);
     }
 
     function messageFromTo(uint _first, uint _last, string memory _item, string memory _message) external {
         address marketCollections = IContract(contractAddress).marketCollections();
         uint _collectionId = IMarketPlace(marketCollections).addressToCollectionId(msg.sender);
         (uint[] memory _tokenIds,) = getMerchantTicketsPagination(_collectionId, _first, _last, _item);
-        batchSuperChat(_tokenIds, _message);
+        batchSuperChat(_tokenIds, 0, _message);
     }
 
     // used by merchant to message clients
-    function batchSuperChat(uint[] memory _tokenIds, string memory _message) public {
+    function batchSuperChat(uint[] memory _tokenIds, uint _amount, string memory _message) public {
         for (uint i = 0; i < _tokenIds.length; i++) {
-            superChat(_tokenIds[i], 0, _message);
+            _superChat(_tokenIds[i], _amount, _message);
         }
     }
     
-    function superChat(uint _tokenId, uint _amount, string memory _message) internal lock {
+    function _superChat(uint _tokenId, uint _amount, string memory _message) internal lock {
         uint _merchant = ticketInfo_[_tokenId].merchant;
         address marketCollections = IContract(contractAddress).marketCollections();
         uint _collectionId = IMarketPlace(marketCollections).addressToCollectionId(msg.sender);
@@ -321,7 +322,7 @@ contract NFTicket {
         if (getReceiver(_tokenId) == msg.sender) {
             require(merchantMessages[_merchant].length() <= IContract(contractAddress).maxMessage(), "NT5");
             require(_amount >= IContract(contractAddress).minSuperChat(), "NT6");
-            IARPHelper(_nfticketHelper())._safeTransferFrom(IContract(contractAddress).token(), address(msg.sender), address(this), _amount);
+            IERC20(IContract(contractAddress).token()).safeTransferFrom(address(msg.sender), address(this), _amount);
             uint _fee = _amount*adminFee/10000;
             pendingRevenue[_collectionId] += _amount - _fee;
             treasury += _fee;
@@ -382,19 +383,22 @@ contract NFTicket {
         uint _price = _amount == 0 ? treasury : Math.min(_amount, treasury);
         if (_token ==  IContract(contractAddress).token()) {
             treasury -= _price;
-            IARPHelper(nfticketHelper)._safeTransfer(_token, msg.sender, _price);
+            IERC20(_token).safeTransfer(msg.sender, _price);
         } else {
-            IARPHelper(nfticketHelper)._safeTransfer(_token, msg.sender, erc20(_token).balanceOf(address(this)));
+            IERC20(_token).safeTransfer(msg.sender, erc20(_token).balanceOf(address(this)));
         }
     }
 
     function withdrawRevenue(uint _amount) external lock {
-        // address marketCollections = IContract(contractAddress).marketCollections();
-        // address nfticketHelper = IContract(contractAddress).nfticketHelper();
         uint _collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
         uint _price = _amount == 0 ? pendingRevenue[_collectionId] : Math.min(_amount, pendingRevenue[_collectionId]);
-        pendingRevenue[_collectionId] -= _price;
-        IARPHelper(_nfticketHelper())._safeTransfer(IContract(contractAddress).token(), msg.sender, _price);
+        if (pendingRevenue[_collectionId] > _price) {
+            pendingRevenue[_collectionId] -= _price;
+        } else {
+            _price = pendingRevenue[_collectionId];
+            pendingRevenue[_collectionId] = 0;
+        }
+        IERC20(IContract(contractAddress).token()).safeTransfer(msg.sender, _price);
     }
 
     // function batchAttach(uint256[] memory _tokenIds, uint256 _period, address _lender) external { 
@@ -561,7 +565,7 @@ contract NFTicketHelper {
         uint _merchantId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
         tags[_merchantId][_tokenId] = _tag;
         IMarketPlace(IContract(contractAddress).marketPlaceEvents()).emitUpdateMiscellaneous(
-            6,
+            12,
             _merchantId,
             _tokenId,
             _tag,
@@ -576,7 +580,7 @@ contract NFTicketHelper {
         uint _merchantId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
         tagRegistrations[_merchantId][_tag] = _add;
         IMarketPlace(IContract(contractAddress).marketPlaceEvents()).emitUpdateMiscellaneous(
-            7,
+            13,
             _merchantId,
             _tag,
             "",
@@ -1063,7 +1067,7 @@ contract NFTicketHelper2 is ERC721Pausable {
         override 
     {
         super._beforeTokenTransfer(from, to, tokenId);
-        require(!attached[tokenId]);
+        require(!attached[tokenId], "NFTH1");
         if (msg.sender != IAuth(contractAddress).devaddr_() && from != address(0x0) && to != address(0x0)) {
             // address nfticket = IContract(contractAddress).nfticket();
             TicketInfo memory _ticketInfo = INFTicket(IContract(contractAddress).nfticket()).getTicketInfo(tokenId);
@@ -1164,9 +1168,9 @@ contract MarketPlaceEvents {
     event PaywallVoted(uint indexed collectionId, uint profileId, string tokenId, uint likes, uint disLikes, bool like, address sender);
 
     // Ask order is cancelled
-    event AskCancel(uint256 indexed collection, uint256 indexed tokenId);
+    event AskCancel(uint256 indexed collection, string tokenId);
     
-    event PaywallAskCancel(uint256 indexed collection, uint256 indexed tokenId, address sender);
+    event PaywallAskCancel(uint256 indexed collection, string tokenId, address sender);
     
     event UserRegistration(uint256 indexed collectionId, uint256 userCollectionId, bool active);
 
@@ -1386,7 +1390,7 @@ contract MarketPlaceEvents {
         uint256 netPrice,
         uint256 nfTicketId
     );
-    event CreatePaywallARP(address subscriptionARP, uint collectionId);
+    event CreatePaywallARP(address subscriptionARP, uint collectionId, string tokenId);
     event DeletePaywallARP(uint collectionId);
     event UpdateSubscriptionInfo(uint collectionId, uint optionId, uint freeTrialPeriod);
     
@@ -1515,6 +1519,9 @@ contract MarketPlaceEvents {
         address paramValue4,
         string memory paramValue5
     ) external {
+        if (_idx == 0) {
+            require(IMarketPlace(IContract(contractAddress).paywallARPHelper()).isGauge(msg.sender));
+        }
         emit UpdateMiscellaneous(
             _idx, 
             _collectionId, 
@@ -1629,7 +1636,7 @@ contract MarketPlaceEvents {
         emit CollectionClose(_collectionId);
     }
 
-    function emitAskCancel(uint256 collection, uint256 tokenId) external {
+    function emitAskCancel(uint256 collection, string memory tokenId) external {
         if(msg.sender == IContract(contractAddress).marketOrders()) {
             emit AskCancel(collection, tokenId);
         } else {
@@ -1918,15 +1925,15 @@ contract MarketPlaceEvents {
         uint _optionId,
         uint _freeTrialPeriod
     ) external {
-        require(msg.sender == IContract(contractAddress).paywallMarketHelpers());
+        require(IMarketPlace(IContract(contractAddress).paywallARPHelper()).isGauge(msg.sender));
 
         emit UpdateSubscriptionInfo(_collectionId, _optionId, _freeTrialPeriod);   
     }
 
-    function emitCreatePaywallARP(address _subscriptionARP, uint _collectionId) external {
+    function emitCreatePaywallARP(address _subscriptionARP, uint _collectionId, string memory _tokenId) external {
         require(msg.sender == IContract(contractAddress).paywallARPHelper());
 
-        emit CreatePaywallARP(_subscriptionARP, _collectionId);   
+        emit CreatePaywallARP(_subscriptionARP, _collectionId, _tokenId);   
     }
 
     function emitDeletePaywallARP(uint collectionId) external {
@@ -3241,7 +3248,7 @@ contract MarketPlaceOrders {
         
         // Emit event
         address marketPlaceEvents = IContract(contractAddress).marketPlaceEvents();
-        IMarketPlace(marketPlaceEvents).emitAskCancel(_collectionId, _tokenId);
+        IMarketPlace(marketPlaceEvents).emitAskCancel(_collectionId, __tokenId);
     }
 
     function modifyAskOrderIdentity(
@@ -3459,7 +3466,7 @@ contract MarketPlaceOrders {
         _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].minBidIncrementPercentage = _minBidIncrementPercentage;
         _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].transferrable = _transferrable;
         _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].dropinTimer = block.timestamp + _dropinTimer;
-        _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].maxSupply = _maxSupply > 0 ? _maxSupply : type(uint).max;
+        _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].maxSupply = _maxSupply;
         _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].tokenInfo.requireUpfrontPayment = _requireUpfrontPayment;
         
         // Emit event

@@ -561,7 +561,7 @@ contract NFTicketHelper {
         uint _merchantId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
         tags[_merchantId][_tokenId] = _tag;
         IMarketPlace(IContract(contractAddress).marketPlaceEvents()).emitUpdateMiscellaneous(
-            6,
+            12,
             _merchantId,
             _tokenId,
             _tag,
@@ -576,7 +576,7 @@ contract NFTicketHelper {
         uint _merchantId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
         tagRegistrations[_merchantId][_tag] = _add;
         IMarketPlace(IContract(contractAddress).marketPlaceEvents()).emitUpdateMiscellaneous(
-            7,
+            13,
             _merchantId,
             _tag,
             "",
@@ -1149,9 +1149,9 @@ contract MarketPlaceEvents {
     event PaywallVoted(uint indexed collectionId, uint profileId, string tokenId, uint likes, uint disLikes, bool like, address sender);
 
     // Ask order is cancelled
-    event AskCancel(uint256 indexed collection, uint256 indexed tokenId);
+    event AskCancel(uint256 indexed collection, string tokenId);
     
-    event PaywallAskCancel(uint256 indexed collection, uint256 indexed tokenId, address sender);
+    event PaywallAskCancel(uint256 indexed collection, string tokenId, address sender);
     
     event UserRegistration(uint256 indexed collectionId, uint256 userCollectionId, bool active);
 
@@ -1371,7 +1371,7 @@ contract MarketPlaceEvents {
         uint256 netPrice,
         uint256 nfTicketId
     );
-    event CreatePaywallARP(address subscriptionARP, uint collectionId);
+    event CreatePaywallARP(address subscriptionARP, uint collectionId, string tokenId);
     event DeletePaywallARP(uint collectionId);
     event UpdateSubscriptionInfo(uint collectionId, uint optionId, uint freeTrialPeriod);
     
@@ -1500,6 +1500,9 @@ contract MarketPlaceEvents {
         address paramValue4,
         string memory paramValue5
     ) external {
+        if (_idx == 0) {
+            require(IMarketPlace(IContract(contractAddress).paywallARPHelper()).isGauge(msg.sender));
+        }
         emit UpdateMiscellaneous(
             _idx, 
             _collectionId, 
@@ -1614,7 +1617,7 @@ contract MarketPlaceEvents {
         emit CollectionClose(_collectionId);
     }
 
-    function emitAskCancel(uint256 collection, uint256 tokenId) external {
+    function emitAskCancel(uint256 collection, string memory tokenId) external {
         if(msg.sender == IContract(contractAddress).marketOrders()) {
             emit AskCancel(collection, tokenId);
         } else {
@@ -1903,15 +1906,15 @@ contract MarketPlaceEvents {
         uint _optionId,
         uint _freeTrialPeriod
     ) external {
-        require(msg.sender == IContract(contractAddress).paywallMarketHelpers());
+        require(IMarketPlace(IContract(contractAddress).paywallARPHelper()).isGauge(msg.sender));
 
         emit UpdateSubscriptionInfo(_collectionId, _optionId, _freeTrialPeriod);   
     }
 
-    function emitCreatePaywallARP(address _subscriptionARP, uint _collectionId) external {
+    function emitCreatePaywallARP(address _subscriptionARP, uint _collectionId, string memory _tokenId) external {
         require(msg.sender == IContract(contractAddress).paywallARPHelper());
 
-        emit CreatePaywallARP(_subscriptionARP, _collectionId);   
+        emit CreatePaywallARP(_subscriptionARP, _collectionId, _tokenId);   
     }
 
     function emitDeletePaywallARP(uint collectionId) external {
@@ -3214,7 +3217,7 @@ contract NFTMarketPlaceOrders {
         
         // Emit event
         address marketPlaceEvents = IContract(contractAddress).marketPlaceEvents();
-        IMarketPlace(marketPlaceEvents).emitAskCancel(_collectionId, _tokenId);
+        IMarketPlace(marketPlaceEvents).emitAskCancel(_collectionId, __tokenId);
     }
 
     function modifyAskOrderIdentity(
@@ -4793,20 +4796,22 @@ contract NFTMarketPlaceHelper3 is ERC721Pausable {
 
     function getMinter(uint _collectionId, string memory _tokenId, address _user, address _minter, uint _nftTokenId, uint _maxSupply) external {
         require(IContract(contractAddress).nftMarketOrders() == msg.sender, "PNMHHH2");
+        NFTYPE _nftype = NFTYPE.erc1155;
         if (_minter != address(0x0)) {
             if (_nftTokenId > 0) {
                 require(_maxSupply == 1, "PNMHHH3");
                 // Transfer NFT to nfticketHelper2
-                if (IERC721(_minter).supportsInterface(0x80ac58cd)) {
+                try IERC721(_minter).supportsInterface(0x80ac58cd) {
                     IERC721(_minter).safeTransferFrom(_user, IContract(contractAddress).nfticketHelper2(), _nftTokenId);
-                } else {
+                } catch {
                     IERC1155(_minter).safeTransferFrom(_user, IContract(contractAddress).nfticketHelper2(), _nftTokenId, 1, msg.data);
                 }
+                _nftype = NFTYPE.erc721;
             }
             minter[_collectionId][_tokenId] = MintValues({
                 minter: _minter,
                 tokenId: _nftTokenId,
-                nftype: IERC721(_minter).supportsInterface(0x80ac58cd) ? NFTYPE.erc721 : NFTYPE.erc1155
+                nftype: _nftype
             });
         } else {
             _minter = IMarketPlace(IContract(contractAddress).minterFactory()).itemToMinter(_collectionId, _tokenId);
@@ -4824,16 +4829,16 @@ contract Minter is ERC721Pausable {
     using EnumerableSet for EnumerableSet.UintSet;
 
     address public devaddr_;
-    address public factory;
+    address factory;
     uint public maxSupply = type(uint).max;
-    uint public ticketID = 1;
-    address public contractAddress;
+    uint ticketID = 1;
+    address contractAddress;
     address public uriGenerator;
     mapping(uint => Option[]) public options;
     mapping(string => EnumerableSet.UintSet) private locked;
     mapping(uint => EnumerableSet.UintSet) private lockedTo;
     mapping(string => bool) public isLocked;
-    string[] private media;
+    string[] public media;
     string[] private chat;
     string[3] private featuredOptionNames;
     string[3] private featuredOptionValues;
@@ -4850,11 +4855,14 @@ contract Minter is ERC721Pausable {
     constructor(
         string memory __name,
         string memory __symbol,
+        string[] memory _media,
         address _devaddr,
         address _contractAddress
     ) ERC721(__name, __symbol) {
+        media = _media;
         devaddr_ = _devaddr;
         factory = msg.sender;
+        chat = new string[](1);
         contractAddress = _contractAddress;
     }
 
@@ -4902,8 +4910,7 @@ contract Minter is ERC721Pausable {
         if (ticketID < maxSupply) {
             require(
                 devaddr_ == msg.sender || 
-                IContract(contractAddress).nfticketHelper2() == msg.sender,
-                "M1"
+                IContract(contractAddress).nfticketHelper2() == msg.sender
             );
             for (uint i = 0; i < _options.length; i++) {
                 Option memory _boughtOption = IMarketPlace(IContract(contractAddress).nftMarketHelpers()).options(
@@ -4911,10 +4918,10 @@ contract Minter is ERC721Pausable {
                     _item, 
                     i
                 );
-                require(_isGood(_boughtOption.traitType), "M003");
+                require(_isGood(_boughtOption.traitType));
                 options[ticketID].push(_boughtOption);
                 if (isLocked[_boughtOption.category]) {
-                    require(locked[_boughtOption.category].length() > 0, "M01");                 
+                    require(locked[_boughtOption.category].length() > 0);                 
                     uint _currentTokenId = locked[_boughtOption.category].at(0);
                     locked[_boughtOption.category].remove(_currentTokenId);
                     lockedTo[ticketID].add(_currentTokenId);
@@ -4924,12 +4931,15 @@ contract Minter is ERC721Pausable {
                 }
             }
             _safeMint(_to, ticketID, msg.data);
-            emit InfoMint(
-                ticketID, 
-                _to,
+            IMarketPlace(IContract(contractAddress).marketPlaceEvents()).emitUpdateMiscellaneous(
+                11, 
                 _collectionId,
                 _item,
-                _options
+                "",
+                ticketID,
+                IMarketPlace(IContract(contractAddress).nfticket()).ticketID(),
+                _to,
+                ""
             );
             return ticketID++;
         }
@@ -4949,7 +4959,7 @@ contract Minter is ERC721Pausable {
 
     function unLockResource(string memory _category, uint _tokenId) external {
         require(devaddr_ == msg.sender);
-        require(locked[_category].contains(_tokenId), "M001");
+        require(locked[_category].contains(_tokenId));
         locked[_category].remove(_tokenId);
         if (locked[_category].length() == 0) {
             isLocked[_category] = false;
@@ -4957,7 +4967,7 @@ contract Minter is ERC721Pausable {
     }
 
     function burn(uint _tokenId) external {
-        require(ownerOf(_tokenId) == msg.sender, "M002");
+        require(ownerOf(_tokenId) == msg.sender);
         _burn(_tokenId);
         for(uint i = 0; i < lockedTo[_tokenId].length(); i++) {
             uint _currentTokenId = lockedTo[_tokenId].at(i);
@@ -4974,10 +4984,10 @@ contract Minter is ERC721Pausable {
         return IContract(contractAddress).nftSvg();
     }
 
-    function updateMedia(string[] memory _media) external {
-        require(devaddr_ == msg.sender);
-        media = _media;
-    }
+    // function updateMedia(string[] memory _media) external {
+    //     require(devaddr_ == msg.sender);
+    //     media = _media;
+    // }
 
     function updateChat(string[] memory _chat) external {
         require(devaddr_ == msg.sender);
@@ -5015,6 +5025,8 @@ contract Minter is ERC721Pausable {
     function _getOptions(uint _tokenId) internal view returns(string[] memory optionNames, string[] memory optionValues) {
         // free options
         uint idx;
+        optionNames = new string[](featuredOptionNames.length + lockedTo[_tokenId].length() + options[_tokenId].length);
+        optionValues = new string[](featuredOptionNames.length + lockedTo[_tokenId].length() + options[_tokenId].length);
         for (uint i = 0; i < featuredOptionNames.length; i++) {
             if (!_isEmpty(featuredOptionNames[i]) && !_isEmpty(featuredOptionValues[i])) {
                 optionNames[idx] = featuredOptionNames[i];
@@ -5041,7 +5053,7 @@ contract Minter is ERC721Pausable {
             (string[] memory optionNames, string[] memory optionValues) = _getOptions(_tokenId);
             output = IMarketPlace(_nftSvg()).constructTokenURI(
                 _tokenId,
-                name(),
+                "",
                 devaddr_,
                 ownerOf(_tokenId),
                 ownerOf(_tokenId),
@@ -5078,11 +5090,10 @@ contract Minter is ERC721Pausable {
 }
 
 contract MinterFactory {
-    address public contractAddress;
+    address contractAddress;
     mapping(uint => mapping(string => address)) public itemToMinter;
 
-    function setContractAddress(address _contractAddress) external {
-        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender, "NT2");
+    constructor(address _contractAddress) {
         contractAddress = _contractAddress;
     }
 
@@ -5093,16 +5104,18 @@ contract MinterFactory {
     function createGauge(
         string memory _item,
         string memory _name,
-        string memory _symbol
+        string memory _symbol,
+        string[] memory _media
     ) external {
-        uint _collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
+        // uint _collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
         address last_gauge = address(new Minter(
             _name,
             _symbol,
+            _media,
             msg.sender,
             contractAddress
         ));
-        itemToMinter[_collectionId][_item] = last_gauge;
+        itemToMinter[IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender)][_item] = last_gauge;
     }
 }
 

@@ -815,7 +815,7 @@ contract StakeMarketNote {
 
     function getNumPeriods(uint tm1, uint tm2, uint _period) internal pure returns(uint) {
         if (tm1 == 0 || tm2 == 0 || tm2 < tm1 || _period == 0) return 0;
-        return (tm2 - tm1) / _period;
+        return (tm2 - tm1) / Math.max(1,_period);
     }
 
     function getDuePayable(uint _stakeId, uint _numPeriods) external view returns(uint, uint, int) {

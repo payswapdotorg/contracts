@@ -223,7 +223,7 @@ contract ARP {
         (address owner,address _token,,address claimableBy,,,,,,) = 
         ITrustBounty(trustBounty).bountyInfo(_bountyId);
         if (isAdmin[msg.sender]) {
-            require(owner == msg.sender && claimableBy == address(0x0), "ARP1");
+            require(owner == msg.sender && claimableBy == address(0x0));
             address note = _note();
             if (_bountyId > 0) {
                 IARP(note).attach(_bountyId);
@@ -235,15 +235,14 @@ contract ARP {
             require(owner == msg.sender && 
                 ve(helper).ownerOf(_tokenId) == msg.sender &&
                 _token == protocolInfo[_tokenId].token && 
-                claimableBy == devaddr_, 
-                "ARP2"
+                claimableBy == devaddr_
             );
             protocolInfo[_tokenId].bountyId = _bountyId;
         }
     }
 
     function updateAutoCharge(bool _autoCharge, uint _tokenId) external {
-        require(ve(helper).ownerOf(_tokenId) == msg.sender, "ARP3");
+        require(ve(helper).ownerOf(_tokenId) == msg.sender);
         isAutoChargeable[_tokenId] = _autoCharge;
         IARP(helper).emitUpdateAutoCharge(
             _tokenId,
@@ -290,7 +289,7 @@ contract ARP {
     function autoCharge(uint[] memory _tokenIds, uint _numPeriods) public lock {
         for (uint i = 0; i < _tokenIds.length; i++) {
             if (profileRequired) require(protocolInfo[_tokenIds[i]].profileId > 0);
-            if (isAdmin[msg.sender]) require(isAutoChargeable[_tokenIds[i]], "ARP4");
+            if (isAdmin[msg.sender]) require(isAutoChargeable[_tokenIds[i]]);
             (uint _price, uint _due) = getReceivable(_tokenIds[i], _numPeriods);
             address token = protocolInfo[_tokenIds[i]].token;
             (uint payswapFees,uint adminFees) = _getFees(_price, token, true);
@@ -327,8 +326,7 @@ contract ARP {
 
     function payInvoicePayable(uint _protocolId, uint _numPeriods) public lock {
         require(
-            addressToProtocolId[msg.sender] == _protocolId || isAdmin[msg.sender], 
-            "ARP5"
+            addressToProtocolId[msg.sender] == _protocolId || isAdmin[msg.sender]
         );
         address note = _note();
         address token = protocolInfo[_protocolId].token;
@@ -374,7 +372,7 @@ contract ARP {
     }
 
     function updateTokenId(uint _tokenId) external {
-        require(ve(_ve).ownerOf(_tokenId) == msg.sender, "ARP7");
+        require(ve(_ve).ownerOf(_tokenId) == msg.sender);
         uint _protocolId = addressToProtocolId[msg.sender];
         if (protocolInfo[_protocolId].tokenId == 0) {
             protocolInfo[_protocolId].tokenId = _tokenId;
@@ -406,7 +404,7 @@ contract ARP {
     }
 
     function updateOwner(address _prevOwner, uint _protocolId) external {
-        require(ve(helper).ownerOf(_protocolId) == msg.sender, "ARP8");
+        require(ve(helper).ownerOf(_protocolId) == msg.sender);
         addressToProtocolId[msg.sender] = _protocolId;
         delete addressToProtocolId[_prevOwner];
     }
@@ -428,18 +426,25 @@ contract ARP {
         IARP(helper).emitDeleteProtocol(_protocolId);
     }
 
-    function withdraw(address _token, uint amount) external onlyAdmin {
-        require(pendingRevenue[_token] >= amount, "ARP9");
-        pendingRevenue[_token] -= amount;
-        address note = _note();
-        erc20(_token).approve(note, amount);
-        IARP(note).safeTransferWithBountyCheck(_token, msg.sender, 0, amount);
-    
+    function withdraw(address _token, uint amount, uint _isNFT) external onlyAdmin {
+        if (NFTYPE(_isNFT) == NFTYPE.erc721) {
+            IERC721(_token).safeTransferFrom(address(this), msg.sender, amount);
+            pendingRevenue[_token] = 0;
+        } else if (NFTYPE(_isNFT) == NFTYPE.erc1155) {
+            IERC1155(_token).safeTransferFrom(address(this), msg.sender, amount, 1, msg.data);
+            pendingRevenue[_token] = 0;
+        } else {
+            require(pendingRevenue[_token] >= amount);
+            pendingRevenue[_token] -= amount;
+            address note = _note();
+            erc20(_token).approve(note, amount);
+            IARP(note).safeTransferWithBountyCheck(_token, msg.sender, 0, amount);
+        }
         IARP(helper).emitWithdraw(msg.sender, amount);
     }
 
     function noteWithdraw(address _to, address _token, uint amount) external {
-        require(msg.sender == _note(), "ARP10");
+        require(msg.sender == _note());
         IERC20(_token).safeTransfer(_to, amount);     
     }
 
@@ -448,17 +453,33 @@ contract ARP {
     }
 
     function notifyRewardAmount(address _token, address _from, uint _amount) public {
-        try IERC721(_token).safeTransferFrom(msg.sender, devaddr_, _amount) {
+        try IERC721(_token).safeTransferFrom(_from, address(this), _amount) {
             reward[_token] = _amount;
-        } catch{
-            IERC20(_token).safeTransferFrom(_from, address(this), _amount);
-            reward[_token] += _amount;
+        } catch {
+            try IERC1155(_token).safeTransferFrom(_from, address(this), _amount, 1, msg.data) {
+                reward[_token] = _amount;
+            } catch {
+                IERC20(_token).safeTransferFrom(_from, address(this), _amount);
+                reward[_token] += _amount;
+            }
         }
         IARP(helper).emitNotifyReward(_token, _amount);
     }
 
     function notifyDebt(address _token, uint _amount) external onlyAdmin {
         debt[_token] += _amount;
+    }
+
+    function onERC721Received(address,address,uint256,bytes memory) public virtual returns (bytes4) {
+        return this.onERC721Received.selector; 
+    }
+
+    function onERC1155Received(address, address, uint256, uint256, bytes memory) public virtual returns (bytes4) {
+        return this.onERC1155Received.selector;
+    }
+
+    function onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory) public virtual returns (bytes4) {
+        return this.onERC1155BatchReceived.selector;
     }
 }
 
@@ -910,7 +931,7 @@ contract ARPNote is ERC721Pausable {
 
     function getNumPeriods(uint tm1, uint tm2, uint _period) internal pure returns(uint) {
         if (tm1 == 0 || tm2 == 0 || tm2 < tm1 || _period == 0) return 0;
-        return (tm2 - tm1) / _period;
+        return (tm2 - tm1) / Math.max(1,_period);
     }
 
     function getDueReceivable(address _arp, uint _protocolId, uint _numExtraPeriods) public view returns(uint, uint, int) {
@@ -931,7 +952,7 @@ contract ARPNote is ERC721Pausable {
         return (
             due, // due
             dueDate, // next
-            int(block.timestamp) - int(dueDate) //late seconds or seconds in advance
+            int(block.timestamp) - int(dueDate) // late seconds or seconds in advance
         );
     }
 
@@ -1498,7 +1519,7 @@ contract ARPMinter {
 }
 
 contract ARPFactory {
-    address public contractAddress;
+    address contractAddress;
 
     function setContractAddress(address _contractAddress) external {
         require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);

@@ -149,6 +149,7 @@ async function main() {
       const NFTMarketPlaceHelper3 = await ethers.getContractFactory("contracts/NFTMarketPlace.sol:NFTMarketPlaceHelper3");
       const NFTSVG = await ethers.getContractFactory("contracts/NFTMarketPlace.sol:NFTSVG")
       const MinterFactory = await ethers.getContractFactory("MinterFactory");
+      const Minter = await ethers.getContractFactory("Minter");
       const WILLNote = await ethers.getContractFactory("WILLNote");
       const WILLFactory = await ethers.getContractFactory("WILLFactory");
       const WILL = await ethers.getContractFactory("WILL");
@@ -230,7 +231,7 @@ async function main() {
   const feeToAddress = "0x0Fe2B9DAE99b685ce57c7160eF01022e49843Ca6"
   const payswapFactory = "0x843b8C96676018024cb14C9429De8293b9ED9Eda"
   const payswapRouter = "0xF314FC209E6f52BE35a876206a1ec7CC18AAb25f"
-  const WFTM = "0xB8406F928784221b2dDD72a50Cf7563C45e8Ed9c"
+  const WFTM = "0x07B9c47452C41e8E00f98aC4c075F5c443281d2A"
   const INIT_CODE_PAIR_HASH = "0xc686be96020737842c8d1dc73f500c20206f43ad5e5928a27a00cbf05cf911fa"
   const businessMinterAddress = "0xfF4d74eD76bBF5b6Da80F3b5D493d3f23D52eB55"
   const auditorNoteAddress = "0x51ccF98593809607bdB08509e8b8d670658f86C0"
@@ -241,11 +242,11 @@ async function main() {
   const futureCollateralAddress = "0xD2b2435aa749E42F3523033Fe167Ae543082375F"
   const cardAddress = "0x97b9795Dc1375EAA8B657cdc3c008B14b5A6F2C0"
   const contributorVoterAddress = "0xBCb2E030953dC9f2E68C179C19C2C121aF348Abb"
-  const vavaFactoryAddress = "0xD2DFBCEc6340182853BA7B454d83B7aB999E91D4"
-  const vavaHelperAddress = "0x5925eE9f895Ce02686ae0cB674421de1D035AD09"
-  const vavaHelper2Address = "0xE5828fE6FCd22AD20915DA44CB61DDCF905a8359"
-  const veFactoryAddress = "0x2b7b92c617609eEb2C2cA78DC2AE918c5E4B798d"
-  const valuepoolVoterAddress = "0xe3152A3E3fFA3F0578c3984aeFE454D3f7D6e04b"
+  const vavaFactoryAddress = "0x5fdbCeEc25E02d15dE51af3450289c72Ef2d081E"
+  const vavaHelperAddress = "0xC38993A66820830bfED5D92bc4c937a4bba4528D"
+  const vavaHelper2Address = "0x282E20b214ec4f4ae560dB9eaF03a29D0910Cb40"
+  const veFactoryAddress = "0x60496E81e744B5aD59b91d17Cfa62036d69fC856"
+  const valuepoolVoterAddress = "0x3a5231DAC8755102D17b911c0Dc99cE7DC47d0bD"
   const businessBribeFactoryAddress = "0xee1388EeFb6F9206836eB6C64F12bFBAEa14d9Cd"
   const businessGaugeFactoryAddress = "0x3a5F4F01Bbe5729b8EC35f453d4a92A364F9eF66"
   const referralBribeFactoryAddress = "0x3D262AD24C4ff3F8598367a23bA5288Df3581da2"
@@ -259,7 +260,7 @@ async function main() {
   const stakeMarketAddress = "0xbf877500681AF64f10F6C3E92fA9946f800804ea"
   const stakeMarketNoteAddress = "0x2596c9eA9473AE8B1F8EB08019CD8e9844Cea34a"
   const stakeMarketHelperAddress = "0xf178d8A6661aBA43bEaFe98080e47CD213c2FC34"
-  const stakeMarketBribeAddress = "0xE12F90F08916Dd587bb399ea09488ffA36CF17Ab"
+  const stakeMarketBribeAddress = "0x1b947A45Ad79438d5F47f45C920B9f1Dbe26f802"
   const stakeMarketVoterAddress = "0xeAf2c655581C83D47497D9D0C68dE09b1B32Fa55"
   const contractAddress = "0x214Cb0c088D0992d5ba36Cff283CB1333149E1e7" //"0x997068BaD1417e1d7Be77CFC9123B40a3D9Bdb92"
   const nftsvgAddress = "0x36D1257A7E29E73A345D01F1e5F81d424C12a2c7"
@@ -283,17 +284,17 @@ async function main() {
   const marketPlaceHelper3Address = "0x2affD239CAB6c7ca5643e1e821fa4ddF6072f7cC"
   const paywallMarketPlaceHelper3Address = "0xf82726AbB3b7d854ba07AB8db7f1Afd1f3834d50"
   const nftMarketPlaceHelper3Address = "0xe83a58792EACa44345129141313E16Cae2076d15"
-  const paywallARPFactoryAddress = "0xA732c57C3DA59aE51Eb04A842569eb4Ae15B3A0f"
-  const paywallARPHelperAddress = "0x5877de59AAf11794396e9bB5950CE58E06557cC3"
-  const minterFactoryAddress = "0x5Ed7ae0A1f29389295f4F25A1A679Bc051ae6aD4"
-  const trustBountiesAddress = "0x12feADd609596cf4f441920AF561ad80bD9c1be7"
-  const trustBountiesHelperAddress = "0xD4c16ADB9E07ADF9Aef50376888BFbD8690e06A5"
-  const trustBountiesVoterAddress = "0x8363970f0cca2Bb19a7717a3DE6bEC5e61f7ec17"
+  const paywallARPFactoryAddress = "0xD306Bc71120c7Ca5cd5Ce19Bc57f005Bf4F6D264"
+  const paywallARPHelperAddress = "0xDA1f5994a7568A6F7dED60E34fD29fAc5f466C23"
+  const minterFactoryAddress = "0x972A806DD4C5536E50F38155d7AfFD04741429a0"
+  const trustBountiesAddress = "0x855413AC9576A43f16C811777133FedFC971697C"
+  const trustBountiesHelperAddress = "0xf824a961659D39629Df27272569Ee66A061EB76e"
+  const trustBountiesVoterAddress = "0x2CD8f718BD6784873454d6288119d51DfcAe6FA4"
   const customMinterAddress = "0xB6c2E68a43a092973512a9C154D81C5559B5eBbA"
-  const arpFactoryAddress = "0xE9c25b9821D17677081b0099c29382E5a0c3eb40"
-  const arpHelperAddress = "0x79F85d94A346002D55e14bbb115a607A455e6F8f"
-  const arpMinterAddress = "0x2041cd77e870b997D3e035f877bE975E0f2a04ED"
-  const arpNoteAddress = "0x79Eb1063000aA15Ef5B73F182793835749188AcB"
+  const arpFactoryAddress = "0xB43FfE737042aD45191eb8d4e397c631D66a23FD"
+  const arpHelperAddress = "0x18988deb80151Cd52aB68f203c074B1BCAaD32e9"
+  const arpMinterAddress = "0x700532cc53282cD577f2299ce60f15Da11308a25"
+  const arpNoteAddress = "0xEFD289a07972Fa58FF0F9b4d37a0A9EFd2566550"
   const billFactoryAddress = "0xE697b2D4135b14216DB09e379f50E93dd281fD16"
   const billMinterAddress = "0x90256b159FC802c497b6C2BF7799DE75eAD936F2"
   const billHelperAddress = "0xbdb2ec1b244ACa734A5dA0ce7cd89d447319a2fA"
@@ -1173,6 +1174,12 @@ async function main() {
   // await stakeMarketBribe.deployed()
   // console.log("stakeMarketBribe============>", stakeMarketBribe.address)
 
+  // await ethers.provider.getBalance(stakeMarketBribe.address).then((balance) => {
+  //   // convert a currency unit from wei to ether
+  //   const balanceInEth = ethers.utils.formatEther(balance)
+  //   console.log(`2balance: ${balanceInEth} ${balance} ETH`)
+  // })
+
   // const stakeMarketVoter = await StakeMarketVoter.deploy()
   // await stakeMarketVoter.deployed()
   // console.log("stakeMarketVoter============>", stakeMarketVoter.address)
@@ -1271,7 +1278,7 @@ async function main() {
   // await paywallARPHelper.deployed()
   // console.log("paywallARPHelper============>", paywallARPHelper.address)
 
-  // const minterFactory = await MinterFactory.deploy();
+  // const minterFactory = await MinterFactory.deploy(contractAddresses.address);
   // await minterFactory.deployed()
   // console.log("minterFactory============>", minterFactory.address)
 
@@ -1306,6 +1313,12 @@ async function main() {
   // const trustBountiesHelper = await TrustBountiesHelper.deploy()
   // await trustBountiesHelper.deployed()
   // console.log("trustBountiesHelper============>", trustBountiesHelper.address)
+
+  await ethers.provider.getBalance(trustBountiesHelper.address).then((balance) => {
+    // convert a currency unit from wei to ether
+    const balanceInEth = ethers.utils.formatEther(balance)
+    console.log(`1balance: ${balanceInEth} ${balance} ETH`)
+  })
 
   // const extraTokenFactory = await ExtraTokenFactory.deploy(contractAddresses.address)
   // await extraTokenFactory.deployed()
@@ -1548,9 +1561,6 @@ async function main() {
   // await paywallARPHelper.setContractAddress(contractAddresses.address)
   // console.log("paywallARPHelper.setContractAddress===========> Done!")
 
-  // await minterFactory.setContractAddress(contractAddresses.address)
-  // console.log("minterFactory.setContractAddress===========> Done!")
-
   // await rampFactory.setContractAddress(contractAddresses.address)
   // console.log("rampFactory.setContractAddress===========> Done!")
 
@@ -1651,6 +1661,9 @@ async function main() {
   // await contractAddresses.setAuditorHelper(auditorHelper.address)
   // console.log("contractAddresses.setAuditorHelper===========> Done!")
 
+  // await contractAddresses.setBadgeNft(auditorHelper.address)
+  // console.log("contractAddresses.setBadgeNft===========> Done!")
+
   // await contractAddresses.setAuditorHelper2(auditorHelper2.address)
   // console.log("contractAddresses.setAuditorHelper2===========> Done!")
 
@@ -1689,6 +1702,7 @@ async function main() {
   // await trustBountiesHelper.updateVes("0xb55A821877d473D972B4ECBB18E41739687c539f", true)
   // await trustBountiesHelper.updateVes("0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62", true)
   // await trustBountiesHelper.updateVes("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", true)
+  // await trustBountiesHelper.updateVes("0xb9858E52175Dc194686E29875570703B5C986Fe3", true)
   // console.log("trustBountiesHelper.updateVes===========> Done!")
 
   // await trustBountiesHelper.updateWhitelistedTokens([futureCollateral.address, tFiat.address, nfticketHelper2.address], true)
@@ -1912,6 +1926,8 @@ async function main() {
   // console.log("marketPlaceHelper3.addVetoken==========>", await marketPlaceHelper3.veTokenSetContains(ve.address))
 
   // await trustBountiesVoter.updatePeriod(600)
+  // console.log("trustBountiesHelper.updatePeriod============>Done")
+
   // await trustBountiesHelper.updateParameters(
   //   86400 * 7,
   //   86400 * 7,
@@ -2214,6 +2230,19 @@ async function main() {
     //   "All"
     // )
     // console.log("marketPlaceCollection.emitAskInfo===========> Done!")
+  // await paywallMarketPlaceOrders.modifyAskOrder(
+  //   deployer.address,
+  //   "baba",
+  //   0,
+  //   0,
+  //   0,
+  //   true,
+  //   false,
+  //   0,
+  //   10,
+  //   0,
+  // );
+  // console.log("paywallMarketPlaceOrders.modifyAskOrder===========> Done!")
     // await paywallMarketPlaceOrders.createAskOrder(
     //   "uber",
     //   ethers.BigNumber.from("1000000000000000000"),
@@ -2442,24 +2471,63 @@ async function main() {
     // await lotteryRandomNumberGenerator.setNextRandomResult(199999999)
     // console.log("lotteryRandomNumberGenerator.setNextRandomResult=================>Done!")
 
-    // // paywallARP
-  // let paywallAddress = "0x238d804fbbe6c45836085890c42701beb08c81ca" // (await paywallARPHelper.getAllARPs(0))[0]
-  //   let paywallARP = Paywall.attach(paywallAddress)
-  //   console.log("paywallARP===>", paywallAddress, paywallARP.address)
+    // paywallARP
+  // let paywallAddress = (await paywallARPHelper.getAllARPs(0))[0]
+  // let paywallARP = Paywall.attach(paywallAddress)
+  // console.log("paywallARP===>", paywallAddress, paywallARPHelper.address, await paywallARP.collectionId())
+  // //   // await paywallARP.partner(1,"uber","uber",2592000)
+  // //   // console.log("partner==========>", await paywallARP.partners(1,"uber"))
 
-    // await paywallARP.partner(1,"uber","uber",2592000)
-    // console.log("partner==========>", await paywallARP.partners(1,"uber"))
+  // // console.log("getTicketPaywallOptions==================>", await nfticketHelper2.ownerOf(4), await nfticketHelper2.getTicketPaywallOptions(4))
+  // // // console.log("getTicketPaywallOptions==================>", await nfticketHelper2.ownerOf(6), await nfticketHelper2.getTicketPaywallOptions(6))
 
-  // await paywallARP.updateProtocol(5, 0, [deployer.address])
-  // console.log("referrer==================>", await nfticket.referrer(5))
-  // console.log("getTicketInfo==================>", await nfticket.getTicketInfo(5))
-  // console.log("userTokenId==================>", await nfticket.userTokenId(5))
-  // console.log("getTicketPaywallOptions==================>", await nfticketHelper2.getTicketPaywallOptions(5))
-  // console.log("ongoing==================>", await nfticketHelper2.ownerOf(5))
-  // console.log("ongoing==================>", await paywallARP.lastProtocolId()) //, await paywallARP.protocolInfo(5))
-  // console.log("ongoing==================>", await paywallARP.ongoingSubscription("0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA", 4, "netflix"))
+  // // // await paywallARP.updateProtocol(4, 0, [deployer.address])
+  // // console.log("referrer==================>", await nfticket.referrer(5))
+  // // console.log("userTokenId==================>", await nfticket.userTokenId(5))
+  // // console.log("getTicketPaywallOptions==================>", await nfticketHelper2.getTicketPaywallOptions(5))
+  // // console.log("ongoing==================>", await nfticketHelper2.ownerOf(7), deployer.address)
+  // // console.log("getTicketInfo==================>", await nfticket.getTicketInfo(4))
+  // console.log("partnershipEnds==================>", await paywallARP.partnershipEnds(290, "ali"))
+  // console.log("partnershipEnds==================>", await paywallARP.partnershipEnds(290, "baba"))
+  // console.log("collectionIdToPaywallARP==================>", await paywallARPHelper.collectionIdToPaywallARP(290))
+  // // console.log("paywallARP==================>", await paywallARP.protocolInfo(1), await paywallARP.addressToProtocolId("0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA"))
+  // // console.log("lastProtocolId==================>", await paywallARP.lastProtocolId(), await paywallARP.owner(1))
+  // console.log("getDueReceivable==================>", await paywallARP.getDueReceivable(1))
+  // console.log("ongoing==================>", await paywallARP.ongoingSubscription("0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA", 0, "baba"))
+  // console.log("ongoing==================>", await paywallARP.ongoingSubscription("0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA", 20, "ali"))
+  // console.log("devaddr_===============>", await paywallARP.devaddr_(), await paywallARP.owner(1))
 
-    // // create future collateral
+  // await trustBounties.createBounty(
+  //   deployer.address,
+  //   "0x0000000000000000000000000000000000000000",
+  //   "0xb9858E52175Dc194686E29875570703B5C986Fe3",
+  //   "0x0000000000000000000000000000000000000000",
+  //   0,
+  //   290,
+  //   86700 * 7 * 54,
+  //   0,
+  //   false,
+  //   "http://link-to-avatar.com",
+  //   "1"
+  // )
+  // console.log("bountyInfo(1)===========>", await trustBounties.bountyInfo(1))
+
+  // await trustBountiesVoter.createClaim(
+
+  // )
+
+  // await trustBounties.applyClaimResults(
+  //   1,
+  //   0,
+  //   ethers.BigNumber.from("100000000000000000"),
+  //   "",
+  //   "",
+  //   ""
+  // )
+  // console.log("trustBounties.applyClaimResults=============>Done", await trustBounties.claims(1,0))
+  // console.log("trustBounties.applyClaimResults=============>Done", await trustBounties.balances(1,trustBounties.address))
+
+  // // create future collateral
     // await trustBounties.createBounty(
     //   deployer.address,
     //   futureCollateral.address,
@@ -2492,8 +2560,8 @@ async function main() {
     // console.log("bountyInfo(1)===========>", await trustBounties.bountyInfo(1))
   // console.log("bountyInfo(2)===========>", await trustBounties.bountyInfo(2))
   // console.log("bountyInfo(2)===========>", await trustBountiesVoter.isGauge("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", 2))
-  // console.log("trustBounties.claims=================>", await trustBounties.claims(3, 0))
-  // console.log("trustBounties.claims=================>", await trustBounties.claims(3, 1))
+  // console.log("trustBounties.claims=================>", await trustBounties.claims(1,0))
+  // console.log("trustBounties.getLatestClaimId=================>", await trustBounties.getLatestClaimId(1))
   // console.log("tFiat.balanceOf=================>", await tFiat.balanceOf(trustBounties.address))
   // console.log("tFiat.balanceOf=================>", await tFiat.balanceOf(trustBountiesHelper.address))
   // console.log("trustBounties.getBalance=================>", await trustBounties.getBalance(1))
@@ -2663,6 +2731,17 @@ async function main() {
     // await sponsorNote.updateMinBountyPercent(0)
     // console.log("sponsorNote.updateMinBountyPercent==============>Done", await sponsorNote.minBountyPercent())
 
+  //   // minter
+  // const minterAddress = await minterFactory.itemToMinter(290, "Bored-Ape-Yatch-Club-9")
+  // const minter = Minter.attach(minterAddress)
+  // await minter.updateChat(["Hello here"])
+  // await minter.updateFeaturedOptions(
+  //   ["First Name", "Last Name", "Age"],
+  //   ["Tay", "Nur", "30"]
+  // )
+  // console.log("minter.updateChat====================>Done", minterAddress)
+  // console.log("minter.media====================>", await minter.media(0))
+  // console.log("minter.tokenURI====================>", await minter.tokenURI(1))
 
     // // create bill
     // const bill = await BILL.deploy(
@@ -2855,6 +2934,7 @@ async function main() {
   //   // // await vava.deployed()
   // let vava = Vava.attach(vavaAddress)
   // console.log("vava.deployed===============>Done", vavaAddress)
+  // console.log("nfticketHelper2===============>", nfticketHelper2.address, vava.address, await nfticketHelper2.balanceOf(vava.address), await nfticketHelper2.ownerOf(3))
   //   console.log("vava===>", vava.address, await vava.token(), await vavaHelper.getSupplyAvailable(vava.address))
   //   // await veFactory.createVe(tFiat.address, vava.address, false)
   //   // console.log("veFactory.createVe===============>Done")
@@ -3488,7 +3568,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[23]).updateCollection(
   //   "DCAHub",
-  //   "Introducing DCAHub: Your Destination for Group Dollar-Cost Averaging (DCA)! Are you interested in cryptocurrency or stock investments but prefer the safety and strategy of Dollar-Cost Averaging (DCA)? Welcome to DCAHub, the ultimate platform for discovering and joining groups of like-minded individuals who DCA together.",
+  //   "Introducing DCAHub: Your Destination for Group Dollar-Cost Averaging (DCA)! Are you interested in cryptocurrencies, NFTs, stocks or any type of investment but prefer the safety and strategy of Dollar-Cost Averaging (DCA)? Welcome to DCAHub, the ultimate platform for discovering and joining groups of like-minded individuals who DCA together using valuepools. You can find valuepools that use their funds to regularly purchase various assets like cryptocurrencies, stocks, real estate, NFTs, etc. Each valuepool has a set of assets that it regularly purchases and members can submit proposals to introduce new assets, sell existing assets or stop purchasing some assets.",
   //   "https://i.ibb.co/f8M4pZy/61.jpg",
   //   "https://i.ibb.co/f8M4pZy/61.jpg",
   //   "https://i.ibb.co/qBw8hm9/279.jpg",
@@ -5180,7 +5260,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[117]).updateCollection(
   //   "CitizenSeed",
-  //   "Introducing CitizenSeed: Your Pathway to US Citizenship for Your Children — our unique platform connects expectant parents with compassionate individuals in the United States who are willing to provide support, guidance, and assistance during the crucial period before childbirth. By forging meaningful connections, we aim to help parents navigate the process of giving birth in the US, ensuring their children become US citizens, and ultimately providing them with expanded opportunities for their future. CitizenSeed is your trusted partner in realizing the American dream for your family.",
+  //   "Introducing CitizenSeed: Your Pathway to citizenship in multiple countries — our unique platform connects you with people that will help you get a citizenship either through marriages, helping expectant parents deliver their kids in the country they are seeking citizenship in, etc.",
   //   "https://i.ibb.co/yyWyQyn/423.jpg",
   //   "https://i.ibb.co/yyWyQyn/423.jpg",
   //   "https://i.ibb.co/SxCtmx5/207.jpg",
@@ -11296,6 +11376,95 @@ async function main() {
   // );
   // console.log("459marketPlaceCollection.updateCollection===========> Done!")
 
+  // // 460
+  // await marketPlaceCollection.connect(wallets[457]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[457]).updateCollection(
+  //   "LawPay",
+  //   "LawPay matches you with professional lawyers that you can book consultations with or recruit. If you are a lawyer, you can partner with the channel and start offering your services to our users.",
+  //   "https://i.ibb.co/9cY2Y0B/47.jpg",
+  //   "https://i.ibb.co/9cY2Y0B/47.jpg",
+  //   "https://i.ibb.co/0XmYrqL/289.jpg",
+  //   "",
+  //   "",
+  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("460marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 461
+  // await marketPlaceCollection.connect(wallets[458]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[458]).updateCollection(
+  //   "Groupany",
+  //   "A Groupany is a valuepool that works like a company, its members are both its investors and employees. Take a delivery groupany for instance, it will have a channel to accept delivery orders and once a delivery order is created, its members will start applying to it, fulfill it and have the payment sent to the groupany's valuepool. All proceeds of the groupany are shared between its members with respect to their percentiles. You can explore all groupanies available and apply to join any of them that you like from international shipping groupanies to security groupanies.",
+  //   "https://i.ibb.co/Qnc0CX3/39.jpg",
+  //   "https://i.ibb.co/Qnc0CX3/39.jpg",
+  //   "https://i.ibb.co/NV8X2H2/38-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("461marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 462
+  // await marketPlaceCollection.connect(wallets[459]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[459]).updateCollection(
+  //   "Free Credits",
+  //   "Do free deliveries or provide free services on various platform that the channel recognizes in exchange for IOUs and create a request that the sex workers that offer services on the platform can apply to in order to film adult content with you (you can be masked or have your face blurred to remain anonymous). The content are posted behind the sex workers' paywalls. Only content filmed with IOU holders are authorized on the platform",
+  //   "https://i.ibb.co/FB4tT79/125.jpg",
+  //   "https://i.ibb.co/FB4tT79/125.jpg",
+  //   "https://i.ibb.co/DVZ9bpp/229.jpg",
+  //   "",
+  //   "",
+  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("462marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 463
+  // await marketPlaceCollection.connect(wallets[460]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[460]).updateCollection(
+  //   "CamLottery",
+  //   "CamLottery is just like any cam sites but with an added twist. Some cam girls have ongoing lotteries to select which of the viewers they will have sex with either live or privately. Viewers can purchase the lottery tickets for a chance to be picked.",
+  //   "https://i.ibb.co/vxPSGXs/31.jpg",
+  //   "https://i.ibb.co/vxPSGXs/31.jpg",
+  //   "https://i.ibb.co/ZBV2VKT/30-2.jpg",
+  //   "",
+  //   "",
+  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("463marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 464
+  // await marketPlaceCollection.connect(wallets[461]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[461]).updateCollection(
+  //   "HornyGamers",
+  //   "HornyGamers is a platform where you can create a request to find a gaming partner that you bet either sex or money with through a stake and whomever wins gets to claim whatever the other party has bet. Suppose you create a stake with 1000 USD for instance to play Chess online and you find a partner that bets to have sex with you; you will play the game either online on in-person and if you lose, the partner gets your 1000 USD otherwise, you get to have sex with her/him.",
+  //   "https://i.ibb.co/6vTH6Qr/40.jpg",
+  //   "https://i.ibb.co/6vTH6Qr/40.jpg",
+  //   "https://i.ibb.co/s1mDPGp/37-2.jpg",
+  //   "",
+  //   "",
+  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("464marketPlaceCollection.updateCollection===========> Done!")
 
   }
   

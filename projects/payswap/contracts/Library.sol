@@ -47,6 +47,20 @@ struct ARPInfo {
     uint startPayable;
     uint startReceivable;
 }
+struct PaywallInfo {
+    uint ticketId;
+    uint startReceivable;
+    uint amountReceivable;
+    uint periodReceivable;
+    uint paidReceivable;
+    uint freeTrialPeriod;
+    uint userTokenId;
+    uint optionId;
+    uint profileId;
+    uint referrerCollectionId;
+    bool autoCharge;
+    string item;
+}
 struct BILLInfo {
     address token;
     uint version;
@@ -5525,6 +5539,7 @@ interface IRamp {
 }
 
 interface IMarketPlace {
+    function ticketID() external view returns(uint);
     function generateSVG(uint,address,address,address,address,address,string[] memory,string[] memory,string[] memory,string[] memory) external view returns (string memory);
     function partner(uint,string memory,string memory,uint,bool) external;
     function symbol() external view returns(string memory);
@@ -5547,12 +5562,12 @@ interface IMarketPlace {
     function notifyRewardAmount(address,uint) external;
     function getState(address,string memory,uint) external view returns(uint);
     function itemToMinter(uint,string memory) external view returns(address);
-    function updateGauge(address,uint) external;
+    function updateGauge(address,uint, string memory) external;
     function collectionId() external view returns(uint);
     function setContractAddress(address) external;
     function partnerShip(uint,uint) external view returns(bool);
     function hasGauge(uint) external view returns(address);
-    function collectionIdToPaywallARP(uint) external view returns(address);
+    function collectionIdToPaywallARP(uint, string memory) external view returns(address);
     function ongoingSubscription(address,uint,string memory) external view returns(bool);
     function mint(uint,string memory,address,uint[] memory) external returns(uint);
     function verifyNFT(uint,uint,string memory) external view returns(uint);
@@ -5564,7 +5579,7 @@ interface IMarketPlace {
     function isGauge(address) external returns(bool);
     function referrer(uint) external view returns(address);
     function contractAddress() external view returns(address);
-    function emitCreatePaywallARP(address,uint) external;
+    function emitCreatePaywallARP(address,uint,string memory) external;
     function emitDeletePaywallARP(uint) external;
     function getDueReceivable(address,uint) external view returns(uint, uint, int);
     function getDiscount(uint,address,string memory) external view returns(uint);
@@ -5599,7 +5614,7 @@ interface IMarketPlace {
     function emitUpdateSubscriptionInfo(uint, uint, uint) external;
     function emitUpdateScubscriptionTiers(uint, uint[] memory, uint[] memory) external;
     function emitAskNew(uint,string memory,uint,uint,int,bool,uint,uint,uint,address,address) external;
-    function emitAskCancel(uint,uint) external;
+    function emitAskCancel(uint,string memory) external;
     function emitCloseListing(uint, string memory) external;
     function emitAddReferral(uint, uint, string memory, uint, uint) external;
     function emitRevenueClaim(address, uint) external;
@@ -5680,7 +5695,7 @@ interface IMarketPlace {
     function arps(uint) external view returns(address);
     function getPaymentCredits(address,uint,string memory) external view returns(uint);
     function minter(uint,string memory) external view returns(MintValues memory);
-    function protocolInfo(uint) external view returns(uint,uint,uint,uint,uint,uint,uint,uint,uint,bool,string memory);  
+    function protocolInfo(uint) external view returns(PaywallInfo memory);  
 }
 
 contract Auth {

@@ -997,7 +997,7 @@ contract BILLNote is ERC721Pausable {
 
     function getNumPeriods(uint tm1, uint tm2, uint _period) public pure returns(uint) {
         if (tm1 == 0 || tm2 == 0 || tm2 < tm1) return 0;
-        uint _numPeriods = _period > 0 ? (tm2 - tm1) / _period : 1;
+        uint _numPeriods = _period > 0 ? (tm2 - tm1) / Math.max(1,_period) : 1;
         return Math.max(1,_numPeriods);
     }
     
