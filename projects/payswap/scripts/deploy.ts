@@ -2,7 +2,7 @@ import { ethers, network } from "hardhat";
 import config from "../config";
 
 async function main() {
-  const [deployer, deployer2, deployer3, deployer4, deployer5, deployer6, deployer7, deployer8, deployer9, deployer10, deployer11, deployer12, deployer13, deployer14, deployer15] = await ethers.getSigners();
+  const [deployer] = await ethers.getSigners();
 
   console.log("Deploying contracts with the account:", deployer.address);
   
@@ -240,7 +240,7 @@ async function main() {
   const auditorFactoryAddress = "0xa78F0762FAFd64B90B2F8fb52A8aF923cD399ddD"
   const acceleratorVoterAddress = "0x84779D6bCf31E90DE81Ac4155EFA9A725a60B7f9"
   const futureCollateralAddress = "0xD2b2435aa749E42F3523033Fe167Ae543082375F"
-  const cardAddress = "0x97b9795Dc1375EAA8B657cdc3c008B14b5A6F2C0"
+  const cardAddress = "0xb522D4285f3f843a171755f2Be9D61Cc9ebd37a4"
   const contributorVoterAddress = "0xBCb2E030953dC9f2E68C179C19C2C121aF348Abb"
   const vavaFactoryAddress = "0x5fdbCeEc25E02d15dE51af3450289c72Ef2d081E"
   const vavaHelperAddress = "0xC38993A66820830bfED5D92bc4c937a4bba4528D"
@@ -263,32 +263,32 @@ async function main() {
   const stakeMarketBribeAddress = "0x1b947A45Ad79438d5F47f45C920B9f1Dbe26f802"
   const stakeMarketVoterAddress = "0xeAf2c655581C83D47497D9D0C68dE09b1B32Fa55"
   const contractAddress = "0x214Cb0c088D0992d5ba36Cff283CB1333149E1e7" //"0x997068BaD1417e1d7Be77CFC9123B40a3D9Bdb92"
-  const nftsvgAddress = "0x36D1257A7E29E73A345D01F1e5F81d424C12a2c7"
-  const nfticketAddress = "0x88db9D87e4D8ecC1f05eA72db52D933E25f88d2A"
-  const nfticketHelperAddress = "0x4888CEc598B9115bfC965d714E68e791c2cC1d80"
-  const nfticketHelper2Address = "0x517a113a03B7842C1B731b482E89FB4920363aD5"
-  const marketPlaceEventsAddress = "0xAD38AFac104D620C079a9FFf7bc0E9B59eB00e6d"
-  const marketPlaceCollectionAddress = "0x0970926487E31cF5451b2Ed5Ba7C44cC9f8eA604"
-  const marketPlaceOrdersAddress = "0xdc72352eA34141Bf8F72aEFca07b30AcEc155dcf"
-  const paywallMarketPlaceOrdersAddress = "0x8E253b889A5c03d35bfc2A9e433Dde4144236fBa"
-  const nftMarketPlaceOrdersAddress = "0x9cFE0aEB5f89E5f3A58C36498c42aCDd278ACbfc"
-  const marketPlaceTradesAddress = "0xf2904F2325ea229adD6EbCb04951fF1D28C3b891"
-  const paywallMarketPlaceTradesAddress = "0x8C4575C706515E2725C64F6c27A60EC2dCd104c2"
-  const nftMarketPlaceTradesAddress = "0xb43A592FF03b10D243E3cFc64Ee32ba6912Ed61c"
-  const marketPlaceHelperAddress = "0x0B252359e6F81694c11b5Ba4782a9151e3E82579"
-  const paywallMarketPlaceHelperAddress = "0x5e54677A9C2803481016E041A8cFeB3fD03770c6"
-  const nftMarketPlaceHelperAddress = "0x352ae66Dca43ad2C23D57393D6D5b5adF6B2446C"
-  const marketPlaceHelper2Address = "0x78C10070AC5e9Aad679CCdF2d3bE9A2F77EE5F11"
-  const paywallMarketPlaceHelper2Address = "0x86973bEbE9233792426Bbb39d7e1356eb1211594"
-  const nftMarketPlaceHelper2Address = "0xcA00299bEfd8A4ff57Ac83aEfdb3F1701e7d5C2b"
-  const marketPlaceHelper3Address = "0x2affD239CAB6c7ca5643e1e821fa4ddF6072f7cC"
-  const paywallMarketPlaceHelper3Address = "0xf82726AbB3b7d854ba07AB8db7f1Afd1f3834d50"
-  const nftMarketPlaceHelper3Address = "0xe83a58792EACa44345129141313E16Cae2076d15"
+  const nftsvgAddress = "0xabd6aB0c520848770B16f2b7d1d3cD58F83f82D8"
+  const nfticketAddress = "0xC4bdaB8341803547Bc8d468ef7Ee7e7B35953c89"
+  const nfticketHelperAddress = "0x8e29bd8dd5c1D62594d6826C0660312E4191593B"
+  const nfticketHelper2Address = "0xEE4a5abf0fC0978b2DCf7c2bc8d57FDc43DadB55"
+  const marketPlaceEventsAddress = "0xB891F70205643D7DC4e6c6891013E92183E43AB1"
+  const marketPlaceCollectionAddress = "0x2265a1377833F7BCCDbC5729Ba832552B48A7c92"
+  const marketPlaceOrdersAddress = "0x3DFB090975C08535462b7BB49cd2c5c3e7Eeb49E"
+  const paywallMarketPlaceOrdersAddress = "0x8127516Ff3c8fE6fdb9CE22145C6BFDb83aB54c6"
+  const nftMarketPlaceOrdersAddress = "0x8F0dE71645c5fc6dE40A0b5066d0e53BeCC3bCf5"
+  const marketPlaceTradesAddress = "0xA19fb0df53D03D88d9786B8091070D0cCbD17ADC"
+  const paywallMarketPlaceTradesAddress = "0x72925EE40442597c02bfAa3295113E7BD1479c45"
+  const nftMarketPlaceTradesAddress = "0x4C15181252952064399D593a3B868521A2Fd0425"
+  const marketPlaceHelperAddress = "0x99dbF90228302E17B0CcFaa541DCE676775A8EBA"
+  const paywallMarketPlaceHelperAddress = "0x2f01f949F9cDE9822dF361A85bBe5A0BDCb659d3"
+  const nftMarketPlaceHelperAddress = "0x9BbA15a01A3bc11A6aD200B3de333fB26930737F"
+  const marketPlaceHelper2Address = "0xeDA992166cd47e84Af047d6d355ACD841307c91f"
+  const paywallMarketPlaceHelper2Address = "0x6444FeDeD64cb196253E31527647fb5075b3F722"
+  const nftMarketPlaceHelper2Address = "0xD5C57208CD6b89c540010727D7ac1647255Ed0e3"
+  const marketPlaceHelper3Address = "0x8a61AB91ec0e1aD414c5F90D072ea8276496B167"
+  const paywallMarketPlaceHelper3Address = "0x442e00e70e71325d400F21B58eaA7b98496A237e"
+  const nftMarketPlaceHelper3Address = "0x63166f4fC06260416031A583f14E3d28BA8d76f9"
   const paywallARPFactoryAddress = "0xD306Bc71120c7Ca5cd5Ce19Bc57f005Bf4F6D264"
   const paywallARPHelperAddress = "0xDA1f5994a7568A6F7dED60E34fD29fAc5f466C23"
   const minterFactoryAddress = "0x972A806DD4C5536E50F38155d7AfFD04741429a0"
-  const trustBountiesAddress = "0x855413AC9576A43f16C811777133FedFC971697C"
-  const trustBountiesHelperAddress = "0xf824a961659D39629Df27272569Ee66A061EB76e"
+  const trustBountiesAddress = "0x99fAc8AB3f51C89AC45372d0dfDB63d979f0d5EB"
+  const trustBountiesHelperAddress = "0xcB2863E4aEd438AF8973cf28480315ba0EF3BFf2"
   const trustBountiesVoterAddress = "0x2CD8f718BD6784873454d6288119d51DfcAe6FA4"
   const customMinterAddress = "0xB6c2E68a43a092973512a9C154D81C5559B5eBbA"
   const arpFactoryAddress = "0xB43FfE737042aD45191eb8d4e397c631D66a23FD"
@@ -373,8 +373,8 @@ async function main() {
   const stakeMarketHelper = StakeMarketHelper.attach(stakeMarketHelperAddress)
   const stakeMarketVoter = StakeMarketVoter.attach(stakeMarketVoterAddress)
   const stakeMarketBribe = StakeMarketBribe.attach(stakeMarketBribeAddress)
-  const nftSvg = NFTSVG.attach(nftsvgAddress)
   const minterFactory = MinterFactory.attach(minterFactoryAddress)
+  const nftSvg = NFTSVG.attach(nftsvgAddress)
   const nfticket = NFTicket.attach(nfticketAddress)
   const nfticketHelper = NFTicketHelper.attach(nfticketHelperAddress)
   const nfticketHelper2 = NFTicketHelper2.attach(nfticketHelper2Address)
@@ -894,6 +894,7 @@ async function main() {
   let wallets = [] as any;
   const k=0
   const nb = privateKeys.length
+  const deployer2 = new ethers.Wallet("d476d1cc0634a7d50959fd73f747ab419d4de249cdebb21212d5f8710e1efd82", ethers.provider);
   for(let i=k; i < nb; i++){
       // Get a new wallet
       // const wallet = ethers.Wallet.createRandom();
@@ -927,13 +928,14 @@ async function main() {
   // await futureCollateral.deployed()
   // console.log("futureCollateral============>", futureCollateral.address)
 
-  // const card = await Card.deploy("0x384582a8d93e91dbf6a399cd8241d374da2d7095");
+  // const card = await Card.deploy();
   // await card.deployed()
   // console.log("card============>", card.address)
+
   // await tFiat.balanceOf(card.address), await card.balance(
   //   'bXtvzJS/MsPkW4IH30dLcpfN9rkLoiIdmC4XQt1E9uEWOPPqyRbQjblrzW8qR2F/IfKOw6iM2AgiD9OqdoVje1Sapvv3fRgNTd94bBTkI0h9RzwbgD1DGY7WRCVhb6arrUY9sYT/6/e9RsvwG9TIM6vzRClK2snKIMBB0/OLAAjehIvyldg5U7nn2wttJtFXXJUkdzwLPwBr558UmeAWcaZmPj/seEjbQlc34kjVjnzJESd9xAky5O/DE0CXDB2zFLqgxdvyyKKhiPuL84x6XrwxGh3jAqdoKt B91cEi/M6KOY0qA0AKzADYp8MUm1rIiwmCEcXXrSXSFZw9Kh6JQ==',
   //   tFiat.address))
-
+  // console.log("card.accounts==================>", await card.balance("Cq05sEIwoxmbbYrL1NR7JHQbHRkfLmjNPQ4Wbf8J2SIik9VA3vhRmDBRojuFIYA78NKDkxN1PxUme9C0w9jhHJ8ghbCs9u1A+yOWg+ypj2mmrvRYTxnY3d0LH6PiaKp1iGAlhP8MeSpF9OSDeR3yvBUsFKK/H1va8KEF1eEIym0Bs6VsqDK0pCZRYpm5UNXia+D2YP3n/gBCQjcDZUJIY9UuRHHwgbnT0gt0RukmVgqNyzsME0myhPo9vkQ7qsDcwyu7YUcs1f3Jw1GZxi+w7pbRtLlk30uSDlWSPdRkbUk4rxyI7q+H6jfcJNfFjk0eutAFJR87W8vWLMpqXsVIDg==", tFiatAddress))
   // const feeTo = await FeeTo.deploy();
   // await feeTo.deployed()
   // console.log("feeTo============>", feeTo.address)
@@ -1222,15 +1224,15 @@ async function main() {
   // await nftMarketPlaceOrders.deployed()
   // console.log("nftMarketPlaceOrders============>", nftMarketPlaceOrders.address)
 
-  // const marketPlaceTrades = await MarketPlaceTrades.deploy()
+  // const marketPlaceTrades = await MarketPlaceTrades.deploy(contractAddresses.address)
   // await marketPlaceTrades.deployed()
   // console.log("marketPlaceTrades============>", marketPlaceTrades.address)
 
-  // const paywallMarketPlaceTrades = await PaywallMarketPlaceTrades.deploy()
+  // const paywallMarketPlaceTrades = await PaywallMarketPlaceTrades.deploy(contractAddresses.address)
   // await paywallMarketPlaceTrades.deployed()
   // console.log("paywallMarketPlaceTrades============>", paywallMarketPlaceTrades.address)
 
-  // const nftMarketPlaceTrades = await NFTMarketPlaceTrades.deploy()
+  // const nftMarketPlaceTrades = await NFTMarketPlaceTrades.deploy(contractAddresses.address)
   // await nftMarketPlaceTrades.deployed()
   // console.log("nftMarketPlaceTrades============>", nftMarketPlaceTrades.address)
 
@@ -1314,11 +1316,11 @@ async function main() {
   // await trustBountiesHelper.deployed()
   // console.log("trustBountiesHelper============>", trustBountiesHelper.address)
 
-  await ethers.provider.getBalance(trustBountiesHelper.address).then((balance) => {
-    // convert a currency unit from wei to ether
-    const balanceInEth = ethers.utils.formatEther(balance)
-    console.log(`1balance: ${balanceInEth} ${balance} ETH`)
-  })
+  // await ethers.provider.getBalance(trustBountiesHelper.address).then((balance) => {
+  //   // convert a currency unit from wei to ether
+  //   const balanceInEth = ethers.utils.formatEther(balance)
+  //   console.log(`1balance: ${balanceInEth} ${balance} ETH`)
+  // })
 
   // const extraTokenFactory = await ExtraTokenFactory.deploy(contractAddresses.address)
   // await extraTokenFactory.deployed()
@@ -1512,15 +1514,6 @@ async function main() {
 
   // await nftMarketPlaceOrders.setContractAddress(contractAddresses.address)
   // console.log("nftMarketPlaceOrders.setContractAddress===========> Done!")
-
-  // await marketPlaceTrades.setContractAddress(contractAddresses.address)
-  // console.log("marketPlaceTrades.setContractAddress===========> Done!")
-
-  // await paywallMarketPlaceTrades.setContractAddress(contractAddresses.address)
-  // console.log("paywallMarketPlaceTrades.setContractAddress===========> Done!")
-
-  // await nftMarketPlaceTrades.setContractAddress(contractAddresses.address)
-  // console.log("nftMarketPlaceTrades.setContractAddress===========> Done!")
 
   // await marketPlaceHelper.setContractAddress(contractAddresses.address)
   // console.log("marketPlaceHelper.setContractAddress===========> Done!")
@@ -1791,6 +1784,9 @@ async function main() {
   // await contractAddresses.setToken(tFiat.address)
   // console.log("contractAddresses.setToken===========> Done!")
 
+  // await contractAddresses.setNftSvg(nftSvg.address)
+  // console.log("contractAddresses.setNftSvg===========> Done!")
+
   // await contractAddresses.setNfticket(nfticket.address)
   // console.log("contractAddresses.setNfticket===========> Done!")
 
@@ -1853,9 +1849,6 @@ async function main() {
 
   // await contractAddresses.setMinterFactory(minterFactory.address)
   // console.log("contractAddresses.setMinterFactory===========> Done!")
-
-  // await contractAddresses.setNftSvg(nftSvg.address)
-  // console.log("contractAddresses.setNftSvg===========> Done!")
 
   // await contractAddresses.setWorldFactory(worldFactory.address)
   // console.log("contractAddresses.setWorldFactory===========> Done!")
@@ -1925,12 +1918,39 @@ async function main() {
   // await marketPlaceHelper3.addVetoken("0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62")
   // console.log("marketPlaceHelper3.addVetoken==========>", await marketPlaceHelper3.veTokenSetContains(ve.address))
 
+  // await marketPlaceHelper.updateBurnTokenForCredit(
+  //   "0xAB45391c5Ee3270880565E2e9b6BA1d01A4A2cCF",
+  //   "0x247ad9598bC67EfCe568d36f8f5e4cb966EE5a5E",
+  //   // "0x1f311bf83c4150f36fB6C088d4abBf54744E6Bbf",
+  //   deployer.address,
+  //   // "0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA",
+  //   10000,
+  //   291,
+  //   true,
+  //   "uber"
+  // )
+  // // // 0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA
+  // // console.log("owner========================>", await nfticketHelper2.ownerOf(1))
+  // const tk = ve.attach("0xAB45391c5Ee3270880565E2e9b6BA1d01A4A2cCF")
+  // await tk.
+  // connect(deployer2). // transferFrom(deployer2.address, deployer.address, 7)
+  // setApprovalForAll(marketPlaceHelper.address, true)
+
+  // await marketPlaceHelper.
+  // connect(deployer2).
+  // burnForCredit(
+  //   deployer.address,
+  //   0,
+  //   1,
+  //   "uber"
+  // )
+
   // await trustBountiesVoter.updatePeriod(600)
   // console.log("trustBountiesHelper.updatePeriod============>Done")
 
   // await trustBountiesHelper.updateParameters(
   //   86400 * 7,
-  //   86400 * 7,
+  //   600,
   //   600,
   //   100,
   //   1,
@@ -1963,6 +1983,23 @@ async function main() {
   // console.log("rampHelper.addDtoken==========>Done")
   // await tFiat.updateMinter(rampHelper.address)
   // console.log("tFiat.updateMinter==========>Done")
+
+  // await marketPlaceCollection.addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollection===========> Done!")
+  // await marketPlaceCollection.updateCollection(
+  //   "Payswap Support",
+  //   "Explore various Payswap community and join them on Paychat",
+  //   "https://i.ibb.co/T2SZLbJ/520.jpg",
+  //   "https://i.ibb.co/T2SZLbJ/520.jpg",
+  //   "https://i.ibb.co/bs9B2mg/221.jpg",
+  //   "email,payswap",
+  //   "support@payswap.org,support@payswap.org",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "All",
+  //   ""
+  // );
+  // console.log("marketPlaceCollection.updateCollection===========> Done!")
 
   // await marketPlaceCollection.connect(deployer2).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
@@ -2289,7 +2326,7 @@ async function main() {
     //   [0,0,5] //[_referrerFee, _bountyId, type]
     // )
     // console.log("paywallMarketPlaceOrders.addReferral===========> Done!", await marketPlaceHelper2.partnerShip(1,1))
-    // await nftSvg.updateDescription(nfticketHelper2.address, "This is a receipt of your purchase of a collectible in the eCollectible marketplace. This is a receipt of your purchase of a collectible in the eCollectible ma.")
+    // await nftSvg.updateDescription(nfticketHelper2.address, "This is a receipt of your purchase of a collectible in the eCollectible marketplace.")
 
     // await tFiat.approve(marketPlaceTrades.address, ethers.BigNumber.from("1000000000000000000"))
     // await marketPlaceTrades.buyWithContract(
@@ -2371,6 +2408,15 @@ async function main() {
       // console.log("willNote.transferDueToNotePayable==================>Done")
       // console.log("willNote.notes(1)==================>", await willNote.notes(1))
       // console.log("willNote.tokenURI(1)==================>", await willNote.tokenURI(1))
+
+    // nfticket time estimates
+    // await nfticketHelper.addTimeEstimates("uber", false, 600, [], [])
+  // console.log("nfticketHelper.getTimeEstimates=================>", await nfticketHelper.getTimeEstimates(
+  //     291,
+  //     "uber",
+  //     marketPlaceHelperAddress,
+  //     []
+  //   ))
 
     // await worldFactory.createGauge(1, deployer.address)
     // let worldAddress = (await worldNote.getAllWorlds(0))[0]
@@ -3103,7 +3149,28 @@ async function main() {
     // const encode = Encode.attach("0x923550B93b3A0C9e7cf8b2F69f9dffB8A1cB3Cd7")
     // console.log("encode(blablacar)============>", await encode.enc('blablacar'), await encode.e())
     // blablacar: 0xb927343f08b783f83b7aba01beff9cc1a9edbefbed4ceb5e4463596dc230e486
-
+  // await nftSvg.updateSVGTask("")
+  // await nftSvg.updateSVGTask("https://payswap.org")
+    // await nftSvg.updateSVGTask('<svg xmlns = "http://www.w3.org/2000/svg" width="100%" height="100%"><rect x="25" y="25" width="250" height="200" fill="#ff0000" stroke="#000000"/><foreignObject x="50" y="50" width="200" height="150"><body xmlns="http://www.w3.org/1999/xhtml"><form><input type="text"/><input type="text"/></form></body></foreignObject><circle cx="60" cy="80" r="30" fill="#00ff00" fill-opacity="0.5"/></svg>')
+    // console.log("nftSvg.task======================>", await nftSvg.task(291))
+  //   await nfticket.mint(
+  //   deployer.address,
+  //   "0x0000000000000000000000000000000000000000",
+  //   291,
+  //   "uber",
+  //   // [0,0,0,0,0],
+  //   [0, 0, 0, ethers.BigNumber.from("100000000000000000"), ethers.BigNumber.from("10000000000000000000")],
+  //   [0,1],
+  //   // [],
+  //   true
+  // )
+  // await nfticket.batchSuperChat([2], 0, "Hello you!!!!")
+  // await nfticket.superChatAll("Meeting at 7 PM stat!")
+  // console.log("optionIndices================>", await nfticket.ticketInfo_(1), await nfticket.ticketID(), await nfticket.pendingRevenue(291)) //, await nfticket.getTicketsPagination(0, 1701624739))
+  // console.log("optionIndices================>", await nfticketHelper2.getTicketOptions(0), await nfticketHelper2.getTicketOptions(1), await nfticketHelper2.getTicketOptions(2))
+  // console.log("owner================>", await nfticketHelper2.ownerOf(1))
+  // console.log("optionIndices================>", await nfticketHelper2.tokenURI(1)) //, await nfticket.getTicketsPagination(0, 1701624739))
+  // console.log("optionIndices================>", await nfticketHelper2.getTicketPaywallOptions(0), await nfticketHelper2.getTicketPaywallOptions(1), await nfticketHelper2.getTicketPaywallOptions(2))
   // console.log("scheduledMedia======================>", await nfticketHelper2.tokenURI(1))
   // console.log("0scheduledMedia======================>", await nfticketHelper.tagRegistrations(290, ""))
   // console.log("1scheduledMedia======================>", await nfticketHelper.getSponsorsMedia(290, ""))
@@ -3122,7 +3189,127 @@ async function main() {
     //   ['BID','CID','EID','Symbol,Decimals','Paid','Period','Rewards','Claimed','','','Pick'],
     //   ['1','0','2','usd,18','99900000000000000','0','0','Not Yet','a-z','scores','1000020005000100000300000000']
     // ))
-    // console.log("bettingMinter._getSubjects(1)===============>", await bettingMinter._getSubjects(bettingAddress, 1))
+  // await marketPlaceOrders.modifyAskOrderDiscountPriceReductors(
+  //   "uber",
+  //   1,
+  //   0,
+  //   false,
+  //   false,
+  //   false,
+  //   [
+  //     1701690108,
+  //     1701703692,
+  //     1000,
+  //     1,
+  //     100,
+  //     10
+  //   ],
+  //   [
+  //     0,
+  //     0,
+  //     0,
+  //     0,
+  //     0,
+  //     0,
+  //   ]
+  // )
+
+  // console.log("getAskOrder=================>", await marketPlaceOrders.getAskOrder(1, "bidder"))
+  // console.log("incrementPaymentCredits===================>", await marketPlaceOrders.getPaymentCredits(
+  //   deployer.address,
+  //   291,
+  //   "uber"
+  // ),) 
+  // await nfticket.getMerchantTicketsPagination(
+  //   291,
+  //   1701690108,
+  //   1701858805,
+  //   ""
+  // ),
+  //   await nfticket.getUserTicketsPagination(
+  //     deployer.address,
+  //     291,
+  //     1701690108,
+  //   1701858805,
+  //     ""
+  //   )
+  // )
+  // console.log("2incrementPaymentCredits===================>", await marketPlaceOrders.getPaymentCredits(
+  //   "0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA",
+  //   291,
+  //   "uber"
+  // ),)
+  //   await nfticket.getMerchantTicketsPagination(
+  //     291,
+  //     1701690108,
+  //   1701858805,
+  //     ""
+  //   ),
+  //   await nfticket.getUserTicketsPagination(
+  //     "0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA",
+  //     291,
+  //     1701690108,
+  //   1701858805,
+  //     ""
+  //   )
+    // )
+  // console.log("3incrementPaymentCredits===================>", await marketPlaceOrders.getPaymentCredits(
+  //   "0xED00DC98e07f572d8b3071182406235d1D28D258",
+  //   291,
+  //   "uber"
+  // ),
+  //   await nfticket.getMerchantTicketsPagination(
+  //     291,
+  //     1701690108,
+  //   1701858805,
+  //     ""
+  //   ),
+  //   await nfticket.getUserTicketsPagination(
+  //     "0xED00DC98e07f572d8b3071182406235d1D28D258",
+  //     291,
+  //     1701690108,
+  //   1701858805,
+  //     ""
+  //   ))
+  // console.log("getDiscount==================>", await marketPlaceHelper3.getDiscount(
+  //   291,
+  //   "0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA",
+  //   "uber" 
+  // ))
+  // console.log("2getDiscount==================>", await marketPlaceHelper3.getDiscount(
+  //   291,
+  //   deployer.address,
+  //   "uber"
+  // ))
+  // console.log("getUserTicketsPagination=================>", await nfticket.getUserTicketsPagination(
+  //   "0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA",
+  //   291,
+
+  // ))
+  // console.log("0options============>", await nfticketHelper2.getTicketOptions(0))
+  // 100000000000000000
+  // console.log("1options============>", await nfticketHelper2.getTicketOptions(1))
+  // 200000000000000000
+  // console.log("2options============>", await nfticketHelper2.getTicketOptions(2))
+  // 300000000000000000
+  // console.log("marketHelper===================>", await marketPlaceHelper.getRealPrice(
+  //   deployer.address,
+  //   "0xED00DC98e07f572d8b3071182406235d1D28D258",
+  //   "uber",
+  //   [0, 0, 0, 1, 1, 2, 2, 2, 2],
+  //   0,
+  //   ethers.BigNumber.from("100000000000000000")
+  // ))
+  // console.log("marketHelper===================>", await marketPlaceHelper.getRealPrice(
+  //   deployer.address,
+  //   "0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA",
+  //   "uber",
+  //   [0, 0, 0, 1, 1, 2, 2, 2, 2],
+  //   0,
+  //   ethers.BigNumber.from("100000000000000000")
+  // ))
+
+  // console.log("bettingMinter._getSubjects(1)===============>", await bettingMinter._getSubjects(bettingAddress, 1))
     // console.log("bettingMinter._getOptions(1)===============>", await bettingMinter.getOptions(bettingAddress, 1))
     // console.log("bettingMinter.tokenURI(1)===============>", await bettingMinter.tokenURI(1))
     // console.log("nftMarketPlaceOrders======================>", await nftMarketPlaceOrders.contractAddress())
@@ -5818,7 +6005,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[148]).updateCollection(
   //   "ArtSupport",
-  //   "Introducing ArtSupport: Your all-in-one creative platform, where artists, content creators, and innovators of all kinds can thrive. ArtSupport offers a dynamic space for creators to share their work, connect with their audiences, and receive direct support. Whether you're a musician, writer, visual artist, podcaster, or any type of creator, our platform empowers you to monetize your passion through subscriptions, exclusive content, and meaningful interactions with your dedicated supporters. Join ArtSupport today and turn your creativity into a sustainable income while fostering a vibrant community around your work.",
+  //   "Introducing ArtSupport: Your all-in-one creative platform, where artists, content creators, and innovators of all kinds can thrive. ArtSupport offers a dynamic space for creators to share their work, connect with their audiences, and receive direct support. Whether you're a musician, writer, visual artist, podcaster, ghost writer, or any type of creator, our platform empowers you to monetize your passion through subscriptions, exclusive content, and meaningful interactions with your dedicated supporters. Join ArtSupport today and turn your creativity into a sustainable income while fostering a vibrant community around your work.",
   //   "https://i.ibb.co/Db0TcM3/511.jpg",
   //   "https://i.ibb.co/Db0TcM3/511.jpg",
   //   "https://i.ibb.co/5Bhg9F5/239.jpg",
@@ -8351,7 +8538,6 @@ async function main() {
   //   );
   //   console.log("291marketPlaceCollection.updateCollection===========> Done!")
 
-
   // // 292
   // await marketPlaceCollection.connect(wallets[292]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
@@ -10098,7 +10284,7 @@ async function main() {
   //  );
   //  console.log("389marketPlaceCollection.updateCollection===========> Done!")
 
-   // 390
+  // //  390
   // await marketPlaceCollection.connect(wallets[389]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[389]).updateCollection(
@@ -10728,7 +10914,7 @@ async function main() {
   //  );
   //  console.log("423marketPlaceCollection.updateCollection===========> Done!")
 
-   // 424
+  //  424
   // await marketPlaceCollection.connect(wallets[423]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[423]).updateCollection(
@@ -11465,6 +11651,24 @@ async function main() {
   //   ""
   // );
   // console.log("464marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 465
+  // await marketPlaceCollection.connect(wallets[462]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[462]).updateCollection(
+  //   "XTwitch",
+  //   "XTwitch is a platform where you can watch streams of people playing video games whilst having sex.",
+  //   "https://i.ibb.co/T2SZLbJ/520.jpg",
+  //   "https://i.ibb.co/T2SZLbJ/520.jpg",
+  //   "https://i.ibb.co/HFrZnbw/222.jpg",
+  //   "",
+  //   "",
+  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("465marketPlaceCollection.updateCollection===========> Done!")
 
   }
   

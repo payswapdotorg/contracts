@@ -1165,7 +1165,7 @@ contract MarketPlaceEvents {
         string _tokenId,
         uint _askPrice,
         uint _bidDuration,
-        int _minBidIncrementPercentage,
+        uint _minBidIncrementPercentage,
         bool _transferrable,
         uint _rsrcTokenId,
         uint _maxSupply,
@@ -1179,7 +1179,7 @@ contract MarketPlaceEvents {
         string _tokenId,
         uint _askPrice,
         uint _bidDuration,
-        int _minBidIncrementPercentage,
+        uint _minBidIncrementPercentage,
         bool _transferrable,
         uint _rsrcTokenId,
         uint _maxSupply,
@@ -1211,7 +1211,7 @@ contract MarketPlaceEvents {
         uint256 indexed _collectionId,
         uint256 _newPrice,
         uint256 _bidDuration,
-        int256 _minBidIncrementPercentage,
+        uint256 _minBidIncrementPercentage,
         bool _transferrable,
         uint256 _rsrcTokenId,
         uint256 _maxSupply,
@@ -1225,7 +1225,7 @@ contract MarketPlaceEvents {
         uint256 indexed _collectionId,
         uint256 _newPrice,
         uint256 _bidDuration,
-        int256 _minBidIncrementPercentage,
+        uint256 _minBidIncrementPercentage,
         bool _transferrable,
         uint256 _rsrcTokenId,
         uint256 _maxSupply,
@@ -1630,7 +1630,7 @@ contract MarketPlaceEvents {
         string memory tokenId, 
         uint256 askPrice, 
         uint _bidDuration,
-        int _minBidIncrementPercentage,
+        uint _minBidIncrementPercentage,
         bool _transferrable,
         uint _rsrcTokenId,
         uint _maxSupply,
@@ -1676,7 +1676,7 @@ contract MarketPlaceEvents {
         uint256 _collectionId,
         uint256 _newPrice,
         uint256 _bidDuration,
-        int256 _minBidIncrementPercentage,
+        uint256 _minBidIncrementPercentage,
         bool _transferrable,
         uint256 _rsrcTokenId,
         uint256 _maxSupply,
@@ -2997,10 +2997,10 @@ contract MarketPlaceCollection is Auth {
 contract NFTMarketPlaceOrders {
     mapping(uint => mapping(bytes32 => Ask)) private _askDetails; // Ask details (price + seller address) for a given collection and a tokenId
     mapping(address => mapping(string => uint)) internal paymentCredits;
-    address public contractAddress;
+    address contractAddress;
 
     function setContractAddress(address _contractAddress) external {
-        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender, "PNMO2");
+        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
         contractAddress = _contractAddress;
     }
 
@@ -3044,6 +3044,16 @@ contract NFTMarketPlaceOrders {
         _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].price = _price;
         _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].lastBidTime = _lastBidTime;
         _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].lastBidder = _lastBidder;
+        IMarketPlace(IContract(contractAddress).marketPlaceEvents()).emitUpdateMiscellaneous(
+            14,
+            _collectionId,
+            _tokenId,
+            "",
+            _price,
+            _lastBidTime,
+            _lastBidder,
+            ""
+        );
     }
 
     function decrementMaxSupply(uint _collectionId, bytes32 _tokenId) external {
@@ -3062,7 +3072,7 @@ contract NFTMarketPlaceOrders {
         string memory _tokenId,
         uint _askPrice,
         uint _bidDuration,
-        int _minBidIncrementPercentage,
+        uint _minBidIncrementPercentage,
         bool _transferrable,
         bool _requireUpfrontPayment,
         bool _usetFIAT,
@@ -3105,7 +3115,7 @@ contract NFTMarketPlaceOrders {
         uint _askPrice,
         string memory _tokenId,
         uint _bidDuration,
-        int _minBidIncrementPercentage,
+        uint _minBidIncrementPercentage,
         bool _transferrable,
         uint _rsrcTokenId,
         uint _maxSupply,
@@ -3178,7 +3188,7 @@ contract NFTMarketPlaceOrders {
         string memory _tokenId, 
         uint _askPrice, 
         uint _bidDuration,
-        int _minBidIncrementPercentage,
+        uint _minBidIncrementPercentage,
         bool _transferrable,
         uint _rsrcTokenId,
         uint _maxSupply,
@@ -3271,7 +3281,7 @@ contract NFTMarketPlaceOrders {
         address marketCollections = IContract(contractAddress).marketCollections();
         uint _collectionId = IMarketPlace(marketCollections).addressToCollectionId(msg.sender);
         {
-            if (_discountStatus == Status.Open) {
+            // if (_discountStatus == Status.Open) {
                 _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].priceReductor.discountStatus = _discountStatus;
                 _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].priceReductor.discountStart = block.timestamp + _discountStart;
                 _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].priceReductor.cashNotCredit = _cashNotCredit;
@@ -3293,7 +3303,7 @@ contract NFTMarketPlaceOrders {
                     upperThreshold: __discountCost[4],
                     limit: __discountCost[5]
                 });
-            }
+            // }
         }
         // Emit event
         address marketPlaceEvents = IContract(contractAddress).marketPlaceEvents();
@@ -3331,7 +3341,7 @@ contract NFTMarketPlaceOrders {
         uint _collectionId = IMarketPlace(marketCollections).addressToCollectionId(msg.sender);
         IMarketPlace(marketHelpers2).updateCashbackRevenue(msg.sender, _tokenId);
         {
-            if (_cashbackStatus == Status.Open) {
+            // if (_cashbackStatus == Status.Open) {
                 _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].priceReductor.cashbackStatus = _cashbackStatus;
                 _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].priceReductor.cashbackStart = block.timestamp + _cashbackStart;
                 _askDetails[_collectionId][keccak256(abi.encodePacked(_tokenId))].priceReductor.cashNotCredit = _cashNotCredit;
@@ -3352,7 +3362,7 @@ contract NFTMarketPlaceOrders {
                     upperThreshold: __cashbackCost[4],
                     limit: __cashbackCost[5]
                 });
-            }
+            // }
         }
         // Emit event
         address marketPlaceEvents = IContract(contractAddress).marketPlaceEvents();
@@ -3407,7 +3417,7 @@ contract NFTMarketPlaceOrders {
         string memory _tokenId,
         uint256 _newPrice,
         uint256 _bidDuration,
-        int256 _minBidIncrementPercentage,
+        uint256 _minBidIncrementPercentage,
         bool _transferrable,
         bool _requireUpfrontPayment,
         uint256 _rsrcTokenId,
@@ -3458,15 +3468,16 @@ contract NFTMarketPlaceTrades {
 
     mapping(address => uint) public treasuryRevenue;
     mapping(address => uint) public lotteryRevenue;
-    mapping(address => mapping(uint => address)) public taxContracts;
+    mapping(address => mapping(uint => address)) taxContracts;
     mapping(address => mapping(uint => uint256)) public pendingRevenue; // For creator/treasury to claim
     mapping(address => mapping(uint256 => uint256)) public pendingRevenueFromNote;
     mapping(address => mapping(uint => uint)) public cashbackFund;
     mapping(uint => mapping(address => uint)) public recurringBountyBalance;
-    address public contractAddress;
+    address contractAddress;
     
     mapping(string => mapping(address => uint)) public discountLimits;
     mapping(string => mapping(address => uint)) private cashbackLimits;
+    mapping(string => mapping(bytes32 => uint)) identityLimits2;
     mapping(string => mapping(bytes32 => uint)) public identityLimits;
     struct Limits {
         uint cashbackLimits;
@@ -3475,15 +3486,21 @@ contract NFTMarketPlaceTrades {
     }
     // collectionId => tokenId => version
     mapping(uint => mapping(bytes32 => Limits)) public merchantVersion;
-    mapping(uint => mapping(bytes32 => Limits)) public userVersion;
-
+    mapping(address => mapping(bytes32 => Limits)) public userVersion;
+    struct NoteInfo {
+        uint end;
+        uint tokenId;
+    }
+    mapping(uint => NoteInfo) notePeriod;
     struct MerchantNote {
         uint start;
         uint end;
-        uint lender;
+        uint merchantId;
     }
-    mapping(address => MerchantNote) public notes;
-    uint public permissionaryNoteTokenId = 1;
+    mapping(uint => MerchantNote) public notes;
+    uint permissionaryNoteTokenId = 1;
+
+    constructor(address _contractAddress) { contractAddress = _contractAddress; }
 
     // simple re-entrancy check
     uint internal _unlocked = 1;
@@ -3492,11 +3509,6 @@ contract NFTMarketPlaceTrades {
         _unlocked = 2;
         _;
         _unlocked = 1;
-    }
-
-    function setContractAddress(address _contractAddress) external {
-        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
-        contractAddress = _contractAddress;
     }
 
     function marketOrders() internal view returns(address) {
@@ -3584,40 +3596,102 @@ contract NFTMarketPlaceTrades {
         taxContracts[_token][_collectionId] = _taxContract;
     }
 
-    function updateIdVersion(uint _collectionId, string memory _tokenId, uint _identityTokenId) external {
+    function updateIdVersion(uint _collectionId, address _user, string memory _tokenId) external {
         if (
             merchantVersion[_collectionId][keccak256(abi.encodePacked(_tokenId))].identityLimits > 
-            userVersion[_collectionId][keccak256(abi.encodePacked(_tokenId))].identityLimits
+            userVersion[_user][keccak256(abi.encodePacked(_collectionId, _tokenId))].identityLimits
         ) {
-            address ssi = IContract(contractAddress).ssi();
-            SSIData memory metadata = ISSI(ssi).getSSIData(_identityTokenId);
-            SSIData memory metadata2 = ISSI(ssi).getSSID(metadata.senderProfileId);
-            require(metadata.deadline > block.timestamp, "PNMT3");
-            if (keccak256(abi.encodePacked(metadata2.answer)) != keccak256(abi.encodePacked(""))) {
-                identityLimits[string(abi.encodePacked(_collectionId, _tokenId))][keccak256(abi.encodePacked(metadata2.answer))] = 0;
-                userVersion[_collectionId][keccak256(abi.encodePacked(_tokenId))].identityLimits =
+                uint _profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(_user);
+                SSIData memory metadata = ISSI(IContract(contractAddress).ssi()).getSSID(_profileId);
+                identityLimits[string(abi.encodePacked(_collectionId, _tokenId))][keccak256(abi.encodePacked(metadata.answer))] = 0;
+                identityLimits2[string(abi.encodePacked(_collectionId, _tokenId))][keccak256(abi.encodePacked(metadata.answer))] = 0;
+                userVersion[_user][keccak256(abi.encodePacked(_collectionId, _tokenId))].identityLimits =
                 merchantVersion[_collectionId][keccak256(abi.encodePacked(_tokenId))].identityLimits;
             }
         }
-    }
 
-    function updateVersion(uint _collectionId, string memory _tokenId, address _user) external {
+    function updateVersion(uint _collectionId, address _user, string memory _tokenId) external {
         if (
             merchantVersion[_collectionId][keccak256(abi.encodePacked(_tokenId))].discountLimits > 
-            userVersion[_collectionId][keccak256(abi.encodePacked(_tokenId))].discountLimits
+            userVersion[_user][keccak256(abi.encodePacked(_collectionId, _tokenId))].discountLimits
         ) {
             discountLimits[string(abi.encodePacked(_collectionId, _tokenId))][_user] = 0;
-            userVersion[_collectionId][keccak256(abi.encodePacked(_tokenId))].discountLimits =
+            userVersion[_user][keccak256(abi.encodePacked(_collectionId, _tokenId))].discountLimits =
             merchantVersion[_collectionId][keccak256(abi.encodePacked(_tokenId))].discountLimits;
         }
         if (
             merchantVersion[_collectionId][keccak256(abi.encodePacked(_tokenId))].cashbackLimits > 
-            userVersion[_collectionId][keccak256(abi.encodePacked(_tokenId))].cashbackLimits
+            userVersion[_user][keccak256(abi.encodePacked(_collectionId, _tokenId))].cashbackLimits
         ) {
             cashbackLimits[string(abi.encodePacked(_collectionId, _tokenId))][_user] = 0;
-            userVersion[_collectionId][keccak256(abi.encodePacked(_tokenId))].cashbackLimits =
+            userVersion[_user][keccak256(abi.encodePacked(_collectionId, _tokenId))].cashbackLimits =
             merchantVersion[_collectionId][keccak256(abi.encodePacked(_tokenId))].cashbackLimits;
         }
+    }
+
+    function _requireIdentityCode(bool _checkIdentityCode, string memory _cid) internal view returns(bytes32 _identityCode) {
+        uint _limit = cashbackLimits[_cid][msg.sender];
+        if (_checkIdentityCode) {
+            SSIData memory metadata = ISSI(IContract(contractAddress).ssi()).getSSID(
+                IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender)
+            );
+            _limit = identityLimits2[_cid][keccak256(abi.encodePacked(metadata.answer))];
+            _identityCode = keccak256(abi.encodePacked(metadata.answer));
+        }
+        require(_limit < 1, "PNMT4");
+    }
+
+    function computeCashBack(uint _collectionId, string memory _tokenId) public view returns(bytes32 _identityCode, uint totalCashback) {
+        uint256 cashback1;
+        uint256 cashback2;
+        bytes32 _identityCode;
+        Ask memory ask = IMarketPlace(marketOrders()).getAskDetails(_collectionId, keccak256(abi.encodePacked(_tokenId)));
+        if (ask.priceReductor.cashbackStatus == Status.Open &&
+            ask.priceReductor.cashbackStart <= block.timestamp
+        ) {
+            _identityCode = _requireIdentityCode(
+                ask.priceReductor.checkIdentityCode,
+                string(abi.encodePacked(_collectionId, _tokenId))
+            );
+            (uint256[] memory values1,) = INFTicket(nfticket()).getMerchantTicketsPagination(
+                _collectionId, 
+                ask.priceReductor.cashbackNumbers.cursor,
+                ask.priceReductor.cashbackNumbers.size,
+                ask.priceReductor.checkItemOnly ? _tokenId : ""
+            );
+            (,uint256 totalPrice2) = INFTicket(nfticket()).getMerchantTicketsPagination(
+                _collectionId, 
+                ask.priceReductor.cashbackCost.cursor,
+                ask.priceReductor.cashbackCost.size,
+                ask.priceReductor.checkItemOnly ? _tokenId : ""
+            );
+            
+            if (values1.length >= ask.priceReductor.cashbackNumbers.lowerThreshold && 
+                values1.length <= ask.priceReductor.cashbackNumbers.upperThreshold
+            ) {
+                cashback1 = ask.priceReductor.cashbackNumbers.perct;
+            }
+            if (totalPrice2 >= ask.priceReductor.cashbackCost.lowerThreshold && 
+                totalPrice2 <= ask.priceReductor.cashbackCost.upperThreshold
+            ) {
+                cashback2 = ask.priceReductor.cashbackCost.perct;
+            }
+        }
+        (, uint256 totalPrice11) = INFTicket(nfticket()).getUserTicketsPagination(
+            msg.sender, 
+            _collectionId, 
+            ask.priceReductor.cashbackNumbers.cursor,
+            ask.priceReductor.cashbackNumbers.size,
+            ask.priceReductor.checkItemOnly ? _tokenId : ""
+        );
+        (, uint256 totalPrice22) = INFTicket(nfticket()).getUserTicketsPagination(
+            msg.sender, 
+            _collectionId, 
+            ask.priceReductor.cashbackCost.cursor,
+            ask.priceReductor.cashbackCost.size,
+            ask.priceReductor.checkItemOnly ? _tokenId : ""
+        );
+        totalCashback = (totalPrice11 * cashback1 / 10000) + (totalPrice22 * cashback2 / 10000); 
     }
 
     function processCashBack(
@@ -3626,76 +3700,31 @@ contract NFTMarketPlaceTrades {
         bool _creditNotCash,
         string memory _applyToTokenId
     ) external lock {
-        uint256 cashback1;
-        uint256 cashback2;
-        address nft_ = nfticket();
         uint _collectionId = IMarketPlace(marketCollections()).addressToCollectionId(_collection);
         Ask memory ask = IMarketPlace(marketOrders()).getAskDetails(_collectionId, keccak256(abi.encodePacked(_tokenId)));
         {
-            if (ask.priceReductor.cashbackStatus == Status.Open &&
-                ask.priceReductor.cashbackStart <= block.timestamp
-            ) {
-                require(
-                    cashbackLimits[string(abi.encodePacked(_collectionId, _tokenId))][msg.sender] < Math.max(ask.priceReductor.cashbackCost.limit, ask.priceReductor.cashbackNumbers.limit),
-                    "PNMT4"
-                );
-
-                (uint256[] memory values1,) = INFTicket(nft_).getMerchantTicketsPagination(
-                    _collectionId, 
-                    ask.priceReductor.cashbackNumbers.cursor,
-                    ask.priceReductor.cashbackNumbers.size,
-                    ask.priceReductor.checkItemOnly ? _tokenId : ""
-                );
-                (,uint256 totalPrice2) = INFTicket(nft_).getMerchantTicketsPagination(
-                    _collectionId, 
-                    ask.priceReductor.cashbackCost.cursor,
-                    ask.priceReductor.cashbackCost.size,
-                    ask.priceReductor.checkItemOnly ? _tokenId : ""
-                );
-                
-                if (values1.length >= ask.priceReductor.cashbackNumbers.lowerThreshold && 
-                    values1.length <= ask.priceReductor.cashbackNumbers.upperThreshold
-                ) {
-                    cashback1 += ask.priceReductor.cashbackNumbers.perct;
-                    if (totalPrice2 >= ask.priceReductor.cashbackCost.lowerThreshold && 
-                        totalPrice2 <= ask.priceReductor.cashbackCost.upperThreshold
-                    ) {
-                        cashback2 += ask.priceReductor.cashbackCost.perct;
-                    }
-                }
-            }
             if (!ask.priceReductor.cashNotCredit) {
                 _creditNotCash = true;
             }
-            (, uint256 totalPrice11) = INFTicket(nft_).getUserTicketsPagination(
-                msg.sender, 
-                _collectionId, 
-                ask.priceReductor.cashbackNumbers.cursor,
-                ask.priceReductor.cashbackNumbers.size,
-                ask.priceReductor.checkItemOnly ? _tokenId : ""
-            );
-            (, uint256 totalPrice22) = INFTicket(nft_).getUserTicketsPagination(
-                msg.sender, 
-                _collectionId, 
-                ask.priceReductor.cashbackCost.cursor,
-                ask.priceReductor.cashbackCost.size,
-                ask.priceReductor.checkItemOnly ? _tokenId : ""
-            );
-            uint256 totalCashback = cashback1 * totalPrice11 / 10000;
-            totalCashback += cashback2 * totalPrice22 / 10000;  
-            if (totalCashback > 0) cashbackLimits[string(abi.encodePacked(_collectionId, _tokenId))][msg.sender] += 1;
-            address _token = ask.tokenInfo.usetFIAT ? ask.tokenInfo.tFIAT : ve(ask.tokenInfo.ve).token();
-
-            if (!_creditNotCash) {
-                IERC20(_token).safeTransfer(address(msg.sender), totalCashback);            
-            } else {
-                IMarketPlace(marketOrders()).incrementPaymentCredits(msg.sender,_collectionId, _applyToTokenId,totalCashback);
-                pendingRevenue[_token][_collectionId] += Math.min(totalCashback, cashbackFund[_token][_collectionId]);
-            }
-            if (cashbackFund[_token][_collectionId] > totalCashback) {
-                cashbackFund[_token][_collectionId] -= totalCashback; 
-            } else {
-                cashbackFund[_token][_collectionId] = 0;
+            (bytes32 _identityCode, uint totalCashback) = computeCashBack(_collectionId, _tokenId);
+            if (totalCashback > 0) {
+                if (ask.priceReductor.checkIdentityCode) {
+                    identityLimits2[string(abi.encodePacked(_collectionId, _tokenId))][_identityCode] += 1;
+                } else {
+                    cashbackLimits[string(abi.encodePacked(_collectionId, _tokenId))][msg.sender] += 1;
+                }
+                address _token = ask.tokenInfo.usetFIAT ? ask.tokenInfo.tFIAT : ve(ask.tokenInfo.ve).token();
+                if (!_creditNotCash) {
+                    if (cashbackFund[_token][_collectionId] > totalCashback) {
+                        cashbackFund[_token][_collectionId] -= totalCashback; 
+                    } else {
+                        totalCashback = cashbackFund[_token][_collectionId];
+                        cashbackFund[_token][_collectionId] = 0;
+                    }
+                    IERC20(_token).safeTransfer(address(msg.sender), totalCashback);            
+                } else {
+                    IMarketPlace(marketOrders()).incrementPaymentCredits(msg.sender,_collectionId, _applyToTokenId,totalCashback);
+                }
             }
         }
     }
@@ -3722,15 +3751,17 @@ contract NFTMarketPlaceTrades {
     /**
      * @notice Claim pending revenue (treasury or creators)
      */
-    function claimPendingRevenue(address _token, address _user, uint _identityTokenId) external lock {
+    function claimPendingRevenue(address _token, address _to, uint _identityTokenId) external lock {
         uint _collectionId = IMarketPlace(marketCollections()).addressToCollectionId(msg.sender);
         IMarketPlace(marketCollections()).checkIdentityProof(msg.sender, _identityTokenId, false);
-        IERC20(_token).safeTransfer(address(_user), pendingRevenue[_token][_collectionId]);
-        if (_isContract(_user)) {
-            try IMarketPlace(_user).notifyRewardAmount(_token, pendingRevenue[_token][_collectionId])
-            {} catch {}
+        if (_isContract(_to)) {
+            try erc20(_token).approve(_to, pendingRevenue[_token][_collectionId]) {
+                IARP(_to).notifyReward(_token, pendingRevenue[_token][_collectionId]);
+            } catch {}
+        } else {
+            IERC20(_token).safeTransfer(address(_to), pendingRevenue[_token][_collectionId]);
         }
-        IMarketPlace(marketPlaceEvents()).emitRevenueClaim(_user, pendingRevenue[_token][_collectionId]);
+        IMarketPlace(marketPlaceEvents()).emitRevenueClaim(_to, pendingRevenue[_token][_collectionId]);
         pendingRevenue[_token][_collectionId] = 0;
     }
 
@@ -3746,31 +3777,34 @@ contract NFTMarketPlaceTrades {
     }
 
     function claimPendingRevenueFromNote(address _token, uint _tokenId, uint _identityTokenId) external lock {
-        require(ve(marketHelpers3()).ownerOf(_tokenId) == msg.sender, "PNMT5");
+        require(ve(marketHelpers3()).ownerOf(_tokenId) == msg.sender);
         IMarketPlace(marketCollections()).checkIdentityProof(msg.sender, _identityTokenId, false);
         IERC20(_token).safeTransfer(address(msg.sender), pendingRevenueFromNote[_token][_tokenId]);
         IMarketPlace(marketPlaceEvents()).emitRevenueClaim(msg.sender, pendingRevenueFromNote[_token][_tokenId]);
         pendingRevenueFromNote[_token][_tokenId] = 0;
     }
     
-    function transferDueToNote(uint _start, uint _end) external {
-        require(notes[msg.sender].end < block.timestamp, "PNMT6");
-        require(_end > _start, "PPMT7");
-        notes[msg.sender] = MerchantNote({
+     function transferDueToNote(uint _start, uint _end) external {
+        uint _collectionId = IMarketPlace(marketCollections()).addressToCollectionId(msg.sender);
+        require(notePeriod[_collectionId].end < block.timestamp, "PNMT6");
+        uint _endTime = block.timestamp + _end;
+        notePeriod[_collectionId].end = _endTime;
+        notePeriod[_collectionId].tokenId = permissionaryNoteTokenId;
+        notes[permissionaryNoteTokenId] = MerchantNote({
             start: block.timestamp + _start,
-            end: block.timestamp + _end,
-            lender: permissionaryNoteTokenId
+            end: _endTime,
+            merchantId: _collectionId
         });
         IMarketPlace(marketHelpers3()).mintNote(msg.sender, permissionaryNoteTokenId++);
     }
     
     function updatePendingRevenue(address _token, address _merchant, uint _revenue, bool _isReferrer) external {
-        require(msg.sender == marketHelpers() || msg.sender == marketHelpers2(), "PNMT8");
-        if (notes[_merchant].start < block.timestamp && 
-            notes[_merchant].end >= block.timestamp && !_isReferrer) {
-            pendingRevenueFromNote[_token][notes[_merchant].lender] += _revenue;
+        uint _collectionId = IMarketPlace(marketCollections()).addressToCollectionId(_merchant);
+        require(msg.sender == marketHelpers() || msg.sender == marketHelpers2(), "PMT8");
+        if (notes[notePeriod[_collectionId].tokenId].start < block.timestamp && 
+            notes[notePeriod[_collectionId].tokenId].end >= block.timestamp && !_isReferrer) {
+            pendingRevenueFromNote[_token][notePeriod[_collectionId].tokenId] += _revenue;
         } else {
-            uint _collectionId = IMarketPlace(marketCollections()).addressToCollectionId(_merchant);
             pendingRevenue[_token][_collectionId] += _revenue;
             if (taxContracts[_token][_collectionId] != address(0x0)) {
                 IBILL(taxContracts[_token][_collectionId]).notifyCredit(address(this), _merchant, _revenue);
@@ -3806,7 +3840,7 @@ contract NFTMarketPlaceTrades {
     }
 
     function claimTreasuryRevenue(address _token) external {
-        require(msg.sender == IAuth(contractAddress).devaddr_(), "PNMT15");
+        require(msg.sender == IAuth(contractAddress).devaddr_());
         IERC20(_token).safeTransfer(msg.sender, treasuryRevenue[_token]);
         treasuryRevenue[_token] = 0;
     }
@@ -3892,7 +3926,7 @@ contract NFTMarketPlaceTrades {
         recurringBountyBalance[_collectionId][_token] += _amount;
     }
 
-    function withdrawRecurringBounty(address _referrer, address _token) external returns(uint _amount) {
+    function withdrawRecurringBounty(address _referrer, address _token) external lock returns(uint _amount) {
         require(IContract(contractAddress).trustBounty() == msg.sender, "PNMT17");
         uint _referrerCollectionId = IMarketPlace(marketCollections()).addressToCollectionId(_referrer);
         _amount = recurringBountyBalance[_referrerCollectionId][_token];
@@ -4034,18 +4068,11 @@ contract NFTMarketPlaceHelper {
         require(marketTrades == msg.sender);
         uint _collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(_collection);
         Ask memory ask = IMarketPlace(marketOrders).getAskDetails(_collectionId, keccak256(abi.encodePacked(_tokenId)));
-        require(ask.lastBidTime == 0 || ask.lastBidTime + ask.bidDuration > block.timestamp);
+        // require(ask.lastBidTime == 0 || ask.lastBidTime + ask.bidDuration > block.timestamp);
         uint _askPrice = ask.price;
-        if (ask.lastBidTime != 0 && ask.minBidIncrementPercentage > 0) {
-            _price += ask.price * uint(ask.minBidIncrementPercentage) / 10000;
-            _askPrice += ask.price * uint(ask.minBidIncrementPercentage) / 10000;
-        } else if (ask.lastBidTime != 0 && ask.minBidIncrementPercentage < 0) {
-            if (ask.price * uint(-ask.minBidIncrementPercentage) / 10000 > _price) {
-                _price = 0;
-            } else {
-                _price -= ask.price * uint(-ask.minBidIncrementPercentage) / 10000;
-            }
-            _askPrice -= ask.price * uint(-ask.minBidIncrementPercentage) / 10000;
+        if (ask.lastBidTime != 0) {
+            _price += ask.price * ask.minBidIncrementPercentage / 10000;
+            _askPrice += ask.price * ask.minBidIncrementPercentage / 10000;
         }
         // If this is the first valid bid, we should set the starting time now.
         // If it's not, then we should refund the last bidder
@@ -4619,11 +4646,9 @@ contract NFTMarketPlaceHelper2 {
         require(marketOrders == msg.sender, "PNMHH24");
         uint _collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(_collection);
         Ask memory ask = IMarketPlace(marketOrders).getAskDetails(_collectionId, keccak256(abi.encodePacked(_tokenId)));
-        if (ask.priceReductor.cashbackStatus == Status.Open &&
-            ask.priceReductor.cashbackStart <= block.timestamp
-        ) {
-            require(ask.priceReductor.cashbackNumbers.size < block.timestamp &&
-                ask.priceReductor.cashbackCost.size < block.timestamp, "PNMHH25");
+        require(ask.priceReductor.cashbackStart < block.timestamp, "PNMHH25");
+        
+        if (ask.priceReductor.cashbackStatus == Status.Open) {
             (uint256[] memory values1,) = INFTicket(nft_).getMerchantTicketsPagination(
                 _collectionId, 
                 ask.priceReductor.cashbackNumbers.cursor,
@@ -4636,15 +4661,18 @@ contract NFTMarketPlaceHelper2 {
                 ask.priceReductor.cashbackCost.size,
                 ask.priceReductor.checkItemOnly ? _tokenId : ""
             );
+            uint _totalPercent;
             bool _passedFirstTest = values1.length >= ask.priceReductor.cashbackNumbers.lowerThreshold && 
                 values1.length <= ask.priceReductor.cashbackNumbers.upperThreshold;
             bool _passedSecondTest = totalPrice2 >= ask.priceReductor.cashbackCost.lowerThreshold && 
                     totalPrice2 <= ask.priceReductor.cashbackCost.upperThreshold;
+            if (!_passedFirstTest) _totalPercent = ask.priceReductor.cashbackNumbers.perct;
+            if (!_passedSecondTest) _totalPercent += ask.priceReductor.cashbackCost.perct;
             if (!_passedFirstTest || !_passedSecondTest) {
                 address marketTrades = IContract(contractAddress).nftMarketTrades();
                 address _token = ask.tokenInfo.usetFIAT ? ask.tokenInfo.tFIAT : ve(ask.tokenInfo.ve).token();
                 uint _amount = IMarketPlace(marketTrades).cashbackFund(_token, _collectionId);
-                cashbackRevenue[_collectionId][keccak256(abi.encodePacked(_tokenId))].amount = _amount;
+                cashbackRevenue[_collectionId][keccak256(abi.encodePacked(_tokenId))].amount = _amount * _totalPercent / 100;
                 cashbackRevenue[_collectionId][keccak256(abi.encodePacked(_tokenId))].bufferTime = block.timestamp + ask.priceReductor.cashbackNumbers.size +
                 ask.priceReductor.cashbackCost.size - ask.priceReductor.cashbackNumbers.cursor - ask.priceReductor.cashbackCost.cursor;
                 IMarketPlace(marketTrades).updateCashbackFund(_token, _collectionId, _amount, false);
@@ -4715,8 +4743,7 @@ contract NFTMarketPlaceHelper3 is ERC721Pausable {
         string[] memory optionNames = new string[](5);
         string[] memory optionValues = new string[](5);
         address owner = ownerOf(_tokenId);
-        uint merchantId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(owner);
-        (uint start, uint end,) = IMarketPlace(IContract(contractAddress).nftMarketTrades()).notes(owner);
+        (uint start, uint end, uint merchantId) = IMarketPlace(IContract(contractAddress).nftMarketTrades()).notes(_tokenId);
         optionValues[idx++] = toString(_tokenId);
         optionNames[idx] = "MID";
         optionValues[idx++] = toString(merchantId);
@@ -5122,9 +5149,10 @@ contract MinterFactory {
 contract NFTSVG {
     using Strings for uint256;
     
-    uint public constant MAX_NUM_OF_PARAMS = 15;
+    uint public constant MAX_NUM_OF_PARAMS = 8;
     address public contractAddress;
     mapping(address => string) public description;
+    mapping(uint => string) public task;
 
     function setContractAddress(address _contractAddress) external {
         require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
@@ -5136,13 +5164,17 @@ contract NFTSVG {
         description[_contract] = _description;
     }
 
+    function updateSVGTask(string memory _str) external {
+        uint _collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
+        task[_collectionId] = _str;
+    }
+
     function constructTokenURI(
         uint tokenId,
-        string memory name, 
         address token1, 
         address token2, 
         address owner,
-        address taxContract,
+        address channelOwner,
         string[] memory media,
         string[] memory optionNames,
         string[] memory optionValues,
@@ -5155,8 +5187,8 @@ contract NFTSVG {
                         token1, 
                         token2, 
                         msg.sender, 
-                        owner, 
-                        taxContract,
+                        owner,
+                        channelOwner, 
                         media,
                         optionNames,
                         optionValues,
@@ -5192,7 +5224,7 @@ contract NFTSVG {
         address token2, 
         address sender, 
         address owner,
-        address taxContract,
+        address channelOwner,
         string[] memory media,
         string[] memory optionNames,
         string[] memory optionValues,
@@ -5204,13 +5236,10 @@ contract NFTSVG {
                     generateSVGDefs(token1, token2),
                     generateSVGBorderText(sender, owner, tokenId),
                     generateSVGMedia(media, chat),
-                    generateSVGParams(taxContract, tokenId, optionNames, optionValues),
+                    generateSVGParams(channelOwner, optionNames, optionValues),
                     generateSVGControls(),
-                    generateSVGScript(
-                        media.length, 
-                        taxContract != address(0x0)
-                    ),
-                    generateSVGSparkle(),
+                    generateSVGScript(media.length, hasTask(channelOwner)),
+                    media.length > 0 ? "" : generateSVGSparkle(),
                     '</svg>'
                 )
             );
@@ -5411,13 +5440,13 @@ contract NFTSVG {
         );
     }
 
-    function generateSVGParams(address taxContract, uint tokenId, string[] memory optionNames, string[] memory optionValues) private view returns (string memory svg) {
+    function generateSVGParams(address _channelOwner, string[] memory optionNames, string[] memory optionValues) private view returns (string memory svg) {
         svg = string(
             abi.encodePacked(
                 '<g id="task">',
-                generateSVGTask(taxContract, tokenId),
+                generateSVGTask(_channelOwner),
                 '</g><g id="default">',
-                generateSVGParamLines(optionNames, optionValues),
+                generateSVGParamLines(_channelOwner, optionNames, optionValues),
                 '</g>',
                 generateSVGFeaturedParams(optionNames, optionValues)
             )
@@ -5431,25 +5460,30 @@ contract NFTSVG {
         }
     }
 
-    function generateSVGTask(address taxContract, uint tokenId) private view returns (string memory svg) {
-        svg = taxContract != address(0x0)
-        ? IMarketPlace(taxContract).getTask(tokenId)
-        : "";
-        // string(
-        //     abi.encodePacked(
-        //         '<svg xmlns = "http://www.w3.org/2000/svg" width="100%" height="100%">',
-        //         '<rect x="25" y="25" width="250" height="200" fill="#ff0000" stroke="#000000"/>'
-        //         '<foreignObject x="50" y="50" width="200" height="150"><body xmlns="http://www.w3.org/1999/xhtml">',
-        //         '<form><input type="text"/><input type="text"/></form></body></foreignObject>',
-        //         '<circle cx="60" cy="80" r="30" fill="#00ff00" fill-opacity="0.5"/></svg>'
-        //     )
-        // );
+    function hasTask(address _channelOwner) internal view returns(bool) {
+        if (msg.sender != IContract(contractAddress).nfticketHelper2()) return false;
+        uint _collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(_channelOwner);
+        return keccak256(abi.encodePacked(task[_collectionId])) != keccak256(abi.encodePacked(""));
     }
 
-    function generateSVGParamLines(string[] memory optionNames, string[] memory optionValues) private pure returns (string memory svg) {
+    function generateSVGTask(address _channelOwner) private view returns (string memory svg) {
+        uint _collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(_channelOwner);
+        svg = hasTask(_channelOwner) ? string(
+            abi.encodePacked(
+                '<svg xmlns = "http://www.w3.org/2000/svg" width="100%" height="100%">',
+                '<rect x="25" y="350" width="250" height="40" fill="#ff0000" stroke="#000000"/>'
+                '<foreignObject x="85" y="350" width="200" height="150"><body xmlns="http://www.w3.org/1999/xhtml">',
+                '<form method="get" action="', task[_collectionId],
+                '" target="_blank"><input type="submit" value="Complete Task"/></form></body></foreignObject>',
+                '</svg>'
+            )
+        ) : "";
+    }
+
+    function generateSVGParamLines(address _channelOwner, string[] memory optionNames, string[] memory optionValues) private view returns (string memory svg) {
         uint startIdx = optionNames.length > 3 ? 3 : 0;
         uint multiplier = 0;
-        uint endIdx = Math.min(optionNames.length, MAX_NUM_OF_PARAMS);
+        uint endIdx = Math.min(optionNames.length, hasTask(_channelOwner) ? 5 : MAX_NUM_OF_PARAMS);
         for (uint i = startIdx; i < endIdx; i++) {
             svg = string(abi.encodePacked(svg, generateSVGParam(optionNames[i], optionValues[i], toString(30 + multiplier * 30))));
             multiplier += 1;
@@ -5501,10 +5535,10 @@ contract NFTSVG {
         );
     }
 
-    function generateSVGScript(uint mediaLength, bool hasTask) private pure returns (string memory svg) {
+    function generateSVGScript(uint mediaLength, bool _hasTask) private pure returns (string memory svg) {
         svg = string(
             abi.encodePacked(
-                generateSVGScriptInit(mediaLength, hasTask),
+                generateSVGScriptInit(mediaLength, _hasTask),
                 generateSVGScriptNextNDefault(mediaLength),
                 generateSVGScriptSuperChatNPrevious(),
                 generateSVGScriptDisplay()
@@ -5512,13 +5546,13 @@ contract NFTSVG {
         );
     }
 
-    function generateSVGScriptInit(uint mediaLength, bool hasTask) private pure returns (string memory svg) {
+    function generateSVGScriptInit(uint mediaLength, bool _hasTask) private pure returns (string memory svg) {
         svg = string(
             abi.encodePacked(
                 '<script type="text/javascript"><![CDATA[var global = 1;',
                 generateSVGScriptSetPage(mediaLength),
                 'if (',
-                hasTask ? "true" : "false",
+                _hasTask ? "true" : "false",
                 '){document.getElementById("task").setAttribute("style","display:show;");',
                 'document.getElementById("default").setAttribute("style","display:none;");',
                 '}else{document.getElementById("default").setAttribute("style","display:show;");',
@@ -5538,7 +5572,6 @@ contract NFTSVG {
         svg = string(
             abi.encodePacked(
                 'function next() {document.getElementById("default").setAttribute("style","display:none;");',
-                'document.getElementById("task").setAttribute("style","display:none;");',
                 'document.getElementById("superchat").setAttribute("style","display:none;");',
                 'document.getElementById(global).setAttribute("style","display:none;");global = global% ',
                 toString(mediaLength),
@@ -5547,7 +5580,6 @@ contract NFTSVG {
                 
                 'function defaultnft() {document.getElementById(global).setAttribute("style","display:none;");',
                 'document.getElementById("superchat").setAttribute("style","display:none;");',
-                'document.getElementById("task").setAttribute("style","display:none;");',
                 'document.getElementById("default").setAttribute("style","display:show;");}'
             )
         );
@@ -5557,12 +5589,10 @@ contract NFTSVG {
         svg = string(
             abi.encodePacked(
                 'function superchat() {document.getElementById(global).setAttribute("style","display:none;");',
-                'document.getElementById("task").setAttribute("style","display:none;");',
                 'document.getElementById("default").setAttribute("style","display:none;");',
                 'document.getElementById("superchat").setAttribute("style","display:show;");}',
 
                 'function previous() {document.getElementById("default").setAttribute("style","display:none;");',
-                'document.getElementById("task").setAttribute("style","display:none;");',
                 'document.getElementById("superchat").setAttribute("style","display:none;");',
                 'document.getElementById(global).setAttribute("style","display:none;");',
                 'if (global > 1) global -= 1;document.getElementById(global).setAttribute("style","display:show;");}'

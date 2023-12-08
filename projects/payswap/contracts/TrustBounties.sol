@@ -206,11 +206,16 @@ contract TrustBounties {
         );
     }
 
-    function addRecurringBalance(uint _bountyId, address _source) external lock {
-        uint _amount = IMarketPlace(_source).withdrawRecurringBounty(msg.sender, bountyInfo[_bountyId].token);
-        balances[_bountyId][_source].amount += _amount;
-        _source = address(this);
-        balanceSources[_bountyId].add(_source);
+    function addRecurringBalance(uint _bountyId, address _owner, address _source) external lock {
+        require(
+            bountyInfo[_bountyId].recurring && 
+            bountyInfo[_bountyId].owner == _owner && 
+            bountyInfo[_bountyId].endTime > block.timestamp + ITrustBounty(_trustBountyHelper()).balanceBuffer(), 
+            "T6"
+        );
+        uint _amount = IMarketPlace(_source).withdrawRecurringBounty(_owner, bountyInfo[_bountyId].token);
+        balances[_bountyId][address(this)].amount += _amount;
+        balanceSources[_bountyId].add(address(this));
 
         ITrustBounty(_trustBountyHelper()).emitAddBalance(_bountyId, _source, _amount);
     }

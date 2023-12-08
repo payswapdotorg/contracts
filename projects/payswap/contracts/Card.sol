@@ -9,12 +9,14 @@ contract Card {
     using EnumerableSet for EnumerableSet.AddressSet;
     
     uint public adminFee = 100;
+    uint public protocolId = 1;
     address public contractAddress;
     mapping(string => EnumerableSet.AddressSet) private _tokens;
     mapping(string => mapping(address => uint)) public balance;
     mapping(string => string) public accounts;
     mapping(address => uint) public treasury;
     mapping(string => uint) public profileId;
+    mapping(string => uint) public accountId;
 
     event UpdatePassword(string _username, string _password);
     event TransferBalance(string from, string to, address token, uint amount);
@@ -63,6 +65,7 @@ contract Card {
     function createAccount(string memory _username, string memory _password) external {
         require(_isEmpty(accounts[_username]));
         accounts[_username] = _password;
+        accountId[_username] = protocolId++;
         emit UpdatePassword(_username, _password);
     }
 

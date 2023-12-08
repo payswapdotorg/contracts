@@ -279,7 +279,7 @@ struct Ask {
     address lastBidder;
     uint256 bidDuration;
     uint256 lastBidTime;
-    int256 minBidIncrementPercentage;
+    uint256 minBidIncrementPercentage;
     uint256 rsrcTokenId;
     bool transferrable;
     PriceReductor priceReductor;
@@ -5538,8 +5538,15 @@ interface IRamp {
     function emitUpdateMiscellaneous(uint,uint,string memory,string memory,uint,uint,address,string memory) external;
 }
 
+interface INFTSVG {
+    function generateSVG(uint,address,address,address,address,string[] memory,string[] memory,string[] memory,string[] memory) external view returns (string memory);
+    function constructTokenURI(uint,address,address,address,address,string[] memory,string[] memory,string[] memory,string[] memory) external view returns(string memory);
+}
+
 interface IMarketPlace {
+    function taskContracts(uint) external view returns(address);
     function ticketID() external view returns(uint);
+    function getTimeEstimates(uint,string memory,address,uint[] memory) external view returns(uint);
     function generateSVG(uint,address,address,address,address,address,string[] memory,string[] memory,string[] memory,string[] memory) external view returns (string memory);
     function partner(uint,string memory,string memory,uint,bool) external;
     function symbol() external view returns(string memory);
@@ -5547,7 +5554,7 @@ interface IMarketPlace {
     function lotteryRevenue(address) external view returns(uint);
     function claimLotteryRevenue(address) external;
     function claimLotteryRevenue() external;
-    function notes(address) external view returns(uint,uint,uint);
+    function notes(uint) external view returns(uint,uint,uint);
     function tokenURIs(address,uint) external view returns(string memory);
     function scheduledMedia(uint) external view returns(uint,string memory);
     function currentMediaIdx() external view returns(uint);
@@ -5607,13 +5614,13 @@ interface IMarketPlace {
     function emitNewAdminAndTreasuryAddresses(address,address) external;
     function emitCollectionUpdate(uint256,address,uint256,uint256,uint256,uint256,uint256,uint256,bool,bool) external;
     function emitCollectionNew(uint256,address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool,bool) external;
-    function emitAskUpdate(string memory,address,uint,uint,uint,int,bool,uint,uint,uint) external;
+    function emitAskUpdate(string memory,address,uint,uint,uint,uint,bool,uint,uint,uint) external;
     function emitAskUpdateDiscount(uint,string memory,Status,uint,bool,bool,bool,uint[6] memory,uint[6] memory) external;
     function emitAskUpdateCashback(uint,string memory,Status,uint,bool,bool,uint[6] memory,uint[6] memory) external;
     function emitAskUpdateIdentity(uint,string memory,string memory,string memory,bool,bool,uint,COLOR) external;
     function emitUpdateSubscriptionInfo(uint, uint, uint) external;
     function emitUpdateScubscriptionTiers(uint, uint[] memory, uint[] memory) external;
-    function emitAskNew(uint,string memory,uint,uint,int,bool,uint,uint,uint,address,address) external;
+    function emitAskNew(uint,string memory,uint,uint,uint,bool,uint,uint,uint,address,address) external;
     function emitAskCancel(uint,string memory) external;
     function emitCloseListing(uint, string memory) external;
     function emitAddReferral(uint, uint, string memory, uint, uint) external;
