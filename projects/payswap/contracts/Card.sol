@@ -17,16 +17,17 @@ contract Card {
     mapping(address => uint) public treasury;
     mapping(string => uint) public profileId;
     mapping(string => uint) public accountId;
+    mapping(string => mapping(address => uint)) public toBurn;
 
-    event UpdatePassword(string _username, string _password);
-    event TransferBalance(string from, string to, address token, uint amount);
-    event AddBalance(string _username, address token, uint amount);
-    event NotifyAddBalance(string _username, string _sessionId, address token, uint amount);
-    event RemoveBalance(string _username, address operator, address token, uint amount);
+    event UpdatePassword(string _username, string _password, uint _accountId);
+    event TransferBalance(uint from, uint to, address token, uint amount);
+    event AddBalance(uint _accountId, address token, uint amount);
+    event NotifyAddBalance(uint _accountId, string _sessionId, address token, uint amount);
+    event RemoveBalance(uint _accountId, address operator, address token, uint amount);
     event ExecutePurchase(
         address collection,
         address token,
-        string _username,
+        uint _accountId,
         string productId,
         uint isPaywall,
         uint price,
@@ -34,8 +35,7 @@ contract Card {
         uint identityTokenId,
         uint[] options
     );
-    mapping(string => mapping(address => uint)) public toBurn;
-    event NotifyBurn(string username, address token, uint amount, bool clear);
+    event NotifyBurn(uint _accountId, address token, uint amount, bool clear);
 
     // simple re-entrancy check
     uint internal _unlocked = 1;
@@ -65,14 +65,14 @@ contract Card {
     function createAccount(string memory _username, string memory _password) external {
         require(_isEmpty(accounts[_username]));
         accounts[_username] = _password;
-        accountId[_username] = protocolId++;
-        emit UpdatePassword(_username, _password);
+        accountId[_username] = protocolId;
+        emit UpdatePassword(_username, _password, protocolId++);
     }
 
     function updatePassword(string memory _username, string memory _oldPassword, string memory _password) external onlyAdmin {
         require(_isAccountOwner(_username, _oldPassword), "C5");
         accounts[_username] = _password;
-        emit UpdatePassword(_username, _password);
+        emit UpdatePassword(_username, _password, accountId[_username]);
     }
 
     function updateProfileId(string memory _username, string memory _password, address _owner) external onlyAdmin {
@@ -87,7 +87,7 @@ contract Card {
         uint _profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender);
         require(profileId[_username] == _profileId && _profileId > 0);
         accounts[_username] = _password;
-        emit UpdatePassword(_username, _password);
+        emit UpdatePassword(_username, _password, accountId[_username]);
     }
 
     function _isEmpty(string memory val) internal pure returns(bool) {
@@ -113,7 +113,7 @@ contract Card {
         }
         balance[_username][_token] += _amount;
         IRamp(IContract(contractAddress).rampHelper()).postMint(_sessionId);
-        emit NotifyAddBalance(_username, _sessionId, _token, _amount);
+        emit NotifyAddBalance(accountId[_username], _sessionId, _token, _amount);
     }
     
     function notifyBurn(string memory _username, address _token, uint _amount, bool _clear) external onlyAdmin {
@@ -123,7 +123,7 @@ contract Card {
             balance[_username][_token] -= _amount;
             toBurn[_username][_token] += _amount;
         }
-        emit NotifyBurn(_username, _token, _amount, _clear);
+        emit NotifyBurn(accountId[_username], _token, _amount, _clear);
     }
 
     function addBalance(string memory _username, address _token, uint _amount) external lock {
@@ -135,7 +135,7 @@ contract Card {
         balance[_username][_token] += _amount * (10000 - adminFee) / 10000;
         treasury[_token] += _amount * adminFee / 10000;
 
-        emit AddBalance(_username, _token, _amount);
+        emit AddBalance(accountId[_username], _token, _amount);
     }
 
     function removeBalance(string memory _username, string memory _password, address _token, address _recipient, uint _amount) public lock onlyAuth(_username) {
@@ -149,7 +149,7 @@ contract Card {
             IERC20(_token).safeTransfer(_recipient, _amount);
         }
 
-        emit RemoveBalance(_username, _recipient, _token, _amount);
+        emit RemoveBalance(accountId[_username], _recipient, _token, _amount);
     }
 
     function transferBalance(
@@ -169,7 +169,7 @@ contract Card {
             balance[_username][_token] -= _amount;
         }
 
-        emit TransferBalance(_username, _recipientUsername, _token, _amount);
+        emit TransferBalance(accountId[_username], accountId[_recipientUsername], _token, _amount);
     }
 
     function executePurchase(
@@ -189,9 +189,13 @@ contract Card {
         : _isPaywall == 1
         ? IContract(contractAddress).nftMarketTrades()
         : IContract(contractAddress).marketTrades();
-        require(balance[_username][_token] > _price);
-
-        balance[_username][_token] -= _price;
+        require(balance[_username][_token] >= _price);
+        if (balance[_username][_token] > _price) {
+            balance[_username][_token] -= _price;
+        } else {
+            _price = balance[_username][_token];
+            balance[_username][_token] = 0;
+        }
 
         erc20(_token).approve(marketPlace, _price);
         IMarketPlace(marketPlace).buyWithContract(
@@ -206,7 +210,7 @@ contract Card {
         emit ExecutePurchase(
             _collection,
             _token,
-            _username,
+            accountId[_username],
             _productId,
             _isPaywall,
             _price,
@@ -226,6 +230,14 @@ contract Card {
     function withdrawTreasury(address _token, uint _amount) external onlyAdmin {
         treasury[_token] -= _amount;
         IERC20(_token).safeTransfer(msg.sender, _amount);
+    }
+
+    function onERC721Received(address,address,uint256,bytes memory) public virtual returns (bytes4) {
+        return this.onERC721Received.selector; 
+    }
+
+    function onERC1155Received(address, address, uint256, uint256, bytes memory) public virtual returns (bytes4) {
+        return this.onERC1155Received.selector;
     }
     
 }

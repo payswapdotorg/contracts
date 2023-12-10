@@ -277,6 +277,7 @@ contract Ramp {
         require(IAuth(contractAddress).devaddr_() == msg.sender || isAdmin[msg.sender], "R1");
         require(protocolInfo[_token].status == RampStatus.Open, "R2");
         (uint _mintable,, CollateralStatus _status) = IRamp(IContract(contractAddress).rampAds()).mintAvailable(address(this), _token);
+        require(_mintable >= _amount, "R3");
         if (_status == CollateralStatus.OverCollateralized) {
             uint _toMint = Math.min(_mintable, _amount);
             uint _fee;

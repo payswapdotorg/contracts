@@ -240,7 +240,7 @@ async function main() {
   const auditorFactoryAddress = "0xa78F0762FAFd64B90B2F8fb52A8aF923cD399ddD"
   const acceleratorVoterAddress = "0x84779D6bCf31E90DE81Ac4155EFA9A725a60B7f9"
   const futureCollateralAddress = "0xD2b2435aa749E42F3523033Fe167Ae543082375F"
-  const cardAddress = "0xb522D4285f3f843a171755f2Be9D61Cc9ebd37a4"
+  const cardAddress = "0x5133ce668Dcfe85690CCB890e175F594fb11d0D0"
   const contributorVoterAddress = "0xBCb2E030953dC9f2E68C179C19C2C121aF348Abb"
   const vavaFactoryAddress = "0x5fdbCeEc25E02d15dE51af3450289c72Ef2d081E"
   const vavaHelperAddress = "0xC38993A66820830bfED5D92bc4c937a4bba4528D"
@@ -314,10 +314,10 @@ async function main() {
   const worldHelperAddress = "0x0691B361313da730d1528f3100fD4ab7d95370B3"
   const worldHelper2Address = "0x350aB48Ad25003D1887a17D269f947f7DD27a2C8"
   const worldHelper3Address = "0x29cF710FA955E4F3A6e8E672d4885fd9A43F380F"
-  const rampFactoryAddress = "0xdC6fAb469dcF7D94fdf525e4DED83FC5C717B059"
-  const rampHelperAddress = "0x9BEC19D775a197fDc8A0249c612c95B06b449945"
-  const rampHelper2Address = "0xB845Bd32afF5d57Bf7CD6F4b672704f27929Bf8B"
-  const rampAdsAddress = "0xB69C2F1ceB9e8eCa8B40cD0935E3160ecb065EC5"
+  const rampFactoryAddress = "0x5F578d98eA02e6F637123780436Bd2A4D185F868"
+  const rampHelperAddress = "0x23Be44620Fa12769260E02C7060193e1Df86D260"
+  const rampHelper2Address = "0xfDcF4202C251600Ce957080b0986Fe2e5311c4AF"
+  const rampAdsAddress = "0xdBae46e2b19A39300139dBC6437678A2a3e12347"
   const bettingHelperAddress = "0xE7c267Fa69166Cc6431916Cd0612F74BEb52E19D"
   const bettingMinterAddress = "0xB486008DcD9770d452bF82A22bb6ae1FceE85bDE"
   const bettingFactoryAddress = "0x03b92F38DD4d6B66aFd5679F84f0A22291A325B3"
@@ -935,7 +935,10 @@ async function main() {
   // await tFiat.balanceOf(card.address), await card.balance(
   //   'bXtvzJS/MsPkW4IH30dLcpfN9rkLoiIdmC4XQt1E9uEWOPPqyRbQjblrzW8qR2F/IfKOw6iM2AgiD9OqdoVje1Sapvv3fRgNTd94bBTkI0h9RzwbgD1DGY7WRCVhb6arrUY9sYT/6/e9RsvwG9TIM6vzRClK2snKIMBB0/OLAAjehIvyldg5U7nn2wttJtFXXJUkdzwLPwBr558UmeAWcaZmPj/seEjbQlc34kjVjnzJESd9xAky5O/DE0CXDB2zFLqgxdvyyKKhiPuL84x6XrwxGh3jAqdoKt B91cEi/M6KOY0qA0AKzADYp8MUm1rIiwmCEcXXrSXSFZw9Kh6JQ==',
   //   tFiat.address))
-  // console.log("card.accounts==================>", await card.balance("Cq05sEIwoxmbbYrL1NR7JHQbHRkfLmjNPQ4Wbf8J2SIik9VA3vhRmDBRojuFIYA78NKDkxN1PxUme9C0w9jhHJ8ghbCs9u1A+yOWg+ypj2mmrvRYTxnY3d0LH6PiaKp1iGAlhP8MeSpF9OSDeR3yvBUsFKK/H1va8KEF1eEIym0Bs6VsqDK0pCZRYpm5UNXia+D2YP3n/gBCQjcDZUJIY9UuRHHwgbnT0gt0RukmVgqNyzsME0myhPo9vkQ7qsDcwyu7YUcs1f3Jw1GZxi+w7pbRtLlk30uSDlWSPdRkbUk4rxyI7q+H6jfcJNfFjk0eutAFJR87W8vWLMpqXsVIDg==", tFiatAddress))
+  // console.log("card.accounts==================>", await card.accounts("FE9tulO6OKwLvVJXwRwvB4kE9rgi4pAha1PsWcAYfNl0xJTf5oumZYrbPT2EPtnpOTSEYqa07wrNLQC3zf/G9X3e9Az5YJ2250eFacte6Eo11CEJ58U3+x3TxI6Voa7awfkuJkvbne4DIDpjJ9JNkW8F56iIgUJWGyJVHm64/qPuyfbChesyBe1KnXKfZAJvN+e/n0xsY1kHzMo0HhiU0CuUbKRX40OFZTyEBYQekYjGKeswmiPYRYXsT1PDG27YqXlmrSBK/Dmcbk/MJLZOg5y6iRzNCp7rhfrca0+J/Ne8040J9yDIPFnPf4O/lc7mLFZ/ke0lTUC/Nr60IYmtaQ=="))
+  // console.log("card.balance==================>", await card.balance("FE9tulO6OKwLvVJXwRwvB4kE9rgi4pAha1PsWcAYfNl0xJTf5oumZYrbPT2EPtnpOTSEYqa07wrNLQC3zf/G9X3e9Az5YJ2250eFacte6Eo11CEJ58U3+x3TxI6Voa7awfkuJkvbne4DIDpjJ9JNkW8F56iIgUJWGyJVHm64/qPuyfbChesyBe1KnXKfZAJvN+e/n0xsY1kHzMo0HhiU0CuUbKRX40OFZTyEBYQekYjGKeswmiPYRYXsT1PDG27YqXlmrSBK/Dmcbk/MJLZOg5y6iRzNCp7rhfrca0+J/Ne8040J9yDIPFnPf4O/lc7mLFZ/ke0lTUC/Nr60IYmtaQ==", tFiat.address))
+  // console.log("balance==================>", await tFiat.balanceOf(card.address))
+
   // const feeTo = await FeeTo.deploy();
   // await feeTo.deployed()
   // console.log("feeTo============>", feeTo.address)
@@ -1982,7 +1985,7 @@ async function main() {
   // await rampHelper.addDtoken(tFiatAddress)
   // console.log("rampHelper.addDtoken==========>Done")
   // await tFiat.updateMinter(rampHelper.address)
-  // console.log("tFiat.updateMinter==========>Done")
+  // console.log("tFiat.updateMinter==========>Done", await tFiat.minter())
 
   // await marketPlaceCollection.addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
@@ -2662,14 +2665,24 @@ async function main() {
     // )
     // await ramp.deployed()
     // console.log("ramp==============>", ramp.address)
-  // let rampAddress = "0x384582a8d93e91dbf6a399cd8241d374da2d7095" // (await rampHelper.getAllRamps(0))[0]
+  // let rampAddress = (await rampHelper.getAllRamps(0))[0]
   //   let ramp = Ramp.attach(rampAddress)
-    // console.log("ramp===>", rampAddress, ramp.address)
+  //   console.log("ramp===>", rampAddress, ramp.address)
+    
     // console.log("ramp.protocolInfo============>", await ramp.protocolInfo(tFiat.address))
     // console.log("getParams===============>", await ramp.getParams())
   // await ramp.updateAdmin(deployer.address, true)
+
     // await ramp.updateAdmin(card.address, true)
-    // console.log("ramp.updateAdmin===============>Done")
+    // console.log("ramp.updateAdmin===============>Done", await ramp.isAdmin(card.address))
+
+    // console.log("rampHelper.getAllRamps=====================>", await rampHelper.getAllRamps(0))
+    
+    // await rampHelper.updateIsPayswapRamp(ramp.address, true)
+    // console.log("rampHelper.updateIsPayswapRamp=====================>Done")
+
+    // console.log("rampAds.mintAvailable=====================>", await rampAds.mintAvailable(ramp.address, tFiat.address))
+    // console.log("rampHelper.isPayswapRamp=====================>", await rampHelper.isPayswapRamp(ramp.address))
 
     // await trustBounties.createBounty(
     //   deployer.address,
@@ -11669,6 +11682,24 @@ async function main() {
   //   ""
   // );
   // console.log("465marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 466
+  // await marketPlaceCollection.connect(wallets[463]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[463]).updateCollection(
+  //   "Lotterelator",
+  //   "Lotterelator combines lotteries and businesses in one: there various lotteries offered on the platform each targeting a specific type of business (cleaning services, ride hailing, delivery, security agents, etc.); users find a type of business they are already paying for and participate in its lottery. At the end of each round of lottery, the funds are used to start a business in the lottery's category which pays dividends to the winners of the lottery. The other participants in the lottery become customers of that business in order to value it at a high enough valuation that, the owner of the business (which is a valuepool made of all the lottery participants) to take a big enough loan on behalf of the business in order to replicate that business. The second business distributes dividends to the next set of lottery participants. This cycle is replicated until all participants of the lottery have a business paying them dividends regularly. Each run of the lottery creates a new cohort of lottery particpants.",
+  //   "https://i.ibb.co/jyGLD7k/133.jpg",
+  //   "https://i.ibb.co/jyGLD7k/133.jpg",
+  //   "https://i.ibb.co/HCqK6C9/224.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("466marketPlaceCollection.updateCollection===========> Done!")
 
   }
   

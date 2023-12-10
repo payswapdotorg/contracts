@@ -5,6 +5,7 @@ import "./Library.sol";
 
 // Gauges are used to incentivize different actions
 contract Valuepool {
+    using SafeERC20 for IERC20;
     using EnumerableSet for EnumerableSet.AddressSet;
     using EnumerableSet for EnumerableSet.UintSet;
     using Percentile for *; 
@@ -466,6 +467,7 @@ contract Valuepool {
 }
 
 contract ValuepoolHelper {
+    using SafeERC20 for IERC20;
     using EnumerableSet for EnumerableSet.AddressSet;
 
     uint public tradingFee;
@@ -475,7 +477,7 @@ contract ValuepoolHelper {
     mapping(address => bool) private isMarketPlace;
     mapping(address => bool) public onePersonOneVote;
     mapping(address => address) public randomGenerators;
-    mapping(address => string) private description;
+    mapping(address => string) public description;
     mapping(uint => address) private taxContracts;
     EnumerableSet.AddressSet private valuepools;
 
@@ -516,12 +518,12 @@ contract ValuepoolHelper {
     event ExecuteNextPurchase(address vava, address user, uint rank, uint tokenId, uint amount);
     event Deposit(address va, address vava, address owner, uint tokenId, uint value, uint balanceOf, uint lockTime, DepositType deposit_type, uint percentile);
     event Withdraw(address va, address owner, uint tokenId, uint value, uint balanceOf, uint percentile);
-    event UpdateMinimumBalance(address va, address owner, uint tokenId, uint amount);
-    event DeleteMinimumBalance(address va, address owner, uint tokenId, uint amount);
-    event Supply(address vava, uint prevSupply, uint supply);
-    event Transfer(address va, address from, address to, uint tokenId);
-    event Approval(address va, address owner, address approved, uint tokenId);
-    event ApprovalForAll(address va, address owner, address operator, bool approved);
+    // event UpdateMinimumBalance(address va, address owner, uint tokenId, uint amount);
+    // event DeleteMinimumBalance(address va, address owner, uint tokenId, uint amount);
+    // event Supply(address vava, uint prevSupply, uint supply);
+    // event Transfer(address va, address from, address to, uint tokenId);
+    // event Approval(address va, address owner, address approved, uint tokenId);
+    // event ApprovalForAll(address va, address owner, address operator, bool approved);
     event SetParams(address vava, string name, string symbol, uint8 decimals, uint maxSupply, uint minTicketPrice, uint minToSwitch);
     event Switch(address vava);
     event Delete(address vava);
@@ -573,7 +575,7 @@ contract ValuepoolHelper {
     }
 
     function deleteVava(address _vava) external {
-        require(msg.sender == IAuth(contractAddress).devaddr_() || IAuth(_vava).devaddr_() == msg.sender, "VaH1");
+        require(msg.sender == IAuth(contractAddress).devaddr_() || IAuth(_vava).devaddr_() == msg.sender);
         valuepools.remove(_vava);
         emit Delete(_vava);
     }
@@ -613,18 +615,13 @@ contract ValuepoolHelper {
         description[vava] = _description;
     }
 
-    function getDescription(address _vava) external view returns(string[] memory desc) {
-        desc = new string[](1);
-        desc[0] = description[_vava];
-    }
+    // function emitApproval(address owner, address _approved, uint _tokenId) external {
+    //     emit Approval(msg.sender, owner, _approved, _tokenId);
+    // }
 
-    function emitApproval(address owner, address _approved, uint _tokenId) external {
-        emit Approval(msg.sender, owner, _approved, _tokenId);
-    }
-
-    function emitApprovalForAll(address owner, address operator, bool approved) external {
-        emit ApprovalForAll(msg.sender, owner, operator, approved);
-    }
+    // function emitApprovalForAll(address owner, address operator, bool approved) external {
+    //     emit ApprovalForAll(msg.sender, owner, operator, approved);
+    // }
 
     function emitWithdraw(address provider, uint tokenId, uint value, uint balanceOf, uint percentile) external {
         uint _profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(provider);
@@ -652,22 +649,22 @@ contract ValuepoolHelper {
         emit SetParams(_vava, _name, _symbol, _decimals, _maxSupply, _minTicketPrice, _minToSwitch);
     }
 
-    function emitUpdateMinimumBalance(address owner, uint tokenId, uint amount) external {
-        emit UpdateMinimumBalance(msg.sender, owner, tokenId, amount);
-    }
+    // function emitUpdateMinimumBalance(address owner, uint tokenId, uint amount) external {
+    //     emit UpdateMinimumBalance(msg.sender, owner, tokenId, amount);
+    // }
 
-    function emitDeleteMinimumBalance(address owner, uint tokenId, uint amount) external {
-        emit DeleteMinimumBalance(msg.sender, owner, tokenId, amount);
-    }
+    // function emitDeleteMinimumBalance(address owner, uint tokenId, uint amount) external {
+    //     emit DeleteMinimumBalance(msg.sender, owner, tokenId, amount);
+    // }
 
-    function emitSupply(address _valuepool, uint prevSupply, uint supply) external {
-        require(IValuePool(_valuepool)._ve() == msg.sender, "VaH6");
-        emit Supply(_valuepool, prevSupply, supply);
-    }
+    // function emitSupply(address _valuepool, uint prevSupply, uint supply) external {
+    //     require(IValuePool(_valuepool)._ve() == msg.sender, "VaH6");
+    //     emit Supply(_valuepool, prevSupply, supply);
+    // }
 
-    function emitTransfer(address from, address to, uint tokenId) external {
-        emit Transfer(msg.sender, from, to, tokenId);
-    }
+    // function emitTransfer(address from, address to, uint tokenId) external {
+    //     emit Transfer(msg.sender, from, to, tokenId);
+    // }
 
     function updateTaxContract(address _taxContract) external {
         uint _profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender);
@@ -768,6 +765,11 @@ contract ValuepoolHelper {
         IVava(_vava).notifyWithdraw(_token, businessGauge, amount - _fees);
         IVava(_vava).notifyWithdraw(_token, address(this), _fees);
         emit WithdrawFromVava(msg.sender, _vava, amount);
+    }
+
+    function withdrawTreasury(address _token) external {
+        require(msg.sender == IAuth(contractAddress).devaddr_());
+        IERC20(_token).safeTransfer(msg.sender, erc20(_token).balanceOf(address(this)));
     }
 
     function updateTradingFee(uint _tradingFee) external {
