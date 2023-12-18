@@ -803,7 +803,6 @@ contract ARPHelper is ERC721Pausable {
         
         output = IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
             __tokenId,
-            '',
             _arp,
             ownerOf(_tokenId),
             ownerOf(__tokenId),
@@ -1125,7 +1124,6 @@ contract ARPNote is ERC721Pausable {
     function _constructTokenURI(uint _tokenId, address _token, string[] memory description, string[] memory optionNames, string[] memory optionValues) internal view returns(string memory) {
         return IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
             _tokenId,
-            "",
             _token,
             ownerOf(_tokenId),
             ownerOf(_tokenId),
@@ -1483,7 +1481,6 @@ contract ARPMinter {
         
     //     output = IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
     //         __tokenId,
-    //         'ARP',
     //         _arp,
     //         ve(helper).ownerOf(_tokenId),
     //         ve(helper).ownerOf(__tokenId),

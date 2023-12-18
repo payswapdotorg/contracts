@@ -610,7 +610,6 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     function _constructTokenURI(uint _tokenId, string[] memory optionNames, string[] memory optionValues) internal view returns(string memory) {
         return IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
             _tokenId,
-            "",
             token,
             isAuditor[_tokenId],
             collateral[_tokenId].owner,

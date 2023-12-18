@@ -979,7 +979,6 @@ contract GameHelper is ERC721Pausable {
         (,,address _game,,,,,,,,,) = IGameNFT(IContract(contractAddress).gameMinter()).gameInfo_(_tokenId);
         return IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
             _tokenId,
-            '',
             _game,
             _getToken(_collectionId),
             ownerOf(_tokenId),

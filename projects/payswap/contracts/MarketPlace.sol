@@ -4830,7 +4830,6 @@ contract MarketPlaceHelper3 is ERC721Pausable {
     function _constructTokenURI(uint _tokenId, string[] memory description, string[] memory optionNames, string[] memory optionValues) internal view returns(string memory) {
         return IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
             _tokenId,
-            "",
             address(this),
             ownerOf(_tokenId),
             ownerOf(_tokenId),

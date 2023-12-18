@@ -5563,7 +5563,7 @@ interface IMarketPlace {
     function scheduledMedia(uint) external view returns(uint,string memory);
     function currentMediaIdx() external view returns(uint);
     function pendingTask(uint) external view returns(bool);
-    function constructTokenURI(uint,string memory,address,address,address,address,string[] memory,string[] memory,string[] memory,string[] memory) external view returns(string memory);
+    function constructTokenURI(uint,address,address,address,address,string[] memory,string[] memory,string[] memory,string[] memory) external view returns(string memory);
     function getTask(uint) external view returns(string memory);
     function uri(uint) external view returns(string memory);
     function defaultUri(address,string memory) external view returns(string memory);

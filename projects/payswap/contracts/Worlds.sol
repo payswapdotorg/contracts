@@ -1206,7 +1206,6 @@ contract WorldHelper2 is ERC721Pausable {
     function _constructTokenURI(address _world, uint _tokenId, string[] memory _media, string[] memory _description, string[] memory optionNames, string[] memory optionValues) internal view returns(string memory) {
         return IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
             _tokenId,
-            "",
             getToken(_world),
             getToken(_world),
             ownerOf(_tokenId),
@@ -1390,7 +1389,6 @@ contract WorldHelper3 is ERC721Pausable {
     function _constructTokenURI(uint _tokenId, address _token, string[] memory description, string[] memory optionNames, string[] memory optionValues) internal view returns(string memory) {
         return IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
             _tokenId,
-            "",
             _token,
             ownerOf(_tokenId),
             ownerOf(_tokenId),

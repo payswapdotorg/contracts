@@ -993,7 +993,6 @@ contract NFTicketHelper2 is ERC721Pausable {
             }
             output = IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
                 _tokenId,
-                '',
                 _ask.tokenInfo.tFIAT,
                 _ask.tokenInfo.ve,
                 ownerOf(_tokenId),
@@ -4726,7 +4725,6 @@ contract NFTMarketPlaceHelper3 is ERC721Pausable {
     function _constructTokenURI(uint _tokenId, string[] memory description, string[] memory optionNames, string[] memory optionValues) internal view returns(string memory) {
         return IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
             _tokenId,
-            "",
             address(this),
             ownerOf(_tokenId),
             ownerOf(_tokenId),
@@ -5080,7 +5078,6 @@ contract Minter is ERC721Pausable {
             (string[] memory optionNames, string[] memory optionValues) = _getOptions(_tokenId);
             output = IMarketPlace(_nftSvg()).constructTokenURI(
                 _tokenId,
-                "",
                 devaddr_,
                 ownerOf(_tokenId),
                 ownerOf(_tokenId),

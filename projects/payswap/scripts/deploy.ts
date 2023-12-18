@@ -7987,7 +7987,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[253]).updateCollection(
   //   "DataLotteries",
-  //   "Fnd lotteries only people who shared data with the lottery creator can play. Find lotteries trying to collect data for medical research, pandemic monitoring, market research, data brokers(collect corpora of data to resell to companies), etc. Partners include auditors that collect/create user data. Some lotteries can have users annotating data into JSON files on IPFS, then creating SSI data that point to the files, to help optimize AGIs.",
+  //   "Find lotteries only people who shared data with the lottery creator can play. Find lotteries trying to collect data for medical research, pandemic monitoring, market research, data brokers(collect corpora of data to resell to companies), etc. Partners include auditors that collect/create user data. Some lotteries can have users annotating data into JSON files on IPFS, then creating SSI data that point to the files, to help optimize AGIs.",
   //   "https://i.ibb.co/5cFPRqV/381.jpg",
   //   "https://i.ibb.co/5cFPRqV/381.jpg",
   //   "https://i.ibb.co/3CXYKZM/407-2.jpg",
@@ -11869,6 +11869,60 @@ async function main() {
   //   ""
   // );
   // console.log("469marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 470
+  // await marketPlaceCollection.connect(wallets[467]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[467]).updateCollection(
+  //   "SelfCheckout",
+  //   "Users set up a trustbounty large enough to cover their purchases from our list of partner stores. To make purchases, they present their bounties to the vigil at the front of each store, then as soon as they enter the store they use one hand to record their other hand that picks u[ the products from the shelves. They upload their purchase video to the channel's paychat with their wallet address as a title for the video. They have 1 hour after each run at a partner store to purchase every single item they've picked from the shelves. No matter how big it is, the partner store only needs to employ 2 people: the vigil and a person to match the uploaded videos on the channel's Paychat with the purchases on the channel. In case of theft, users' trustbounties are claimed",
+  //   "https://i.ibb.co/f8M4pZy/61.jpg",
+  //   "https://i.ibb.co/f8M4pZy/61.jpg",
+  //   "https://i.ibb.co/935S3bf/278.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("470marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 471
+  // await marketPlaceCollection.connect(wallets[468]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[468]).updateCollection(
+  //   "BrainCredit",
+  //   "BrainCredit is a platform where you can pass quizzes to get loans, the fundamental idea being that smart people will always end up finding ways to earn money. Find auditors that evaluate your ability to pay back a loan by figuring out how smart you are or how knowledgeable you are on certain subjects. You can also find on BrainCredit, people willing to lend you money based on your brain credit.",
+  //   "https://i.ibb.co/jyGLD7k/133.jpg",
+  //   "https://i.ibb.co/jyGLD7k/133.jpg",
+  //   "https://i.ibb.co/HCqK6C9/224.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("471marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 472
+  // await marketPlaceCollection.connect(wallets[469]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[469]).updateCollection(
+  //   "NFTLottery",
+  //   "NFTLottery is a platform where you can purchase NFTs through lotteries. You can tokenize the ownership title of your property/vehicle/business/etc and sell it through an NFT Lottery.",
+  //   "https://i.ibb.co/5LqVjTh/203.jpg",
+  //   "https://i.ibb.co/5LqVjTh/203.jpg",
+  //   "https://i.ibb.co/s6cd4RT/31-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("472marketPlaceCollection.updateCollection===========> Done!")
 
   }
   

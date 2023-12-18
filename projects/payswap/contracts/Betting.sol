@@ -1276,7 +1276,6 @@ contract BettingMinter is ERC721Pausable {
     function _constructTokenURI(uint _tokenId, string[] memory _media, string[] memory _description, string[] memory optionNames, string[] memory optionValues) public view returns(string memory) {
         return IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
             _tokenId,
-            "",
             tokenIdToBetting[_tokenId],
             IBetting(tokenIdToBetting[_tokenId]).getToken(_tokenId),
             ownerOf(_tokenId),
