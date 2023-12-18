@@ -33,6 +33,7 @@ contract TrustBounties {
     struct Claim {
         uint bountyId;
         address hunter;
+        address recipient;
         uint endTime;
         uint amountToClaim;
         bool friendly;
@@ -103,13 +104,13 @@ contract TrustBounties {
         string memory _bountySource
     ) external returns(uint) { 
         address trustBountyHelper = _trustBountyHelper();
-        require(ITrustBounty(trustBountyHelper).isVe(_ve) && _claimableBy != _user,"1");
-        require(_endTime >= ITrustBounty(trustBountyHelper).minLockPeriod(),"2");
+        require(ITrustBounty(trustBountyHelper).isVe(_ve) && _claimableBy != _user,"T1");
+        require(_endTime >= ITrustBounty(trustBountyHelper).minLockPeriod(),"T2");
         if (_token == address(0x0)) {
             _token = trustBountyHelper;
         }
         require(_token == trustBountyHelper || 
-            ITrustBounty(trustBountyHelper).isWhiteListed(_token),"3");
+            ITrustBounty(trustBountyHelper).isWhiteListed(_token),"T3");
         if (_parentBountyId > 0) {
             require(bountyInfo[_parentBountyId].owner != address(0x0));
             if (!_recurring) require(!bountyInfo[_parentBountyId].recurring);
@@ -210,8 +211,7 @@ contract TrustBounties {
         require(
             bountyInfo[_bountyId].recurring && 
             bountyInfo[_bountyId].owner == _owner && 
-            bountyInfo[_bountyId].endTime > block.timestamp + ITrustBounty(_trustBountyHelper()).balanceBuffer(), 
-            "T6"
+            bountyInfo[_bountyId].endTime > block.timestamp + ITrustBounty(_trustBountyHelper()).balanceBuffer()
         );
         uint _amount = IMarketPlace(_source).withdrawRecurringBounty(_owner, bountyInfo[_bountyId].token);
         balances[_bountyId][address(this)].amount += _amount;
@@ -298,6 +298,7 @@ contract TrustBounties {
 
     function createClaim(
         address _attacker,
+        address _recipient,
         uint _bountyId,
         uint _amountToClaim,
         bool _lockBounty,
@@ -319,6 +320,7 @@ contract TrustBounties {
         claims[_bountyId].push(Claim({
             bountyId: _bountyId,
             hunter: _attacker,
+            recipient: _recipient,
             endTime: 0,
             amountToClaim: _amountToClaim,
             winner: address(0x0),
@@ -376,6 +378,7 @@ contract TrustBounties {
 
     function createFriendlyClaim(
         address _attacker,
+        address _recipient,
         uint _bountyId,
         uint _amountToClaim
     ) external {
@@ -387,6 +390,7 @@ contract TrustBounties {
         claims[_bountyId].push(Claim({
             bountyId: _bountyId,
             hunter: _attacker,
+            recipient: _recipient,
             endTime: 0,
             amountToClaim: _amountToClaim,
             winner: address(0x0),
@@ -431,9 +435,9 @@ contract TrustBounties {
         address trustBountyHelper = _trustBountyHelper();
         if (_amountToClaim > 0) { // appealing
             require(claims[_bountyId][_claimId].winner != msg.sender);
-            address _attacker = claims[_bountyId][_claimId].winner == bountyInfo[_bountyId].owner
-            ?  msg.sender : claims[_bountyId][_claimId].hunter;
-            createClaim(_attacker, _bountyId, _amountToClaim, lockedBounties[_bountyId], _title, _content, _tags);
+            address _recipient = claims[_bountyId][_claimId].winner == bountyInfo[_bountyId].owner
+            ?  claims[_bountyId][_claimId].recipient : address(this);
+            createClaim(msg.sender, _recipient, _bountyId, _amountToClaim, lockedBounties[_bountyId], _title, _content, _tags);
         } else if (claims[_bountyId][_claimId].winner == claims[_bountyId][_claimId].hunter) {
             require(claims[_bountyId][_claimId].endTime < block.timestamp);
             if (balances[_bountyId][address(this)].amount > claims[_bountyId][_claimId].amountToClaim) {
@@ -447,13 +451,13 @@ contract TrustBounties {
             ITrustBounty(trustBountyHelper).notifyFees(bountyInfo[_bountyId].token, _fees);
             ITrustBounty(trustBountyHelper).safeTransfer(
                 _bountyId, 
-                claims[_bountyId][_claimId].hunter, 
+                claims[_bountyId][_claimId].recipient, 
                 _amountToClaim - _fees
             );
         } else if (claims[_bountyId][_claimId].winner == bountyInfo[_bountyId].owner) {
             lockedBounties[_bountyId] = false;
         } else {
-            require(false, "T3");
+            require(false);
         }
         claims[_bountyId][_claimId].status = StakeStatusEnum.AtPeace;
         ITrustBounty(trustBountyHelper).emitUpdateClaim(

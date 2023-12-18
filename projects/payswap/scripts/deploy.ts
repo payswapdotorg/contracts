@@ -45,7 +45,7 @@ async function main() {
       const TrustBountiesHelper = await ethers.getContractFactory("TrustBountiesHelper");
       const BusinessVoter = await ethers.getContractFactory("BusinessVoter");
       const ReferralVoter = await ethers.getContractFactory("ReferralVoter");
-      const Profile = await ethers.getContractFactory("Profile");
+      const ProfileHelper = await ethers.getContractFactory("ProfileHelper");
       const ve_distContract = await ethers.getContractFactory("contracts/ve_dist.sol:ve_dist");
       const StakeMarketBribe =  await ethers.getContractFactory("Bribe")
       const CustomMinter = await ethers.getContractFactory('contracts/CustomMinter.sol:CustomMinter')
@@ -103,7 +103,7 @@ async function main() {
         },
       });
   
-      const ProfileHelper = await ethers.getContractFactory("ProfileHelper",{
+      const Profile = await ethers.getContractFactory("Profile",{
         libraries: {
           Percentile: percentiles.address,
         },
@@ -225,7 +225,7 @@ async function main() {
     });
   const pair = "0x1ddEf42AE2339612A1fD81dcf798AdcC17664844"
   const lpAddress = "0x7eB9763f5eF3bFb84CE6f31b324e7619bFA1ca37"
-  const veAddress = "0xfd045C059AC6423F9B21A456a432Ead97a93F706"
+  const veAddress = "0xb9858E52175Dc194686E29875570703B5C986Fe3" // "0xfd045C059AC6423F9B21A456a432Ead97a93F706"
   const ve_distAddress = "0x47d59AF489bCd9A959AD80B045766305c793293D"
   const tFiatAddress = "0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe"
   const feeToAddress = "0x0Fe2B9DAE99b685ce57c7160eF01022e49843Ca6"
@@ -255,8 +255,8 @@ async function main() {
   const sponsorFactoryAddress = "0x71324803103f17D00e2E2Fe6449f27d301693c0A"
   const sponsorNoteAddress = "0xDF1Fd12D700110CF763A540e059349ce4a453C5A"
   const ssiAddress = "0x1de9D006f209E9A7556270cae74D1F0D6864168a" //"0xFEc4d4A1aad9cE28dA66D86609c3B47aaeF5e527"
-  const profileAddress = "0x810EBEa7d4330B6A6EFa2f73FF7E7773c57F98CD" //"0x8D531506a9Eb2E5931235a09e5192201B38b12b6"
-  const profileHelperAddress = "0xf2Ca8333888cf3C673E81225228a000F9b7b4338" //"0xa71B00c519d6573E0cFC37638FE712aC6dD65a2c"
+  const profileAddress = "0x5E008DCE8095dE09BFF103Df85b566449c1dF7e2" // "0x810EBEa7d4330B6A6EFa2f73FF7E7773c57F98CD" //"0x8D531506a9Eb2E5931235a09e5192201B38b12b6"
+  const profileHelperAddress = "0x0cf9f62B1e215ba580C8445Ca9C9CBf2ad32b6DB" // "0xf2Ca8333888cf3C673E81225228a000F9b7b4338" //"0xa71B00c519d6573E0cFC37638FE712aC6dD65a2c"
   const stakeMarketAddress = "0xbf877500681AF64f10F6C3E92fA9946f800804ea"
   const stakeMarketNoteAddress = "0x2596c9eA9473AE8B1F8EB08019CD8e9844Cea34a"
   const stakeMarketHelperAddress = "0xf178d8A6661aBA43bEaFe98080e47CD213c2FC34"
@@ -306,9 +306,9 @@ async function main() {
   const gameMinterAddress = "0x45160eA1079e7A07160C2EA122A760cee0Ffcc71"
   const gameHelperAddress = "0x6Ff847c7EbDf92bA9E6D1DBD9c172d912f61C4D4"
   const gameHelper2Address = "0xD3A538C35fEA83F7C696Fc5b80783dA5B3c4812A"
-  const lotteryAddress = "0x7e8D44C232468E3516627A773443C3709bA032A0"
-  const lotteryHelperAddress = "0x8e740851a2DeE2eF78aEFBbD4836eA479A81F56A"
-  const lotteryRandomNumberGeneratorAddress = "0xc611188afcD9923fBbaCDea3E110BD73dBE5D70a"
+  const lotteryAddress = "0xa0a200D83C67fBa6386a8c901eB43CD6013104af"
+  const lotteryHelperAddress = "0x49BA1bE93992a0fD9FE475B9bdF6b6D97C685e1C"
+  const lotteryRandomNumberGeneratorAddress = "0x64e7a26A476A4D832F4ED5393a43a4e0c2D852Ce"
   const worldFactoryAddress = "0x0Bb7F9c3dDb587A8843D92f2De22B936c0537545"
   const worldNoteAddress = "0xfC28F508032e3D18e3130791F0b376Bd99aB1374"
   const worldHelperAddress = "0x0691B361313da730d1528f3100fD4ab7d95370B3"
@@ -1039,13 +1039,13 @@ async function main() {
   // await lotteryRandomNumberGenerator.deployed()
   // console.log("lotteryRandomNumberGenerator============>", lotteryRandomNumberGenerator.address)
 
+  // const lottery = await Lottery.deploy(contractAddresses.address, lotteryRandomNumberGenerator.address);
+  // await lottery.deployed()
+  // console.log("lottery============>", lottery.address)
+
   // const lotteryHelper = await LotteryHelper.deploy();
   // await lotteryHelper.deployed()
   // console.log("lotteryHelper============>", lotteryHelper.address)
-
-  // const lottery = await Lottery.deploy(lotteryRandomNumberGenerator.address);
-  // await lottery.deployed()
-  // console.log("lottery============>", lottery.address)
 
   // const billFactory = await BILLFactory.deploy(contractAddresses.address);
   // await billFactory.deployed()
@@ -1159,7 +1159,7 @@ async function main() {
   // await profile.deployed()
   // console.log("profile============>", profile.address)
 
-  // const profileHelper = await ProfileHelper.deploy()
+  // const profileHelper = await ProfileHelper.deploy(contractAddresses.address)
   // await profileHelper.deployed()
   // console.log("profileHelper============>", profileHelper.address)
 
@@ -1401,9 +1401,6 @@ async function main() {
   // await willNote.setContractAddress(contractAddresses.address)
   // console.log("willNote.setContractAddress===========> Done!")
 
-  // await lottery.setContractAddress(contractAddresses.address)
-  // console.log("lottery.setContractAddress===========> Done!")
-
   // await lotteryHelper.setContractAddress(contractAddresses.address)
   // console.log("lotteryHelper.setContractAddress===========> Done!")
 
@@ -1497,9 +1494,6 @@ async function main() {
   // await profile.setContractAddress(contractAddresses.address)
   // console.log("profile.setContractAddress===========> Done!")
 
-  // await profileHelper.setContractAddress(contractAddresses.address)
-  // console.log("profileHelper.setContractAddress===========> Done!")
-
   // await nftSvg.setContractAddress(contractAddresses.address)
   // console.log("nftSvg.setContractAddress===========> Done!")
 
@@ -1590,6 +1584,12 @@ async function main() {
 
   // await contractAddresses.setLotteryHelper(lotteryHelper.address)
   // console.log("contractAddresses.setLotteryHelper===========> Done!")
+
+  // await lotteryRandomNumberGenerator.setLotteryAddress(lottery.address)
+  // console.log("lotteryRandomNumberGenerator.setLotteryAddress=================>Done!")
+  
+  // await lotteryRandomNumberGenerator.setNextRandomResult(1999999)
+  // console.log("lotteryRandomNumberGenerator.setNextRandomResult=================>Done!")
 
   // await contractAddresses.setARPFactory(arpFactory.address)
   // console.log("contractAddresses.setARPFactory===========> Done!")
@@ -1709,6 +1709,18 @@ async function main() {
 
   // await trustBountiesHelper.updateCanAttach(futureCollateral.address, true)
   // console.log("trustBountiesHelper.updateCanAttach===========> Done!")
+
+  // await trustBountiesHelper.updateAuthorizedSourceFactories(
+  //   ["0xb9858E52175Dc194686E29875570703B5C986Fe3"], 
+  //   true
+  // )
+  // console.log("trustBountiesHelper.updateAuthorizedSourceFactories===========> Done!")
+  
+  // console.log("trustBountiesHelper.isAuthorizedSourceFactories===========>", await trustBountiesHelper.isAuthorizedSourceFactories("0xb9858E52175Dc194686E29875570703B5C986Fe3"))
+  // let va = await Va.attach("0xb9858E52175Dc194686E29875570703B5C986Fe3")
+  // console.log("va.token===========>", await va.token(), await va.ownerOf(1), await va.getWithdrawable(1))
+  // console.log("trustBounties.bountyInfo==================>", await trustBounties.bountyInfo(1), await trustBounties.balances(1, "0xb9858E52175Dc194686E29875570703B5C986Fe3"), await tFiat.balanceOf(trustBounties.address))
+  
 
   // await businessMinter.updateVes([ve.address], [ve_dist.address], true)
   // console.log("businessMinter.updateVes===========> Done!")
@@ -1933,7 +1945,7 @@ async function main() {
   //   "uber"
   // )
   // // // 0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA
-  // // console.log("owner========================>", await nfticketHelper2.ownerOf(1))
+  // console.log("owner========================>", await nfticketHelper2.ownerOf(2))
   // const tk = ve.attach("0xAB45391c5Ee3270880565E2e9b6BA1d01A4A2cCF")
   // await tk.
   // connect(deployer2). // transferFrom(deployer2.address, deployer.address, 7)
@@ -2372,7 +2384,43 @@ async function main() {
     // await profile.shareEmail(deployer12.address)
     // await profile.shareEmail(deployer13.address)
     // await profile.shareEmail(deployer14.address)
-    // console.log("profile.shareEmail==============>", await profile.sharedEmail(deployer.address))
+    // console.log("profile.sharedEmail==============>", await profile.sharedEmail(deployer.address))
+
+    // await profile.updateHelper(arpNote.address, true)
+    // console.log("profile.updateHelper==============>Done")
+    
+    // const _ve = ve.attach(veAddress)
+    // console.log("trustBounties.ves=====================>", await trustBountiesHelper.ves(veAddress), await _ve.ownerOf(1))
+
+    // console.log("profile.getPercentile=====================>", await profile.getPercentile(
+    //   veAddress,
+    //   1
+    // ))
+    // console.log("before profile.total====================>", await profile.total(veAddress), await profile.sum_of_diff_squared(veAddress))
+    // console.log("before profile.goldReported====================>", await profile.goldReported("0xD1909Be8B3a80b23b5E6BDcb6c2c7d67b75F0a50", 1))
+    // console.log("before profile.silverReported====================>", await profile.silverReported("0xD1909Be8B3a80b23b5E6BDcb6c2c7d67b75F0a50", 1))
+    // console.log("before profile.brownReported====================>", await profile.brownReported("0xD1909Be8B3a80b23b5E6BDcb6c2c7d67b75F0a50", 1))
+    // console.log("before profile.blackReported====================>", await profile.blackReported("0xD1909Be8B3a80b23b5E6BDcb6c2c7d67b75F0a50", 1))
+    
+    // await profile.updateLateDays(
+    //   arpNote.address,
+    //   "0xD1909Be8B3a80b23b5E6BDcb6c2c7d67b75F0a50",
+    //   deployer.address,
+    //   veAddress,
+    //   1,
+    //   2,
+    //   1,
+    //   false
+    // )
+    // console.log("arpNote.getDueReceivable============>", await arpNote.getDueReceivable("0xD1909Be8B3a80b23b5E6BDcb6c2c7d67b75F0a50", 2, 0))
+    // console.log("profile.updateLateDays====================>Done")
+    // console.log("after profile.profileInfo====================>", await profile.profileInfo(1))
+    // console.log("after profile.total====================>", await profile.total(veAddress), await profile.sum_of_diff_squared(veAddress))
+    // console.log("after profile.goldReported====================>", await profile.goldReported("0xD1909Be8B3a80b23b5E6BDcb6c2c7d67b75F0a50", 1))
+    // console.log("after profile.silverReported====================>", await profile.silverReported("0xD1909Be8B3a80b23b5E6BDcb6c2c7d67b75F0a50", 1))
+    // console.log("after profile.brownReported====================>", await profile.brownReported("0xD1909Be8B3a80b23b5E6BDcb6c2c7d67b75F0a50", 1))
+    // console.log("after profile.blackReported====================>", await profile.blackReported("0xD1909Be8B3a80b23b5E6BDcb6c2c7d67b75F0a50", 1))
+
     // await ssi.generateIdentityProof(deployer.address,1,1,86700 * 7,"ssid","tepa")
     // await ssi.generateIdentityProof(deployer.address,1,1,86700 * 7 * 4,"testify_age","gt_18")
     // console.log("ssi.generateIdentityProof==============>", await ssi.metadata(1), await ssi.metadata(2))
@@ -2515,11 +2563,6 @@ async function main() {
     // await lottery.claimTickets(1,[1],[5])
     // console.log("lottery.claimTickets=================>Done!")
 
-    // await lotteryRandomNumberGenerator.setLotteryAddress(lottery.address)
-    // console.log("lotteryRandomNumberGenerator.setLotteryAddress=================>Done!")
-    // await lotteryRandomNumberGenerator.setNextRandomResult(199999999)
-    // console.log("lotteryRandomNumberGenerator.setNextRandomResult=================>Done!")
-
     // paywallARP
   // let paywallAddress = (await paywallARPHelper.getAllARPs(0))[0]
   // let paywallARP = Paywall.attach(paywallAddress)
@@ -2527,7 +2570,7 @@ async function main() {
   // //   // await paywallARP.partner(1,"uber","uber",2592000)
   // //   // console.log("partner==========>", await paywallARP.partners(1,"uber"))
 
-  // // console.log("getTicketPaywallOptions==================>", await nfticketHelper2.ownerOf(4), await nfticketHelper2.getTicketPaywallOptions(4))
+  // console.log("getTicketPaywallOptions==================>", await nfticketHelper2.ownerOf(1), await nfticketHelper2.ownerOf(2))
   // // // console.log("getTicketPaywallOptions==================>", await nfticketHelper2.ownerOf(6), await nfticketHelper2.getTicketPaywallOptions(6))
 
   // // // await paywallARP.updateProtocol(4, 0, [deployer.address])
@@ -2535,7 +2578,7 @@ async function main() {
   // // console.log("userTokenId==================>", await nfticket.userTokenId(5))
   // // console.log("getTicketPaywallOptions==================>", await nfticketHelper2.getTicketPaywallOptions(5))
   // // console.log("ongoing==================>", await nfticketHelper2.ownerOf(7), deployer.address)
-  // // console.log("getTicketInfo==================>", await nfticket.getTicketInfo(4))
+  // console.log("getTicketInfo==================>", await nfticket.getTicketInfo(2))
   // console.log("partnershipEnds==================>", await paywallARP.partnershipEnds(290, "ali"))
   // console.log("partnershipEnds==================>", await paywallARP.partnershipEnds(290, "baba"))
   // console.log("collectionIdToPaywallARP==================>", await paywallARPHelper.collectionIdToPaywallARP(290))
@@ -2849,7 +2892,7 @@ async function main() {
     // )
     // await arp.deployed()
 
-    // let arpAddress = (await arpHelper.getAllARPs(0))[0]
+    // let arpAddress = "0xD1909Be8B3a80b23b5E6BDcb6c2c7d67b75F0a50" // (await arpHelper.getAllARPs(0))[0]
     // let arp = ARP.attach(arpAddress)
     // console.log("arp===>", arpAddress, arp.address)
 
@@ -2864,7 +2907,7 @@ async function main() {
   //   "description"
   // )
   // console.log("arpHelper.isLender===================>", await arpHelper.isLender(arpAddress, "0x017aba5f9fe7673a675c9541df0e792d8118fb41", 0, 0))
-  // console.log("protocolInfo============>", await arp.protocolInfo(1))
+  // console.log("protocolInfo============>", await arp.protocolInfo(2))
   // await nftSvg.updateDescription(arpNote.address, "This note gives you access to revenues of the arp on the specified protocol")
   // await arp.updateAutoCharge(true, 1)
   // console.log("arpHelper.isGauge============>", await arpHelper.isGauge(arp.address), await arp.isAutoChargeable(1))
@@ -2982,17 +3025,78 @@ async function main() {
     // )
     // console.log("vavaFactory.createValuePool===============>Done")
   //   console.log("vavaHelper.getAllVavas===============>",await vavaHelper.getAllVavas(0))
-  // let vavaAddress =  (await vavaHelper.getAllVavas(0))[0]
+  // let vavaAddress = (await vavaHelper.getAllVavas(0))[0]
 
-  //   // // const vava =  await Vava.deploy(
-  //   // //   tFiat.address,
-  //   // //   deployer.address,
-  //   // //   vavaHelper.address,
-  //   // //   contractAddresses.address
-  //   // // )
-  //   // // await vava.deployed()
+    // const vava =  await Vava.deploy(
+    //   tFiat.address,
+    //   deployer.address,
+    //   vavaHelper.address,
+    //   contractAddresses.address
+    // )
+    // await vava.deployed()
+
   // let vava = Vava.attach(vavaAddress)
-  // console.log("vava.deployed===============>Done", vavaAddress)
+  // console.log("vava.deployed===============>Done", vava.address)
+  
+  // // fungible token loan
+  // // await tFiat.approve(vava.address, ethers.BigNumber.from("1000000000000000000"))
+  // // await tFiat.transfer(vava.address, ethers.BigNumber.from("1000000000000000000"))
+  // console.log("tFiat.balanceOf===============>", await tFiat.balanceOf(vava.address))
+
+  // // await vava.notifyLoan(
+  // //   tFiat.address,
+  // //   "0x1a3fdbad895f5c084866cec9c7225e251dcadc49",
+  // //   ethers.BigNumber.from("100000000000000000"),
+  // // )
+  // console.log("before======================>", await vava.lenderBalance(
+  //   // "0x517a113a03b7842c1b731b482e89fb4920363ad5",
+  //   tFiat.address,
+  //   "0x1a3fdbad895f5c084866cec9c7225e251dcadc49"
+  // ))
+  // console.log("tFiat.balanceOf===============>", await tFiat.balanceOf(vava.address))
+
+  // await tFiat.approve(vava.address, ethers.BigNumber.from("100000000000000000"))
+  // await vava.notifyReimbursement(
+  //   tFiat.address,
+  //   "0x1a3fdbad895f5c084866cec9c7225e251dcadc49",
+  //   ethers.BigNumber.from("100000000000000000"),
+  // )
+  // console.log("after======================>", await vava.lenderBalance(
+  //   // "0x517a113a03b7842c1b731b482e89fb4920363ad5",
+  //   tFiat.address,
+  //   "0x1a3fdbad895f5c084866cec9c7225e251dcadc49"
+  // ))
+  // console.log("tFiat.balanceOf===============>", await tFiat.balanceOf(vava.address))
+
+  // nft token loan
+  // const tk = ve.attach("0xEE4a5abf0fC0978b2DCf7c2bc8d57FDc43DadB55")
+  // await tk.setApprovalForAll(vava.address, true)
+  // await tk.transferFrom(deployer.address, vava.address, 1)
+  // console.log("tk.ownerOf===============>", await tk.ownerOf(1))
+
+  // await vava.notifyLoan(
+  //   tk.address,
+  //   "0x1a3fdbad895f5c084866cec9c7225e251dcadc49",
+  //   1,
+  // )
+  // console.log("before======================>", await vava.lenderBalance(
+  //   tk.address,
+  //   "0x1a3fdbad895f5c084866cec9c7225e251dcadc49"
+  // ))
+  // console.log("tk.ownerOf===============>", await tk.ownerOf(1))
+
+  // await tk.setApprovalForAll(vava.address, true)
+  // await vava.notifyReimbursement(
+  //   tk.address,
+  //   "0x1a3fdbad895f5c084866cec9c7225e251dcadc49",
+  //   1,
+  // )
+  // console.log("after======================>", await vava.lenderBalance(
+  //   tk.address,
+  //   "0x1a3fdbad895f5c084866cec9c7225e251dcadc49"
+  // ))
+  // console.log("tk.ownerOf===============>", await tk.ownerOf(1))
+
   // console.log("nfticketHelper2===============>", nfticketHelper2.address, vava.address, await nfticketHelper2.balanceOf(vava.address), await nfticketHelper2.ownerOf(3))
   //   console.log("vava===>", vava.address, await vava.token(), await vavaHelper.getSupplyAvailable(vava.address))
   //   // await veFactory.createVe(tFiat.address, vava.address, false)
@@ -3125,15 +3229,26 @@ async function main() {
     //     [],
     //     [],
     // ))
+    // console.log("lotteryHelper.paymentCredits==================>", await lotteryHelper.paymentCredits(deployer.address, 1))
     // console.log("getPendingReward==================>", await lottery.getPendingReward(1, deployer.address, tFiatAddress, false))
-    // console.log("calculateRewardsForTicketId0===========>", await lotteryHelper.calculateRewardsForTicketId(1, 1, 0, tFiatAddress))
-    // console.log("calculateRewardsForTicketId1===========>", await lotteryHelper.calculateRewardsForTicketId(1, 1, 1, tFiatAddress))
-    // console.log("calculateRewardsForTicketId2===========>", await lotteryHelper.calculateRewardsForTicketId(1, 1, 2, tFiatAddress))
-    // console.log("calculateRewardsForTicketId3===========>", await lotteryHelper.calculateRewardsForTicketId(1, 1, 3, tFiatAddress))
-    // console.log("calculateRewardsForTicketId4===========>", await lotteryHelper.calculateRewardsForTicketId(1, 1, 4, tFiatAddress))
-    // console.log("calculateRewardsForTicketId5===========>", await lotteryHelper.calculateRewardsForTicketId(1, 1, 5, tFiatAddress))
-    // console.log("lottery==================>", await lottery.viewLottery(1))
-    // console.log("lottery.viewTicket==================>", await lottery.viewTicket(1))
+    // console.log("calculateRewardsForTicketId0===========>", await lotteryHelper.calculateRewardsForTicketId(2, 3, 0, tFiatAddress))
+    // console.log("calculateRewardsForTicketId1===========>", await lotteryHelper.calculateRewardsForTicketId(2, 3, 1, tFiatAddress))
+    // console.log("calculateRewardsForTicketId2===========>", await lotteryHelper.calculateRewardsForTicketId(2, 3, 2, tFiatAddress))
+    // console.log("calculateRewardsForTicketId3===========>", await lotteryHelper.calculateRewardsForTicketId(2, 3, 3, tFiatAddress))
+    // console.log("calculateRewardsForTicketId4===========>", await lotteryHelper.calculateRewardsForTicketId(2, 3, 4, tFiatAddress))
+    // console.log("calculateRewardsForTicketId5===========>", await lotteryHelper.calculateRewardsForTicketId(2, 3, 5, tFiatAddress))
+    // console.log("calculateRewardsForTicketId5===========>", await lotteryHelper.calculateRewardsForTicketId(2, 3, 5, lpAddress))
+    // console.log("lottery==================>", await lottery.viewLottery(2))
+    // console.log("lottery.viewTicket==================>", await lottery.viewTicket(3))
+    // console.log("lottery.getAllTokens==================>", await lottery.getAllTokens(2, 0))
+    // console.log("lottery.viewRewardsForTicketId==================>", await lotteryHelper.viewRewardsForTicketId(2, 3, 0, tFiatAddress))
+    // console.log("lottery.viewRewardsForTicketId==================>", await lotteryHelper.viewRewardsForTicketId(2, 3, 1, tFiatAddress))
+    // console.log("lottery.viewRewardsForTicketId==================>", await lotteryHelper.viewRewardsForTicketId(2, 3, 2, tFiatAddress))
+    // console.log("lottery.viewRewardsForTicketId==================>", await lotteryHelper.viewRewardsForTicketId(2, 3, 3, tFiatAddress))
+    // console.log("lottery.viewRewardsForTicketId==================>", await lotteryHelper.viewRewardsForTicketId(2, 3, 4, tFiatAddress))
+    // console.log("lottery.viewRewardsForTicketId==================>", await lotteryHelper.viewRewardsForTicketId(2, 3, 5, tFiatAddress))
+    // console.log("1lottery.getPendingReward==============>", await lottery.getPendingReward(1, deployer.address, tFiat.address, false))
+    // console.log("2lottery.getPendingReward==============>", await lottery.getPendingReward(2, deployer.address, tFiat.address, false))
     // console.log("profileHelper._constructTokenURI(1)==================>", await profileHelper._constructTokenURI(
     //   "0x0000000000000000000000000000000000000000",
     //   1,
@@ -4326,7 +4441,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[54]).updateCollection(
   //   "BuildDeliver",
-  //   "Introducing BuildDeliver: Your Last-Mile Delivery Solution for the Construction Industry! Are you in the construction business and tired of the hassles of last-mile deliveries? Do you need a reliable, on-demand solution to transport people, materials, and equipment from point A to point B? Look no further than BuildDeliver, the ultimate platform tailored for the construction industry's unique needs.",
+  //   "Introducing BuildDeliver: Your last-mile delivery solution for the construction industry! Are you in the construction business and tired of the hassles of last-mile deliveries? Do you need a reliable, on-demand solution to transport people, materials, and equipment from point A to point B? Look no further than BuildDeliver, the ultimate platform tailored for the construction industry's unique needs.",
   //   "https://i.ibb.co/sbz5spT/97.jpg",
   //   "https://i.ibb.co/sbz5spT/97.jpg",
   //   "https://i.ibb.co/G3Q4jgY/248.jpg",
@@ -4433,8 +4548,8 @@ async function main() {
   // await marketPlaceCollection.connect(wallets[60]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[60]).updateCollection(
-  //   "LegalPitch",
-  //   "Introducing LegalPitch: Your Gateway to Justice and Investment Opportunities! Are you facing a legal challenge that could potentially earn you money, but lack the necessary funds to pursue it? Welcome to LegalPitch, the groundbreaking platform that empowers individuals with valid legal cases to pitch their claims, raise the necessary funds, and share the journey to justice with savvy investors.",
+  //   "LitiFi",
+  //   "Introducing LitiFi (Litigation Finance): Your Gateway to Justice and Investment Opportunities! Are you facing a legal challenge that could potentially earn you money, but lack the necessary funds to pursue it? Welcome to LitiFi, the groundbreaking platform that empowers individuals with valid legal cases to pitch their claims, raise the necessary funds, and share the journey to justice with savvy investors.",
   //   "https://i.ibb.co/TBS5qfZ/109.jpg",
   //   "https://i.ibb.co/TBS5qfZ/109.jpg",
   //   "https://i.ibb.co/xMtBGQW/242.jpg",
@@ -11700,6 +11815,60 @@ async function main() {
   //   ""
   // );
   // console.log("466marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 467
+  // await marketPlaceCollection.connect(wallets[464]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[464]).updateCollection(
+  //   "MMarket",
+  //   "MMarket is a platform where you can find and purchase materials for your construction project, parts for your vehicle, parts for your electronic gadgets, etc. With this platform, no need to physically tour materials markets, you can discover, purchase and have the material/part you need delivered straight to your doorstep.",
+  //   "https://i.ibb.co/t4KS593/44.jpg",
+  //   "https://i.ibb.co/t4KS593/44.jpg",
+  //   "https://i.ibb.co/4tBKnp7/292.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("467marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 468
+  // await marketPlaceCollection.connect(wallets[465]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[465]).updateCollection(
+  //   "PollMarket",
+  //   "PollMarket is a platform where you can find and participate in various polls. You can also create your own poll and incentivize users to participate by adding a cash reward they can win through a lottery system for instance. You can also have a demography requirement for participants in the poll and enforce that by having them mint an NFTicket of your poll product (which will require them to have an identity token that passes your identity requirement criteria) and submitting their NFTicket's IDs in their responses to the poll.",
+  //   "https://i.ibb.co/2Kng73j/135.jpg",
+  //   "https://i.ibb.co/2Kng73j/135.jpg",
+  //   "https://i.ibb.co/5G434QR/227.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("468marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 469
+  // await marketPlaceCollection.connect(wallets[466]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[466]).updateCollection(
+  //   "InfiniteBanking",
+  //   "InfiniteBanking is a platform where you can take a loan on your valuepool NFT. Suppose you want to buy a car, instead of buying the car upfront, you can put that money in a valuepool and then take a loan on the NFT of that valuepool to buy the car. To reimburse your loan, you can use the money you make from being a member of the valuepool. Valuepools can make their members money by investing their money, by selling ad spots on their NFTs, by lending money, etc.",
+  //   "https://i.ibb.co/pbbQvYS/55.jpg",
+  //   "https://i.ibb.co/pbbQvYS/55.jpg",
+  //   "https://i.ibb.co/XkQfFPf/282.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("469marketPlaceCollection.updateCollection===========> Done!")
 
   }
   

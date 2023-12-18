@@ -33,7 +33,9 @@ contract LotteryContract {
     mapping(address => mapping(bytes32 => uint)) private pendingReward;
     mapping(address => mapping(address => uint)) public toReinject;
     mapping(address => mapping(bytes32 => uint)) private pendingReferrerFee;
-
+    mapping(uint => mapping(address => uint)) public priceTicket;
+    mapping(uint => mapping(address => bool)) private claimed;
+    
     // Bracket calculator is used for verifying claims for ticket prizes
     mapping(uint => uint) private _bracketCalculator;
 
@@ -59,6 +61,7 @@ contract LotteryContract {
     event LotteryNumberDrawn(uint256 indexed lotteryId, uint256 finalNumber, uint256 countWinningTickets);
     event TicketsPurchase(address indexed buyer, uint256 indexed lotteryId, uint256 ticketId, uint256 numberTicket);
     event TicketsClaim(address indexed claimer, address token, uint256 amount, uint256 indexed lotteryId, uint256 ticketId);
+    event PricePerTicketUpdated(address token, uint lotteryId, uint pricePerTicket);
     event UpdateMiscellaneous(
         uint idx, 
         uint collectionId, 
@@ -76,8 +79,9 @@ contract LotteryContract {
      * @dev RandomNumberGenerator must be deployed prior to this contract
      * @param _randomGeneratorAddress: address of the RandomGenerator contract used to work with ChainLink VRF
      */
-    constructor(address _randomGeneratorAddress) {
+    constructor(address _contractAddress, address _randomGeneratorAddress) {
         randomGenerator = _randomGeneratorAddress;
+        contractAddress = _contractAddress;
 
         // Initializes a mapping
         _bracketCalculator[0] = 1;
@@ -102,10 +106,10 @@ contract LotteryContract {
     //     randomGenerator = _randomGenerator;
     // }
 
-    function setContractAddress(address _contractAddress) external {
-        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
-        contractAddress = _contractAddress;
-    }
+    // function setContractAddress(address _contractAddress) external {
+    //     require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
+    //     contractAddress = _contractAddress;
+    // }
 
     function viewNumberTicketsPerLotteryId(uint _lotteryId, uint _winningNumberTransformed) external view returns(uint) {
         return _numberTicketsPerLotteryId[_lotteryId][_winningNumberTransformed];
@@ -184,10 +188,6 @@ contract LotteryContract {
                 _amountToTransfer = 0;
             }
         }
-        if (!_lotteryTokens[_lotteryId].contains(_token)) {
-            require(amountCollected[_lotteryId][_token] >= MINIMUM_REWARD, "L01");
-            _lotteryTokens[_lotteryId].add(_token);
-        }
         // Increment the total amount collected for the lottery round
         amountCollected[_lotteryId][_token] += _amountToTransfer;
         
@@ -230,7 +230,7 @@ contract LotteryContract {
         for (uint256 i = 0; i < _ticketNumbers.length; i++) {
             uint thisTicketNumber = _ticketNumbers[i];
 
-            require((thisTicketNumber >= MIN_TICKET_NUMBER) && (thisTicketNumber <= MIN_TICKET_NUMBER+TICKET_RANGE), "L6");
+            require((thisTicketNumber >= MIN_TICKET_NUMBER) && (thisTicketNumber <= MIN_TICKET_NUMBER+TICKET_RANGE));
 
             _numberTicketsPerLotteryId[_lotteryId][1 + (thisTicketNumber % 10)]++;
             _numberTicketsPerLotteryId[_lotteryId][11 + (thisTicketNumber % 100)]++;
@@ -242,10 +242,7 @@ contract LotteryContract {
             _userTicketIdsPerLotteryId[_user][_lotteryId].push(currentTicketId);
             _tickets[currentTicketId] = Ticket({number: thisTicketNumber, owner: _user});
     
-            emit TicketsPurchase(_user, _lotteryId, currentTicketId, thisTicketNumber);
-
-            // Increase lottery ticket number
-            currentTicketId++;
+            emit TicketsPurchase(_user, _lotteryId, currentTicketId++, thisTicketNumber);
         }
     }
 
@@ -270,43 +267,42 @@ contract LotteryContract {
      * @dev Callable by users only, not contract!
      */
     function claimTickets(
+        address _token,
         uint256 _lotteryId,
         uint256[] calldata _ticketIds,
         uint[] calldata _brackets
     ) external lock {
-        require(_ticketIds.length == _brackets.length, "L7");
-        require(_ticketIds.length <= IContract(contractAddress).maximumSize(), "L8");
-        require(_lotteries[_lotteryId].status == LotteryStatus.Claimable, "L10");
+        require(_ticketIds.length == _brackets.length);
+        require(_ticketIds.length <= IContract(contractAddress).maximumSize());
+        require(_lotteries[_lotteryId].status == LotteryStatus.Claimable);
         address lotteryHelper = IContract(contractAddress).lotteryHelper();
 
-        for (uint j = 0; j < _lotteryTokens[_lotteryId].length(); j++) {
-            address _token = _lotteryTokens[_lotteryId].at(j);
-            for (uint256 i = 0; i < _ticketIds.length; i++) {
-                require(_brackets[i] < 6, "L11"); // Must be between 0 and 5
+        for (uint256 i = 0; i < _ticketIds.length; i++) {
+            require(_brackets[i] < 6); // Must be between 0 and 5
 
-                uint256 thisTicketId = _ticketIds[i];
+            uint256 thisTicketId = _ticketIds[i];
 
-                require(_lotteries[_lotteryId].firstTicketId <= thisTicketId, "L12");
-                require(msg.sender == _tickets[thisTicketId].owner);
+            require(_lotteries[_lotteryId].firstTicketId <= thisTicketId);
+            require(!claimed[thisTicketId][_token]);
 
-                // Update the lottery ticket owner to 0x address
-                _tickets[thisTicketId].owner = address(0);
-                uint256 rewardForTicketId = ILottery(lotteryHelper).calculateRewardsForTicketId(_lotteryId, thisTicketId, _brackets[i], _token);
+            uint256 rewardForTicketId = ILottery(lotteryHelper).calculateRewardsForTicketId(_lotteryId, thisTicketId, _brackets[i], _token);
 
-                // Check user is claiming the correct bracket
-                if(rewardForTicketId != 0) {
+            // Check user is claiming the correct bracket
+            if(rewardForTicketId != 0) {
 
-                    if (_brackets[i] != 5) {
-                        require(
-                            ILottery(lotteryHelper).calculateRewardsForTicketId(_lotteryId, thisTicketId, _brackets[i] + 1, _token) == 0,
-                            "L15"
-                        );
-                    }
+                if (_brackets[i] != 5) {
+                    require(
+                        ILottery(lotteryHelper).calculateRewardsForTicketId(_lotteryId, thisTicketId, _brackets[i] + 1, _token) == 0
+                    );
+                }
+                if (_lotteries[_lotteryId].treasury.isNFT == NFTYPE.not) {
                     // Transfer money to msg.sender
                     pendingReward[msg.sender][keccak256(abi.encodePacked(_lotteryId, _token))] += rewardForTicketId;
-                    
-                    emit TicketsClaim(msg.sender, _token, rewardForTicketId, _lotteryId, thisTicketId);
+                } else {
+                    pendingReward[msg.sender][keccak256(abi.encodePacked(_lotteryId, _token))] = ILottery(lotteryHelper).nftPrizes(_lotteryId, _token);
                 }
+                
+                emit TicketsClaim(msg.sender, _token, rewardForTicketId, _lotteryId, thisTicketId);
             }
         }
     }
@@ -327,9 +323,8 @@ contract LotteryContract {
         require(_lotteries[_lotteryId].status == LotteryStatus.Open, "L16");
         require(
             block.timestamp > _lotteries[_lotteryId].endTime ||
-            (   _lotteries[_lotteryId].endAmount > 0 &&
-                amountCollected[_lotteryId][_lotteryTokens[_lotteryId].at(0)] >= _lotteries[_lotteryId].endAmount), 
-            "L17"
+            (_lotteries[_lotteryId].endAmount > 0 &&
+            amountCollected[_lotteryId][_lotteryTokens[_lotteryId].at(0)] >= _lotteries[_lotteryId].endAmount) 
         );
         ILottery(randomGenerator).getRandomNumber(_lotteryId);
         _lotteries[_lotteryId].status = LotteryStatus.Close;
@@ -351,13 +346,13 @@ contract LotteryContract {
         // Calculate the finalNumber based on the randomResult generated by ChainLink's fallback
         uint finalNumber = ILottery(randomGenerator).viewRandomResult(_lotteryId);
 
-        // Initialize a number to count addresses in the previous bracket
-        uint256 numberAddressesInPreviousBracket;
 
         for (uint k = 0; k < _lotteryTokens[_lotteryId].length(); k++) {
+            // Initialize a number to count addresses in the previous bracket
+            uint256 numberAddressesInPreviousBracket;
             address _token = _lotteryTokens[_lotteryId].at(k);
             // Calculate the amount to share post-treasury fee
-            uint256 amountToShareToWinners = (
+            uint256 amountToShareToWinners = _lotteries[_lotteryId].treasury.isNFT != NFTYPE.not ? 0 : (
                 (amountCollected[_lotteryId][_token] * (10000 - _lotteries[_lotteryId].treasury.fee))
             ) / 10000;
             // Initializes the amount to withdraw to treasury
@@ -389,25 +384,44 @@ contract LotteryContract {
                     // A. No CAKE to distribute, they are added to the amount to withdraw to treasury address
                 } else {
                     tokenPerBracket[_lotteryId][_token][j] = 0;
-
                     amountToWithdrawToTreasury +=
                         (_lotteries[_lotteryId].rewardsBreakdown[j] * amountToShareToWinners) / 10000;
                 }
             }
 
-            amountToWithdrawToTreasury += (amountCollected[_lotteryId][_token] - amountToShareToWinners);
+            if (_lotteries[_lotteryId].treasury.isNFT == NFTYPE.not) {
+                amountToWithdrawToTreasury += (amountCollected[_lotteryId][_token] - amountToShareToWinners);
 
-            // Transfer token to admin address
-            toReinject[_lotteries[_lotteryId].owner][_token] += amountToWithdrawToTreasury;
+                // Transfer token to admin address
+                toReinject[_lotteries[_lotteryId].owner][_token] += amountToWithdrawToTreasury;
+            }
+
+            emit LotteryNumberDrawn(_lotteryId, finalNumber, numberAddressesInPreviousBracket);
         }
         // Update internal statuses for lottery
         _lotteries[_lotteryId].finalNumber = finalNumber;
         _lotteries[_lotteryId].status = LotteryStatus.Claimable;
 
-        emit LotteryNumberDrawn(_lotteryId, finalNumber, numberAddressesInPreviousBracket);
+    }
+
+    function withdrawNFTPendingReward(address _token, uint _lotteryId) external lock {
+        require(_lotteries[_lotteryId].treasury.isNFT != NFTYPE.not);
+        if (_lotteries[_lotteryId].owner == msg.sender) {
+            uint _pendingReward = amountCollected[_lotteryId][_token];
+            amountCollected[_lotteryId][_token] = 0;
+            uint _fee = _pendingReward * treasuryFee / 10000;
+            pendingReward[IAuth(contractAddress).devaddr_()][keccak256(abi.encodePacked(_lotteryId, _token))] += _fee;
+            IERC20(_token).safeTransfer(msg.sender, (_pendingReward - _fee));
+        }
+    }
+
+    function deleteReward(address _token, address _user, uint _lotteryId) external {
+        require(msg.sender == IContract(contractAddress).lotteryHelper());
+        delete pendingReward[_user][keccak256(abi.encodePacked(_lotteryId, _token))];
     }
 
     function withdrawPendingReward(address _token, uint _lotteryId, uint _identityTokenId) external lock {
+        require(_lotteries[_lotteryId].treasury.isNFT == NFTYPE.not);
         uint _pendingReward = pendingReward[msg.sender][keccak256(abi.encodePacked(_lotteryId, _token))];
         pendingReward[msg.sender][keccak256(abi.encodePacked(_lotteryId, _token))] = 0;
         uint _fee1 = _pendingReward * _lotteries[_lotteryId].treasury.fee / 10000;
@@ -449,7 +463,7 @@ contract LotteryContract {
      * @dev Callable by owner or injector address
      */
     function injectFunds(uint256 _lotteryId, uint256 _amount, address _token, bool _reinject) external lock {
-        require(_lotteries[_lotteryId].status == LotteryStatus.Open);
+        require(_lotteries[_lotteryId].status == LotteryStatus.Open && _lotteryTokens[_lotteryId].contains(_token));
         if (_reinject) {
             _amount = toReinject[_lotteries[_lotteryId].owner][_token];
             toReinject[_lotteries[_lotteryId].owner][_token] = 0;
@@ -457,11 +471,6 @@ contract LotteryContract {
             IERC20(_token).safeTransferFrom(address(msg.sender), address(this), _amount);
         }
         if (amountCollected[_lotteryId][_token] + _amount >= MINIMUM_REWARD) {
-            address marketHelpers3 = IContract(contractAddress).marketHelpers3();
-            require(
-                IMarketPlace(marketHelpers3).dTokenSetContains(_token) ||
-                IMarketPlace(marketHelpers3).veTokenSetContains(_token)
-            );
             _lotteryTokens[_lotteryId].add(_token);
         }
         amountCollected[_lotteryId][_token] += _amount;
@@ -470,44 +479,46 @@ contract LotteryContract {
     }
 
     function claimLotteryRevenue(uint256 _lotteryId, address _token) external {
-        require(_lotteries[_lotteryId].status == LotteryStatus.Open, "L21");
+        require(_lotteries[_lotteryId].status == LotteryStatus.Open && _lotteryId == 1, "L21");
         address _marketTrades = IContract(contractAddress).marketTrades();
         address _paywallMarketTrades = IContract(contractAddress).paywallMarketTrades();
         address _nftMarketTrades = IContract(contractAddress).nftMarketTrades();
-        uint _amount;
-        if (_lotteryId == 1) {
-            _amount = IMarketPlace(_marketTrades).lotteryRevenue(_token);
-            _amount += IMarketPlace(_paywallMarketTrades).lotteryRevenue(_token);
-            _amount += IMarketPlace(_nftMarketTrades).lotteryRevenue(_token);
-        
-            IMarketPlace(_marketTrades).claimLotteryRevenue(_token);
-            IMarketPlace(_paywallMarketTrades).claimLotteryRevenue(_token);
-            IMarketPlace(_nftMarketTrades).claimLotteryRevenue(_token);
+        uint _amount = IMarketPlace(_marketTrades).lotteryRevenue(_token);
+        _amount += IMarketPlace(_paywallMarketTrades).lotteryRevenue(_token);
+        _amount += IMarketPlace(_nftMarketTrades).lotteryRevenue(_token);
+    
+        IMarketPlace(_marketTrades).claimLotteryRevenue(_token);
+        IMarketPlace(_paywallMarketTrades).claimLotteryRevenue(_token);
+        IMarketPlace(_nftMarketTrades).claimLotteryRevenue(_token);
 
-            require(IMarketPlace(_marketTrades).lotteryRevenue(_token) == 0);
-            require(IMarketPlace(_paywallMarketTrades).lotteryRevenue(_token) == 0);
-            require(IMarketPlace(_nftMarketTrades).lotteryRevenue(_token) == 0);
-        }
-        if (amountCollected[_lotteryId][_token] + _amount >= MINIMUM_REWARD) {
+        require(IMarketPlace(_marketTrades).lotteryRevenue(_token) == 0);
+        require(IMarketPlace(_paywallMarketTrades).lotteryRevenue(_token) == 0);
+        require(IMarketPlace(_nftMarketTrades).lotteryRevenue(_token) == 0);
+   if (amountCollected[_lotteryId][_token] + _amount >= MINIMUM_REWARD) {
             _lotteryTokens[_lotteryId].add(_token);
         }
         amountCollected[_lotteryId][_token] += _amount;
     }
     
     function claimLotteryRevenueFomSponsors(uint256 _lotteryId) external {
-        require(_lotteries[_lotteryId].status == LotteryStatus.Open, "L22");
+        require(_lotteries[_lotteryId].status == LotteryStatus.Open && _lotteryId == 1, "L22");
         address nfticketHelper = IContract(contractAddress).nfticketHelper();
         address _token = IMarketPlace(nfticketHelper).token();
-        uint _amount;
-        if (_lotteryId == 1) {
-            _amount = IMarketPlace(nfticketHelper).lottery();
-            IMarketPlace(nfticketHelper).claimLotteryRevenue();
-            require(IMarketPlace(nfticketHelper).lottery() == 0);
-        }
+        uint _amount = IMarketPlace(nfticketHelper).lottery();
+        IMarketPlace(nfticketHelper).claimLotteryRevenue();
+        require(IMarketPlace(nfticketHelper).lottery() == 0);
         if (amountCollected[_lotteryId][_token] + _amount >= MINIMUM_REWARD) {
             _lotteryTokens[_lotteryId].add(_token);
         }
         amountCollected[_lotteryId][_token] += _amount;
+    }
+
+    function updatePricePerTicket(address _token, uint _lotteryId, uint _pricePerTicket) external {
+        require(_lotteries[_lotteryId].owner == msg.sender);
+        priceTicket[_lotteryId][_token] = _pricePerTicket;
+        _lotteryTokens[_lotteryId].add(_token);
+
+        emit PricePerTicketUpdated(_token, _lotteryId, _pricePerTicket);
     }
 
     function startLottery(
@@ -520,10 +531,11 @@ contract LotteryContract {
         uint256 _lockDuration,
         uint256 _collectionId,
         bool _useNFTicket,
+        uint _isNFT,
         uint256[4] calldata _values, //_treasuryFee, _referrerFee, _priceTicket, _discountDivisor
         uint256[6] calldata _rewardsBreakdown
     ) external {
-        require(IContract(contractAddress).lotteryHelper() == msg.sender, "L022");
+        require(IContract(contractAddress).lotteryHelper() == msg.sender);
         _lotteries[_currentLotteryId] = Lottery({
             status: LotteryStatus.Open,
             startTime: _startTime,
@@ -538,12 +550,13 @@ contract LotteryContract {
             lockDuration: _lockDuration,
             treasury: Treasury({
                 fee: _values[0],
+                isNFT: NFTYPE(_isNFT),
                 referrerFee: _values[1],
-                useNFTicket: _useNFTicket,
-                priceTicket: _values[2]
+                useNFTicket: _useNFTicket
             }),
             finalNumber: 0
         });
+        priceTicket[_currentLotteryId][IContract(contractAddress).token()] = _values[2];
         emit LotteryOpen(
             _currentLotteryId,
             _values[0],
@@ -576,7 +589,7 @@ contract LotteryContract {
     function viewBracketCalculator(uint _braket) external view returns(uint) {
         return _bracketCalculator[_braket];
     }
-
+    
     /**
      * @notice Calculate final price for bulk of tickets
      * @param _numberTickets: number of tickets purchased
@@ -596,7 +609,7 @@ contract LotteryContract {
         } else {
             _token = _lotteryTokens[_lotteryId].length() != 0 ? _lotteryTokens[_lotteryId].at(_nfticketId) : IContract(contractAddress).token();
         }
-        _price = (_lotteries[_lotteryId].treasury.priceTicket * _numberTickets * (_discountDivisor + 1 - _numberTickets)) / _discountDivisor;
+        _price = (priceTicket[_lotteryId][_token] * _numberTickets * (_discountDivisor + 1 - _numberTickets)) / _discountDivisor;
         if (_price > _lotteryCredits) {
             _price -= _lotteryCredits;
         } else {
@@ -618,6 +631,7 @@ contract LotteryHelper {
     uint256 public treasuryFee = 100; // 1%
     uint256 public minDiscountDivisor = 300;
     mapping(uint => uint) public collectionIdToLotteryId;
+    mapping(uint => mapping(address => uint)) public nftPrizes;
     
     function updateParams(
         uint _treasuryFee,
@@ -669,6 +683,7 @@ contract LotteryHelper {
         uint256 _endAmount,
         uint256 _lockDuration,
         bool _useNFTicket,
+        uint _isNFT,
         uint256[4] calldata _values, //_treasuryFee, _referrerFee, _priceTicket,_discountDivisor
         uint256[6] calldata _rewardsBreakdown
     ) external {
@@ -699,6 +714,7 @@ contract LotteryHelper {
             _lockDuration,
             _collectionId,
             _useNFTicket,
+            _isNFT,
             _values,
             _rewardsBreakdown
         );
@@ -712,6 +728,10 @@ contract LotteryHelper {
     function deletePaymentCredits(address _user, uint _lotteryId) external {
         require(msg.sender == IContract(contractAddress).lotteryAddress());
         paymentCredits[_user][_lotteryId] = 0;
+    }
+
+    function burnTokenForCreditLength(uint _collectionId) external view returns(uint) {
+        return burnTokenForCredit[_collectionId].length;
     }
 
     function updateBurnTokenForCredit(
@@ -784,14 +804,18 @@ contract LotteryHelper {
                 burnTokenForCredit[_collectionId][_position].collectionId,
                 burnTokenForCredit[_collectionId][_position].item
             );
-            IERC721(burnTokenForCredit[_collectionId][_position].token).safeTransferFrom(msg.sender, _destination, _number);
-            credit = burnTokenForCredit[_collectionId][_position].discount * _times / 10000;
+            IERC721(burnTokenForCredit[_collectionId][_position].token).transferFrom(msg.sender, _destination, _number);
+            credit = burnTokenForCredit[_collectionId][_position].discount * _times;
         }
         paymentCredits[msg.sender][_lotteryId] += credit;
     }
 
     function onERC721Received(address,address,uint256,bytes memory) public virtual returns (bytes4) {
         return this.onERC721Received.selector; 
+    }
+
+    function onERC1155Received(address, address, uint256, uint256, bytes memory) public virtual returns (bytes4) {
+        return this.onERC1155Received.selector;
     }
 
     /**
@@ -892,12 +916,47 @@ contract LotteryHelper {
 
         // Check ticketId is within range
         if (
-            _lottery.firstTicketId >= _ticketId
+            _lottery.firstTicketId > _ticketId
         ) {
             return 0;
         }
 
         return calculateRewardsForTicketId(_lotteryId, _ticketId, _bracket, _token);
+    }
+
+    function updateNFTPrizes(address _token, address _from, uint _lotteryId, uint _tokenId) external {
+        address lotteryAddress = IContract(contractAddress).lotteryAddress();
+        Lottery memory _lottery = ILottery(lotteryAddress).viewLottery(_lotteryId);
+        require(_lottery.treasury.isNFT != NFTYPE.not && nftPrizes[_lotteryId][_token] == 0, "LH2");
+        if (_lottery.treasury.isNFT == NFTYPE.erc721) {
+            IERC721(_token).safeTransferFrom(_from, address(this), _tokenId);
+        } else if (_lottery.treasury.isNFT == NFTYPE.erc1155) { 
+            IERC1155(_token).safeTransferFrom(_from, address(this), _tokenId, 1, msg.data);
+        }
+        nftPrizes[_lotteryId][_token] = _tokenId;
+        ILottery(lotteryAddress).emitUpdateMiscellaneous(
+            0,
+            _lotteryId,
+            "",
+            "",
+            _tokenId,
+            0,
+            _token,
+            ""
+        );
+    }
+
+    function withdrawNFTPrize(address _token, uint _lotteryId) external {
+        address lotteryAddress = IContract(contractAddress).lotteryAddress();
+        uint _tokenId = ILottery(lotteryAddress).getPendingReward(
+            _lotteryId,
+            msg.sender,
+            _token,
+            false
+        );
+        require(_tokenId > 0, "LH1");
+        IERC721(_token).transferFrom(address(this), msg.sender, _tokenId);
+        ILottery(lotteryAddress).deleteReward(_token, msg.sender, _lotteryId);
     }
 
     /**
@@ -914,7 +973,9 @@ contract LotteryHelper {
     ) public view returns (uint256) {
         address lotteryAddress = IContract(contractAddress).lotteryAddress();
         // Retrieve the winning number combination
-        uint userNumber = ILottery(lotteryAddress).viewLottery(_lotteryId).finalNumber;
+        Lottery memory _lottery = ILottery(lotteryAddress).viewLottery(_lotteryId);
+        uint userNumber = _lottery.finalNumber;
+        NFTYPE _isNFT = _lottery.treasury.isNFT;
 
         // Retrieve the user number combination from the ticketId
         uint winningTicketNumber = ILottery(lotteryAddress).viewTicket(_ticketId).number;
@@ -926,7 +987,10 @@ contract LotteryHelper {
 
         // Confirm that the two transformed numbers are the same, if not throw
         if (transformedWinningNumber == transformedUserNumber) {
-            return ILottery(lotteryAddress).tokenPerBracket(_lotteryId, _token, _bracket);
+            if (_isNFT == NFTYPE.not) {
+                return ILottery(lotteryAddress).tokenPerBracket(_lotteryId, _token, _bracket);
+            }
+            return _bracket == 5 ? nftPrizes[_lotteryId][_token] : 0;
         } else {
             return 0;
         }

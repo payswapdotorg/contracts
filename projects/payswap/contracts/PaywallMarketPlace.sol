@@ -4289,7 +4289,7 @@ contract PaywallMarketPlaceHelper {
     function burnForCredit(
         address _collection, 
         uint _position, 
-        uint _number,  // tokenId in case of NFTs and amount otherwise 
+        uint256 _number,  // tokenId in case of NFTs and amount otherwise 
         string memory _applyToTokenId
     ) external {
         uint _collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(_collection);
@@ -4301,12 +4301,12 @@ contract PaywallMarketPlaceHelper {
             credit = burnTokenForCredit[_collectionId][_position].discount * _number / 10000;
         } else { //NFT
             uint _times = IMarketPlace(burnTokenForCredit[_collectionId][_position].checker).verifyNFT(
-                _number, 
+                _number,
                 burnTokenForCredit[_collectionId][_position].collectionId, 
                 burnTokenForCredit[_collectionId][_position].item
             );
-            IERC721(burnTokenForCredit[_collectionId][_position].token).safeTransferFrom(msg.sender, _destination, _number);
-            credit = burnTokenForCredit[_collectionId][_position].discount * _times / 10000;
+            IERC721(burnTokenForCredit[_collectionId][_position].token).transferFrom(msg.sender, _destination, _number);
+            credit = burnTokenForCredit[_collectionId][_position].discount * _times;
         }
         IMarketPlace(IContract(contractAddress).paywallMarketOrders()).
         incrementPaymentCredits(msg.sender, _collectionId, _applyToTokenId, credit);

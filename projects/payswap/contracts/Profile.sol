@@ -8,12 +8,14 @@ contract Profile {
     using SafeERC20 for IERC20;
     using EnumerableSet for EnumerableSet.AddressSet;
     using EnumerableSet for EnumerableSet.UintSet;
+    using Percentile for *;
 
     mapping(address => uint) public sum_of_diff_squared;
     mapping(address => uint) public total;
     uint bufferTime = 14 days;
     uint limitFactor = 10000;
     uint constant INITIAL_PROFILE_ID = 2;
+    mapping(address => bool) public isHelper;
     mapping(address => EnumerableSet.AddressSet) private _allContracts;
     mapping(uint => EnumerableSet.UintSet) private _badgeIds;
     mapping(uint => ProfileInfo) public profileInfo;
@@ -24,7 +26,6 @@ contract Profile {
     mapping(string => bool) private usedSSID;
     // profileid => token => bountyid
     mapping(uint => mapping(address => uint)) public bounties;
-    mapping(address => bool) private isHelper;
     mapping(uint => bool) private isFollowerAuditor;
     mapping(address => mapping(uint =>  CreditReport)) public goldReported;
     mapping(address => mapping(uint =>  CreditReport)) public silverReported;
@@ -116,17 +117,8 @@ contract Profile {
         return IContract(contractAddress).marketCollections();
     }
 
-    function _rampHelper() internal view returns(address) {
-        return IContract(contractAddress).rampHelper();
-    }
-
     function _helper() internal view returns(address) {
         return IContract(contractAddress).profileHelper();
-    }
-
-    function updateHelper(address __helper, bool _add) external onlyAdmin {
-        isHelper[__helper] = _add;
-        emit UpdateHelper(__helper, _add);
     }
     
     function updateBlackList(uint _profileId, bool _add) external {
@@ -366,46 +358,61 @@ contract Profile {
         emit ClaimRevenue(_token, _profileId, _toClaim);
     }
 
-    function _getPercentile(address _ve, uint _tokenId) internal view returns(uint _percentile, uint _total, uint sods) {
-        return ILottery(IContract(contractAddress).profileHelper()).getPercentile(
-            msg.sender, 
-            _ve, 
+    function getPercentile(address _ve, uint _tokenId) public view returns(uint,uint,uint) {
+        require(ITrustBounty(IContract(contractAddress).trustBountyHelper()).ves(_ve) && ve(_ve).ownerOf(_tokenId) == msg.sender);
+        uint _balance = ve(_ve).balanceOfNFT(_tokenId);
+        (uint percentile, uint sods) = Percentile.computePercentileFromData(
+            false,
+            _balance,
+            total[_ve] + _balance,
             _allContracts[_ve].length(),
-            _tokenId
+            sum_of_diff_squared[_ve]
+        );
+        return (
+            percentile,
+            total[_ve] + _balance,
+            sods
         );
     }
 
-    function updateLateDays(address __helper, address _arp, address _protocolOwner, address _ve, uint _tokenId, uint _protocolId, uint _profileId) external {
-        require(isHelper[__helper] && IARP(__helper).isGauge(_arp) && IAuth(_arp).isAdmin(msg.sender), "P26");
-        require(accounts[_profileId].contains(_protocolOwner), "P27");
-        require(IMarketPlace(_arp).getProfileId(_protocolId) == _profileId, "P28");
-        (uint _due,, int lateSeconds) = IMarketPlace(__helper).getDueReceivable(_arp, _protocolId);
-        uint due = IRamp(_rampHelper()).convert(IMarketPlace(_arp).getToken(_protocolId), _due);
+    function updateLateDays(
+        address _note, 
+        address _arp, 
+        address _protocolOwner, 
+        address _ve, 
+        uint _tokenId, 
+        uint _protocolId, 
+        uint _profileId, 
+        bool _isPaywall
+    ) external {
+        require(isHelper[_note] && IAuth(_arp).isAdmin(msg.sender), "P26");
+        require(accounts[_profileId].contains(_protocolOwner));
+        (uint due, uint lateSeconds) = IProfile(IContract(contractAddress).profileHelper()).getDueNLateSeconds(_isPaywall, _note, _arp, _protocolId, _profileId);
         require(lateSeconds > 0);
         _updateReports(_arp, _profileId);
         _allContracts[_ve].add(_arp);
-        (uint _percentile, uint _total, uint sods) = _getPercentile(_ve, _tokenId);
+        (uint _percentile, uint _total, uint sods) = getPercentile(_ve, _tokenId);
         total[_ve] = _total;
         sum_of_diff_squared[_ve] = sods;
         if (_percentile > 75) {
-            profileInfo[_profileId].gold.lateSeconds += uint(-lateSeconds);
+            profileInfo[_profileId].gold.lateSeconds += lateSeconds;
             profileInfo[_profileId].gold.lateValue += due;
-            goldReported[_arp][_profileId].lateSeconds = uint(-lateSeconds);
+            goldReported[_arp][_profileId].lateSeconds = lateSeconds;
             goldReported[_arp][_profileId].lateValue = due;
         } else if (_percentile > 50) {
-            profileInfo[_profileId].silver.lateSeconds += uint(-lateSeconds);
+            profileInfo[_profileId].silver.lateSeconds += lateSeconds;
             profileInfo[_profileId].silver.lateValue += due;
-            silverReported[_arp][_profileId].lateSeconds = uint(-lateSeconds);
+            silverReported[_arp][_profileId].lateSeconds = lateSeconds;
             silverReported[_arp][_profileId].lateValue = due;
         } else if (_percentile > 25) {
-            profileInfo[_profileId].brown.lateSeconds += uint(-lateSeconds);
+            profileInfo[_profileId].brown.lateSeconds += lateSeconds;
             profileInfo[_profileId].brown.lateValue += due;
-            brownReported[_arp][_profileId].lateSeconds = uint(-lateSeconds);
+            brownReported[_arp][_profileId].lateSeconds = lateSeconds;
             brownReported[_arp][_profileId].lateValue = due;
         } else {
-            profileInfo[_profileId].black.lateSeconds += uint(-lateSeconds);
+            profileInfo[_profileId].black.lateSeconds += lateSeconds;
             profileInfo[_profileId].black.lateValue += due;
-            blackReported[_arp][_profileId].lateSeconds = uint(-lateSeconds);
+            blackReported[_arp][_profileId].lateSeconds = lateSeconds;
             blackReported[_arp][_profileId].lateValue = due;
         }
     }
@@ -433,6 +440,12 @@ contract Profile {
         );
     }
 
+    function updateHelper(address __helper, bool _add) external {
+        require(IAuth(contractAddress).devaddr_() == msg.sender);
+        isHelper[__helper] = _add;
+        emit UpdateHelper(__helper, _add);
+    }
+
     function _updateReports(address _arp, uint _profileId) internal {
         if (goldReported[_arp][_profileId].lateValue > 0) {
             profileInfo[_profileId].gold.lateSeconds -= goldReported[_arp][_profileId].lateSeconds;
@@ -447,6 +460,10 @@ contract Profile {
             profileInfo[_profileId].black.lateSeconds -= blackReported[_arp][_profileId].lateSeconds;
             profileInfo[_profileId].black.lateValue -= blackReported[_arp][_profileId].lateValue;
         }
+        delete goldReported[_arp][_profileId];
+        delete silverReported[_arp][_profileId];
+        delete brownReported[_arp][_profileId];
+        delete blackReported[_arp][_profileId];
     }
 
     function emitAddAccount(uint _profileId, address _user) external {
@@ -468,7 +485,6 @@ contract Profile {
 
 contract ProfileHelper is ERC721Pausable {
     using SafeERC20 for IERC20;
-    using Percentile for *;
 
     address private contractAddress;
     uint constant INITIAL_PROFILE_ID = 2; // starts at 1000000
@@ -488,7 +504,6 @@ contract ProfileHelper is ERC721Pausable {
     mapping(uint => string) public broadcast; // to broadcast msgs to followers
     mapping(uint => address) private uriGenerator;
     mapping(uint => uint) public createdAt;
-    mapping(uint => address) private taskContracts;
     mapping(uint => uint[]) public identityProofs;
 
     event UpdateCrush(
@@ -504,7 +519,9 @@ contract ProfileHelper is ERC721Pausable {
         string sharedInfo
     );
 
-    constructor() ERC721("ProfileNFT", "ProfileNFT") {}
+    constructor(address _contractAddress) ERC721("ProfileNFT", "ProfileNFT") {
+        contractAddress = _contractAddress;
+    }
 
     // simple re-entrancy check 
     uint internal _unlocked = 1;
@@ -515,13 +532,8 @@ contract ProfileHelper is ERC721Pausable {
         _unlocked = 1;
     }
 
-    function setContractAddress(address _contractAddress) external {
-        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender, "PH1");
-        contractAddress = _contractAddress;
-    }
-
     function updateBroadcast(string memory message, uint _profileId) external {
-        require(IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender) == _profileId, "P0H2");
+        require(IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender) == _profileId);
         broadcast[_profileId] = message;
     }
 
@@ -536,29 +548,30 @@ contract ProfileHelper is ERC721Pausable {
         );
     }
 
-    function getPercentile(
-        address _user, 
-        address _ve, 
-        uint _length, 
-        uint _tokenId
-    ) external view returns(uint,uint,uint) {
-        require(ITrustBounty(IContract(contractAddress).trustBounty()).ves(_ve) && ve(_ve).ownerOf(_tokenId) == _user, "P25");
-        address profile = IContract(contractAddress).profile();
-        uint _sodq = IProfile(profile).sum_of_diff_squared(_ve);
-        uint _total = IProfile(profile).total(_ve);
-        uint _balance = ve(_ve).balanceOfNFT(_tokenId);
-        (uint percentile, uint sods) = Percentile.computePercentileFromData(
-            false,
-            _balance,
-            _total + _balance,
-            _length,
-            _sodq
-        );
-        return (
-            percentile,
-            _total + _balance,
-            sods
-        );
+    function _rampHelper() internal view returns(address) {
+        return IContract(contractAddress).rampHelper();
+    }
+
+    function getDueNLateSeconds(bool _isPaywall, address _note, address _arp, uint _protocolId, uint _profileId) external returns(uint due, uint lateSeconds) {
+        if (_isPaywall) {
+            require(IMarketPlace(IContract(contractAddress).paywallARPHelper()).isGauge(_arp));
+            PaywallInfo memory _protocolInfo = IMarketPlace(_arp).protocolInfo(_protocolId);
+            require(_protocolInfo.profileId == _profileId);
+            (uint _due,, int _lateSeconds) = IMarketPlace(_arp).getDueReceivable(_protocolId);
+            Ask memory ask = IMarketPlace(IContract(contractAddress).paywallMarketOrders()).getAskDetails(
+                IMarketPlace(_arp).collectionId(), 
+                keccak256(abi.encodePacked(IMarketPlace(_arp).tokenId()))
+            );
+            address _token = ask.tokenInfo.usetFIAT ? ask.tokenInfo.tFIAT : ve(ask.tokenInfo.ve).token();
+            due = IRamp(_rampHelper()).convert(_token, _due);
+            lateSeconds = uint(_lateSeconds);
+        } else {
+            ARPInfo memory _protocolInfo = IARP(_arp).protocolInfo(_protocolId);
+            require(_protocolInfo.profileId == _profileId);
+            (uint _due,, int _lateSeconds) = IARP(_note).getDueReceivable(_arp, _protocolId, 0);
+            due = IRamp(_rampHelper()).convert(_protocolInfo.token, _due);
+            lateSeconds = uint(_lateSeconds);
+        }
     }
 
     function updateParams(
@@ -566,7 +579,7 @@ contract ProfileHelper is ERC721Pausable {
         uint _bidDuration, 
         uint _minBidIncrementPercentage
     ) external {
-        require(IAuth(contractAddress).devaddr_() == msg.sender, "PH2");
+        require(IAuth(contractAddress).devaddr_() == msg.sender);
         bidStart = _bidStart;
         bidDuration = _bidDuration;
         minBidIncrementPercentage = _minBidIncrementPercentage;
@@ -584,7 +597,7 @@ contract ProfileHelper is ERC721Pausable {
     }
 
     function bidForProfile(uint _amount) external lock {
-        require(boughtProfileId < INITIAL_PROFILE_ID, "PH3");
+        require(boughtProfileId < INITIAL_PROFILE_ID);
         _bidForProfile(boughtProfileId, _amount);
     }
 
@@ -665,19 +678,6 @@ contract ProfileHelper is ERC721Pausable {
     function _isEmpty(string memory val) internal pure returns(bool) {
         return keccak256(abi.encodePacked(val)) == keccak256(abi.encodePacked(""));
     }
-    
-    function updateTaxContract(address __taskContract) external {
-        uint _collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
-        if (_collectionId > 0) {
-            taskContracts[_collectionId] = __taskContract;
-        }
-    }
-
-    function _taskContract(uint _tokenId) internal view returns(address) {
-        (,,,,,,uint _collectionId,,,,) = IProfile(IContract(contractAddress).profile()).profileInfo(_tokenId);
-        return taskContracts[_collectionId] != address(0x0) && IMarketPlace(taskContracts[_collectionId]).pendingTask(_tokenId)
-            ? taskContracts[_collectionId] : address(0x0);
-    }
 
     function _getDescription(uint _tokenId) public view returns(string[] memory) {
         string[] memory _description = new string[](1);
@@ -730,14 +730,13 @@ contract ProfileHelper is ERC721Pausable {
         }
     }
 
-    function _constructTokenURI(address _task, uint _tokenId, string[] memory _media, string[] memory optionNames, string[] memory optionValues, string[] memory _description) internal view returns(string memory) {
-        return IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
+    function _constructTokenURI(uint _tokenId, string[] memory _media, string[] memory optionNames, string[] memory optionValues, string[] memory _description) internal view returns(string memory) {
+        return INFTSVG(IContract(contractAddress).nftSvg()).constructTokenURI(
             _tokenId,
-            "",
             address(this),
             ownerOf(_tokenId),
             ownerOf(_tokenId),
-            _task,
+            address(0x0),
             _media.length > 0 ? _media : new string[](1),
             optionNames,
             optionValues,
@@ -754,7 +753,6 @@ contract ProfileHelper is ERC721Pausable {
             (string[] memory optionNames, string[] memory optionValues) = getOptions(_tokenId);
             string[] memory media = INFTicket(IContract(contractAddress).nfticketHelper()).getSponsorsMedia(_collectionId, "");
             output = _constructTokenURI(
-                _taskContract(_tokenId),
                 _tokenId, 
                 media, 
                 optionNames, 

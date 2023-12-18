@@ -28,8 +28,8 @@ struct Divisor {
     uint cap;
 }
 struct Treasury {
-    uint256 priceTicket;
     uint256 fee;
+    NFTYPE isNFT;
     bool useNFTicket;
     uint256 referrerFee;
 }
@@ -5136,6 +5136,8 @@ interface IProfile {
     function sharedEmail(address) external view returns(bool);
     function safeMint(address,uint) external;
     function burn(uint) external;
+    function getPercentile(address,address,uint,uint) external view returns(uint,uint,uint);
+    function getDueNLateSeconds(bool,address,address,uint,uint) external returns(uint,uint);
     function referrerFromAddress(address) external view returns(uint);
     function updateLateDays(uint _profileId, uint _lateDays, uint _dueReceivable) external;
     function getAllAccounts(uint,uint) external view returns(address[] memory);
@@ -5432,6 +5434,7 @@ interface IPaywall {
 interface IBILL {
     function attach(uint) external;
     function detach(uint) external;
+    function isLender(address,uint,uint) external view returns(bool);
     function getDue(uint,uint,uint,uint) external pure returns(uint);
     function protocolInfo(uint) external view returns(BILLInfo memory);
     function percentiles(address) external view returns(uint);
@@ -5546,6 +5549,7 @@ interface INFTSVG {
 interface IMarketPlace {
     function taskContracts(uint) external view returns(address);
     function ticketID() external view returns(uint);
+    function tokenId() external view returns(string memory);
     function getTimeEstimates(uint,string memory,address,uint[] memory) external view returns(uint);
     function generateSVG(uint,address,address,address,address,address,string[] memory,string[] memory,string[] memory,string[] memory) external view returns (string memory);
     function partner(uint,string memory,string memory,uint,bool) external;
@@ -5588,7 +5592,7 @@ interface IMarketPlace {
     function contractAddress() external view returns(address);
     function emitCreatePaywallARP(address,uint,string memory) external;
     function emitDeletePaywallARP(uint) external;
-    function getDueReceivable(address,uint) external view returns(uint, uint, int);
+    function getDueReceivable(uint) external view returns(uint, uint, int);
     function getDiscount(uint,address,string memory) external view returns(uint);
     function getGaugeNColor(SSIData memory,uint,COLOR,bool,bool) external view returns(bytes32);
     function checkBounty(address,uint,uint,uint,bytes32,bool) external;
@@ -6099,10 +6103,12 @@ interface INoteEmitter {
 }
 
 interface ILottery {
+    function deleteReward(address,address,uint) external;
+    function getPendingReward(uint,address,address,bool) external view returns(uint);
     function withdrawPendingReward(address,uint,uint) external;
     function getAllTokens(uint,uint) external view returns(address[] memory);
     function getPercentile(address,address,uint,uint) external view returns(uint,uint,uint);
-    function startLottery(address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool,uint256[4] calldata,uint256[6] calldata) external;
+    function startLottery(address,address,uint256,uint256,uint256,uint256,uint256,uint256,bool,uint,uint256[4] calldata,uint256[6] calldata) external;
     function checkIdentity(address,address,uint,uint,uint[] calldata) external returns(uint,uint);
     function getRandomNumber(uint256) external;
     function viewRandomResult(uint) external view returns (uint);
@@ -6119,6 +6125,8 @@ interface ILottery {
     function viewBracketCalculator(uint) external view returns(uint);
     function tokenPerBracket(uint,address,uint) external view returns(uint);
     function calculateRewardsForTicketId(uint,uint,uint,address) external view returns (uint256);
+    function emitUpdateMiscellaneous(uint,uint,string memory,string memory,uint,uint,address,string memory) external;
+    function nftPrizes(uint,address) external view returns(uint);
 }
 
 interface IValuePool {

@@ -148,18 +148,29 @@ contract Valuepool {
     }
 
     function notifyLoan(address _token, address _arp, uint _amount) external nonreentrant {
-        uint _limit = IValuePool(IContract(contractAddress).valuepoolVoter()).getBalance(_ve, _arp);
-        require(_limit >= lenderBalance[_token][_arp] + _amount);
-        lenderBalance[_token][_arp] += _amount * lenderFactor / 10000;
+        _amount = IValuePool(IContract(contractAddress).valuepoolVoter()).getBalance(_ve, _arp);
         try IERC721(_token).setApprovalForAll(_arp, true) {
-        } catch { erc20(_token).approve(_arp, _amount); }    
+            require(_amount > 0 && lenderBalance[_token][_arp] == 0);
+        } catch { 
+            require(_amount >= lenderBalance[_token][_arp] + _amount);
+            erc20(_token).approve(_arp, _amount); 
+        }    
+        lenderBalance[_token][_arp] += _amount * lenderFactor / 10000;
         IARP(_arp).notifyReward(_token, _amount);
-        IValuePool(helper).emitNotifyLoan(_arp, _token, _amount * lenderFactor / 10000);
+        IValuePool(helper).emitNotifyLoan(
+            _arp, 
+            _token, 
+            _amount * lenderFactor / 10000
+        );
     }
 
     function notifyReimbursement(address _token, address _arp, uint _amount) external nonreentrant {
         _amount = _amount == 0 ? lenderBalance[_token][_arp] : Math.min(lenderBalance[_token][_arp],_amount);
-        assert(IERC20(_token).transferFrom(msg.sender, address(this), _amount));
+        try IERC721(_token).transferFrom(msg.sender, address(this), _amount) {
+            require(_amount == lenderBalance[_token][_arp]);
+        } catch {
+            assert(IERC20(_token).transferFrom(msg.sender, address(this), _amount));
+        }
         bool _active = lenderBalance[_token][_arp] > _amount;
         lenderBalance[_token][_arp] -= _amount;
         IValuePool(helper).emitNotifyReimbursement(_arp, _token, _amount, _active);
@@ -355,9 +366,9 @@ contract Valuepool {
     
     function _checkIdentityProof(uint _tokenId, uint _identityTokenId, bool checkUnique) internal {
         if (keccak256(abi.encodePacked(valueName)) != keccak256(abi.encodePacked(""))) {
-            address _owner = va(_ve).ownerOf(_tokenId);
             address ssi = IContract(contractAddress).ssi();
-            require(ve(ssi).ownerOf(_identityTokenId) == _owner);
+            address _owner = ve(ssi).ownerOf(_identityTokenId);
+            require(ve(_ve).isApprovedOrOwner(_owner, _tokenId));
             SSIData memory metadata = ISSI(ssi).getSSIData(_identityTokenId);
             require(metadata.deadline > block.timestamp);
             (string memory _ssid, address _gauge, address _gauge2) = _checkProfiles(metadata);
@@ -1035,7 +1046,7 @@ contract ValuepoolHelper2 {
     function updateGeoTag(address _vava, uint _geoTag, uint _tokenId) external {
         address _ve = IValuePool(_vava)._ve();
         require(
-            ve(_ve).ownerOf(_tokenId) == msg.sender || 
+            ve(_ve).isApprovedOrOwner(msg.sender, _tokenId) || 
             IAuth(_vava).devaddr_() == msg.sender ||
             IAuth(contractAddress).devaddr_() == msg.sender
         );
@@ -1326,9 +1337,10 @@ contract ValuepoolVoter {
     ) external {
         require(period[_ve] > 0 && !isBlacklisted[_ve][_pool], "VaV10");
         require(_amount == 0 || 
-        IARP(IContract(contractAddress).arpHelper()).isLender(_pool, _ve, minPeriod[_ve], minBountyRequired[_ve]), "VaV11");
+        IARP(IContract(contractAddress).arpHelper()).isLender(_pool, _ve, minPeriod[_ve], minBountyRequired[_ve]) ||
+        IBILL(IContract(contractAddress).billMinter()).isLender(_pool, minPeriod[_ve], minBountyRequired[_ve]), "VaV11");
         require(_pool == msg.sender || IAuth(_pool).devaddr_() == msg.sender, "VaV12");
-        require(va(_ve).balanceOfNFT(_tokenId) >= minimumLockValue[_ve] && va(_ve).ownerOf(_tokenId) == msg.sender, "VaV13");
+        require(va(_ve).balanceOfNFT(_tokenId) >= minimumLockValue[_ve] && va(_ve).isApprovedOrOwner(msg.sender, _tokenId), "VaV13");
         if(isGauge[_ve][_pool] == 0) pools[_ve].push(_pool);
         uint _endTime = block.timestamp + period[_ve];
         gauges[proposalId].start = block.timestamp;
@@ -1783,7 +1795,7 @@ contract Ve {
 
     /// @dev Returns the address of the owner of the NFT.
     /// @param _tokenId The identifier for an NFT.
-    function ownerOf(uint _tokenId) public view returns (address) {
+    function ownerOf(uint _tokenId) external view returns (address) {
         return idToOwner[_tokenId];
     }
 
@@ -1943,16 +1955,16 @@ contract Ve {
     //     _transferFrom(_from, _to, _tokenId, msg.sender);
     // }
 
-    function _isContract(address account) internal view returns (bool) {
-        // This method relies on extcodesize, which returns 0 for contracts in
-        // construction, since the code is only stored at the end of the
-        // constructor execution.
-        uint size;
-        assembly {
-            size := extcodesize(account)
-        }
-        return size > 0;
-    }
+    // function _isContract(address account) internal view returns (bool) {
+    //     // This method relies on extcodesize, which returns 0 for contracts in
+    //     // construction, since the code is only stored at the end of the
+    //     // constructor execution.
+    //     uint size;
+    //     assembly {
+    //         size := extcodesize(account)
+    //     }
+    //     return size > 0;
+    // }
 
     // /// @dev Transfers the ownership of an NFT from one address to another address.
     // ///      Throws unless `msg.sender` is the current owner, an authorized operator, or the
@@ -2407,7 +2419,7 @@ contract Ve {
     function getWithdrawable(uint _tokenId) public view  returns(uint) {
         uint _percent_withdrawable =  block.timestamp * 10000 / locked[_tokenId].end;
         if(!withdrawable) {
-            return block.timestamp >= locked[_tokenId].end ? uint(int(locked[_tokenId].amount)) : 0;
+            return block.timestamp >= locked[_tokenId].end ? uint(int(locked[_tokenId].amount)) - minimumBalance[_tokenId]: 0;
         } 
         return uint(int(locked[_tokenId].amount)) * _percent_withdrawable / 10000 - minimumBalance[_tokenId];
     }
@@ -2425,7 +2437,11 @@ contract Ve {
         require(msg.sender == _trustBounty());
         assert(_isApprovedOrOwner(_owner, _tokenId));
         require(deadlines[_tokenId] < block.timestamp);
-        minimumBalance[_tokenId] -= _amount;
+        if (minimumBalance[_tokenId] > _amount) {
+            minimumBalance[_tokenId] -= _amount;
+        } else {
+            minimumBalance[_tokenId] = 0;
+        }
         // IValuePool(_valuepoolHelper()).emitDeleteMinimumBalance(_owner, _tokenId, _amount);
     }
 
@@ -2535,12 +2551,11 @@ contract Ve {
     function tokenURI(uint _tokenId) public view returns (string memory) {
         require(idToOwner[_tokenId] != address(0));
         (string[] memory optionNames, string[] memory optionValues) = _populate(_tokenId);
-        return IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
+        return INFTSVG(IContract(contractAddress).nftSvg()).constructTokenURI(
             _tokenId,
-            '',
             valuepool,
             token,
-            ownerOf(_tokenId),
+            idToOwner[_tokenId],
             address(0x0),
             IValuePool(IContract(contractAddress).valuepoolHelper2()).getMedia(valuepool,_tokenId),
             optionNames,

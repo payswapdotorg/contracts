@@ -4253,12 +4253,12 @@ contract NFTMarketPlaceHelper {
             credit = burnTokenForCredit[_collectionId][_position].discount * _number / 10000;
         } else { //NFT
             uint _times = IMarketPlace(burnTokenForCredit[_collectionId][_position].checker).verifyNFT(
-                _number, 
+                _number,
                 burnTokenForCredit[_collectionId][_position].collectionId, 
                 burnTokenForCredit[_collectionId][_position].item
             );
-            IERC721(burnTokenForCredit[_collectionId][_position].token).safeTransferFrom(msg.sender, _destination, _number);
-            credit = burnTokenForCredit[_collectionId][_position].discount * _times / 10000;
+            IERC721(burnTokenForCredit[_collectionId][_position].token).transferFrom(msg.sender, _destination, _number);
+            credit = burnTokenForCredit[_collectionId][_position].discount * _times;
         }
         IMarketPlace(IContract(contractAddress).nftMarketOrders()).
         incrementPaymentCredits(msg.sender, _collectionId, _applyToTokenId, credit);

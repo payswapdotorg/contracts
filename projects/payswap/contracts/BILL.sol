@@ -230,7 +230,7 @@ contract BILL {
             _amount,
             _merchant
         );
-    }
+    }    
 
     function notifyDebit(address _merchant, address _owner, uint _amount) external lock {
         uint _protocolId = addressToProtocolId[_owner];
@@ -531,12 +531,16 @@ contract BILL {
         IBILL(helper).emitPayInvoicePayable(_protocolId, _toPay);
     }
 
-    function withdraw(address _token, uint amount) external onlyAdmin {
-        require(pendingRevenue[_token] >= amount, "BILL9");
+    function notifyReward(address _token, uint _amount) external {
+        IERC20(_token).safeTransferFrom(msg.sender, address(this), _amount);
+    }
+
+    function withdraw(address _token, address _to, uint amount) external onlyAdmin {
+        require(pendingRevenue[_token] >= amount);
         pendingRevenue[_token] -= amount;
         address note = _note();
         erc20(_token).approve(note, amount);
-        IBILL(note).safeTransferWithBountyCheck(_token, msg.sender, 0, amount);
+        IBILL(note).safeTransferWithBountyCheck(_token, _to, 0, amount);
     
         IBILL(helper).emitWithdraw(msg.sender, amount);
     }
@@ -624,6 +628,12 @@ contract BILLMinter is ERC721Pausable {
             return 1;
         }
         return 0;
+    }
+
+    function isLender(address _bill, uint _minAdminPeriod, uint _minAdminBounty) external view returns(bool) {
+        return gauges.contains(_bill) && 
+               IBILL(_bill).adminBountyRequired() >= _minAdminBounty &&
+               IBILL(_bill).period() >= _minAdminPeriod;
     }
 
     function mint(address _to) external returns(uint) {
