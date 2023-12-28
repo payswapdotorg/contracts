@@ -152,7 +152,7 @@ contract Auditor {
             return (dueReceivable + _penalty, dueReceivable);
         } else {
             uint _factor = Math.min(discountDivisor[_optionId].cap, (uint(-secondsReceivable) / Math.max(1,discountDivisor[_optionId].period)) * discountDivisor[_optionId].factor);
-            uint _discount = Math.max(dueReceivable, protocolInfo[_protocolId].amountReceivable) * _factor / 10000; 
+            uint _discount = protocolInfo[_protocolId].amountReceivable * _factor / 10000; 
             return (
                 dueReceivable > _discount ? dueReceivable - _discount : 0,
                 dueReceivable
@@ -161,8 +161,8 @@ contract Auditor {
     }
 
     function autoCharge(uint[] memory _tokenIds, uint _numPeriods) external lock {
-        address minter = _minter();
         for (uint i = 0; i < _tokenIds.length; i++) {
+            address _owner = ve(_minter()).ownerOf(_tokenIds[i]);
             if (isAdmin[msg.sender]) require(isAutoChargeable[_tokenIds[i]], "A4");
             (uint _price, uint _due) = getReceivable(_tokenIds[i], _numPeriods);
             address token = protocolInfo[_tokenIds[i]].token;
@@ -173,8 +173,8 @@ contract Auditor {
             );
             uint _bounty = ITrustBounty(_trustBounty()).getBalance(adminBountyIds[token]);
             require(_bounty >= IAuditor(helper).minBountyPercent() * totalProcessed[token] / 10000);
-            address _user = isAdmin[msg.sender] ? ve(helper).ownerOf(_tokenIds[i]) : msg.sender;
-            IERC20(token).safeTransferFrom(ve(minter).ownerOf(_tokenIds[i]), address(this), _price);
+            address _user = isAdmin[msg.sender] ? _owner : msg.sender;
+            IERC20(token).safeTransferFrom(_owner, address(this), _price);
             IERC20(token).safeTransfer(helper, payswapFees);
             IAuditor(helper).notifyFees(token, payswapFees);
             protocolInfo[_tokenIds[i]].paidReceivable += _due;
@@ -291,7 +291,6 @@ contract AuditorNote is ERC721Pausable {
         uint likes;
         uint dislikes;
     }
-    bool public check;
     address public contractAddress;
     mapping(uint => uint) private sum_of_diff_squared;
     uint public minBountyPercent = 1;
@@ -534,6 +533,8 @@ contract AuditorNote is ERC721Pausable {
 
     function updatePendingRevenueFromNote(uint _tokenId, uint _paid) external {
         require(gauges.contains(msg.sender));
+        require(notes[tokenId].due <= _paid);
+        notes[tokenId].due = 0;
         pendingRevenueFromNote[_tokenId] += _paid;
     }
     
@@ -543,7 +544,6 @@ contract AuditorNote is ERC721Pausable {
         uint _protocolId, 
         uint _numPeriods
     ) external lock {
-        check = true;
         require(gauges.contains(_auditor));
         (uint dueReceivable, uint nextDue,) = IAuditor(IContract(contractAddress).auditorHelper2()).getDueReceivable(_auditor, _protocolId, _numPeriods);
         require(
@@ -577,14 +577,14 @@ contract AuditorNote is ERC721Pausable {
         require(ownerOf(_tokenId) == msg.sender, "Only owner!");
         require(notes[_tokenId].timer <= block.timestamp, "Not yet due");
         uint256 revenueToClaim = pendingRevenueFromNote[_tokenId];
-        _burn(_tokenId);
         delete pendingRevenueFromNote[_tokenId];
         delete adminNotes[notes[_tokenId].protocolId];
         uint payswapFees = revenueToClaim * tradingFee / 10000;
         IAuditor(notes[_tokenId].auditor).noteWithdraw(address(msg.sender), _tokenId, revenueToClaim - payswapFees);
-        IAuditor(notes[_tokenId].auditor).noteWithdraw(address(this), _tokenId, payswapFees);
-        treasuryFees[notes[_tokenId].token] += payswapFees;
+        // IAuditor(notes[_tokenId].auditor).noteWithdraw(address(this), _tokenId, payswapFees);
+        // treasuryFees[notes[_tokenId].token] += payswapFees;
         delete notes[_tokenId];
+        _burn(_tokenId);
     }
 
     function _constructTokenURI(uint _tokenId, address _token, string[] memory description, string[] memory optionNames, string[] memory optionValues) internal view returns(string memory) {
@@ -603,8 +603,8 @@ contract AuditorNote is ERC721Pausable {
 
     function tokenURI(uint _tokenId) public override view returns (string memory output) {
         uint idx;
-        string[] memory optionNames = new string[](5);
-        string[] memory optionValues = new string[](5);
+        string[] memory optionNames = new string[](6);
+        string[] memory optionValues = new string[](6);
         uint decimals = uint(IMarketPlace(notes[_tokenId].token).decimals());
         optionValues[idx++] = toString(_tokenId);
         optionNames[idx] = "PID";
@@ -612,7 +612,9 @@ contract AuditorNote is ERC721Pausable {
         optionNames[idx] = "End";
         optionValues[idx++] = toString(notes[_tokenId].timer);
         optionNames[idx] = "Amount";
-        optionValues[idx++] = string(abi.encodePacked(toString(notes[_tokenId].due/10**decimals), " " ,IMarketPlace(notes[_tokenId].token).symbol()));
+        optionValues[idx++] = toString(notes[_tokenId].due);
+        optionNames[idx] = "Symbol, Decimals";
+        optionValues[idx++] = string(abi.encodePacked(toString(uint(IMarketPlace(notes[_tokenId].token).decimals())), ", ", IMarketPlace(notes[_tokenId].token).symbol()));
         optionNames[idx] = "Expired";
         optionValues[idx++] = notes[_tokenId].timer < block.timestamp ? "Yes" : "No";
         string[] memory _description = new string[](1);
@@ -1055,15 +1057,14 @@ contract AuditorHelper2 {
     function getDueReceivable(address _auditor, uint _protocolId, uint _numExtraPeriods) public view returns(uint, uint, int) {
         (,,uint amountReceivable,uint paidReceivable,uint periodReceivable,uint startReceivable,,) =
         IAuditor(_auditor).protocolInfo(_protocolId);
-        uint numPeriods = getNumPeriods(startReceivable, block.timestamp, periodReceivable);
-        // uint numPeriods = amountReceivable == 0 ? 1 : Math.max(1, paidReceivable / amountReceivable);
-        uint nextDue = startReceivable + periodReceivable * numPeriods;
-        numPeriods += _numExtraPeriods;
-        uint due = nextDue < block.timestamp ? amountReceivable * numPeriods - paidReceivable : 0;
+        uint shiftedBlockTimestamp = block.timestamp + _numExtraPeriods * periodReceivable;
+        uint numPeriods = getNumPeriods(startReceivable, shiftedBlockTimestamp, periodReceivable);
+        uint dueDate = startReceivable + periodReceivable * ((paidReceivable / Math.max(1, amountReceivable)) + 1);
+        uint due = amountReceivable * numPeriods > paidReceivable ? amountReceivable * numPeriods - paidReceivable : 0;
         return (
             due, // due
-            nextDue, // next
-            int(block.timestamp) - int(nextDue) //late or seconds in advance
+            dueDate, // next
+            int(block.timestamp) - int(dueDate) //late or seconds in advance
         );
     }
 

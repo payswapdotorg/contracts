@@ -289,7 +289,7 @@ contract BILL {
     }
 
     function _updateProtocol(
-        bool _migrate,
+        bool __migrate,
         address _token,
         address _owner,
         uint _startReceivable,
@@ -303,8 +303,8 @@ contract BILL {
     ) internal returns(uint _protocolId) {
         _protocolId = IBILL(helper).mint(_owner);
         protocolInfo[_protocolId].token = _token;
-        protocolInfo[_protocolId].startReceivable = _migrate ? _startReceivable : block.timestamp + _startReceivable;
-        protocolInfo[_protocolId].startPayable = _migrate ? _startPayable : block.timestamp + _startPayable;
+        protocolInfo[_protocolId].startReceivable = __migrate ? _startReceivable : block.timestamp + _startReceivable;
+        protocolInfo[_protocolId].startPayable = __migrate ? _startPayable : block.timestamp + _startPayable;
         protocolInfo[_protocolId].periodReceivable = _periodReceivable;
         protocolInfo[_protocolId].periodPayable = _periodPayable;
         protocolInfo[_protocolId].version = migrationPoint.version;

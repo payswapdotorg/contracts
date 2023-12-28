@@ -234,10 +234,10 @@ async function main() {
   const WFTM = "0x07B9c47452C41e8E00f98aC4c075F5c443281d2A"
   const INIT_CODE_PAIR_HASH = "0xc686be96020737842c8d1dc73f500c20206f43ad5e5928a27a00cbf05cf911fa"
   const businessMinterAddress = "0xfF4d74eD76bBF5b6Da80F3b5D493d3f23D52eB55"
-  const auditorNoteAddress = "0x51ccF98593809607bdB08509e8b8d670658f86C0"
-  const auditorHelperAddress = "0xEE0A3DE3952B71cfadaA155182878Ed49a6D93a2"
-  const auditorHelper2Address = "0x0e5d8abf5F9A31b8A17e0f35dd89cCcDd1227DC8"
-  const auditorFactoryAddress = "0xa78F0762FAFd64B90B2F8fb52A8aF923cD399ddD"
+  const auditorNoteAddress = "0x588EB4fa93cE8eC49d09c64be24F3e52d3C12F1B"
+  const auditorHelperAddress = "0xB11FC59614722954a69Ce242DbFEB02f5564148d"
+  const auditorHelper2Address = "0x35500917fc270C8484b586A36a7086fd80b6DC70"
+  const auditorFactoryAddress = "0x949CBc87D0531b95e9D8DA184126808960bB02D4"
   const acceleratorVoterAddress = "0x84779D6bCf31E90DE81Ac4155EFA9A725a60B7f9"
   const futureCollateralAddress = "0xD2b2435aa749E42F3523033Fe167Ae543082375F"
   const cardAddress = "0x5133ce668Dcfe85690CCB890e175F594fb11d0D0"
@@ -255,8 +255,8 @@ async function main() {
   const sponsorFactoryAddress = "0x71324803103f17D00e2E2Fe6449f27d301693c0A"
   const sponsorNoteAddress = "0xDF1Fd12D700110CF763A540e059349ce4a453C5A"
   const ssiAddress = "0x1de9D006f209E9A7556270cae74D1F0D6864168a" //"0xFEc4d4A1aad9cE28dA66D86609c3B47aaeF5e527"
-  const profileAddress = "0x5E008DCE8095dE09BFF103Df85b566449c1dF7e2" // "0x810EBEa7d4330B6A6EFa2f73FF7E7773c57F98CD" //"0x8D531506a9Eb2E5931235a09e5192201B38b12b6"
-  const profileHelperAddress = "0x0cf9f62B1e215ba580C8445Ca9C9CBf2ad32b6DB" // "0xf2Ca8333888cf3C673E81225228a000F9b7b4338" //"0xa71B00c519d6573E0cFC37638FE712aC6dD65a2c"
+  const profileAddress = "0x3E0240b8aa46207d267225136BE0837841e53EB5" // "0x5E008DCE8095dE09BFF103Df85b566449c1dF7e2" // "0x810EBEa7d4330B6A6EFa2f73FF7E7773c57F98CD" //"0x8D531506a9Eb2E5931235a09e5192201B38b12b6"
+  const profileHelperAddress = "0x2844bAf1253669Bf37fE6480805D95d6BFB5B126" // "0x0cf9f62B1e215ba580C8445Ca9C9CBf2ad32b6DB" // "0xf2Ca8333888cf3C673E81225228a000F9b7b4338" //"0xa71B00c519d6573E0cFC37638FE712aC6dD65a2c"
   const stakeMarketAddress = "0xbf877500681AF64f10F6C3E92fA9946f800804ea"
   const stakeMarketNoteAddress = "0x2596c9eA9473AE8B1F8EB08019CD8e9844Cea34a"
   const stakeMarketHelperAddress = "0xf178d8A6661aBA43bEaFe98080e47CD213c2FC34"
@@ -300,12 +300,12 @@ async function main() {
   const billHelperAddress = "0xbdb2ec1b244ACa734A5dA0ce7cd89d447319a2fA"
   const billNoteAddress = "0x729124dBeC963b743dfFC8aAA29236d95F1C7a55"
   const extraTokenFactoryAddress = "0x87EDbF47a1e2373282c34298F4041c0c80e328E8"
-  const willFactoryAddress = "0x43CeAaa09f54cCd58B29904BAC64dDe058FcBE87"
-  const willNoteAddress = "0x86EB24C62635573f0dbc52B1b07660f6B3FA8fdA"
-  const gameFactoryAddress = "0x87b5235830038Dc8b874fa5700BC3492E5Fd96bF"
-  const gameMinterAddress = "0x45160eA1079e7A07160C2EA122A760cee0Ffcc71"
-  const gameHelperAddress = "0x6Ff847c7EbDf92bA9E6D1DBD9c172d912f61C4D4"
-  const gameHelper2Address = "0xD3A538C35fEA83F7C696Fc5b80783dA5B3c4812A"
+  const willFactoryAddress = "0x586adF5F95Ff0A51fbf1135Bd48D93A4C9872600"
+  const willNoteAddress = "0x1F19f653c6fAEEE290a33d229aa63Ebdc950fE7D"
+  const gameFactoryAddress = "0xFefe9BDfbc270Ab756Cd3A407c6Af87d9D4BF99f"
+  const gameMinterAddress = "0x6D6322884Fc2FB9621bB5447Eb0fcAB257012846"
+  const gameHelperAddress = "0x7d3AFD77572DE66432FD02Ef1C58F6eeD2e12213"
+  const gameHelper2Address = "0x3d606442837d05d30350b3E55662FF93558A9426"
   const lotteryAddress = "0xa0a200D83C67fBa6386a8c901eB43CD6013104af"
   const lotteryHelperAddress = "0x49BA1bE93992a0fD9FE475B9bdF6b6D97C685e1C"
   const lotteryRandomNumberGeneratorAddress = "0x64e7a26A476A4D832F4ED5393a43a4e0c2D852Ce"
@@ -318,9 +318,9 @@ async function main() {
   const rampHelperAddress = "0x23Be44620Fa12769260E02C7060193e1Df86D260"
   const rampHelper2Address = "0xfDcF4202C251600Ce957080b0986Fe2e5311c4AF"
   const rampAdsAddress = "0xdBae46e2b19A39300139dBC6437678A2a3e12347"
-  const bettingHelperAddress = "0xE7c267Fa69166Cc6431916Cd0612F74BEb52E19D"
-  const bettingMinterAddress = "0xB486008DcD9770d452bF82A22bb6ae1FceE85bDE"
-  const bettingFactoryAddress = "0x03b92F38DD4d6B66aFd5679F84f0A22291A325B3"
+  const bettingHelperAddress = "0x35E19a2Ff5221468b0D0a1F2dae359942c406eAd"
+  const bettingMinterAddress = "0xB50184eA3204193901F7b8531A4D9B94536699E7"
+  const bettingFactoryAddress = "0x3276211F6458A665c15548766345b31c95F23B95"
 
   const customMinter = CustomMinter.attach(customMinterAddress)
   const contractAddresses = ContractAddresses.attach(contractAddress)
@@ -890,6 +890,36 @@ async function main() {
     "0x10f3264c05a2cda2a43640e8ee7ffaefa4c9c77700b5acbcf1785715004c404c",
     "0x0ab77860738b8f19be0f03bdd34dcf1f2dd518997abec33a4c1d91ce48b6e7e6",
     "0x04985dd205c87301c7036ac42494d5d4501a8f028a076bf5b6a58d140ecb6cbc",
+    "0xbe8c8d5ef222f48c280c2088d73f9c8ea1b5f5ddadd925bf446385893184dcfc",
+    "0xa036217448b331ad0f1d25d1792f0e0aca6f8843609bc6085b2cc74ea2c3ad9f",
+    "0x699cc93dd38e2be6dccf199792194aea814f5a16f6c32b19a6197398e71c3d24",
+    "0x4982e20af6f6c673ec63e191c0322ab0d5f7fad923672c5ecc64fcbd8eae73b2",
+    "0xcbce5e8fd535b097a4053a5afd626a7c18bdcef1a7e86b3b86009e0f316c4143",
+    "0x011da36fef59397625cf919f903fcfc6cc2904c35a780c43a5127f86889bd709",
+    "0xcabf5ab2d2b690f7921ad7f7f39b743c70584ed92efdbcd7147298518a699955",
+    "0x7111e20d5fb23345c7a83e2ce34143c3799e6529a62092c84f6ba485ada46e3b",
+    "0x6bf41897b0664083f462649fdf77c58a8dbd641fd239c517f945df8e95760ab3",
+    "0x82b651508089439f281e5c217aef9a7aea6eceb4d2e304ec9d3791659fbb8e56",
+    "0xe34d953f9602699cb571c3e666a6247986bdf18a49df27cd9fdb5a96436a8d64",
+    "0x909b92f26948650ac36f5de5abb2455b4c81c2b1b52444b1819d345baaccb0fc",
+    "0x7205a274798b6d064dcae7523ef3941e526d33fdb08884d2e3a3099c5bd6c019",
+    "0xbb88324a6dd758ad6df2f22066b9a634e5eadb34eee39b7d7eeec4eebe536449",
+    "0xf80d319e11a93c0d4acabae59818f2419116752da9827f2b7ca5f307db5a35a6",
+    "0x734bbd4ad4bf542ab9c3a6de49655ecee8ff7ad3ced0e4bb03f4e0a7a258ac40",
+    "0xec0d49a77d4192c7a1de49e382dcbadfbea47c0bc6451aaff9ff870204a65a16",
+    "0xa843d8fbefdfdff5b73751f80bbad0211f6054eb08339b9b407b5de55a81865f",
+    "0x62e365a10d9536552d1a7a72aa52420364574ee526dd68f0ae85e724fd5de5f8",
+    "0xb04f5e4e460e2c802b6fe1b29c7e2038926d8984d50a1206b0c8e14ea2167f02",
+    "0x0564e88676771c0df50ee8eb6b3f51f9ade1e73a0b742e43f1ea9ca17a1ad082",
+    "0x26056ede0bebbbfd4a6d859eaf893e2ce8b86c07e80d732c1eeeadfb49f2c882",
+    "0xc015c66aec9ae8bcb9d52f7f9f474c58e123065f61094fe69fdbc5f815114e0d",
+    "0x9d046fcd5d4aacb0c30338af46e094f7b1944be1ec048f3ee8b9f89d1f147bfb",
+    "0x3712fc63a55df263fcc572275e9ed66800992664b2aac004c80a07cb279e061d",
+    "0xabcd81b3cb39dbf36e51d3b06e906480ac18c4db796544edcc55055fda864fe1",
+    "0x6b8480c895299b71f533110ac717fc2fd1321420f84efa3fa1fbcf7fece63c05",
+    "0x49b7f045924312cfd984810992481478aa37341f603c03e028b7455d168d143d",
+    "0x7188dcb7ba5fe697af5d3d2eab771e1036ab5b5c21c38f043bc839541249be31",
+    "0x28d5396e92b18384957249546545a6d7ecba2f26fe808b8201180d72b04a933d",
   ]
   let wallets = [] as any;
   const k=0
@@ -914,7 +944,7 @@ async function main() {
       //, wallet._signingKey()
       // )
   }
-  // for (let i = 0; i < 10; i++) {
+  // for (let i = 0; i < 30; i++) {
   //   const wallet = ethers.Wallet.createRandom();
   //   console.log("7wallet=============>", i, wallet._signingKey())
   // }
@@ -1003,7 +1033,7 @@ async function main() {
   // await contractAddresses.deployed()
   // console.log("contractAddresses============>", contractAddresses.address)
 
-  // const bettingFactory = await BettingFactory.deploy();
+  // const bettingFactory = await BettingFactory.deploy(contractAddresses.address);
   // await bettingFactory.deployed()
   // console.log("bettingFactory============>", bettingFactory.address)
 
@@ -1079,7 +1109,7 @@ async function main() {
   // await gameMinter.deployed()
   // console.log("gameMinter============>", gameMinter.address)
 
-  // const gameHelper = await GameHelper.deploy();
+  // const gameHelper = await GameHelper.deploy(contractAddresses.address);
   // await gameHelper.deployed()
   // console.log("gameHelper============>", gameHelper.address)
 
@@ -1162,7 +1192,7 @@ async function main() {
   // const profileHelper = await ProfileHelper.deploy(contractAddresses.address)
   // await profileHelper.deployed()
   // console.log("profileHelper============>", profileHelper.address)
-
+  
   // const stakeMarket = await StakeMarket.deploy(contractAddresses.address)
   // await stakeMarket.deployed()
   // console.log("stakeMarket============>", stakeMarket.address)
@@ -1410,9 +1440,6 @@ async function main() {
   // await gameMinter.setContractAddress(contractAddresses.address)
   // console.log("gameMinter.setContractAddress===========> Done!")
 
-  // await gameHelper.setContractAddress(contractAddresses.address)
-  // console.log("gameHelper.setContractAddress===========> Done!")
-
   // await gameHelper2.setContractAddress(contractAddresses.address)
   // console.log("gameHelper2.setContractAddress===========> Done!")
 
@@ -1475,9 +1502,6 @@ async function main() {
 
   // await bettingMinter.setContractAddress(contractAddresses.address)
   // console.log("bettingMinter.setContractAddress===========> Done!")
-
-  // await bettingFactory.setContractAddress(contractAddresses.address)
-  // console.log("bettingFactory.setContractAddress===========> Done!")
 
   // await stakeMarketNote.setContractAddress(contractAddresses.address)
   // console.log("stakeMarketNote.setContractAddress===========> Done!")
@@ -1900,9 +1924,6 @@ async function main() {
 
   // await contractAddresses.setBettingMinter(bettingMinter.address)
   // console.log("contractAddresses.setBettingMinter===========> Done!")
-
-  // await gameFactory.updateWhitelist(tFiat.address, true)
-  // console.log("gameFactory.isWhitelisted==========>")
 
   // await marketPlaceHelper3.addDtoken(tFiat.address)
   // await marketPlaceHelper3.addDtoken("0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D")
@@ -2369,8 +2390,6 @@ async function main() {
     // console.log("nfticketHelper2.tokenURI(1)==============>", await nfticketHelper2.tokenURI(1))
     // console.log("nfticketHelper2.tokenURI(6)==============>", await nfticketHelper2.tokenURI(6))
     // console.log("nfticketHelper2.tokenURI(3)==============>", await nfticketHelper2.tokenURI(3))
-    // await profile.createSpecificProfile("Tepa",1,0)
-    // console.log("profile1==============>", await profile.profileInfo(1))
     // await profile.shareEmail(deployer.address)
     // await profile.shareEmail(deployer3.address)
     // await profile.shareEmail(deployer4.address)
@@ -2386,11 +2405,40 @@ async function main() {
     // await profile.shareEmail(deployer14.address)
     // console.log("profile.sharedEmail==============>", await profile.sharedEmail(deployer.address))
 
+    // await profile.createSpecificProfile("Tepa",1,0)
+    // console.log("profile1==============>", await profile.profileInfo(1))
+
+    // await tFiat.approve(profileHelper.address, ethers.BigNumber.from("1000000000000000000"))
+    // await profileHelper.bidForProfile(ethers.BigNumber.from("1000000000000000000"))
+    // console.log("==============>", await profileHelper.bids(1))
+
+    // await profileHelper.processAuction()
+    // console.log("profileHelper.processAuction==============>Done")
+
+    // console.log("profileHelper.boughtProfile==============>", await profileHelper.boughtProfile(deployer.address))
+    // console.log("profileHelper.checkCrush==============>", await profileHelper.checkCrush(1, deployer.address))
+    
+    // await profileHelper.updateParams(1, 10, 10, 11000)
+    // console.log("profileHelper.updateParams==============>Done", await profileHelper.boughtProfileId(), await profileHelper.getParams())
+
     // await profile.updateHelper(arpNote.address, true)
     // console.log("profile.updateHelper==============>Done")
-    
+
+    // await profile.updateParameters(84600*7, 10000, 'ssid')
+    // console.log("profile.updateParameters==============>Done")
+
     // const _ve = ve.attach(veAddress)
     // console.log("trustBounties.ves=====================>", await trustBountiesHelper.ves(veAddress), await _ve.ownerOf(1))
+
+    // // getwithdrawable
+    // const _ve = ve.attach(veAddress)
+    // console.log("_ve.isApprovedOrOwner=====================>", await _ve.isApprovedOrOwner(deployer.address, 5), await _ve.isApprovedOrOwner("0x16c248b0f67fbcc1aa8e5f111f79a4560e787b3d", 5), await _ve.ownerOf(5))
+    // const weight_now = await _ve.balanceOfNFT(5)
+    // const weight_end = await _ve.balanceOfNFTAt(5, 1828310400)
+    // const percent_w = 10000 - (weight_now / 1000000000000000000) * 10000
+    // const percent_w2 = 10000 - (weight_end / 1000000000000000000) * 10000
+    // console.log("_ve.ownerOf=====================>", await _ve.ownerOf(5), await _ve.locked(5), weight_now, weight_end)
+    // console.log("==================>", weight_now * 10000 / 1000000000000000000, (weight_now / 1000000000000000000) * 10000, percent_w, percent_w2, 1000000000000000000 * percent_w / 10000)
 
     // console.log("profile.getPercentile=====================>", await profile.getPercentile(
     //   veAddress,
@@ -2511,31 +2559,228 @@ async function main() {
 
     // await bettingFactory.createGauge(1, deployer.address, "0x0000000000000000000000000000000000000000")
     // let bettingAddress = (await bettingHelper.getAllBettings(0))[0]
-    // betting = Betting.attach(bettingAddress)
+    // const betting = Betting.attach(bettingAddress)
+    // const betting = await Betting.deploy(
+    //   deployer.address,
+    //   bettingHelper.address,
+    //   "0x0000000000000000000000000000000000000000",
+    //   contractAddress
+    // )
     // console.log("bettingAddress==================>", bettingAddress, betting.address)
+    // console.log("tickets=================>", (await betting.tickets(1)), (await betting.tickets(2)), (await betting.tickets(3)), (await betting.tickets(4)), (await betting.tickets(5)))
+    // console.log("tokenURI=================>", await bettingMinter.tokenURI(6))
+    // console.log("tokenURI=================>", await bettingMinter.tokenURI(7))
+    // console.log("bettingAddress==================>", await betting.amountCollected(
+    //   1,
+    //   0
+    // ), await betting.amountCollected(
+    //   1,
+    //   1
+    // ),await betting.amountCollected(
+    //   1,
+    //   2
+    // ))
+    // console.log("tickets==================>", await betting.tickets(1), await betting.tickets(2))
+
+    // await betting.updateParameters(
+    //   0,
+    //   "1000000000000000000000000000",
+    //   "999999999999999999999999999" ,
+    //   27
+    // )
+    // console.log("bettingEvent.updateParameters=========>Done")
+
     // await betting.updateBettingEvent(
     //   tFiatAddress,
     //   false,
     //   0,
+    //   3,
     //   0,
-    //   0,
-    //   [0,0,3000,ethers.BigNumber.from("1000000000000000000"),1000],
-    //   [7500,2500,0,0,0,0],
+    //   [0,0,300,ethers.BigNumber.from("100000000000000000"),300],
+    //   // [0,0,60,0,300],
+    //   [10000,0,0,0,0,0],
     //   "scores",
     //   "media",
     //   "desicription",
-    //   ["P1","P2","P3","P4","P5","P6"]
+    //   "999999,999990,999909,999099,990999,909999"
     // )
-    // console.log("bettingEvent=========>", await betting.protocolInfo(1))
-    // await tFiat.approve(betting.address, ethers.BigNumber.from("1000000000000000000"))
+    // console.log("bettingEvent.protocolInfo=========>", await betting.protocolInfo(1))
+
+    // await tFiat.approve(betting.address, ethers.BigNumber.from("200000000000000000"))
     // await betting.buyWithContract(
     //   1,
     //   deployer.address,
     //   "0x0000000000000000000000000000000000000000",
     //   0,
     //   0,
-    //   [1120000]
+    //   ["1999999"]
     // )
+    // console.log("betting.buyWithContract=========>Done", await betting.tickets(1))
+    // console.log("numberTicketsPerBettingId========================>", await betting.numberTicketsPerBettingId(1,"1100000000000000000000000000",0))
+    // // console.log("numberTicketsPerBettingId========================>", await betting.numberTicketsPerBettingId(1,"1100000000000000000000000000",2))
+    // console.log("numberTicketsPerBettingId========================>", await betting.numberTicketsPerBettingId(1,"1010000000000000000000000000",0))
+    // // console.log("numberTicketsPerBettingId========================>", await betting.numberTicketsPerBettingId(1,"1010000000000000000000000000",1))
+    // // console.log("numberTicketsPerBettingId========================>", await betting.numberTicketsPerBettingId(1,"1010000000000000000000000000",2))
+    // console.log("numberTicketsPerBettingId========================>", await betting.numberTicketsPerBettingId(1,"1001000000000000000000000000",0))
+    
+    // console.log("countWinnersPerBracket========================>", await betting.countWinnersPerBracket(1,0,0))
+    // console.log("countWinnersPerBracket========================>", await betting.countWinnersPerBracket(1,1,0))
+    // console.log("countWinnersPerBracket========================>", await betting.countWinnersPerBracket(1,2,0))
+    // period: -1
+    // numberTicketsPerBettingId(a) => []
+    // numberTicketsPerBettingId(b) => []
+    // numberTicketsPerBettingId(c) => []
+    // countWinnersPerBracket => 0
+    // tokenPerBracket => 0
+    // period: 0
+    // numberTicketsPerBettingId(a) => [1]
+    // numberTicketsPerBettingId(b) => []
+    // numberTicketsPerBettingId(c) => []
+    // countWinnersPerBracket => 1
+    // tokenPerBracket => 0.1
+    // period: 1
+    // numberTicketsPerBettingId(a) => []
+    // numberTicketsPerBettingId(b) => [0,1]
+    // numberTicketsPerBettingId(c) => []
+    // countWinnersPerBracket => 1
+    // tokenPerBracket => 0.1
+    // period: 2
+    // numberTicketsPerBettingId(a) => []
+    // numberTicketsPerBettingId(b) => []
+    // numberTicketsPerBettingId(c) => [0,0,1]
+    // countWinnersPerBracket => 1
+    // tokenPerBracket => 0.1
+
+    // const encodeAlphabet = (value: any, ticketSize: any) => {
+    //   const processed = Array<any>()
+    //   // const value = val?.toLowerCase()
+    //   const ALPHABET = {
+    //     a: 0,
+    //     b: 1,
+    //     c: 2,
+    //     d: 3,
+    //     e: 4,
+    //     f: 5,
+    //     g: 6,
+    //     h: 7,
+    //     i: 8,
+    //     j: 9,
+    //     k: 10,
+    //     l: 11,
+    //     m: 12,
+    //     n: 13,
+    //     o: 14,
+    //     p: 15,
+    //     q: 16,
+    //     r: 17,
+    //     s: 18,
+    //     t: 19,
+    //     u: 20,
+    //     v: 21,
+    //     w: 22,
+    //     x: 23,
+    //     y: 24,
+    //     z: 25,
+    //     0: 26,
+    //     1: 27,
+    //     2: 28,
+    //     3: 29,
+    //     4: 30,
+    //     5: 31,
+    //     6: 32,
+    //     7: 33,
+    //     8: 34,
+    //     9: 35,
+    //     '.': 36,
+    //     ' ': 37,
+    //   }
+    //   const res = Array.from({ length: ticketSize }, (_, j) => 0)
+    //   let k = 1
+    //   for (let i = 0; i < value.length; i++) {
+    //     if (!processed.includes(value[i])) {
+    //       if (ALPHABET[value[i]] !== undefined) {
+    //         processed.push(value[i])
+    //         const pos = ALPHABET[value[i]]
+    //         res[pos] = k++
+    //       } else {
+    //         res[i] = value[i]
+    //       }
+    //     }
+    //   }
+    //   return `1${res.join('')}`
+    // }
+    
+    // const decodeAlphabet = (value: any, ticketSize: any) => {
+    //   const ALPHABET = {
+    //     0: 'a',
+    //     1: 'b',
+    //     2: 'c',
+    //     3: 'd',
+    //     4: 'e',
+    //     5: 'f',
+    //     6: 'g',
+    //     7: 'h',
+    //     8: 'i',
+    //     9: 'j',
+    //     10: 'k',
+    //     11: 'l',
+    //     12: 'm',
+    //     13: 'n',
+    //     14: 'o',
+    //     15: 'p',
+    //     16: 'q',
+    //     17: 'r',
+    //     18: 's',
+    //     19: 't',
+    //     20: 'u',
+    //     21: 'v',
+    //     22: 'w',
+    //     23: 'x',
+    //     24: 'y',
+    //     25: 'z',
+    //     26: '=',
+    //     27: '1',
+    //     28: '2',
+    //     29: '3',
+    //     30: '4',
+    //     31: '5',
+    //     32: '6',
+    //     33: '7',
+    //     34: '8',
+    //     35: '9',
+    //     36: '.',
+    //   }
+    //   const res = Array.from({ length: ticketSize }, (_, j) => 0)
+    //   for (let i = 1; i < value.length; i++) {
+    //     if (parseInt(value[i]) !== 0) {
+    //       const pos = ALPHABET[i - 1]
+    //       res[parseInt(value[i])] = pos
+    //     }
+    //   }
+    //   return res.join('')
+    //   .replaceAll('0', '')
+    //   .replaceAll('=', '0').trim()
+    // }
+    // const val = "over 10"
+    // console.log("============================>", encodeAlphabet(val, 38))
+    // console.log("============================>", decodeAlphabet(encodeAlphabet(val, 38), 38))
+
+    // const val2 = "over 10.5"
+    // console.log("============================>", encodeAlphabet(val2, 38))
+    // console.log("============================>", decodeAlphabet(encodeAlphabet(val2, 38), 38))
+
+    // const val3 = "messi"
+    // console.log("============================>", encodeAlphabet(val3, 38))
+    // console.log("============================>", decodeAlphabet(encodeAlphabet(val3, 38), 38))
+
+    // const val4 = "mbappe"
+    // console.log("============================>", encodeAlphabet(val4, 38))
+    // console.log("============================>", decodeAlphabet(encodeAlphabet(val4, 38), 38))
+
+    // const val5 = "messi mbappe"
+    // console.log("============================>", encodeAlphabet(val5, 38))
+    // console.log("============================>", decodeAlphabet(encodeAlphabet(val5, 38), 38))
+
 
     // await lotteryHelper.startLottery(
     //     deployer.address,
@@ -2987,7 +3232,7 @@ async function main() {
     // console.log("stakeMarketHelper.tokenURI(2)===========>", await stakeMarketHelper.tokenURI(2))
 
     // let auditorAddress = (await auditorNote.getAllAuditors(0))[0]
-    // auditor = Auditor.attach(auditorAddress)
+    // const auditor = Auditor.attach(auditorAddress)
     // console.log("auditorAddress===============>", auditor.address, auditorAddress)
     // await auditor.updateProtocol(
     //   deployer.address,
@@ -3000,7 +3245,23 @@ async function main() {
     //   "https://link-to-media.com",
     //   "auditor's description of protocol"
     // )
+    // console.log("pendingRevenueFromNote===============>", await auditorNote.pendingRevenueFromNote(1))
     // console.log("protocol=======================>", await auditor.protocolInfo(1), auditorNote.address)
+    // console.log("auditorHelper.tokenIdToAuditor(1)======================>", await auditorHelper.tokenIdToAuditor(1))
+    // console.log("auditorHelper.tokenIdToAuditor(2)======================>", await auditorHelper.tokenIdToAuditor(2))
+    // console.log("gameHelper.isBlacklisted======================>", await gameHelper.isBlacklisted(1, auditor.address))
+    // console.log("auditorHelper.categories======================>", await auditorHelper.categories(auditor.address))
+    // console.log("auditorHelper.ownerOf(1)======================>", await auditorHelper.ownerOf(1))
+    // console.log("auditorHelper.ownerOf(2)======================>", await auditorHelper.ownerOf(2))
+    // console.log("auditorHelper.ownerOf(4)======================>", await auditorHelper.ownerOf(4))
+    // console.log("auditor.getProtocolRatings(1)======================>", await auditor.getProtocolRatings(1))
+    // console.log("auditor.getProtocolRatings(3)======================>", await auditor.getProtocolRatings(3))
+    // console.log("gameHelper.getResourceToObject======================>", await gameHelper.getResourceToObject(1, 0, "attack_92"))
+    // console.log("gameHelper.getResourceToObject======================>", await gameHelper.getResourceToObject(1, 1, "attack_92"))
+    // console.log("gameHelper.getAllProtocolObjects======================>", await gameHelper.getAllProtocolObjects(1, "attack_91", 0))
+    // console.log("gameHelper.getAllObjects======================>", await gameHelper.getAllObjects(1, 0))
+    // console.log("gameHelper.isObject======================>", await gameHelper.isObject(1, "jolly-jumper"))
+    // console.log("gameHelper.isObject======================>", await gameHelper.ownerOf(1))
     // console.log("auditorHelper.tokenURI======================>", await auditorHelper.tokenURI(1))
     // console.log("auditor.description======================>", await auditor.description(1))
     // console.log("auditorHelper._getOptions======================>", await auditorHelper._getOptions(auditorAddress, 1))
@@ -3469,7 +3730,7 @@ async function main() {
     // console.log("worldHelper======================>", await contractAddresses.worldHelper())
     // console.log("worldHelper2======================>", await contractAddresses.worldHelper2())
     // console.log("worldHelper3======================>", await contractAddresses.worldHelper3())
-    // console.log("profile======================>", await contractAddresses.profile(), await profile.addressToProfileId(deployer.address))
+    // console.log("profile======================>", await contractAddresses.profile(), await profile.addressToProfileId("0x2fbfd5a8b2c31ddb921211933bfb1842ff39b5ea"))
     // console.log("contractAddresses0======================>", await worldFactory.contractAddress())
     // console.log("contractAddresses00======================>", await worldNote.getAllWorlds(0))
     // console.log("contractAddresses2======================>", await worldHelper.contractAddress())
@@ -4279,7 +4540,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[45]).updateCollection(
   //   "RealEstateTontines",
-  //   "Welcome to RealEstateTontines: Revolutionizing Real Estate Investment! Are you looking for a fresh, innovative way to invest in real estate? Look no further than RealEstateTontines – your gateway to a new era of collaborative real estate investment. You pool funds together with other members to purchase a real estate property that you rent out and you take turns in collecting the rent each end of month until you decide to resell the property.",
+  //   "Welcome to RealEstateTontines: Revolutionizing Real Estate Investment! Are you looking for a fresh, innovative way to invest in real estate? Look no further than RealEstateTontines – your gateway to a new era of collaborative real estate investment. You pool funds together with other members to purchase a real estate property (commercial/residential building, farmland, bar, etc.) that you rent out and you take turns in collecting the rent each end of month until you decide to resell the property.",
   //   "https://i.ibb.co/CQJb4c9/304.jpg",
   //   "https://i.ibb.co/CQJb4c9/304.jpg",
   //   "https://i.ibb.co/0qS11Tt/257.jpg",
@@ -8239,7 +8500,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[267]).updateCollection(
   //   "VirginBank",
-  //   "Users pool funds together to attract applications from virgin girls around the world. The girls first contact members of the bank to get to know them in order to pick one. Once they've picked one, they apply for coverage by the valuepool. The applications are processed through the bank's auditors who testify on applicants' effective virginity. Once accepted, both partners create bounties to certify they didn't know each other before meeting on the platform as well as to the terms of their lives together (who has what role and what it implies: the available roles are masculine/metro/feminine man/girl each with clear and unambiguous definitions provided by the channel). After this only can the valuepool provide them with access to tickets to various banks with respect to the guys' credit in the valuepool. 20% of the fund is invested.",
+  //   "Users pool funds together to attract applications from virgin girls around the world. The girls are discovered by scouts which post their videos on the platform and get contacted by members of bank willing to get to know them in order to pick one. Members are forbidden from having sexual intercourse with women from the platform unless pay-married and scouts cannot put more than one man in contact with one girl at a time. Once members have picked one, they apply for coverage by the valuepool. The applications are processed through the bank's auditors who testify on the girls' effective virginity. Once accepted, both partners create bounties to certify they didn't know each other before meeting on the platform as well as to the terms of their lives together (who has what role and what it implies: the available roles are masculine/metro/feminine man/girl each with clear and unambiguous definitions provided by the channel). After this only can the valuepool provide them with access to tickets to various banks with respect to the guys' credit in the valuepool. 20% of the fund is invested.",
   //   "https://i.ibb.co/vqvSRSW/356.jpg",
   //   "https://i.ibb.co/vqvSRSW/356.jpg",
   //   "https://i.ibb.co/HCqK6C9/224.jpg",
@@ -8275,7 +8536,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[269]).updateCollection(
   //   "LotteryVirgins",
-  //   "Introducing LotteryVirgins, a unique platform that combines elements of matchmaking, financial security, and sustainable investment. Here, virginal individuals are authenticated by auditors and added to an exclusive chat group of lottery winners. Men participate in lotteries, contributing varying amounts, and when 1000 participants join, the lottery concludes, and winners gain access to a pool of virginal individuals. Partners can interact and eventually decide on marriage, but intimate interactions are postponed until then. Virgins offer a bounty, ensuring their virginity until they find a husband. Half of the winnings go into a valuepool, where elected VCs invest in businesses with the aim of generating at least 10% annual returns to sustain the fund. The other half covers couples' financial needs, including mortgages, food, education, and more, promoting financial stability for newlyweds. Couples adhere to specific rules, ensuring respect, fidelity, and shared responsibilities, with the fund offering support in conflict resolution and more. It's a revolutionary platform redefining relationships, finance, and investment for a brighter future.",
+  //   "Introducing LotteryVirgins, a unique platform that combines elements of matchmaking, financial security, and sustainable investment. Here, virginal individuals are authenticated by auditors and added to an exclusive chat group of lottery winners. Men participate in lotteries, contributing varying amounts, and when 1000 participants join, the lottery concludes, and winners gain access to a pool of virginal individuals. Partners can interact and eventually decide on marriage, but intimate interactions are postponed until then. Virgins offer a bounty, ensuring their virginity until they find a husband. Half of the winnings go into a valuepool, where elected VCs invest in businesses with the aim of generating at least 10% annual returns to sustain the fund. The other half covers couples' financial needs, including mortgages, food, education, and more, promoting financial stability for newlyweds. Couples adhere to specific rules, ensuring respect, fidelity, and shared responsibilities, with the fund offering support in conflict resolution and more. It's a revolutionary platform redefining relationships, finance, and investment for a brighter future. Scouts are used to find the virgins.",
   //   "https://i.ibb.co/nwyjgd7/351.jpg",
   //   "https://i.ibb.co/nwyjgd7/351.jpg",
   //   "https://i.ibb.co/sWGRP6j/202.jpg",
@@ -8311,7 +8572,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[271]).updateCollection(
   //   "ArrangedMarriage",
-  //   "Users create requests with badges from auditors attesting to each one of their qualities/defaults/resources/etc. They specify the qualities of their partner along with the terms of the marriage and then pick from the requests they receive, from their marriage partner. There is no dating involved, pick and marry. Marriage is done by a priest or whichever partner of the channel users want, then either a couple's stake is created in the appropriate channel, or users choose to involve a specific government or both.",
+  //   "Users create requests with badges from auditors attesting to each one of their qualities/defaults/resources/etc. They specify the qualities of their partner along with the terms of the marriage and then pick from the requests they receive, from their marriage partner. There is no dating involved, pick and marry. Marriage is done by a priest or whichever partner of the channel users want, then either a couple's stake is created in the appropriate channel, or users choose to involve a specific government or both. Scouts are used to find the girls",
   //   "https://i.ibb.co/2vbrXyt/347.jpg",
   //   "https://i.ibb.co/2vbrXyt/347.jpg",
   //   "https://i.ibb.co/Smr3X1b/204.jpg",
@@ -9661,7 +9922,7 @@ async function main() {
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[347]).updateCollection(
   //    "Farmify",
-  //    "Farmify is an innovative platform that connects consumers with local farmers, allowing them to discover and subscribe to receive regular deliveries of fresh produce directly from the source. By signing up for a Farmify, customers can enjoy a wide variety of seasonal fruits and vegetables sourced from nearby farms, all without any additional delivery fees. This means that members can access high-quality, locally grown food at an affordable price while supporting small-scale agriculture in their community. With Farmify, it has never been easier to eat healthily, support sustainability, and build meaningful connections with the people who grow our food.",
+  //    "Farmify is an innovative platform that connects consumers with local farmers, allowing them to discover and subscribe to receive regular deliveries of fresh produce directly from the source. By signing up for a Farmify, customers can enjoy a wide variety of seasonal fruits and vegetables sourced from nearby farms, all without any additional delivery fees. This means that members can access high-quality, locally grown food at an affordable price while supporting small-scale agriculture in their community. With Farmify, it has never been easier to eat healthily, support sustainability, and build meaningful connections with the people who grow our food. Farmify also enables farmers to  rent farmland for a period of time. To maintain soil health without pesticides, farmers typically rotate many crops among their fields. Rotating crops improves soil, but makes scaling difficult. To get another 200 acres of tomatoes, they need to buy another 1000 acres worth of farmland. Being able to rent farmland means farmers can swap fields each year (by renting another farmland) rather than swapping crops; they can thus specialize in one single crop.",
   //    "https://i.ibb.co/0mjLXVk/67.jpg",
   //    "https://i.ibb.co/0mjLXVk/67.jpg",
   //    "https://i.ibb.co/bs9B2mg/221.jpg",
@@ -11923,6 +12184,61 @@ async function main() {
   //   ""
   // );
   // console.log("472marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 473
+  // await marketPlaceCollection.connect(wallets[470]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[470]).updateCollection(
+  //   "SocialLoans",
+  //   "SocialLoans enables you to find, join or apply to valuepools that lend money to users based on their social media following. Elligible social media platforms are determined by the valuepools.",
+  //   "https://i.ibb.co/vZmLvfm/94.jpg",
+  //   "https://i.ibb.co/vZmLvfm/94.jpg",
+  //   "https://i.ibb.co/Gs7g9dw/439-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("473marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 474
+  // await marketPlaceCollection.connect(wallets[471]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[471]).updateCollection(
+  //   "Awards",
+  //   "Find and join valuepools dedicated to giving various awards, you can find valuepools that rewards movies/actors/phones/laptops/influencers/athletes/etc. Each valuepool is dedicated to a specific type of award. Candidates are nominated and winners selected through proposals and votes. The valuepool admins create NFT trophees for the winners using their auditor contract.",
+  //   "https://i.ibb.co/SBcPLxt/68.jpg",
+  //   "https://i.ibb.co/SBcPLxt/68.jpg",
+  //   "https://i.ibb.co/bs9B2mg/221.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("474marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 475
+  // await marketPlaceCollection.connect(wallets[472]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[472]).updateCollection(
+  //   "ModelScouts",
+  //   "Find and vote for your best model. Scouts go in  the world and get random girls they come accross to do some modeling routines which they film and post on the platform for you to vote on the best model. You can buy the models' tickets to participate in the associated game or directly contact the scout if you would like to recruit the girl for some modeling gig.",
+  //   "https://i.ibb.co/9cY2Y0B/47.jpg",
+  //   "https://i.ibb.co/9cY2Y0B/47.jpg",
+  //   "https://i.ibb.co/0XmYrqL/289.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("475marketPlaceCollection.updateCollection===========> Done!")
+
 
   }
   

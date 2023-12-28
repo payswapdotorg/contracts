@@ -123,6 +123,15 @@ struct Credit {
     uint collectionId;
     string item;
 }
+struct BettingCredit {
+    address token;
+    address checker;
+    address destination;
+    uint discount;
+    uint bettingId;
+    uint collectionId;
+    string item;
+}
 struct ProfileInfo {
     string ssid;
     string name;
@@ -5294,6 +5303,7 @@ interface IERC1155 is IERC165 {
 }
 
 interface IGameNFT {
+    function updateTotalScore(uint,address,uint,uint) external;
     function destination(uint) external view returns(address);
     function getDescription(uint) external view returns(string[] memory);
     function getTaskContract(uint,uint) external view returns(address);
@@ -6428,19 +6438,20 @@ interface IBetting {
     function pricePerAttachMinutes(uint) external view returns(uint);
     function updateSponsorMedia(uint,string memory) external;
     function emitAddSponsor(uint,uint,address,string memory,string memory) external;
-    function updatePaymentCredits(address,address,uint) external;
+    function updatePaymentCredits(address,uint,uint) external;
     function processFees(address,address,address,uint,uint,uint) external;
     function getToken(uint) external view returns(address);
     function media(uint) external view returns(string memory);
     function symbol() external view returns(string memory);
     function decimals() external view returns(uint8);
-    function tickets(uint) external view returns(uint,uint,uint,uint,uint,bool,address);
+    function tickets(uint) external view returns(string memory,uint,uint,uint,uint,uint,bool,address);
     function emitTicketsClaim(address,uint,uint,uint) external;
-    function emitTicketsPurchase(address,uint,uint,uint,uint,uint) external;
+    function emitTicketsPurchase(address,uint,uint,uint,uint,string memory,uint) external;
     function emitBettingResultsIn(uint,uint,address,uint) external;
+    function emitBettingResultsIn2(uint,uint,address,string memory) external;
     function emitInjectFunds(address,uint,uint,uint) external;
     function maxAdminShare() external view returns(uint);
-    function buyWithContract(uint,address,address,uint,uint,uint[] calldata) external;
+    function buyWithContract(uint,address,address,uint,uint,uint[] calldata,string[] calldata) external;
     function collectionId() external view returns(uint);
     function tokenURI(uint) external view returns(string memory);
     function uriGenerator(address) external view returns(address);
@@ -6466,8 +6477,9 @@ interface IBetting {
     function token() external view returns(address);
     function updateProtocol(address, address, uint, uint, uint, uint, uint, uint, uint, uint, uint, string memory) external;
     function addressToProtocolId(address) external view returns(uint);
-    function protocolInfo(uint) external view returns(address,string memory,uint,uint,uint,uint,uint,uint,uint,uint[] memory,uint[] memory);
+    function protocolInfo(uint) external view returns(address,string memory,bool,uint,uint,uint,uint,uint,uint,uint,uint,uint,uint);
     function updateGauge(address,address,uint) external;
+    function getLetter(uint) external view returns(string memory);
     function emitUpdateProtocol(uint,uint,address,string memory,uint[5] memory,uint[] memory,string memory,string memory,string memory) external;
     function emitDeleteProtocol(uint) external;
     function emitWithdraw(address,address,uint) external;
@@ -6785,6 +6797,7 @@ interface IPancakeSwapLottery {
 
 interface IWill {
     function notifyNFTFees(address) external;
+    function setApprovalForAll(address,bool) external;
     function emitUpdateProtocol(uint,address,string memory,string memory,address[] memory,uint[] memory) external;
     function tradingNFTFee() external view returns(uint);
     function emitUpdateParameters(uint,uint,uint,uint,uint) external;
@@ -6804,6 +6817,10 @@ interface IWill {
     function updatePercentage(uint,uint,uint,uint) external;
 }
 
+interface IFutureCollateral {
+    function paymentCredits(address) external view returns(uint); 
+    function isAdmin(address) external view returns(bool); 
+}
 
 interface IContract {
     function badgeNft() external view returns(address);

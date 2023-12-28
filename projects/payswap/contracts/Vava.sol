@@ -2417,11 +2417,12 @@ contract Ve {
     } 
 
     function getWithdrawable(uint _tokenId) public view  returns(uint) {
-        uint _percent_withdrawable =  block.timestamp * 10000 / locked[_tokenId].end;
+        uint _amount = uint(int(locked[_tokenId].amount));
+        uint _percent_withdrawable =  10000 - (_balanceOfNFT(_tokenId, block.timestamp) / _amount) * 10000;
         if(!withdrawable) {
-            return block.timestamp >= locked[_tokenId].end ? uint(int(locked[_tokenId].amount)) - minimumBalance[_tokenId]: 0;
+            return block.timestamp >= locked[_tokenId].end ? uint(_amount) - minimumBalance[_tokenId]: 0;
         } 
-        return uint(int(locked[_tokenId].amount)) * _percent_withdrawable / 10000 - minimumBalance[_tokenId];
+        return (_amount * _percent_withdrawable / 10000) - minimumBalance[_tokenId];
     }
     
     function updateMinimumBalance(address _owner, uint _tokenId, uint _amount, uint _deadline) external {

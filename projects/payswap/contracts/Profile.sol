@@ -14,7 +14,7 @@ contract Profile {
     mapping(address => uint) public total;
     uint bufferTime = 14 days;
     uint limitFactor = 10000;
-    uint constant INITIAL_PROFILE_ID = 2;
+    uint constant INITIAL_PROFILE_ID = 5;
     mapping(address => bool) public isHelper;
     mapping(address => EnumerableSet.AddressSet) private _allContracts;
     mapping(uint => EnumerableSet.UintSet) private _badgeIds;
@@ -347,13 +347,11 @@ contract Profile {
     function claimRevenue(address _token, uint _profileId, uint _amount) external lock respectTimeConstraint {
         require(addressToProfileId[msg.sender] == _profileId, "P24");
         uint _toClaim = Math.min(_amount, pendingRevenue[_profileId][_token]);
-        pendingRevenue[_profileId][_token] -= _toClaim;
         if (profileInfo[_profileId].activePeriod < block.timestamp) {
             profileInfo[_profileId].paidPayable = 0;
             profileInfo[_profileId].activePeriod = block.timestamp + bufferTime / bufferTime * bufferTime;
         }
         _safeTransfer(_token, msg.sender, _toClaim);
-        profileInfo[_profileId].paidPayable += _toClaim;
 
         emit ClaimRevenue(_token, _profileId, _toClaim);
     }
@@ -478,8 +476,10 @@ contract Profile {
         uint _limit = ITrustBounty(_trustBounty()).getBalance(_bountyId);
         (,,,,,,uint endTime,,,) = ITrustBounty(_trustBounty()).bountyInfo(_bountyId);
         require(endTime > block.timestamp + bufferTime);
-        uint amount = Math.min(value + profileInfo[_profileId].paidPayable, _limit * limitFactor / 10000);
+        uint amount = Math.min(value, _limit * limitFactor / 10000 - profileInfo[_profileId].paidPayable);
         IERC20(_token).safeTransfer(to, amount);
+        pendingRevenue[_profileId][_token] -= amount;
+        profileInfo[_profileId].paidPayable += amount;
     }
 }
 
@@ -487,49 +487,29 @@ contract ProfileHelper is ERC721Pausable {
     using SafeERC20 for IERC20;
 
     address private contractAddress;
-    uint constant INITIAL_PROFILE_ID = 2; // starts at 1000000
-    uint private boughtProfileId = 1;
+    uint constant INITIAL_PROFILE_ID = 5; // starts at 1000000
+    uint public boughtProfileId = 1;
     uint private periodReceivable = 86400 * 7 * 52;
-    uint private bidStart = 1000e18;
+    uint private bidStart = 1e18;
     uint private bidDuration = 86400 * 7;
-    uint private minBidIncrementPercentage = 1000;
+    uint private minBidIncrementPercentage = 11000;
     mapping(address => uint) public boughtProfile;
     struct Bid {
         uint lastBid;
         uint lastBidTime;
         address lastBidder;
+        uint auctionTime;
     }
     mapping(uint => Bid) public bids;
-    mapping(uint => mapping(uint => bool)) public crushes;
+    mapping(uint => mapping(uint => bool)) private crushes;
     mapping(uint => string) public broadcast; // to broadcast msgs to followers
     mapping(uint => address) private uriGenerator;
     mapping(uint => uint) public createdAt;
     mapping(uint => uint[]) public identityProofs;
+    mapping(uint => uint) public crushCount;
 
-    event UpdateCrush(
-        uint senderProfileId, 
-        uint receiverProfileId, 
-        uint expiresAt,
-        bool notifyCrush,
-        bool secretCrush,
-        bool active,
-        bool friendly,
-        string guessQuestion,
-        string guessAnswer,
-        string sharedInfo
-    );
-
-    constructor(address _contractAddress) ERC721("ProfileNFT", "ProfileNFT") {
+    constructor(address _contractAddress) ERC721("ProfileNFT", "PNFT") {
         contractAddress = _contractAddress;
-    }
-
-    // simple re-entrancy check 
-    uint internal _unlocked = 1;
-    modifier lock() {
-        require(_unlocked == 1);
-        _unlocked = 2;
-        _;
-        _unlocked = 1;
     }
 
     function updateBroadcast(string memory message, uint _profileId) external {
@@ -537,14 +517,13 @@ contract ProfileHelper is ERC721Pausable {
         broadcast[_profileId] = message;
     }
 
-    function getParams() external view returns(address, uint,uint,uint,uint,uint) {
+    function getParams() external view returns(address,uint,uint,uint,uint) {
         return (
             contractAddress,
-            boughtProfileId,
             periodReceivable,
             bidStart,
             bidDuration,
-            bidDuration
+            minBidIncrementPercentage
         );
     }
 
@@ -554,9 +533,8 @@ contract ProfileHelper is ERC721Pausable {
 
     function getDueNLateSeconds(bool _isPaywall, address _note, address _arp, uint _protocolId, uint _profileId) external returns(uint due, uint lateSeconds) {
         if (_isPaywall) {
-            require(IMarketPlace(IContract(contractAddress).paywallARPHelper()).isGauge(_arp));
             PaywallInfo memory _protocolInfo = IMarketPlace(_arp).protocolInfo(_protocolId);
-            require(_protocolInfo.profileId == _profileId);
+            require(IMarketPlace(IContract(contractAddress).paywallARPHelper()).isGauge(_arp) && _protocolInfo.profileId == _profileId);
             (uint _due,, int _lateSeconds) = IMarketPlace(_arp).getDueReceivable(_protocolId);
             Ask memory ask = IMarketPlace(IContract(contractAddress).paywallMarketOrders()).getAskDetails(
                 IMarketPlace(_arp).collectionId(), 
@@ -577,40 +555,46 @@ contract ProfileHelper is ERC721Pausable {
     function updateParams(
         uint _bidStart, 
         uint _bidDuration, 
+        uint _periodReceivable,
         uint _minBidIncrementPercentage
     ) external {
         require(IAuth(contractAddress).devaddr_() == msg.sender);
         bidStart = _bidStart;
         bidDuration = _bidDuration;
+        periodReceivable = _periodReceivable;
         minBidIncrementPercentage = _minBidIncrementPercentage;
     }
     
-    function takeOverBid(uint _boughtProfileId, uint _amount) external lock {
-        require(bids[_boughtProfileId].lastBidTime + periodReceivable < block.timestamp, "PH03");
-        _bidForProfile(_boughtProfileId, _amount);
-    }
-
-    function updateLastBidTime(uint _boughtProfileId, uint _amount) external lock {
+    function takeOverBid(uint _boughtProfileId, uint _amount) external {
+        require(bids[_boughtProfileId].auctionTime < block.timestamp && bids[_boughtProfileId].lastBidder != address(0x0));
+        require(bids[_boughtProfileId].lastBid * minBidIncrementPercentage / 10000 <= _amount && _amount >= bidStart);
         IERC20(IContract(contractAddress).token()).safeTransferFrom(msg.sender, address(this), _amount);
-        bids[_boughtProfileId].lastBid = _amount;
-        bids[_boughtProfileId].lastBidTime = block.timestamp;
-    }
-
-    function bidForProfile(uint _amount) external lock {
-        require(boughtProfileId < INITIAL_PROFILE_ID);
-        _bidForProfile(boughtProfileId, _amount);
-    }
-
-    function _bidForProfile(uint _boughtProfileId, uint _amount) internal lock {
-        address _token = IContract(contractAddress).token();
-        if (bids[_boughtProfileId].lastBidder != address(0x0)) {
-            require(bids[_boughtProfileId].lastBid * minBidIncrementPercentage / 10000 >= _amount);
-            IERC20(_token).safeTransfer(bids[_boughtProfileId].lastBidder, bids[_boughtProfileId].lastBid);
-        }
-        IERC20(_token).safeTransferFrom(msg.sender, address(this), _amount);
         bids[_boughtProfileId].lastBid = _amount;
         bids[_boughtProfileId].lastBidder = msg.sender;
         bids[_boughtProfileId].lastBidTime = block.timestamp;
+        bids[_boughtProfileId].auctionTime = block.timestamp + bidDuration;
+    }
+
+    function updateLastBidTime(uint _boughtProfileId, uint _amount) external {
+        _amount = Math.max(_amount, bids[_boughtProfileId].lastBid);
+        IERC20(IContract(contractAddress).token()).safeTransferFrom(msg.sender, address(this), _amount);
+        bids[_boughtProfileId].lastBid = _amount;
+        bids[_boughtProfileId].lastBidTime = block.timestamp;
+        bids[_boughtProfileId].auctionTime = block.timestamp + periodReceivable;
+    }
+
+    function bidForProfile(uint _amount) external {
+        require(boughtProfileId < INITIAL_PROFILE_ID);
+        address _token = IContract(contractAddress).token();
+        if (bids[boughtProfileId].lastBidder != address(0x0)) {
+            require(bids[boughtProfileId].lastBid * minBidIncrementPercentage / 10000 <= _amount && _amount >= bidStart);
+            IERC20(_token).safeTransfer(bids[boughtProfileId].lastBidder, bids[boughtProfileId].lastBid);
+        }
+        IERC20(_token).safeTransferFrom(msg.sender, address(this), _amount);
+        bids[boughtProfileId].lastBid = _amount;
+        bids[boughtProfileId].lastBidder = msg.sender;
+        bids[boughtProfileId].lastBidTime = block.timestamp;
+        bids[boughtProfileId].auctionTime = block.timestamp;
     }
 
     function withdraw(address _to, uint _amount) external {
@@ -621,11 +605,13 @@ contract ProfileHelper is ERC721Pausable {
     function processAuction() external {
         require(bids[boughtProfileId].lastBidTime + bidDuration < block.timestamp);
         boughtProfile[bids[boughtProfileId].lastBidder] = boughtProfileId++;
+        bids[boughtProfileId].auctionTime = block.timestamp + periodReceivable;
     }
 
     function processTakeOverAuction(uint _boughtProfileId) external {
         require(bids[_boughtProfileId].lastBidTime + bidDuration < block.timestamp);
         boughtProfile[bids[_boughtProfileId].lastBidder] = _boughtProfileId;
+        bids[_boughtProfileId].auctionTime = block.timestamp + periodReceivable;
     }
     
     function safeMint(address _user, uint _profileId) external {
@@ -642,30 +628,19 @@ contract ProfileHelper is ERC721Pausable {
 
     function updateCrush(
         uint _receiverProfileId, 
-        uint _expiresAt, 
-        bool _notifyCrush,
-        bool _secretCrush,
-        bool _active,
-        bool _friendly,
-        string memory _guessQuestion,
-        string memory _guessAnswer,
-        string memory _sharedInfo
+        bool _add
     ) external {
         uint _profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender); 
-        require(IProfile(IContract(contractAddress).profile()).isUnique(_profileId));
-        crushes[_profileId][_receiverProfileId] = _active;
-        emit UpdateCrush(
-            _profileId,
-            _receiverProfileId, 
-            _expiresAt, 
-            _notifyCrush,
-            _secretCrush,
-            _active,
-            _friendly,
-            _guessQuestion,
-            _guessAnswer,
-            _sharedInfo
-        );
+        crushes[_profileId][_receiverProfileId] = _add;
+        if (_add) {
+            crushCount[_profileId] += 1;
+        } else if (crushCount[_profileId] > 0) {
+            crushCount[_profileId] -= 1;
+        }
+    }
+
+    function checkCrush(uint _profileId) external {
+        require(crushes[_profileId][IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender)], "4");
     }
     
     function updateUriGenerator(address _uriGenerator) external {
@@ -673,10 +648,6 @@ contract ProfileHelper is ERC721Pausable {
         if (collectionId > 0) {
             uriGenerator[collectionId] = _uriGenerator;
         }
-    }
-
-    function _isEmpty(string memory val) internal pure returns(bool) {
-        return keccak256(abi.encodePacked(val)) == keccak256(abi.encodePacked(""));
     }
 
     function _getDescription(uint _tokenId) public view returns(string[] memory) {

@@ -34,7 +34,6 @@ contract GameFactory {
     mapping(uint => mapping(uint => uint)) public userDeadLines_;
     uint private teamShare = 100;
     uint private minPricePerMinutes;
-    mapping(address => bool) private isWhitelisted;
     mapping(address => uint) public treasury;
     mapping(address => mapping(address => uint)) public pendingRevenue;
     mapping(address => uint) public addressToCollectionId;
@@ -130,11 +129,6 @@ contract GameFactory {
         contractAddress = _contractAddress;
     }
 
-    function updateWhitelist(address _token, bool _whitelist) external {
-        require(IAuth(contractAddress).devaddr_() == msg.sender);
-        isWhitelisted[_token] = _whitelist;
-    }
-
     function updateMinPoolSizeB4Delete(uint _minPoolSizeB4Delete) external {
         require(IAuth(contractAddress).devaddr_() == msg.sender);
         minPoolSizeB4Delete = _minPoolSizeB4Delete;
@@ -177,7 +171,6 @@ contract GameFactory {
         require(_creatorShare + _referrerFee + teamShare <= 10000
         , "GF2"
         );
-        require(isWhitelisted[_token], "GF02");
         // checkIdentityProof(msg.sender, false);
         uint _collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
         require(_collectionId > 0, "GF3");
@@ -290,11 +283,12 @@ contract GameFactory {
         IMarketPlace(IContract(contractAddress).marketHelpers2()).checkPartnerIdentityProof(_collectionId, _identityTokenId, _user);
         uint _price = ticketInfo_[_collectionId].pricePerMinutes * _numMinutes[0];
         address gameMinter = IContract(contractAddress).gameMinter();
-        (,,address _ticketGame,,,uint _deadline,,,,,,) = IGameNFT(gameMinter).gameInfo_(_tokenId);
+        (,,address _ticketGame,,uint _score,uint _deadline,,,,,,) = IGameNFT(gameMinter).gameInfo_(_tokenId);
         ticketInfo_[_collectionId].numPlayers += _ticketGame == address(0x0) ? 1 : 0;
         require(_referrer != _user, "GF010");
         _processPayments(_collection, _user, _referrer, _price);
         IGameNFT(gameMinter).updatePricePercentile(_collectionId, _tokenId, _price);
+        ticketInfo_[_collectionId].totalScore = ticketInfo_[_collectionId].totalScore > _score ? ticketInfo_[_collectionId].totalScore - _score : 0;
         IGameNFT(gameMinter).updateGameContract(
             _user, 
             ticketInfo_[_collectionId].gameContract, 
@@ -303,7 +297,7 @@ contract GameFactory {
             _price, 
             0
         );
-        userDeadLines_[_tokenId][_collectionId] = block.timestamp + _numMinutes[0];
+        userDeadLines_[_tokenId][_collectionId] = block.timestamp + _numMinutes[0] * 60;
         emit BuyGameTicket(_user, _collectionId, _tokenId, _numMinutes[0]);
     }
 
@@ -366,8 +360,8 @@ contract GameFactory {
                 burnTokenForCredit[_collectionId][_position].collectionId,
                 burnTokenForCredit[_collectionId][_position].item
             );
-            IERC721(burnTokenForCredit[_collectionId][_position].token).safeTransferFrom(msg.sender, _destination, _number);
-            credit = burnTokenForCredit[_collectionId][_position].discount * _times / 10000;
+            IERC721(burnTokenForCredit[_collectionId][_position].token).transferFrom(msg.sender, _destination, _number);
+            credit = burnTokenForCredit[_collectionId][_position].discount * _times;
         }
         paymentCredits[msg.sender][_collectionId] += credit;
     }
@@ -386,9 +380,7 @@ contract GameFactory {
         address gameMinter = IContract(contractAddress).gameMinter();
         require(ticketInfo_[_collectionId].claimable, "GF12");
         delete userDeadLines_[_tokenId][_collectionId];
-        ticketInfo_[_collectionId].totalScore += _score;
         uint _userFee = ticketInfo_[_collectionId].totalPaid * _score / ticketInfo_[_collectionId].totalScore;  
-        _userFee -= paidPayable[_collectionId][_tokenId];
         paidPayable[_collectionId][_tokenId] += _userFee;
         _processTx(_tokenId, _collectionId, _userFee);
         totalEarned[_collectionId] += _userFee;
@@ -405,6 +397,12 @@ contract GameFactory {
         } else {
             IERC20(ticketInfo_[_collectionId].token).safeTransfer(msg.sender, _userFee);
         }
+    }
+
+    function updateTotalScore(uint _collectionId, address _gameContract, uint _score1, uint _score2) external {
+        require(IContract(contractAddress).gameMinter() == msg.sender && ticketInfo_[_collectionId].gameContract == _gameContract);
+        ticketInfo_[_collectionId].totalScore = ticketInfo_[_collectionId].totalScore > _score1 ? ticketInfo_[_collectionId].totalScore - _score1 : 0;
+        ticketInfo_[_collectionId].totalScore += _score2;
     }
 
     function claimPendingRevenue(address _token) external lock {
@@ -479,6 +477,7 @@ contract GameMinter {
     mapping(uint => uint) public used;
     mapping(uint => uint) public maxUse;
 
+
     // simple re-entrancy check
     uint internal _unlocked = 1;
     modifier lock() {
@@ -549,31 +548,42 @@ contract GameMinter {
         uint _price,
         uint _reward
     ) external {
-        if (gameInfo_[_tokenId].deadline > gameInfo_[_tokenId].gameMinutes) {
-            gameInfo_[_tokenId].score = 0;
-        }
-        require(IContract(contractAddress).gameFactory() == msg.sender);
+        address gameFactory = IContract(contractAddress).gameFactory();
+        require(gameFactory == msg.sender);
         if (_gameContract != address(0x0)) {
             require(!IGameNFT(IContract(contractAddress).gameHelper()).blacklistedTickets(_tokenId));
         }
         require(getReceiver(_tokenId) == _to, "GM4");
         gameInfo_[_tokenId].gameCount += gameInfo_[_tokenId].game == address(0x0) ? 1 : 0;
         gameInfo_[_tokenId].game = _gameContract;
+        gameInfo_[_tokenId].score = 0;
         if (gameInfo_[_tokenId].gameMinutes == 0) {
-            gameInfo_[_tokenId].gameMinutes = block.timestamp + _minutes;
+            gameInfo_[_tokenId].gameMinutes = block.timestamp + _minutes * 60;
         } else {
-            gameInfo_[_tokenId].gameMinutes += _minutes;
+            gameInfo_[_tokenId].gameMinutes += _minutes * 60;
         }
         gameInfo_[_tokenId].price = _price;
         gameInfo_[_tokenId].won += _reward;
     }
 
     function updateScoreNDeadline(uint _tokenId, uint _score, uint _deadline) external {
-        require(msg.sender == gameInfo_[_tokenId].game, "GM5");
+        require(
+            msg.sender == gameInfo_[_tokenId].game && 
+            (gameInfo_[_tokenId].deadline < _deadline || _deadline == 0), 
+            "GM5"
+        );
         address gameHelper = IContract(contractAddress).gameHelper();
         require(!IGameNFT(gameHelper).blacklist(msg.sender), "GM6");
+        IGameNFT(IContract(contractAddress).gameFactory()).updateTotalScore(
+            tokenIdToCollectionId[_tokenId],
+            msg.sender,
+            gameInfo_[_tokenId].score,
+            _score
+        );
+        _deadline = _deadline == 0 ? block.timestamp : _deadline;
         gameInfo_[_tokenId].score = _score;
-        gameInfo_[_tokenId].deadline = _deadline == 0 ? block.timestamp : _deadline;
+        gameInfo_[_tokenId].deadline = _deadline;
+        gameInfo_[_tokenId].gameMinutes = _deadline + 60;
     }
     
     function updatePricePercentile(uint _collectionId, uint _tokenId, uint _value) external {
@@ -725,8 +735,11 @@ contract GameHelper is ERC721Pausable {
     mapping(uint => mapping(string => Ingredient[])) internal resourceToObject;
     // objectToResource = mapping(gameaddress => mapping(objectsNum => NumRecipeStruct))
     mapping(uint => mapping(string => EnumerableSet.UintSet)) private _protocolObjects;
+    mapping(uint => EnumerableSet.UintSet) private _objectToResources;
 
-    constructor() ERC721("GameNFT", "GameNFT")  {}
+    constructor(address _contractAddress) ERC721("GameNFT", "GameNFT")  {
+        contractAddress = _contractAddress;
+    }
 
     modifier onlyAdmin () {
         require(IAuth(contractAddress).devaddr_() == msg.sender);
@@ -756,6 +769,7 @@ contract GameHelper is ERC721Pausable {
         require(msg.sender == _owner);
         address auditorHelper = IContract(contractAddress).auditorHelper();
         if (_add > 0) {
+            require(resourceToObject[_collectionId][_objectName].length == 0, "GH1");
             for (uint i = 0; i < _tokenIds.length; i++) {
                 (address _auditor,) = IAuditor(auditorHelper).tokenIdToAuditor(_tokenIds[i]);
                 uint _category = IAuditor(auditorHelper).categories(_auditor);
@@ -805,14 +819,30 @@ contract GameHelper is ERC721Pausable {
         );
     }
 
-    function burnObject(string memory _objectName, uint _collectionId, uint _gameTokenId, address _to) external {
+    function burnObject(string memory _objectName, uint _collectionId, uint _gameTokenId) external {
         require(ownerOf(_gameTokenId) == msg.sender);
         (bool _exists, uint pos) = isObject(_gameTokenId, _objectName);
         require(_exists);
-        uint _tokenId = _protocolObjects[_collectionId][_objectName].at(0);
         _removeObject(_gameTokenId, pos);
+        for (uint i = 0; i < resourceToObject[_collectionId][_objectName].length; i++) {
+            uint _tokenId = _protocolObjects[_collectionId][_objectName].at(0);
+            _protocolObjects[_collectionId][_objectName].remove(_tokenId);
+            _objectToResources[_gameTokenId].add(_tokenId);
+        }
+    }
+
+    function withdrawResources(uint _gameTokenId, address _to) external {
+        require(ownerOf(_gameTokenId) == msg.sender);
+        uint _tokenId = _objectToResources[_gameTokenId].at(0);
+        _objectToResources[_gameTokenId].remove(_tokenId);
         IERC721(IContract(contractAddress).auditorHelper()).safeTransferFrom(address(this), _to, _tokenId);
-        _protocolObjects[_collectionId][_objectName].remove(_tokenId);
+    }
+
+    function getAllResources(uint _gameTokenId, uint _start) external view returns(uint[] memory _tokenIds) {
+        _tokenIds = new uint[](_objectToResources[_gameTokenId].length() - _start);
+        for (uint i = _start; i < _objectToResources[_gameTokenId].length(); i++) {
+            _tokenIds[i] = _objectToResources[_gameTokenId].at(i);
+        }
     }
 
     function getAllProtocolObjects(uint _collectionId, string memory _objectName, uint _start) external view returns(uint[] memory _tokenIds) {
@@ -872,11 +902,6 @@ contract GameHelper is ERC721Pausable {
         delete _objects[_tokenId][_idx];
         _isObject[_tokenId].remove(_idx); 
     }
-
-    function setContractAddress(address _contractAddress) external {
-        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
-        contractAddress = _contractAddress;
-    }
     
     function _getOptions(uint _collectionId, uint _tokenId) public view returns(string[] memory, string[] memory) {
         (,,,
@@ -933,29 +958,24 @@ contract GameHelper is ERC721Pausable {
         uint _gameMinutes
     ) internal view returns(string[] memory optionNames, string[] memory optionValues) {
         uint idx;
-        optionNames = new string[](10);
-        optionValues = new string[](10);
+        optionNames = new string[](8);
+        optionValues = new string[](8);
         address _token = _getToken(_collectionId);
-        optionNames[idx] = "Game ID";
+        optionNames[idx] = "GameID";
         optionValues[idx++] = toString(_collectionId);
         optionNames[idx] = "Score";
         optionValues[idx++] = toString(_score);
         optionNames[idx] = "#Gamers";
         optionValues[idx++] = toString(_gameCount);
-        optionNames[idx] = "Timer";
-        optionValues[idx++] = toString(_timer);
         optionNames[idx] = "price";
         optionValues[idx++] = toString(_price);
         optionNames[idx] = "Price/Score Percentiles";
         optionValues[idx++] = string(abi.encodePacked(toString(_pricePercentile), "% / ", abi.encodePacked(toString(_scorePercentile), "%")));
-        optionNames[idx] = "Symbol,Decimals";
-        optionValues[idx++] = string(abi.encodePacked(IBetting(_token).symbol(), ",", toString(uint(IBetting(_token).decimals()))));
+        optionValues[idx++] = string(abi.encodePacked(toString(_timer), ",", IBetting(_token).symbol(), ",", toString(uint(IBetting(_token).decimals()))));
         optionNames[idx] = "won";
         optionValues[idx++] = toString(_won);
-        optionNames[idx] = "Minutes";
-        optionValues[idx++] = toString(_gameMinutes);
-        optionNames[idx] = "Deadline";
-        optionValues[idx++] = toString(_deadline);
+        optionNames[idx] = "Ends,Played";
+        optionValues[idx++] = string(abi.encodePacked(toString(_gameMinutes), ",", toString(_deadline)));
     }
 
     function _getToken(uint _collectionId) public view returns(address) {

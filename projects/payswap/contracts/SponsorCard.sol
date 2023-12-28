@@ -171,29 +171,34 @@ contract Sponsor {
         pendingFromNote[addressToProtocolId[_protocol]] = 0;
     }
 
-    function payInvoicePayable(address _protocol) external lock returns(uint) {
+    function payInvoicePayable(address _protocol, uint _numPeriods) external lock {
         require(
             _protocol == msg.sender || devaddr_ == msg.sender,
             "S8"
         );
-        (uint duePayable,,) = ISponsor(helper).getDuePayable(address(this), _protocol, 0);
+        (uint duePayable,,) = ISponsor(helper).getDuePayable(address(this), _protocol, devaddr_ == msg.sender ? _numPeriods : 0);
         address token = protocolInfo[addressToProtocolId[_protocol]].token;
         uint _bounty = ITrustBounty(_trustBounty()).getBalance(adminBountyIds[token]);
         require(_bounty >= ISponsor(helper).minBountyPercent() * totalProcessed[token] / 10000, "S9");
         uint _balanceOf = erc20(token).balanceOf(address(this));
+        if (devaddr_ == msg.sender && _balanceOf < duePayable) {
+            IERC20(token).safeTransferFrom(msg.sender, address(this), duePayable - _balanceOf);
+            _balanceOf += duePayable - _balanceOf;
+        }
         uint _toPay = _balanceOf < duePayable ? _balanceOf : duePayable;
         protocolInfo[addressToProtocolId[_protocol]].paidPayable += _toPay;
-        require(_toPay > 0, "S10");
         uint payswapFees = _toPay * ISponsor(helper).tradingFee() / 10000;
         _toPay -= payswapFees;
         totalProcessed[token] += _toPay;
+        if(taxContract[addressToProtocolId[_protocol]] != address(0x0)) {
+            IBILL(taxContract[addressToProtocolId[_protocol]]).notifyCredit(address(this), _protocol, _toPay);
+        }
         IERC20(token).safeTransfer(helper, payswapFees);
         IERC20(token).safeTransfer(_protocol, _toPay);
         ISponsor(helper).emitPayInvoicePayable(
             addressToProtocolId[_protocol], 
             protocolInfo[addressToProtocolId[_protocol]].paidPayable
         );
-        return _balanceOf < duePayable ? _balanceOf : duePayable;
     }
 
     function _checkIdentityProof(address _owner, uint _identityTokenId) internal {
@@ -496,27 +501,23 @@ contract SponsorNote is ERC721Pausable {
         IMarketPlace(_sponsorCard).setContractAddress(contractAddress);
     }
 
-    function getNumPeriods(uint tm1, uint tm2, uint _period) public pure returns(uint) {
-        if (tm1 == 0 || tm2 == 0 || tm2 < tm1) return 0;
-        return _period > 0 ? (tm2 - tm1) / _period : 1;
+    function getNumPeriods(uint tm1, uint tm2, uint _period) internal pure returns(uint) {
+        if (tm1 == 0 || tm2 == 0 || tm2 < tm1 || _period == 0) return 0;
+        return (tm2 - tm1) / Math.max(1,_period);
     }
 
     function getDuePayable(address _sponsor, address _protocol, uint _numPeriods) public view returns(uint, uint, int) {
         uint _protocolId = ISponsor(_sponsor).addressToProtocolId(_protocol);
         (,,,,uint amountPayable,uint paidPayable,uint periodPayable,uint startPayable) = 
         ISponsor(_sponsor).protocolInfo(_protocolId);
-        uint numPeriods = getNumPeriods(
-            startPayable, 
-            block.timestamp, 
-            periodPayable
-        );
-        numPeriods += _numPeriods;
-        uint nextDue = startPayable + periodPayable * Math.max(1,numPeriods);
-        uint due = nextDue < block.timestamp ? amountPayable * numPeriods - paidPayable : 0;
+        uint shiftedBlockTimestamp = block.timestamp + _numExtraPeriods * periodPayable;
+        uint numPeriods = getNumPeriods(startPayable, shiftedBlockTimestamp, periodPayable);
+        uint dueDate = startPayable + periodPayable * ((paidPayable / Math.max(1, amountPayable)) + 1);
+        uint due = amountPayable * numPeriods > paidPayable ? amountPayable * numPeriods - paidPayable : 0;
         return (
             due, // due
-            periodPayable == 0 ? uint(0) : nextDue, // next
-            periodPayable == 0 ? int(0) : int(block.timestamp) - int(nextDue) //late or seconds in advance
+            dueDate, // next
+            int(block.timestamp) - int(dueDate) //late or seconds in advance
         );
     }
 
@@ -579,8 +580,8 @@ contract SponsorNote is ERC721Pausable {
 
     function tokenURI(uint _tokenId) public override view returns (string memory output) {
         uint idx;
-        string[] memory optionNames = new string[](5);
-        string[] memory optionValues = new string[](5);
+        string[] memory optionNames = new string[](6);
+        string[] memory optionValues = new string[](6);
         uint decimals = uint(IMarketPlace(notes[_tokenId].token).decimals());
         optionValues[idx++] = toString(_tokenId);
         optionNames[idx] = "PID";
@@ -588,7 +589,9 @@ contract SponsorNote is ERC721Pausable {
         optionNames[idx] = "End";
         optionValues[idx++] = toString(notes[_tokenId].timer);
         optionNames[idx] = "Amount";
-        optionValues[idx++] = string(abi.encodePacked(toString(notes[_tokenId].due/10**decimals), " " ,IMarketPlace(notes[_tokenId].token).symbol()));
+        optionValues[idx++] = toString(notes[_tokenId].due);
+        optionNames[idx] = "Symbol, Decimals";
+        optionValues[idx++] = string(abi.encodePacked(toString(uint(IMarketPlace(notes[_tokenId].token).decimals())), ", ", IMarketPlace(notes[_tokenId].token).symbol()));
         optionNames[idx] = "Expired";
         optionValues[idx++] = notes[_tokenId].timer < block.timestamp ? "Yes" : "No";
         string[] memory _description = new string[](1);
@@ -636,13 +639,6 @@ contract SponsorNote is ERC721Pausable {
         }
         return string(buffer);
     }
-
-    function _sumArr(uint[] memory _arr) internal pure returns(uint total) {
-        for (uint i = 0; i < _arr.length; i++) {
-            total += _arr[i];
-        }
-    }
-
 }
 
 contract SponsorFactory {

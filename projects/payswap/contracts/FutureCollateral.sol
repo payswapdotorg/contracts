@@ -40,6 +40,7 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     mapping(uint => uint) public attachments;
     mapping(uint => address) public isAuditor;
     mapping(uint => address) public channelToValuepool;
+    mapping(address => uint) public paymentCredits;
     address private contractAddress;
     struct Collateral {
         uint channel;
@@ -56,6 +57,7 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     mapping(uint => uint) public channels;
     mapping(uint => EnumerableSet.UintSet) private isBlacklisted;
     uint public nextChannelId = 1;
+    uint public credit_divisor = 1;
     mapping(uint => uint) public channelStartTime;
     
     event Mint (
@@ -130,8 +132,8 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     /**
      * @dev See {IERC721-ownerOf}.
      */
-    function ownerOf(uint256 tokenId) public view virtual override returns (address) {
-        address owner = _owners[tokenId];
+    function ownerOf(uint256 _tokenId) public view virtual override returns (address) {
+        address owner = _owners[_tokenId];
         require(owner != address(0));
         return owner;
     }
@@ -153,24 +155,24 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     /**
      * @dev See {IERC721-approve}.
      */
-    function approve(address to, uint256 tokenId) external virtual override {
-        address owner = ownerOf(tokenId);
+    function approve(address to, uint256 _tokenId) external virtual override {
+        address owner = ownerOf(_tokenId);
         require(to != owner);
 
         require(
             _msgSender() == owner || isApprovedForAll(owner, _msgSender())
         );
 
-        _approve(to, tokenId);
+        _approve(to, _tokenId);
     }
 
     /**
      * @dev See {IERC721-getApproved}.
      */
-    function getApproved(uint256 tokenId) public view virtual override returns (address) {
-        require(_exists(tokenId));
+    function getApproved(uint256 _tokenId) public view virtual override returns (address) {
+        require(_exists(_tokenId));
 
-        return _tokenApprovals[tokenId];
+        return _tokenApprovals[_tokenId];
     }
 
     /**
@@ -193,12 +195,12 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     function transferFrom(
         address from,
         address to,
-        uint256 tokenId
+        uint256 _tokenId
     ) public virtual override {
         //solhint-disable-next-line max-line-length
-        require(_isApprovedOrOwner(_msgSender(), tokenId));
+        require(_isApprovedOrOwner(_msgSender(), _tokenId));
 
-        _transfer(from, to, tokenId);
+        _transfer(from, to, _tokenId);
     }
 
     /**
@@ -207,9 +209,9 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     function safeTransferFrom(
         address from,
         address to,
-        uint256 tokenId
+        uint256 _tokenId
     ) public virtual override {
-        safeTransferFrom(from, to, tokenId, "");
+        safeTransferFrom(from, to, _tokenId, "");
     }
 
     /**
@@ -218,11 +220,11 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     function safeTransferFrom(
         address from,
         address to,
-        uint256 tokenId,
+        uint256 _tokenId,
         bytes memory _data
     ) public virtual override {
-        require(_isApprovedOrOwner(_msgSender(), tokenId));
-        _safeTransfer(from, to, tokenId, _data);
+        require(_isApprovedOrOwner(_msgSender(), _tokenId));
+        _safeTransfer(from, to, _tokenId, _data);
     }
 
     /**
@@ -246,11 +248,11 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     function _safeTransfer(
         address from,
         address to,
-        uint256 tokenId,
+        uint256 _tokenId,
         bytes memory _data
     ) internal virtual {
-        _transfer(from, to, tokenId);
-        require(_checkOnERC721Received(from, to, tokenId, _data));
+        _transfer(from, to, _tokenId);
+        require(_checkOnERC721Received(from, to, _tokenId, _data));
     }
 
     /**
@@ -261,8 +263,8 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
      * Tokens start existing when they are minted (`_mint`),
      * and stop existing when they are burned (`_burn`).
      */
-    function _exists(uint256 tokenId) internal view virtual returns (bool) {
-        return _owners[tokenId] != address(0);
+    function _exists(uint256 _tokenId) internal view virtual returns (bool) {
+        return _owners[_tokenId] != address(0);
     }
 
     /**
@@ -272,10 +274,10 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
      *
      * - `tokenId` must exist.
      */
-    function _isApprovedOrOwner(address spender, uint256 tokenId) internal view virtual returns (bool) {
-        require(_exists(tokenId));
-        address owner = ownerOf(tokenId);
-        return (spender == owner || getApproved(tokenId) == spender || isApprovedForAll(owner, spender));
+    function _isApprovedOrOwner(address spender, uint256 _tokenId) internal view virtual returns (bool) {
+        require(_exists(_tokenId));
+        address owner = ownerOf(_tokenId);
+        return (spender == owner || getApproved(_tokenId) == spender || isApprovedForAll(owner, spender));
     }
 
     /**
@@ -290,21 +292,21 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
      *
      * Emits a {Transfer} event.
      */
-    function _mint(address to, uint256 tokenId) internal virtual {
+    function _mint(address to, uint256 _tokenId) internal virtual {
         require(to != address(0));
-        require(!_exists(tokenId));
+        require(!_exists(_tokenId));
 
-        _beforeTokenTransfer(address(0), to, tokenId);
+        _beforeTokenTransfer(address(0), to, _tokenId);
 
         _balances[to] += 1;
-        _owners[tokenId] = to;
+        _owners[_tokenId] = to;
 
-        emit Transfer(address(0), to, tokenId);
+        emit Transfer(address(0), to, _tokenId);
 
-        _afterTokenTransfer(address(0), to, tokenId);
+        _afterTokenTransfer(address(0), to, _tokenId);
 
         require(
-            _checkOnERC721Received(address(0), to, tokenId, "")
+            _checkOnERC721Received(address(0), to, _tokenId, "")
         );
     }
 
@@ -318,20 +320,20 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
      *
      * Emits a {Transfer} event.
      */
-    function _burn(uint256 tokenId) internal virtual {
-        address owner = ownerOf(tokenId);
+    function _burn(uint256 _tokenId) internal virtual {
+        address owner = ownerOf(_tokenId);
 
-        _beforeTokenTransfer(owner, address(0), tokenId);
+        _beforeTokenTransfer(owner, address(0), _tokenId);
 
         // Clear approvals
-        _approve(address(0), tokenId);
+        _approve(address(0), _tokenId);
 
         _balances[owner] -= 1;
-        delete _owners[tokenId];
+        delete _owners[_tokenId];
 
-        emit Transfer(owner, address(0), tokenId);
+        emit Transfer(owner, address(0), _tokenId);
 
-        _afterTokenTransfer(owner, address(0), tokenId);
+        _afterTokenTransfer(owner, address(0), _tokenId);
     }
 
     /**
@@ -348,23 +350,23 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     function _transfer(
         address from,
         address to,
-        uint256 tokenId
+        uint256 _tokenId
     ) internal virtual {
-        require(ownerOf(tokenId) == from);
+        require(ownerOf(_tokenId) == from);
         require(to != address(0));
 
-        _beforeTokenTransfer(from, to, tokenId);
+        _beforeTokenTransfer(from, to, _tokenId);
 
         // Clear approvals from the previous owner
-        _approve(address(0), tokenId);
+        _approve(address(0), _tokenId);
 
         _balances[from] -= 1;
         _balances[to] += 1;
-        _owners[tokenId] = to;
+        _owners[_tokenId] = to;
 
-        emit Transfer(from, to, tokenId);
+        emit Transfer(from, to, _tokenId);
 
-        _afterTokenTransfer(from, to, tokenId);
+        _afterTokenTransfer(from, to, _tokenId);
     }
 
     /**
@@ -372,9 +374,9 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
      *
      * Emits a {Approval} event.
      */
-    function _approve(address to, uint256 tokenId) internal virtual {
-        _tokenApprovals[tokenId] = to;
-        emit Approval(ownerOf(tokenId), to, tokenId);
+    function _approve(address to, uint256 _tokenId) internal virtual {
+        _tokenApprovals[_tokenId] = to;
+        emit Approval(ownerOf(_tokenId), to, _tokenId);
     }
 
     /**
@@ -398,18 +400,18 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
      *
      * @param from address representing the previous owner of the given token ID
      * @param to target address that will receive the tokens
-     * @param tokenId uint256 ID of the token to be transferred
+     * @param _tokenId uint256 ID of the token to be transferred
      * @param _data bytes optional data to send along with the call
      * @return bool whether the call correctly returned the expected magic value
      */
     function _checkOnERC721Received(
         address from,
         address to,
-        uint256 tokenId,
+        uint256 _tokenId,
         bytes memory _data
     ) private returns (bool) {
         if (to.isContract()) {
-            try IERC721Receiver(to).onERC721Received(_msgSender(), from, tokenId, _data) returns (bytes4 retval) {
+            try IERC721Receiver(to).onERC721Received(_msgSender(), from, _tokenId, _data) returns (bytes4 retval) {
                 return retval == IERC721Receiver.onERC721Received.selector;
             } catch (bytes memory reason) {
                 if (reason.length == 0) {
@@ -478,6 +480,11 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
         minColor = _minColor;
     }
 
+    function updateDivisor(uint _credit_divisor) external {
+        require(isAdmin[msg.sender] && _credit_divisor > 1);
+        credit_divisor = _credit_divisor;
+    }
+
     function withdrawTreasury() external {
         require(isAdmin[msg.sender]);
         IERC20(token).safeTransfer(msg.sender, treasury);
@@ -540,6 +547,7 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
         
         uint _price = estimationTable[_channel][0];
         IERC20(token).safeTransferFrom(msg.sender, address(this), _price);
+        paymentCredits[_to] = _price / (2 * credit_divisor);
         _mint(address(this), tokenId);
         
         uint _fee = _price * treasuryFee / 10000;
@@ -554,6 +562,7 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     function notifyReward(uint _channel, uint _amount) external {
         IERC20(IContract(contractAddress).token()).safeTransferFrom(msg.sender, address(this), _amount);
         fund[_channel] += _amount;
+        paymentCredits[msg.sender] = _amount / credit_divisor;
     }
 
     function burn(address _from) external {
@@ -710,7 +719,7 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     function _afterTokenTransfer(
         address from,
         address to,
-        uint256 tokenId
+        uint256 _tokenId
     ) internal virtual {}
 
     function _updateAuditor(
@@ -759,5 +768,43 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
 
     function onERC721Received(address,address,uint256,bytes memory) public virtual returns (bytes4) {
         return this.onERC721Received.selector; 
+    }
+}
+
+contract ColleteralCredits is ERC721Pausable {
+    address public contractAddress;
+    address public fc;
+    uint public tokenId = 1;
+    mapping(uint => uint) minted;
+    mapping(uint => uint) public spentPaymentCredits;
+
+    constructor(address _contractAddress, address _fc) ERC721("ColleteralCredits", "FCredits") {
+        fc = _fc;
+        contractAddress = _contractAddress;
+    }
+
+    function setContractAddress(address _contractAddress) external {
+        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
+        contractAddress = _contractAddress;
+    }
+
+    function verifyNFT(uint _tokenId, uint merchantId, string memory item) external view returns(uint) {
+        address _user = ownerOf(_tokenId);
+        address _profileAddress = IContract(contractAddress).profile();
+        uint _profileId = IProfile(_profileAddress).addressToProfileId(msg.sender);
+        return IFutureCollateral(fc).paymentCredits(_user) > spentPaymentCredits[_profileId]
+        ? IFutureCollateral(fc).paymentCredits(_user) - spentPaymentCredits[_profileId]
+        : 0;
+    }
+
+    function mint() external {
+        address _profileAddress = IContract(contractAddress).profile();
+        uint _profileId = IProfile(_profileAddress).addressToProfileId(msg.sender);
+        require(IProfile(_profileAddress).isUnique(_profileId), "CC1");
+        if (minted[_profileId] > 0) {
+            spentPaymentCredits[_profileId] = IFutureCollateral(fc).paymentCredits(msg.sender);
+        }
+        minted[_profileId] += 1;
+        _safeMint(msg.sender, tokenId++, msg.data);
     }
 }

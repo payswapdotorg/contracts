@@ -10,13 +10,14 @@ contract Betting {
     address private contractAddress;
     mapping(address => uint) public pendingRevenue;
     mapping(address => mapping(address => uint)) public pendingReferrerFee;
-    mapping(uint256 => mapping(uint => uint256[])) private numberTicketsPerBettingId;
+    mapping(uint256 => mapping(string => uint256[])) private numberTicketsPerBettingId;
     mapping(uint => mapping(uint => uint[])) public countWinnersPerBracket;
-    mapping(uint => mapping(uint => uint256[])) public tokenPerBracket;
+    mapping(uint => mapping(uint => uint256[])) private tokenPerBracket;
     mapping(uint => mapping(uint => BettingStatus)) public status;
     mapping(uint => uint[]) public finalNumbers;
+    mapping(uint => bytes32[]) private finalNumbers2;
     mapping(uint => uint[]) public rewardsBreakdown;
-    mapping(uint => uint) public nextToSet;
+    mapping(uint => uint) private nextToSet;
     struct BettingEvent {
         address token;
         string action;
@@ -33,6 +34,7 @@ contract Betting {
         uint minTicketNumber;
     }
     struct BettingTicket {
+        string letter;
         uint number;
         uint paid;
         uint rewards;
@@ -45,9 +47,10 @@ contract Betting {
     mapping(uint => BettingTicket) public tickets;
     mapping(uint => string) public subjects;
     mapping(uint => uint) public ticketSizes;
+    mapping(uint => uint) private masks;
     mapping(uint => uint[]) public amountCollected;
     mapping(uint => BettingEvent) public protocolInfo;
-    mapping(address => mapping(address => uint)) public paymentCredits;
+    mapping(address => mapping(uint => uint)) public paymentCredits;
     address public devaddr_;
     address public oracle;
     address private helper;
@@ -57,6 +60,7 @@ contract Betting {
     mapping(address => uint) public totalProcessed;
     mapping(address => bool) public isAdmin;
     mapping(uint => uint) public partnerEvent;
+    uint256 private MASK = 111111;
     uint256 private MIN_TICKET_NUMBER = 1000000;
     uint256 private TICKET_RANGE = 999999;
     uint private TICKET_SIZE = 6;
@@ -111,6 +115,12 @@ contract Betting {
         return protocolInfo[tickets[_ticketId].bettingId].token;
     }
 
+    function getLetter(uint _ticketId) external view returns(string memory) {
+        return protocolInfo[tickets[_ticketId].bettingId].alphabetEncoding
+        ? tickets[_ticketId].letter
+        : toString(tickets[_ticketId].number);
+    }
+
     function updateAdmin(address _admin, bool _add) external onlyDev {
         isAdmin[_admin] = _add;
     }
@@ -123,11 +133,13 @@ contract Betting {
         uint _collectionId,
         uint _newMinTicketNumber,
         uint _newTicketRange,
-        uint _ticketSize
+        uint _ticketSize,
+        uint _mask
     ) external onlyAdmin {
         MIN_TICKET_NUMBER = _newMinTicketNumber;
         TICKET_RANGE = _newTicketRange;
         TICKET_SIZE = _ticketSize;
+        MASK = _mask;
         if (_collectionId > 0 && devaddr_ == msg.sender) {
             collectionId = IMarketPlace(IContract(contractAddress).marketCollections())
             .addressToCollectionId(msg.sender);
@@ -138,15 +150,15 @@ contract Betting {
         return IContract(contractAddress).bettingMinter();
     }
 
-    function _trustBounty() internal view returns(address) {
-        return IContract(contractAddress).trustBounty();
-    }
+    // function _trustBounty() internal view returns(address) {
+    //     return IContract(contractAddress).trustBounty();
+    // }
 
-    function setContractAddress(address _contractAddress) external {
-        require(contractAddress == address(0x0) || helper == msg.sender);
-        contractAddress = _contractAddress;
-        helper = IContract(_contractAddress).bettingHelper();
-    }
+    // function setContractAddress(address _contractAddress) external {
+    //     require(contractAddress == address(0x0) || helper == msg.sender);
+    //     contractAddress = _contractAddress;
+    //     helper = IContract(_contractAddress).bettingHelper();
+    // }
 
     function _checkAuditorIdentityProof(address _owner, uint _identityTokenId) internal {
         if (collectionId > 0) {
@@ -191,7 +203,7 @@ contract Betting {
     ) external {
         if(_currentBettingId == 0) {
             IBetting(helper).checkMembership(msg.sender);
-            require(IBetting(helper).maxAdminShare() >= _values[0], "B3");
+            require(IBetting(helper).maxAdminShare() >= _values[0]);
             _currentBettingId = currentBettingId++;
             subjects[_currentBettingId] = _subjects;
             protocolInfo[_currentBettingId].token = _token;
@@ -201,16 +213,17 @@ contract Betting {
             protocolInfo[_currentBettingId].bracketDuration = _values[2];
             rewardsBreakdown[_currentBettingId] = _rewardsBreakdown;
             partnerEvent[_currentBettingId] = _currentBettingId;
-            require(_sumArr(_rewardsBreakdown) == 10000, "B02");
+            require(_sumArr(_rewardsBreakdown) == 10000);
         }
         _startTime = block.timestamp + _startTime;
+        masks[_currentBettingId] = MASK;
         ticketSizes[_currentBettingId] = TICKET_SIZE;
         protocolInfo[_currentBettingId].ticketRange = TICKET_RANGE;
         protocolInfo[_currentBettingId].pricePerTicket = _values[3];
         protocolInfo[_currentBettingId].discountDivisor = _values[4];
         protocolInfo[_currentBettingId].minTicketNumber = MIN_TICKET_NUMBER;
         protocolInfo[_currentBettingId].alphabetEncoding = _alphabetEncoding;
-        protocolInfo[_currentBettingId].numberOfPeriods = _numberOfPeriods;
+        protocolInfo[_currentBettingId].numberOfPeriods = _numberOfPeriods == 0 ? IContract(contractAddress).maximumSize() : _numberOfPeriods;
         if (
             protocolInfo[_currentBettingId].startTime == 0 || 
             protocolInfo[_currentBettingId].startTime > block.timestamp
@@ -250,14 +263,20 @@ contract Betting {
         address _referrer, 
         uint _identityTokenId, 
         uint _bettingPeriod,
-        uint[] calldata _ticketNumbers
+        uint[] calldata _ticketNumbers,
+        string[] calldata _ticketNumbers2
     ) external {
-        uint _period = (block.timestamp - protocolInfo[_bettingTicketId].startTime) / protocolInfo[_bettingTicketId].bracketDuration;
-        _period = Math.max(_bettingPeriod, _period);
+        uint _period = Math.max(
+            _bettingPeriod,
+            (block.timestamp - protocolInfo[_bettingTicketId].startTime) / protocolInfo[_bettingTicketId].bracketDuration
+        );
+        // _period = Math.max(_bettingPeriod, _period);
+        require(protocolInfo[_bettingTicketId].numberOfPeriods > _period && protocolInfo[_bettingTicketId].startTime <= block.timestamp);
         // require(status[_bettingTicketId][_period] == BettingStatus.Open,"B1");
-        require(protocolInfo[_bettingTicketId].startTime <= block.timestamp,"B2");
+        // require(protocolInfo[_bettingTicketId].startTime <= block.timestamp);
         _checkIdentityProof(_user, _identityTokenId, _bettingTicketId);
         // Calculate number of token to this contract
+        // uint _length = protocolInfo[_bettingTicketId].alphabetEncoding ? _ticketNumbers2.length : _ticketNumbers.length;
         uint256 _amountToTransfer = _calculateTotalPriceForBulkTickets(
             _ticketNumbers.length,
             _bettingTicketId,
@@ -268,40 +287,68 @@ contract Betting {
             pendingReferrerFee[_referrer][protocolInfo[_bettingTicketId].token] += protocolInfo[_bettingTicketId].referrerShare * _amountToTransfer / 10000;
         }
         for (uint256 i = 0; i < _ticketNumbers.length; i++) {
-            require((_ticketNumbers[i] >= protocolInfo[_bettingTicketId].minTicketNumber) && (_ticketNumbers[i] <= protocolInfo[_bettingTicketId].minTicketNumber + protocolInfo[_bettingTicketId].ticketRange), "L6");
             if (protocolInfo[_bettingTicketId].alphabetEncoding) {
-                uint _length = numberTicketsPerBettingId[_bettingTicketId][_ticketNumbers[i]].length;
-                if (_length == 0) numberTicketsPerBettingId[_bettingTicketId][_ticketNumbers[i]].push(0);
-                numberTicketsPerBettingId[_bettingTicketId][_ticketNumbers[i]][_period]++;
+                for (uint k = numberTicketsPerBettingId[_bettingTicketId][_ticketNumbers2[i]].length; k < _period + 1; k++) {
+                    numberTicketsPerBettingId[_bettingTicketId][_ticketNumbers2[i]].push(0);
+                }
+                numberTicketsPerBettingId[_bettingTicketId][_ticketNumbers2[i]][_period]++;
             } else {
                 _processTicket(_bettingTicketId, _ticketNumbers[i], _period);
             }
-            uint _ticketId = IBetting(_minter()).mint(msg.sender);
+            uint _ticketId = IBetting(_minter()).mint(_user);
             tickets[_ticketId] = BettingTicket({
                 number: _ticketNumbers[i],
+                letter: _ticketNumbers2[i],
                 paid: _amountToTransfer / _ticketNumbers.length,
                 period: _period,
                 rewards: 0,
                 claimed: false,
                 bettingId: _bettingTicketId,
-                owner: msg.sender
+                owner: _user
             });
-            IBetting(helper).emitTicketsPurchase(_user, _bettingTicketId, _amountToTransfer, _ticketId, _ticketNumbers[i], _period);
+            IBetting(helper).emitTicketsPurchase(
+                _user, 
+                _bettingTicketId, 
+                _amountToTransfer, 
+                _ticketId, 
+                _ticketNumbers[i],
+                _ticketNumbers2[i],
+                 _period
+            );
         }
     }
 
+    function toString(uint value) internal pure returns (string memory) {
+        // Inspired by OraclizeAPI's implementation - MIT license
+        // https://github.com/oraclize/ethereum-api/blob/b42146b063c7d6ee1358846c198246239e9360e8/oraclizeAPI_0.4.25.sol
+
+        if (value == 0) {
+            return "0";
+        }
+        uint temp = value;
+        uint digits;
+        while (temp != 0) {
+            digits++;
+            temp /= 10;
+        }
+        bytes memory buffer = new bytes(digits);
+        while (value != 0) {
+            digits -= 1;
+            buffer[digits] = bytes1(uint8(48 + uint(value % 10)));
+            value /= 10;
+        }
+        return string(buffer);
+    }
+
     function _processTicket(uint _bettingTicketId, uint _ticketNumber, uint _period) internal {
+        require((_ticketNumber >= protocolInfo[_bettingTicketId].minTicketNumber) && (_ticketNumber <= protocolInfo[_bettingTicketId].minTicketNumber + protocolInfo[_bettingTicketId].ticketRange));
         for(uint k = 0; k < ticketSizes[_bettingTicketId]; k++) {
-            uint _transformed = uint(_ticketNumber) % (uint(10)**(ticketSizes[_bettingTicketId] - k));
-            uint _length = numberTicketsPerBettingId[_bettingTicketId][_transformed].length;
-            if (_length == 0 || _length - 1 < _period) {
+            uint _power = uint(10)**(ticketSizes[_bettingTicketId] - k);
+            string memory _transformed = toString(_ticketNumber % _power + masks[_bettingTicketId] % _power);
+            for (uint j = numberTicketsPerBettingId[_bettingTicketId][_transformed].length; j < _period + 1; j++) {
                 numberTicketsPerBettingId[_bettingTicketId][_transformed].push(0);
             }
-            if (rewardsBreakdown[_bettingTicketId][k] != 0 && 
-                uint(_ticketNumber) % (uint(10)**(ticketSizes[_bettingTicketId] - k)) != uint(_ticketNumber) % (uint(10)**(ticketSizes[_bettingTicketId] - k - 1))
-            ) {
-                numberTicketsPerBettingId[_bettingTicketId][_transformed][_period]++;
-            }
+            numberTicketsPerBettingId[_bettingTicketId][_transformed][_period]++;
         }
     }
 
@@ -313,13 +360,13 @@ contract Betting {
     function _injectFunds(uint _bettingTicketId, uint _period, uint _amountToTransfer) internal lock {
         IERC20(protocolInfo[_bettingTicketId].token).safeTransferFrom(msg.sender, address(this), _amountToTransfer);
         totalProcessed[protocolInfo[_bettingTicketId].token] += _amountToTransfer;
-        uint _payswapFees = _amountToTransfer * IBetting(helper).tradingFee() / 10000;
-        erc20(protocolInfo[_bettingTicketId].token).approve(helper, _payswapFees);
-        IBetting(helper).notifyFees(protocolInfo[_bettingTicketId].token, _payswapFees);
         if (amountCollected[_bettingTicketId].length >= _period + 1) {
-            amountCollected[_bettingTicketId][_period] += _amountToTransfer - _payswapFees;
+            amountCollected[_bettingTicketId][_period] += _amountToTransfer;
         } else {
-            amountCollected[_bettingTicketId].push(_amountToTransfer - _payswapFees);
+            for (uint i = amountCollected[_bettingTicketId].length; i < _period; i++) {
+                amountCollected[_bettingTicketId].push(0);
+            }
+            amountCollected[_bettingTicketId].push(_amountToTransfer);
         }
     }
 
@@ -335,34 +382,45 @@ contract Betting {
         uint256[] calldata _ticketIds,
         uint[] calldata _brackets
     ) external lock {
-        require(_ticketIds.length == _brackets.length, "L7");
-        require(_ticketIds.length != 0 && _ticketIds.length <= IContract(contractAddress).maximumSize(), "L8");
+        // require(_ticketIds.length == _brackets.length);
+        // require(_ticketIds.length != 0 && _ticketIds.length <= IContract(contractAddress).maximumSize());
         
         for (uint256 i = 0; i < _ticketIds.length; i++) {
-            require(_brackets[i] < ticketSizes[_bettingId], "L11"); // Must be between 0 and TICKET_SIZE - 1
+            // require(_brackets[i] < ticketSizes[_bettingId]); // Must be between 0 and TICKET_SIZE - 1
 
-            uint256 thisTicketId = _ticketIds[i];
-            require(status[_bettingId][tickets[thisTicketId].period] == BettingStatus.Claimable, "L10");
+            // uint256 thisTicketId = _ticketIds[i];
+            require(
+                _brackets[i] < ticketSizes[_bettingId] &&
+                status[_bettingId][tickets[_ticketIds[i]].period] == BettingStatus.Claimable && 
+                !tickets[_ticketIds[i]].claimed
+            );
 
-            require(!tickets[thisTicketId].claimed, "L13");
+            // require(!tickets[_ticketIds[i]].claimed);
             // Update the lottery ticket owner to 0x address
-            tickets[thisTicketId].claimed = true;
-            uint256 rewardForTicketId = calculateRewardsForTicketId(_bettingId, thisTicketId, _brackets[i]);
+            tickets[_ticketIds[i]].claimed = true;
+            uint256 rewardForTicketId = calculateRewardsForTicketId(_bettingId, _ticketIds[i], _brackets[i]);
             
             // Check user is claiming the correct bracket
-            require(rewardForTicketId != 0, "L14");
-
-            // Transfer money to msg.sender
-            uint _adminFee = rewardForTicketId * protocolInfo[_bettingId].adminShare / 10000;
-            tickets[thisTicketId].rewards = rewardForTicketId - _adminFee;
-            pendingRevenue[protocolInfo[partnerEvent[_bettingId]].token] += _adminFee;
-        
-            IBetting(helper).emitTicketsClaim(protocolInfo[partnerEvent[_bettingId]].token, rewardForTicketId, _bettingId, thisTicketId);
+            if(rewardForTicketId != 0) {
+                // Transfer money to msg.sender
+                uint _adminFee = rewardForTicketId * protocolInfo[_bettingId].adminShare / 10000;
+                uint _payswapFees = rewardForTicketId * IBetting(helper).tradingFee() / 10000;
+                tickets[_ticketIds[i]].rewards = rewardForTicketId - _adminFee - _payswapFees;
+                pendingRevenue[protocolInfo[partnerEvent[_bettingId]].token] += _adminFee;
+                
+                erc20(protocolInfo[partnerEvent[_bettingId]].token).approve(helper, _payswapFees);
+                IBetting(helper).notifyFees(protocolInfo[partnerEvent[_bettingId]].token, _payswapFees);
+            
+                IBetting(helper).emitTicketsClaim(protocolInfo[partnerEvent[_bettingId]].token, rewardForTicketId, _bettingId, _ticketIds[i]);
+            }
         }
     }
 
     function closeBetting(uint256 _bettingId) external {
-        uint _period = (block.timestamp - protocolInfo[_bettingId].startTime) / protocolInfo[_bettingId].bracketDuration;
+        uint _period = Math.min(
+            (block.timestamp - protocolInfo[_bettingId].startTime) / protocolInfo[_bettingId].bracketDuration,
+            protocolInfo[_bettingId].numberOfPeriods
+        );
         for (uint i = protocolInfo[_bettingId].nextToClose; i < _period; i++) {
             status[_bettingId][i] = BettingStatus.Close;
             IBetting(helper).emitCloseBetting(_bettingId, i);
@@ -385,10 +443,11 @@ contract Betting {
         } else {
             require(oracle == msg.sender);
         }
-        require(protocolInfo[_bettingId].nextToClose >= (nextToSet[_bettingId] + _finalNumbers.length), "B18");
+        require(protocolInfo[_bettingId].nextToClose >= (nextToSet[_bettingId] + _finalNumbers.length) && !protocolInfo[_bettingId].alphabetEncoding);
 
-        uint _fIdx ;
+        uint _fIdx;
         for (uint i = nextToSet[_bettingId]; i < nextToSet[_bettingId] + _finalNumbers.length; i++) {
+            uint256 amountToWithdrawToTreasury;
             // require(status[_bettingId][i] == BettingStatus.Close, "B18");
             // Initialize a number to count addresses in the previous bracket
             uint256 numberAddressesInPreviousBracket;
@@ -398,52 +457,48 @@ contract Betting {
                 (amountCollected[partnerEvent[_bettingId]][i] * (10000 - protocolInfo[_bettingId].adminShare))
             ) / 10000;
             // Initializes the amount to withdraw to treasury
-            uint256 amountToWithdrawToTreasury;
             countWinnersPerBracket[_bettingId][i] = new uint[](ticketSizes[_bettingId]);
             tokenPerBracket[_bettingId][i] = new uint[](ticketSizes[_bettingId]);
 
-            if (protocolInfo[_bettingId].alphabetEncoding) {
-                if (numberTicketsPerBettingId[_bettingId][_finalNumbers[_fIdx]].length <= i) numberTicketsPerBettingId[_bettingId][_finalNumbers[_fIdx]].push(0);
-                countWinnersPerBracket[_bettingId][i][0] = numberTicketsPerBettingId[_bettingId][_finalNumbers[_fIdx]][i];
-                tokenPerBracket[_bettingId][i][0] = amountToShareToWinners;
-            } else {
-                // Calculate prizes in token for each bracket by starting from the highest one
-                for (uint k = 0; k < ticketSizes[_bettingId]; k++) {
-                    uint j = ticketSizes[_bettingId] - k - 1;
-                    uint transformedWinningNumber = _finalNumbers[_fIdx] % (uint(10)**(j + 1));
-                    if (numberTicketsPerBettingId[_bettingId][transformedWinningNumber].length <= i) numberTicketsPerBettingId[_bettingId][transformedWinningNumber].push(0);
+            // Calculate prizes in token for each bracket by starting from the highest one
+            for (uint k = 0; k < ticketSizes[_bettingId]; k++) {
+                uint j = ticketSizes[_bettingId] - k - 1;
+                string memory transformedWinningNumber = toString(masks[_bettingId] % uint(10)**(j + 1) + _finalNumbers[_fIdx] % (uint(10)**(j + 1)));
+                
+                if (numberTicketsPerBettingId[_bettingId][transformedWinningNumber].length > i) {
                     countWinnersPerBracket[_bettingId][i][j] = (numberTicketsPerBettingId[_bettingId][transformedWinningNumber][i] > numberAddressesInPreviousBracket
                     ? numberTicketsPerBettingId[_bettingId][transformedWinningNumber][i] - numberAddressesInPreviousBracket
-                    : 0) * rewardsBreakdown[_bettingId][k] / Math.max(1,rewardsBreakdown[_bettingId][k]);
+                    : 0); 
+                    // * rewardsBreakdown[_bettingId][k] / Math.max(1,rewardsBreakdown[_bettingId][k]);
+                }
+                // A. If number of users for this _bracket number is superior to 0
+                if (
+                    numberTicketsPerBettingId[_bettingId][transformedWinningNumber].length > i &&
+                    numberTicketsPerBettingId[_bettingId][transformedWinningNumber][i] > numberAddressesInPreviousBracket
+                ) {
+                    // B. If rewards at this bracket are > 0, calculate, else, report the numberAddresses from previous bracket
+                    if (rewardsBreakdown[_bettingId][j] != 0) {
+                        tokenPerBracket[_bettingId][i][j] = //(rewardsBreakdown[_bettingId][k] * amountToShareToWinners) / 10000;
+                        ((rewardsBreakdown[_bettingId][j] * amountToShareToWinners) /
+                            (numberTicketsPerBettingId[_bettingId][transformedWinningNumber][i] - numberAddressesInPreviousBracket)) / 10000;
 
-                    // A. If number of users for this _bracket number is superior to 0
-                    if (
-                        numberTicketsPerBettingId[_bettingId][transformedWinningNumber][i] > numberAddressesInPreviousBracket
-                    ) {
-                        // B. If rewards at this bracket are > 0, calculate, else, report the numberAddresses from previous bracket
-                        if (rewardsBreakdown[_bettingId][k] != 0) {
-                            tokenPerBracket[_bettingId][i][k] = //(rewardsBreakdown[_bettingId][k] * amountToShareToWinners) / 10000;
-                            ((rewardsBreakdown[_bettingId][k] * amountToShareToWinners) /
-                                (numberTicketsPerBettingId[_bettingId][transformedWinningNumber][i] - numberAddressesInPreviousBracket)) / 10000;
-
-                            // Update numberAddressesInPreviousBracket
-                            numberAddressesInPreviousBracket = numberTicketsPerBettingId[_bettingId][transformedWinningNumber][i];
-                        }
-                        // A. No token to distribute, they are added to the amount to withdraw to treasury address
-                    } else {
-                        tokenPerBracket[_bettingId][i][k] = 0;
-                        amountToWithdrawToTreasury += (rewardsBreakdown[_bettingId][k] * amountToShareToWinners) / 10000;
+                        // Update numberAddressesInPreviousBracket
+                        numberAddressesInPreviousBracket = numberTicketsPerBettingId[_bettingId][transformedWinningNumber][i];
                     }
+                    // A. No token to distribute, they are added to the amount to withdraw to treasury address
+                } else {
+                    tokenPerBracket[_bettingId][i][j] = 0;
+                    amountToWithdrawToTreasury += (rewardsBreakdown[_bettingId][j] * amountToShareToWinners) / 10000;
                 }
             }
             status[_bettingId][i] = BettingStatus.Claimable;
+            amountToWithdrawToTreasury += (amountCollected[partnerEvent[_bettingId]][i] - amountToShareToWinners);
             
-            // Transfer token to admin address
-            if (amountToWithdrawToTreasury > 0) {
+            // // Transfer token to admin address
+            // if (amountToWithdrawToTreasury > 0) {
                 erc20(protocolInfo[_bettingId].token).approve(helper, amountToWithdrawToTreasury);
                 IBetting(helper).notifyFees(protocolInfo[_bettingId].token, amountToWithdrawToTreasury);
-            }
-            amountToWithdrawToTreasury += (amountCollected[partnerEvent[_bettingId]][i] - amountToShareToWinners);
+            // }
             
             IBetting(helper).emitBettingResultsIn(_bettingId, i, msg.sender, _finalNumbers[_fIdx++]);
         }
@@ -452,13 +507,59 @@ contract Betting {
         nextToSet[_bettingId] += _finalNumbers.length;
     }
 
-    function updatePaymentCredits(address _user, address _token, uint _credit) external {
-        require(msg.sender == IContract(contractAddress).bettingHelper());
-        paymentCredits[_user][_token] += _credit;
+    function setBettingResults2(
+        uint256 _bettingId, 
+        uint _identityTokenId, 
+        string[] memory _finalNumbers
+    ) external lock {
+        if (oracle == address(0x0)) {
+            _checkAuditorIdentityProof(msg.sender, _identityTokenId);
+        } else {
+            require(oracle == msg.sender);
+        }
+        require(protocolInfo[_bettingId].nextToClose >= (nextToSet[_bettingId] + _finalNumbers.length) && protocolInfo[_bettingId].alphabetEncoding);
+
+        uint _fIdx;
+        for (uint i = nextToSet[_bettingId]; i < nextToSet[_bettingId] + _finalNumbers.length; i++) {
+            uint256 amountToWithdrawToTreasury;
+            // require(status[_bettingId][i] == BettingStatus.Close, "B18");
+            // Initialize a number to count addresses in the previous bracket
+            uint256 numberAddressesInPreviousBracket;
+            // Calculate the amount to share post-treasury fee
+            if (amountCollected[partnerEvent[_bettingId]].length <= i) amountCollected[partnerEvent[_bettingId]].push(0);
+            uint256 amountToShareToWinners =  (
+                (amountCollected[partnerEvent[_bettingId]][i] * (10000 - protocolInfo[_bettingId].adminShare))
+            ) / 10000;
+            // Initializes the amount to withdraw to treasury
+            countWinnersPerBracket[_bettingId][i] = new uint[](1);
+            tokenPerBracket[_bettingId][i] = new uint[](1);
+
+            if (numberTicketsPerBettingId[_bettingId][_finalNumbers[_fIdx]].length <= i) {
+                amountToWithdrawToTreasury = amountToShareToWinners;
+            } else {
+                countWinnersPerBracket[_bettingId][i][0] = numberTicketsPerBettingId[_bettingId][_finalNumbers[_fIdx]][i];
+                tokenPerBracket[_bettingId][i][0] = amountToShareToWinners;
+            }
+            finalNumbers2[_bettingId].push(keccak256(abi.encodePacked(_finalNumbers[_fIdx])));
+            
+            status[_bettingId][i] = BettingStatus.Claimable;
+            amountToWithdrawToTreasury += (amountCollected[partnerEvent[_bettingId]][i] - amountToShareToWinners);
+            
+            // // Transfer token to admin address
+            // if (amountToWithdrawToTreasury > 0) {
+                erc20(protocolInfo[_bettingId].token).approve(helper, amountToWithdrawToTreasury);
+                IBetting(helper).notifyFees(protocolInfo[_bettingId].token, amountToWithdrawToTreasury);
+            // }
+            
+            IBetting(helper).emitBettingResultsIn2(_bettingId, i, msg.sender, _finalNumbers[_fIdx++]);
+        }
+        // Update internal statuses for lottery
+        nextToSet[_bettingId] += _finalNumbers.length;
     }
 
-    function onERC721Received(address,address,uint256,bytes memory) public virtual returns (bytes4) {
-        return this.onERC721Received.selector; 
+    function updatePaymentCredits(address _user, uint _bettingId, uint _credit) external {
+        require(msg.sender == IContract(contractAddress).bettingHelper());
+        paymentCredits[_user][_bettingId] += _credit;
     }
 
     /**
@@ -472,21 +573,27 @@ contract Betting {
         uint _ticketId,
         uint _bracket
     ) public view returns (uint256) {
+        if (protocolInfo[_bettingId].alphabetEncoding) {
+            return keccak256(abi.encodePacked(tickets[_ticketId].letter)) == finalNumbers2[_bettingId][tickets[_ticketId].period]
+            ? tokenPerBracket[_bettingId][tickets[_ticketId].period][_bracket] 
+            : 0;
+        }
         // Retrieve the user number combination from the ticketId
-        uint winningTicketNumber = finalNumbers[_bettingId][tickets[_ticketId].period];
-        uint userNumber = tickets[_ticketId].number;
-        uint k = ticketSizes[_bettingId] - _bracket;
+        // uint winningTicketNumber = finalNumbers[_bettingId][tickets[_ticketId].period];
+        // uint userNumber = tickets[_ticketId].number;
         // Apply transformation to verify the claim provided by the user is true
-        uint transformedWinningNumber = winningTicketNumber % (uint(10)**k);
+        uint transformedWinningNumber = masks[_bettingId] + (finalNumbers[_bettingId][tickets[_ticketId].period] % (uint(10)**(_bracket + 1)));
 
-        uint transformedUserNumber = userNumber % (uint(10)**k);
+        uint transformedUserNumber = masks[_bettingId] + (tickets[_ticketId].number % (uint(10)**(_bracket + 1)));
 
         // Confirm that the two transformed numbers are the same, if not throw
-        if (transformedWinningNumber == transformedUserNumber) {
-            return tokenPerBracket[_bettingId][tickets[_ticketId].period][_bracket];
-        } else {
-            return 0;
-        }
+        // if (transformedWinningNumber == transformedUserNumber) {
+            return transformedWinningNumber == transformedUserNumber
+            ? tokenPerBracket[_bettingId][tickets[_ticketId].period][_bracket]
+            : 0;
+        // } else {
+        //     return 0;
+        // }
     }
 
     /**
@@ -497,13 +604,13 @@ contract Betting {
         uint256 _numberTickets,
         uint256 _bettingId,
         address _user
-    ) public returns (uint256 _price) {
+    ) internal returns (uint256 _price) {
         uint256 _discountDivisor = protocolInfo[_bettingId].discountDivisor;
         _price = (protocolInfo[_bettingId].pricePerTicket * _numberTickets * (_discountDivisor + 1 - _numberTickets)) / _discountDivisor;
-        if (paymentCredits[_user][protocolInfo[_bettingId].token] > _price) {
-            paymentCredits[_user][protocolInfo[_bettingId].token] -= _price;
+        if (paymentCredits[_user][_bettingId] > _price) {
+            paymentCredits[_user][_bettingId] -= _price;
         } else {
-            _price -= paymentCredits[_user][protocolInfo[_bettingId].token];
+            _price -= paymentCredits[_user][_bettingId];
         }
     }
 
@@ -514,22 +621,29 @@ contract Betting {
 
     function withdraw(address _token, uint _amount) external onlyAdmin lock {
         require(pendingRevenue[_token] >= _amount && collectionId > 0);
-        pendingRevenue[_token] -= _amount;
+        if (_amount == 0) {
+            _amount = pendingRevenue[_token];
+            pendingRevenue[_token] = 0;
+        } else {
+            pendingRevenue[_token] -= _amount;
+        }
         address businessGauge = IMarketPlace(IContract(contractAddress).businessGaugeFactory())
         .hasGauge(collectionId);
         IERC20(_token).safeTransfer(businessGauge, _amount);
         
-        IBetting(helper).emitWithdraw(msg.sender, _token, _amount);
+        // IBetting(helper).emitWithdraw(msg.sender, _token, _amount);
     }
 
     function userWithdraw(uint _ticketId) external lock {
-        require(msg.sender == tickets[_ticketId].owner, "B9");
+        require(msg.sender == tickets[_ticketId].owner);
         tickets[_ticketId].owner = address(0x0);
         IBetting(_minter()).burn(_ticketId);
         address _token = protocolInfo[partnerEvent[tickets[_ticketId].bettingId]].token;
-        IERC20(_token).safeTransfer(msg.sender, tickets[_ticketId].rewards);
+        uint _rewards = tickets[_ticketId].rewards;
+        tickets[_ticketId].rewards = 0;
+        IERC20(_token).safeTransfer(msg.sender, _rewards);
         
-        IBetting(helper).emitWithdraw(msg.sender, _token, tickets[_ticketId].rewards);
+        // IBetting(helper).emitWithdraw(msg.sender, _token, tickets[_ticketId].rewards);
     }
 
     function withdrawReferrerFee(address _token) external lock {
@@ -539,7 +653,7 @@ contract Betting {
         pendingRevenue[_token] -= _pendingReward;
         IERC20(_token).safeTransfer(msg.sender, _pendingReward);
 
-        IBetting(helper).emitWithdraw(msg.sender, _token, _pendingReward);
+        // IBetting(helper).emitWithdraw(msg.sender, _token, _pendingReward);
     }
 }
 
@@ -565,7 +679,7 @@ contract BettingHelper {
     mapping(address => uint) public treasuryFees;
     mapping(address => uint) public addressToProfileId;
     mapping(address => bool) public noChargeContracts;
-    mapping(address => Credit[]) public burnTokenForCredit;
+    mapping(address => BettingCredit[]) public burnTokenForCredit;
     mapping(address => address) public uriGenerator;
     mapping(uint => uint) public pricePerAttachMinutes;
     mapping(uint => mapping(string => EnumerableSet.UintSet)) private excludedContents;
@@ -614,7 +728,8 @@ contract BettingHelper {
         uint period,
         uint amount,
         uint ticketId,
-        uint ticketNumber
+        uint ticketNumber,
+        string ticketNumber2
     );
     event TicketsClaim(
         address betting,
@@ -629,6 +744,13 @@ contract BettingHelper {
         uint period,
         address auditor,
         uint finalNumber
+    );
+    event BettingResultsIn2(
+        address betting,
+        uint bettingId,
+        uint period,
+        address auditor,
+        string finalNumber
     );
     event CloseBetting(
         address betting,
@@ -654,6 +776,7 @@ contract BettingHelper {
         address _betting,
         address _checker,
         address _destination,
+        uint _bettingId,
         uint _discount, 
         uint __collectionId,
         bool _clear,
@@ -661,11 +784,12 @@ contract BettingHelper {
     ) external {
         require(IAuth(_betting).isAdmin(msg.sender));
         if(_clear) delete burnTokenForCredit[_betting];
-        burnTokenForCredit[_betting].push(Credit({
+        burnTokenForCredit[_betting].push(BettingCredit({
             token: _token,
             item: _item,
             checker: _checker,
             discount: _discount,
+            bettingId: _bettingId,
             destination: _destination,
             collectionId: __collectionId
         }));
@@ -676,7 +800,7 @@ contract BettingHelper {
         uint _position, 
         uint256 _number  // tokenId in case of NFTs and amount otherwise 
     ) external {
-        address _destination = burnTokenForCredit[_betting][_position].destination == _betting
+        address _destination = burnTokenForCredit[_betting][_position].destination == address(this)
         ? msg.sender : burnTokenForCredit[_betting][_position].destination;
         uint credit;
         if (burnTokenForCredit[_betting][_position].checker == address(0x0)) { //FT
@@ -690,12 +814,12 @@ contract BettingHelper {
                 burnTokenForCredit[_betting][_position].item
             );
             IERC721(burnTokenForCredit[_betting][_position].token)
-            .safeTransferFrom(msg.sender, _destination, _number);
-            credit = burnTokenForCredit[_betting][_position].discount * _times / 10000;
+            .transferFrom(msg.sender, _destination, _number);
+            credit = burnTokenForCredit[_betting][_position].discount * _times;
         }
         IBetting(_betting).updatePaymentCredits(
             msg.sender,
-            burnTokenForCredit[_betting][_position].token,
+            burnTokenForCredit[_betting][_position].bettingId,
             credit
         );
     }
@@ -798,17 +922,19 @@ contract BettingHelper {
         string memory _period, 
         uint _bettingId, 
         uint _identityTokenId, 
-        uint[] calldata _ticketNumbers
+        uint[] calldata _ticketNumbers,
+        string[] calldata _ticketNumbers2
     ) external {
         require(gauges.contains(_collection));
         require(IValuePool(IContract(contractAddress).valuepoolHelper()).isGauge(msg.sender));
         IBetting(_collection).buyWithContract(
-            _bettingId, 
+            _bettingId,
             _user, 
             _referrer, 
             _identityTokenId,
             st2num(_period),
-            _ticketNumbers
+            _ticketNumbers,
+            _ticketNumbers2
         );
     }
 
@@ -865,6 +991,17 @@ contract BettingHelper {
             _finalNumber
         );
     }
+
+    function emitBettingResultsIn2(uint _bettingId, uint _period, address _auditor, string memory _finalNumber) external {
+        require(gauges.contains(msg.sender));
+        emit BettingResultsIn2(
+            msg.sender,
+            _bettingId,
+            _period,
+            _auditor,
+            _finalNumber
+        );
+    }
     
     function emitCloseBetting(uint _bettingId, uint _period) external {
         require(gauges.contains(msg.sender));
@@ -893,6 +1030,7 @@ contract BettingHelper {
         uint _amount,
         uint _ticketId,
         uint _ticketNumber,
+        string memory _ticketNumber2,
         uint _period
     ) external {
         require(gauges.contains(msg.sender));
@@ -903,7 +1041,8 @@ contract BettingHelper {
             _period,
             _amount,
             _ticketId,
-            _ticketNumber
+            _ticketNumber,
+            _ticketNumber2
         );
     }
 
@@ -1231,30 +1370,30 @@ contract BettingMinter is ERC721Pausable {
     }
 
     function _getOptions(address _betting, uint _protocolId) public view returns(string[] memory optionNames, string[] memory optionValues) {
-        (uint _number, uint _paid, uint _rewards, uint _bettingId, uint _period,,) = IBetting(_betting).tickets(_protocolId);
+        (,,uint _paid, uint _rewards, uint _bettingId, uint _period,,) = IBetting(_betting).tickets(_protocolId);
         address token = IBetting(_betting).getToken(_protocolId);
-        optionNames = new string[](10);
-        optionValues = new string[](10);
+        optionNames = new string[](8);
+        optionValues = new string[](8);
         uint idx;
         optionNames[idx] = "BID";
         optionValues[idx++] = toString(IBetting(_helper()).addressToProfileId(_betting));
-        optionNames[idx] = "CID";
-        optionValues[idx++] = toString(IBetting(_betting).collectionId());
+        // optionNames[idx] = "CID";
+        // optionValues[idx++] = toString(IBetting(_betting).collectionId());
         optionNames[idx] = "EID";
         optionValues[idx++] = toString(_bettingId);
-        optionNames[idx] = "Symbol,Decimals";
-        optionValues[idx++] = string(abi.encodePacked(IBetting(token).symbol(), ",", toString(uint(IBetting(token).decimals()))));
+        // optionNames[idx] = "Period,Symbol,Decimals";
+        optionValues[idx++] = string(abi.encodePacked(toString(_period), ",", IBetting(token).symbol(), ",", toString(uint(IBetting(token).decimals()))));
         optionNames[idx] = "Paid";
         optionValues[idx++] = toString(_paid);
-        optionNames[idx] = "Period";
-        optionValues[idx++] = toString(_period);
-        optionNames[idx] = "Rewards";
+        // optionNames[idx] = "Period";
+        // optionValues[idx++] = toString(_period);
+        optionNames[idx] =  "Rewards";
         optionValues[idx++] = toString(_rewards);
         // optionValues[idx++] = _claimed ? "Yes" : "No";
         optionValues[idx++] = IBetting(_betting).subjects(_bettingId);
         optionValues[idx++] = IBetting(_betting).getAction(_bettingId);
         optionNames[idx] = "Pick";
-        optionValues[idx++] = toString(_number);
+        optionValues[idx++] = IBetting(_betting).getLetter(_protocolId);
     }
 
     function tokenURI(uint _tokenId) public view virtual override returns (string memory output) {
@@ -1313,8 +1452,7 @@ contract BettingMinter is ERC721Pausable {
 contract BettingFactory {
     address private contractAddress;
 
-    function setContractAddress(address _contractAddress) external {
-        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
+    constructor(address _contractAddress) {
         contractAddress = _contractAddress;
     }
 

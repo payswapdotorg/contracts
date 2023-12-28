@@ -157,17 +157,17 @@ contract WILL {
     }
     
     function getAllTokens(uint _start) external view returns(
-        address[] memory tokens,
+        address[] memory _tokens,
         uint[] memory balances,
         NFTYPE[] memory tokenTypes
     ) {
-        tokens = new address[](_allTokens.length() - _start);
+        _tokens = new address[](_allTokens.length() - _start);
         balances = new uint[](_allTokens.length() - _start);
         tokenTypes = new NFTYPE[](_allTokens.length() - _start);
         for (uint i = _start; i < _allTokens.length(); i++) {
-            tokens[i] = _allTokens.at(i);
-            balances[i] = balanceOf[tokens[i]];
-            tokenTypes[i] = tokenType[tokens[i]];
+            _tokens[i] = _allTokens.at(i);
+            balances[i] = balanceOf[_tokens[i]];
+            tokenTypes[i] = tokenType[_tokens[i]];
         }    
     }
 
@@ -197,12 +197,11 @@ contract WILL {
 
     function createLock(
         address _token, 
-        address _valuepool, 
+        address _ve, 
         uint _lockDuration, 
         uint _identityTokenId, 
         uint _amount
     ) external onlyAdmin {
-        address _ve = IValuePool(_valuepool)._ve();
         erc20(_token).approve(_ve, _amount);
         IValuePool(_ve).create_lock_for(
             _amount,
@@ -212,8 +211,12 @@ contract WILL {
         );
     }
 
-    function unLock(address _valuepool, uint _tokenId) external onlyAdmin {
-        IValuePool(IValuePool(_valuepool)._ve()).withdraw(_tokenId);
+    function updateAllowance(address _ve, address _to, bool _approve) external onlyAdmin {
+        IWill(_ve).setApprovalForAll(_to, _approve);
+    }
+
+    function unLock(address _ve, uint _tokenId) external onlyAdmin {
+        IValuePool(_ve).withdraw(_tokenId);
     }
 
     function updateActivePeriod(address _token) public onlyAdmin {

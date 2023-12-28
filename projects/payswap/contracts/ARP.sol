@@ -341,14 +341,14 @@ contract ARP {
         (uint payswapFees,uint adminFees) = _getFees(_toPay, token, false);
         totalProcessed[token] += _toPay;
         pendingRevenue[token] += adminFees;
-        if(taxContract[_protocolId] != address(0x0)) {
-            IBILL(taxContract[_protocolId]).notifyCredit(address(this), ve(helper).ownerOf(_protocolId), _toPay);
-        }
         _processAdminFees(_protocolId, adminFees, token);
         IERC20(token).safeTransfer(helper, payswapFees);
         IARP(helper).notifyFees(token, payswapFees);
         _toPay -= (adminFees + payswapFees);
         erc20(token).approve(note, _toPay);
+        if(taxContract[_protocolId] != address(0x0)) {
+            IBILL(taxContract[_protocolId]).notifyCredit(address(this), ve(helper).ownerOf(_protocolId), _toPay);
+        }
         IARP(note).safeTransferWithBountyCheck(
             token,
             ve(helper).ownerOf(_protocolId),

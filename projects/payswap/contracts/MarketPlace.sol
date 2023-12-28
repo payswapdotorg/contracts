@@ -3677,7 +3677,6 @@ contract MarketPlaceTrades {
     function computeCashBack(uint _collectionId, string memory _tokenId) public view returns(bytes32 _identityCode, uint totalCashback) {
         uint256 cashback1;
         uint256 cashback2;
-        bytes32 _identityCode;
         Ask memory ask = IMarketPlace(marketOrders()).getAskDetails(_collectionId, keccak256(abi.encodePacked(_tokenId)));
         if (ask.priceReductor.cashbackStatus == Status.Open &&
             ask.priceReductor.cashbackStart <= block.timestamp
