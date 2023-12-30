@@ -8,7 +8,7 @@ contract World {
     using SafeERC20 for IERC20;
     using EnumerableSet for EnumerableSet.UintSet;
 
-    // bool public bountyRequired;
+    uint public lastProtocolId = 1;
     uint public collectionId;
     uint public totalSupply;
     address private contractAddress;
@@ -97,10 +97,6 @@ contract World {
         }    
     }
 
-    // function updateParameters(bool _bountyRequired) external onlyAdmin {
-    //     bountyRequired = _bountyRequired;
-    // }
-
     function updateDiscountDivisor(uint _optionId, uint _factor, uint _period, uint _cap) external onlyAdmin {
         discountDivisor[_optionId] = Divisor({
             factor: _factor,
@@ -118,6 +114,10 @@ contract World {
     }
 
     function _minter() internal view returns(address) {
+        return IContract(contractAddress).worldHelper2();
+    }
+
+    function _worldHelper() internal view returns(address) {
         return IContract(contractAddress).worldHelper();
     }
 
@@ -136,7 +136,7 @@ contract World {
         ITrustBounty(_trustBounty()).bountyInfo(_bountyId);
         if (isAdmin[msg.sender]) {
             require(owner == msg.sender && claimableBy == address(0x0));
-            if (_bountyId > 0 && adminBountyId[_token] == 0) {
+            if (_bountyId > 0) {
                 IWorld(helper).attach(_bountyId);
             } else if (_bountyId == 0 && adminBountyId[_token] > 0) {
                 IWorld(helper).detach(_bountyId);
@@ -152,11 +152,11 @@ contract World {
         }
     }
 
-    function updateAutoCharge(bool _autoCharge, uint _tokenId) external {
-        require(ve(_minter()).ownerOf(_tokenId) == msg.sender);
-        isAutoChargeable[_tokenId] = _autoCharge;
+    function updateAutoCharge(bool _autoCharge, uint _protocolId) external {
+        require(addressToProtocolId[msg.sender] == _protocolId);
+        isAutoChargeable[_protocolId] = _autoCharge;
         IWorld(helper).emitUpdateAutoCharge(
-            _tokenId,
+            _protocolId,
             _autoCharge
         );
     }
@@ -170,7 +170,7 @@ contract World {
             return (dueReceivable + _penalty, dueReceivable);
         } else {
             uint _factor = Math.min(discountDivisor[_optionId].cap, (uint(-secondsReceivable) / Math.max(1,discountDivisor[_optionId].period)) * discountDivisor[_optionId].factor);
-            uint _discount = Math.max(dueReceivable, protocolInfo[_protocolId].amountReceivable) * _factor / 10000; 
+            uint _discount = protocolInfo[_protocolId].amountReceivable * _factor / 10000; 
             return (
                 dueReceivable > _discount ? dueReceivable - _discount : 0,
                 dueReceivable
@@ -221,15 +221,15 @@ contract World {
     function updateTokenIds(uint[] memory _tokenIds, bool _add) external {
         uint _protocolId = addressToProtocolId[msg.sender];
         if (_add) require((_protocolTokenIds[_protocolId].length() + _tokenIds.length) <= IContract(contractAddress).maximumSize());
-        address minter = _minter();
+        address worldHelper = _worldHelper();
         for (uint i = 0; i < _tokenIds.length; i++) {
             if (!_protocolTokenIds[_protocolId].contains(_tokenIds[i])) {
                 if (_add) {
-                    IWorld(minter).attach(_tokenIds[i], msg.sender);
+                    IWorld(worldHelper).attach(_tokenIds[i], msg.sender);
                     _protocolTokenIds[_protocolId].add(_tokenIds[i]);
                     totalSupply += 1;
                 } else {
-                    IWorld(minter).detach(_tokenIds[i], msg.sender);
+                    IWorld(worldHelper).detach(_tokenIds[i], msg.sender);
                     _protocolTokenIds[_protocolId].remove(_tokenIds[i]);
                     totalSupply -= 1;
                 }
@@ -256,7 +256,7 @@ contract World {
     ) external onlyAdmin {
         if(_protocolId == 0) {
             _checkIdentityProof(_owner, _identityTokenId);
-            _protocolId++;
+            _protocolId = lastProtocolId++;
             protocolInfo[_protocolId].startReceivable = block.timestamp + _bankInfo[2];
             protocolInfo[_protocolId].amountReceivable = _bankInfo[0];
             protocolInfo[_protocolId].periodReceivable = _bankInfo[1];
@@ -280,9 +280,8 @@ contract World {
     }
 
     function deleteProtocol(uint _protocolId) external onlyAdmin {
-        address minter = _minter();
         for (uint i = 0; i < _protocolTokenIds[_protocolId].length(); i++) {
-            IWorld(minter).detach(
+            IWorld(_worldHelper()).detach(
                 _protocolTokenIds[_protocolId].at(i),
                 protocolInfo[_protocolId].owner
             );
@@ -299,7 +298,7 @@ contract World {
     }
 
     function noteWithdraw(address _to, uint _protocolId, uint amount) external {
-        require(msg.sender == helper);
+        require(msg.sender == IContract(contractAddress).worldHelper3());
         IERC20(protocolInfo[_protocolId].token).safeTransfer(_to, amount);
     }
 }
@@ -322,7 +321,6 @@ contract WorldNote {
     uint public minBountyPercent = 1;
     mapping(address => Vote) public votes;
     mapping(uint => mapping(address => int)) public voted;
-    mapping(uint => mapping(WorldType => address)) public profiles;
     mapping(address => uint) public worldToProfileId;
 
     event Voted(address indexed world, uint profileId, uint likes, uint dislikes, bool like);
@@ -360,7 +358,7 @@ contract WorldNote {
         string last4,
         string ext
     );
-    event Transfer(uint indexed tokenId, address to);
+    event Transfer(uint indexed tokenId, address world);
     event CreateWorld(address indexed world, address user, uint profileId);
     event DeleteWorld(address world);
 
@@ -405,14 +403,6 @@ contract WorldNote {
         worldToProfileId[_last_gauge] = _profileId;
         emit CreateWorld(_last_gauge, _user, _profileId);
     }
-
-    function updateProfile(address _world) external {
-        uint _profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender);
-        require(_profileId > 0 && IAuth(_world).isAdmin(msg.sender));
-        WorldType _wt = IWorld(IContract(contractAddress).worldHelper2()).getWorldType(_world);
-        require(_wt != WorldType.undefined);
-        profiles[_profileId][_wt] = _world;
-    }
     
     function updateMinBountyPercent(uint _minBountyPercent) external {
         require(msg.sender == IAuth(contractAddress).devaddr_());
@@ -433,10 +423,11 @@ contract WorldNote {
         }
     }
 
-    function vote(address _world, uint profileId, bool like) external {
+    function vote(address _world, bool like) external {
         WorldType _worldType = IWorld(IContract(contractAddress).worldHelper2()).getWorldType(_world);
         require(_worldType != WorldType.undefined);
-        require(IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender) == profileId && profileId > 0);
+        uint profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender);
+        require(profileId > 0);
         SSIData memory metadata = ISSI(IContract(contractAddress).ssi()).getSSID(profileId);
         require(keccak256(abi.encodePacked(metadata.answer)) != keccak256(abi.encodePacked("")));
         _resetVote(_world, profileId);        
@@ -477,8 +468,7 @@ contract WorldNote {
         }
     }
 
-    function getGaugeNColor(uint _ssidWorldProfileId, WorldType _wt) external view returns(address, COLOR) {
-        address _world = profiles[_ssidWorldProfileId][_wt];
+    function getGaugeNColor(address _world, WorldType _wt) external view returns(address, COLOR) {
         return (
             _world,
             _getColor(percentiles[_world])
@@ -566,22 +556,27 @@ contract WorldNote {
         emit Mint(_tokenId,_to,_world,_start,_end,_first4,_last4,_ext);
     }
 
-    function emitTransfer(uint _tokenId, address _to) external {
+    function emitTransfer(uint _tokenId, address _world) external {
         require(msg.sender == _minter());
-        emit Transfer(_tokenId, _to);
+        emit Transfer(_tokenId, _world);
+    }
+
+    function _getNumPeriods(uint tm1, uint tm2, uint _period) internal pure returns(uint) {
+        if (tm1 == 0 || tm2 == 0 || tm2 < tm1 || _period == 0) return 0;
+        return (tm2 - tm1) / Math.max(1,_period);
     }
 
     function getDueReceivable(address _world, uint _protocolId, uint _numExtraPeriods) public view returns(uint, uint, int) {   
         (,,,uint amountReceivable,uint paidReceivable,uint periodReceivable,uint startReceivable,,) =
         IWorld(_world).protocolInfo(_protocolId);
-        uint numPeriods = amountReceivable == 0 ? 1 : Math.max(1, paidReceivable / amountReceivable);
-        numPeriods += _numExtraPeriods;
-        uint nextDue = startReceivable + periodReceivable * numPeriods;
-        uint due = nextDue < block.timestamp ? amountReceivable * numPeriods - paidReceivable : 0;
+        uint shiftedBlockTimestamp = block.timestamp + _numExtraPeriods * periodReceivable;
+        uint numPeriods = _getNumPeriods(startReceivable, shiftedBlockTimestamp, periodReceivable);
+        uint dueDate = startReceivable + periodReceivable * ((paidReceivable / Math.max(1, amountReceivable)) + 1);
+        uint due = amountReceivable * numPeriods > paidReceivable ? amountReceivable * numPeriods - paidReceivable : 0;
         return (
             due, // due
-            nextDue, // next
-            int(block.timestamp) - int(nextDue) //late or seconds in advance
+            dueDate, // next
+            int(block.timestamp) - int(dueDate) //late or seconds in advance
         );
     }
 
@@ -773,7 +768,7 @@ contract WorldHelper {
 
     function updateCodeInfo(address _world, uint[] memory _tokenIds, uint _rating) external {
         require(IWorld(IContract(contractAddress).worldNote()).isGauge(_world) && IAuth(_world).isAdmin(msg.sender));
-        for (uint i = 0; i < _tokenIds[i]; i++) {
+        for (uint i = 0; i < _tokenIds.length; i++) {
             require(codeInfo[_tokenIds[i]].world == _world);
             codeInfo[_tokenIds[i]].rating = _rating;
         }
@@ -789,16 +784,21 @@ contract WorldHelper {
         require(msg.sender == worldHelper2);
         address worldNote = IContract(contractAddress).worldNote();
         WorldType _wt = IWorld(worldHelper2).getWorldType(_world);
-        (,COLOR _color) = IWorld(worldNote).getGaugeNColor(IWorld(worldNote).worldToProfileId(_world), _wt);
+        (,COLOR _color) = IWorld(worldNote).getGaugeNColor(_world, _wt);
         (,COLOR _color2) = IWorld(worldNote).getGaugeNColor(
-            IWorld(worldNote).worldToProfileId(codeInfo[registeredTo[_wt][curr]].world),
+            codeInfo[registeredTo[_wt][curr]].world,
             codeInfo[registeredTo[_wt][curr]].worldType
         );
         require(_color2 < IWorld(worldHelper2).minColor(),"WH2");
+        uint period = IWorld(worldHelper2).getPeriod();
+        uint week = 86400 * 7;
         codeInfo[_tokenId].world = _world;
         codeInfo[_tokenId].color = _color;
+        codeInfo[_tokenId].start = block.timestamp;
+        codeInfo[_tokenId].end = (block.timestamp + period) / week * week;
+        tokenIdToWorld[_tokenId] = _world;
         IWorld(worldHelper2).transferNFT(_ownerOf(registeredTo[_wt][curr]), _to, registeredTo[_wt][curr]);
-        IWorld(worldNote).emitTransfer(registeredTo[_wt][curr], _to);
+        IWorld(worldNote).emitTransfer(registeredTo[_wt][curr], _world);
     }
 
     function newMint(
@@ -816,7 +816,7 @@ contract WorldHelper {
         address worldNote = IContract(contractAddress).worldNote();
         string memory codeName = string(abi.encodePacked(__first4,__last4,'+',_ext,'_',toString(_planet)));
         WorldType _wt = IWorld(worldHelper2).getWorldType(_world);
-        (,COLOR _color) = IWorld(worldNote).getGaugeNColor(IWorld(worldNote).worldToProfileId(_world), _wt);
+        (,COLOR _color) = IWorld(worldNote).getGaugeNColor(_world, _wt);
         codeInfo[tokenId].world = _world;
         codeInfo[tokenId].color = _color;
         codeInfo[tokenId].start = _start;
@@ -826,7 +826,9 @@ contract WorldHelper {
         codeInfo[tokenId].last4 = __last4;
         codeInfo[tokenId].ext = _ext;
         codeInfo[tokenId].worldType = _wt;
-        registeredTo[_wt][codeName] = tokenId;
+        if (_end > block.timestamp) {
+            registeredTo[_wt][codeName] = tokenId;
+        }
         registeredCodes[__first4][__last4] = _ext;
         tokenIdToWorld[tokenId] = _world;
         IWorld(worldHelper2).safeMint(_to, tokenId);
@@ -853,11 +855,10 @@ contract WorldHelper {
     function withdrawTreasury(address _token, uint _amount) external lock {
         address token = IContract(contractAddress).token();
         address devaddr_ = IAuth(contractAddress).devaddr_();
-        _token = _token == address(0x0) ? token : _token;
-        uint _price = _amount == 0 ? treasury : Math.min(_amount, treasury);
-        if (_token == token) {
-            treasury -= _price;
-            IERC20(_token).safeTransfer(devaddr_, _price);
+        if (_token == token || _token == address(0x0)) {
+            uint _price = _amount == 0 ? treasury : Math.min(_amount, treasury);
+            IERC20(token).safeTransfer(devaddr_, treasury);
+            treasury = 0;
         } else {
             IERC20(_token).safeTransfer(devaddr_, erc20(_token).balanceOf(address(this)));
         }
@@ -903,13 +904,16 @@ contract WorldHelper2 is ERC721Pausable {
     // first4 => last4 => ext
     address private contractAddress;
     uint internal constant week = 86400 * 7;
+    uint internal INIT_DATE;
     uint private timeframe = 26;
     uint public minBounty;
     mapping(address => uint) public bounties;
     COLOR public minColor = COLOR.BROWN;
     mapping(address => address) private uriGenerator;
     
-    constructor() ERC721("PlusCode", "PlusCode")  {}
+    constructor() ERC721("PlusCode", "PlusCode")  {
+        INIT_DATE = block.timestamp;
+    }
 
     function getWorldType(address _world) external view returns(WorldType) {
         return categories[_world];
@@ -938,7 +942,7 @@ contract WorldHelper2 is ERC721Pausable {
         WorldType _wt = categories[_world];
         if (_wt == WorldType.RPWorld) {
             return 0x71635D9FEaE672a3c21386C7a615A467525c91e9;
-        } else if (_wt == WorldType.RPWorld) {
+        } else if (_wt == WorldType.BPWorld) {
             return 0x5790c3534F30437641541a0FA04C992799602998;
         } else {
             return 0xe486De509c5381cbdBF3e71F57D7F1f7570f5c46;
@@ -963,32 +967,33 @@ contract WorldHelper2 is ERC721Pausable {
         address _world,
         uint _start,
         uint _planet,
-        string[] memory _first4, 
-        string[] memory _last4,
-        string[] memory _nfts
+        string[][] memory _first4, 
+        string[][] memory _last4,
+        string[][] memory _nfts
     ) external {
         require(IWorld(IContract(contractAddress).worldNote()).isGauge(_world) && IAuth(_world).isAdmin(msg.sender));
-        (string memory __first4, string memory __last4) = getCodes(_world, _first4, _last4);
-        for (uint i = 0; i < _nfts.length; i++) {
-            _callNewMintFromPast(
-                _to,
-                _world,
-                _start,
-                _planet,
-                __first4,
-                __last4,
-                _nfts[i]
-            );
+        for (uint k = 0; k < _nfts.length; k++) {
+            (string memory __first4, string memory __last4) = getCodes(_world, _first4[k], _last4[k]);
+            for (uint i = 0; i < _nfts[k].length; i++) {
+                _callNewMintFromPast(
+                    _to,
+                    _world,
+                    _start,
+                    _planet,
+                    __first4,
+                    __last4,
+                    _nfts[k][i]
+                );
+            }
         }
     }
 
     function _checkParams(address _world, uint _end, string memory curr, string memory _nft) internal view {
         address worldHelper = IContract(contractAddress).worldHelper();
-        (,uint start,,,,,,,,) = IWorld(worldHelper).codeInfo(1);
-        require(start > _end); //first code must be after any past code
+        require(INIT_DATE > _end, "1"); //first code must be after any past code
         require(PlusCodes.checkExtension(_nft));
-        (,,uint end,,,,,,,) = IWorld(worldHelper).codeInfo(IWorld(worldHelper).registeredTo(categories[_world], curr));
-        require(end == 0);
+        // (,,uint end,,,,,,,) = IWorld(worldHelper).codeInfo(IWorld(worldHelper).registeredTo(categories[_world], curr));
+        // require(end == 0, "2");
     }
 
     function _callNewMintFromPast(
@@ -1001,7 +1006,7 @@ contract WorldHelper2 is ERC721Pausable {
         string memory _nft
     ) internal {
         uint period = timeframe * week;
-        uint _end = (_start + period) / period * period;
+        uint _end = (_start + period) / week * week;
         require(categories[_world] != WorldType.undefined);
         string memory curr = string(abi.encodePacked(__first4,__last4,'+',_nft,'_',toString(_planet)));
         _checkParams(_world, _end, curr, _nft);
@@ -1061,6 +1066,10 @@ contract WorldHelper2 is ERC721Pausable {
         }
     }
 
+    function getPeriod() external view returns(uint) {
+        return timeframe * week;
+    }
+
     function _callNewMint(
         address _to,
         address _world,
@@ -1081,7 +1090,7 @@ contract WorldHelper2 is ERC721Pausable {
                 _to,
                 _world,
                 block.timestamp,
-                (block.timestamp + period) / period * period,
+                (block.timestamp + period) / week * week,
                 _planet,
                 __first4,
                 __last4,
@@ -1097,15 +1106,15 @@ contract WorldHelper2 is ERC721Pausable {
     ) public view returns(string memory,string memory) {
         address worldNote = IContract(contractAddress).worldNote();
         require(IWorld(worldNote).isGauge(_world) && IAuth(_world).isAdmin(msg.sender));
-        require(PlusCodes.isPlusCodeFirstFour(_first4[0], _first4[1], _first4[2], _first4[3]));
-        require(PlusCodes.isPlusCodeLastFour(_last4[0], _last4[1], _last4[2], _last4[3]));
+        // require(PlusCodes.isPlusCodeFirstFour(_first4[0], _first4[1], _first4[2], _first4[3]));
+        // require(PlusCodes.isPlusCodeLastFour(_last4[0], _last4[1], _last4[2], _last4[3]));
         if (minBounty > 0) {
             uint _bounty = ITrustBounty(IContract(contractAddress).trustBounty()).getBalance(bounties[_world]);
             require(bounties[_world] > 0 && _bounty >= minBounty);
         }
         string memory __first4 = string(abi.encodePacked(_first4[0],_first4[1],_first4[2],_first4[3]));
         string memory __last4 = string(abi.encodePacked(_last4[0],_last4[1],_last4[2],_last4[3]));
-        (,COLOR _color) = IWorld(worldNote).getGaugeNColor(IWorld(worldNote).worldToProfileId(_world), categories[_world]);
+        (,COLOR _color) = IWorld(worldNote).getGaugeNColor(_world, categories[_world]);
         require(_color >= minColor);
         return (__first4, __last4);
     }
@@ -1163,8 +1172,8 @@ contract WorldHelper2 is ERC721Pausable {
         // address worldHelper = IContract(contractAddress).worldHelper();
         (address world,uint start,uint end,uint planet,uint rating,string memory _first4,string memory _last4,string memory _ext,COLOR _color,) = 
         IWorld(IContract(contractAddress).worldHelper()).codeInfo(_tokenId);
-        optionNames = new string[](7);
-        optionValues = new string[](7);
+        optionNames = new string[](8);
+        optionValues = new string[](8);
         optionNames[idx] = "WID";
         optionValues[idx++] = toString(_worldId);
         optionNames[idx] = "Start";
@@ -1185,6 +1194,7 @@ contract WorldHelper2 is ERC721Pausable {
         : _color == COLOR.BROWN
         ? "Brown"
         : "Black";
+        optionValues[idx++] = end < block.timestamp ? "Past World" : "Present World";
     }
 
     function tokenURI(uint _tokenId) public view override returns (string memory output) {
@@ -1368,21 +1378,20 @@ contract WorldHelper3 is ERC721Pausable {
     
     function claimPendingRevenueFromNote(uint _tokenId) external lock {
         require(ownerOf(_tokenId) == msg.sender, "Only owner!");
-        require(notes[_tokenId].timer <= block.timestamp, "Not yet due");
+        require(notes[_tokenId].timer < block.timestamp, "Not yet due");
         uint256 revenueToClaim = pendingRevenueFromNote[_tokenId];
-        _burn(_tokenId);
         delete pendingRevenueFromNote[_tokenId];
         delete adminNotes[notes[_tokenId].world][notes[_tokenId].protocolId];
         uint payswapFees = revenueToClaim * tradingFee / 10000;
         IWorld(notes[_tokenId].world).noteWithdraw(address(msg.sender), notes[_tokenId].protocolId, revenueToClaim - payswapFees);
-        IWorld(notes[_tokenId].world).noteWithdraw(address(this), notes[_tokenId].protocolId, payswapFees);
-        treasuryFees[notes[_tokenId].token] += payswapFees;
+        _burn(_tokenId);
         delete notes[_tokenId];
     }
 
     function updatePendingRevenueFromNote(uint _tokenId, uint _paid) external {
         require(IWorld(IContract(contractAddress).worldNote()).isGauge(msg.sender));
-        notes[tokenId].due -= _paid;
+        require(notes[tokenId].due <= _paid);
+        notes[tokenId].due = 0;
         pendingRevenueFromNote[_tokenId] += _paid;
     }
 
@@ -1402,8 +1411,8 @@ contract WorldHelper3 is ERC721Pausable {
 
     function tokenURI(uint _tokenId) public override view returns (string memory output) {
         uint idx;
-        string[] memory optionNames = new string[](5);
-        string[] memory optionValues = new string[](5);
+        string[] memory optionNames = new string[](6);
+        string[] memory optionValues = new string[](6);
         uint decimals = uint(IMarketPlace(notes[_tokenId].token).decimals());
         optionValues[idx++] = toString(_tokenId);
         optionNames[idx] = "PID";
@@ -1411,7 +1420,9 @@ contract WorldHelper3 is ERC721Pausable {
         optionNames[idx] = "End";
         optionValues[idx++] = toString(notes[_tokenId].timer);
         optionNames[idx] = "Amount";
-        optionValues[idx++] = string(abi.encodePacked(toString(notes[_tokenId].due/10**decimals), " " ,IMarketPlace(notes[_tokenId].token).symbol()));
+        optionValues[idx++] = toString(notes[_tokenId].due);
+        optionNames[idx] = "Decimals, Symbol";
+        optionValues[idx++] = string(abi.encodePacked(toString(decimals), ", " , IMarketPlace(notes[_tokenId].token).symbol()));
         optionNames[idx] = "Expired";
         optionValues[idx++] = notes[_tokenId].timer < block.timestamp ? "Yes" : "No";
         string[] memory _description = new string[](1);

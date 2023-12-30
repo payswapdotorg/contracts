@@ -118,7 +118,7 @@ contract Auditor {
         ITrustBounty(trustBounty).bountyInfo(_bountyId);
         if (isAdmin[msg.sender]) {
             require(owner == msg.sender && claimableBy == address(0x0));
-            if (_bountyId > 0 && adminBountyIds[_token] == 0) {
+            if (_bountyId > 0) {
                 IAuditor(helper).attach(_bountyId);
             } else if (_bountyId == 0 && adminBountyIds[_token] > 0) {
                 IAuditor(helper).detach(_bountyId);
@@ -792,7 +792,7 @@ contract AuditorHelper is ERC721Pausable {
         optionNames = new string[](3 + bountyIdLength + protocolRatings.length);
         optionValues = new string[](3 + bountyIdLength + protocolRatings.length);
         uint idx;
-        optionNames[idx] = "Audit Color";
+        optionNames[idx] = "Color";
         address _auditorNote = IContract(contractAddress).auditorNote();
         uint _auditorId = IProfile(_auditorNote).addressToProfileId(_auditor);
         (,,COLOR _color) = IAuditor(_auditorNote).getGaugeNColor(_auditorId);

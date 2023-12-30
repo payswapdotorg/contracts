@@ -234,10 +234,10 @@ async function main() {
   const WFTM = "0x07B9c47452C41e8E00f98aC4c075F5c443281d2A"
   const INIT_CODE_PAIR_HASH = "0xc686be96020737842c8d1dc73f500c20206f43ad5e5928a27a00cbf05cf911fa"
   const businessMinterAddress = "0xfF4d74eD76bBF5b6Da80F3b5D493d3f23D52eB55"
-  const auditorNoteAddress = "0x588EB4fa93cE8eC49d09c64be24F3e52d3C12F1B"
-  const auditorHelperAddress = "0xB11FC59614722954a69Ce242DbFEB02f5564148d"
-  const auditorHelper2Address = "0x35500917fc270C8484b586A36a7086fd80b6DC70"
-  const auditorFactoryAddress = "0x949CBc87D0531b95e9D8DA184126808960bB02D4"
+  const auditorNoteAddress = "0x232DcDe2D2c26C7EC2c0bfc755A2A540E015ABBf"
+  const auditorHelperAddress = "0x00852F6b102E9685E47abf43CB65c14c8bC13ECb"
+  const auditorHelper2Address = "0x4Bd9Fd85E27a2aD3b823f891bF22450c0eE9EB6e"
+  const auditorFactoryAddress = "0xaC3Ab517d81EE6C1169a76724DDE2fE1AE32177b"
   const acceleratorVoterAddress = "0x84779D6bCf31E90DE81Ac4155EFA9A725a60B7f9"
   const futureCollateralAddress = "0xD2b2435aa749E42F3523033Fe167Ae543082375F"
   const cardAddress = "0x5133ce668Dcfe85690CCB890e175F594fb11d0D0"
@@ -252,8 +252,8 @@ async function main() {
   const referralBribeFactoryAddress = "0x3D262AD24C4ff3F8598367a23bA5288Df3581da2"
   const businessVoterAddress = "0x3Fd9F56dE77002e267104d106A92967cd000EEC9" 
   const referralVoterAddress = "0xF72AEF17B06C69d1c2329e8966B7821875BCd21E"
-  const sponsorFactoryAddress = "0x71324803103f17D00e2E2Fe6449f27d301693c0A"
-  const sponsorNoteAddress = "0xDF1Fd12D700110CF763A540e059349ce4a453C5A"
+  const sponsorFactoryAddress = "0xA23Aea1EE6835DD000d8279d5f49212869ddD863"
+  const sponsorNoteAddress = "0x16bc1C7285bB312b8023ca4879F32d57bB706343"
   const ssiAddress = "0x1de9D006f209E9A7556270cae74D1F0D6864168a" //"0xFEc4d4A1aad9cE28dA66D86609c3B47aaeF5e527"
   const profileAddress = "0x3E0240b8aa46207d267225136BE0837841e53EB5" // "0x5E008DCE8095dE09BFF103Df85b566449c1dF7e2" // "0x810EBEa7d4330B6A6EFa2f73FF7E7773c57F98CD" //"0x8D531506a9Eb2E5931235a09e5192201B38b12b6"
   const profileHelperAddress = "0x2844bAf1253669Bf37fE6480805D95d6BFB5B126" // "0x0cf9f62B1e215ba580C8445Ca9C9CBf2ad32b6DB" // "0xf2Ca8333888cf3C673E81225228a000F9b7b4338" //"0xa71B00c519d6573E0cFC37638FE712aC6dD65a2c"
@@ -309,11 +309,11 @@ async function main() {
   const lotteryAddress = "0xa0a200D83C67fBa6386a8c901eB43CD6013104af"
   const lotteryHelperAddress = "0x49BA1bE93992a0fD9FE475B9bdF6b6D97C685e1C"
   const lotteryRandomNumberGeneratorAddress = "0x64e7a26A476A4D832F4ED5393a43a4e0c2D852Ce"
-  const worldFactoryAddress = "0x0Bb7F9c3dDb587A8843D92f2De22B936c0537545"
-  const worldNoteAddress = "0xfC28F508032e3D18e3130791F0b376Bd99aB1374"
-  const worldHelperAddress = "0x0691B361313da730d1528f3100fD4ab7d95370B3"
-  const worldHelper2Address = "0x350aB48Ad25003D1887a17D269f947f7DD27a2C8"
-  const worldHelper3Address = "0x29cF710FA955E4F3A6e8E672d4885fd9A43F380F"
+  const worldFactoryAddress = "0xDdE93bd880cfB708374f071a354a77Ec783A4399"
+  const worldNoteAddress = "0xaeE59D15607A045cf5cc0b3C964279d1aa6E446F"
+  const worldHelperAddress = "0xD5ea83aF4A19b95183dA6ca47D992Bcde753C35D"
+  const worldHelper2Address = "0x24Db7F5E2B4d7A4e1C1835a1647f4b608cc4e8bB"
+  const worldHelper3Address = "0x28EA0071d33213c0c204F24c1dC29554496B18eB"
   const rampFactoryAddress = "0x5F578d98eA02e6F637123780436Bd2A4D185F868"
   const rampHelperAddress = "0x23Be44620Fa12769260E02C7060193e1Df86D260"
   const rampHelper2Address = "0xfDcF4202C251600Ce957080b0986Fe2e5311c4AF"
@@ -2403,10 +2403,28 @@ async function main() {
     // await profile.shareEmail(deployer12.address)
     // await profile.shareEmail(deployer13.address)
     // await profile.shareEmail(deployer14.address)
-    // console.log("profile.sharedEmail==============>", await profile.sharedEmail(deployer.address))
+    // await profile.shareEmail(wallets[0].address)
+    // await profile.shareEmail(wallets[1].address)
+    // await profile.shareEmail(wallets[2].address)
+    // await profile.shareEmail(wallets[3].address)
+    // await profile.shareEmail(wallets[4].address)
+    // await profile.shareEmail(wallets[5].address)
+    // await profile.shareEmail(wallets[6].address)
+    // await profile.shareEmail(wallets[7].address)
+    // console.log("profile.sharedEmail==============>", await profile.sharedEmail(wallets[0].address))
 
     // await profile.createSpecificProfile("Tepa",1,0)
     // console.log("profile1==============>", await profile.profileInfo(1))
+
+    // await profile.connect(wallets[0]).createProfile("a", 0)
+    // await profile.connect(wallets[1]).createProfile("b", 0)
+    // await profile.connect(wallets[2]).createProfile("c", 0)
+    // await profile.connect(wallets[3]).createProfile("d", 0)
+    // await profile.connect(wallets[4]).createProfile("e", 0)
+    // await profile.connect(wallets[5]).createProfile("f", 0)
+    // await profile.connect(wallets[6]).createProfile("g", 0)
+    // await profile.connect(wallets[7]).createProfile("h", 0)
+    // console.log("profile2==============>", await profile.addressToProfileId(wallets[0].address))
 
     // await tFiat.approve(profileHelper.address, ethers.BigNumber.from("1000000000000000000"))
     // await profileHelper.bidForProfile(ethers.BigNumber.from("1000000000000000000"))
@@ -2520,11 +2538,64 @@ async function main() {
     // await worldFactory.createGauge(1, deployer.address)
     // let worldAddress = (await worldNote.getAllWorlds(0))[0]
     // let world = World.attach(worldAddress)
-    // console.log("worldAddress==================>", worldAddress, world.address)
-    // await worldHelper2.updateCategory(worldAddress, 1)
+    // console.log("worldAddress==================>", worldAddress, world.address, await tFiat.balanceOf(world.address)) 
+    // console.log("world.protocolInfo======================+>", await world.protocolInfo(1))
+    // console.log("world.totalSupply======================+>", await world.totalSupply())
+    // console.log("worldHelper3.ownerOf(1)======================+>", await worldHelper3.ownerOf(1), await worldHelper3.notes(1), await worldHelper3.pendingRevenueFromNote(1), await worldHelper3.adminNotes(world.address, 1))
+
+    // console.log("worldHelper3.tokenURI(1)======================+>", await worldHelper3.tokenURI(1))
+    // 99000000000000000
+    // 100000000000000000
+    // console.log("getGaugeNColor==================>", await worldNote.getGaugeNColor(
+    //   world.address,
+    //   0
+    // ), await worldHelper2.minColor())
+    // console.log("=======>", await plusCodes.isPlusCodeFirstFour(
+    //   '7',
+    //   'g',
+    //   'p',
+    //   '2'
+    // ))
+    // console.log("getCodes==================>", await worldHelper2.getCodes(
+    //   world.address,
+    //   ['7','g','p','2'],
+    //   ['8','g','q','6'], // 7GP28WQ6+CX
+    // ))
+    
+    // console.log("===============>", await percentiles.computePercentileFromData(
+    //   false,
+    //   0,
+    //   1,
+    //   1,
+    //   0
+    // ))
+    // console.log("===============>", await percentiles.computePercentileFromData(
+    //   false,
+    //   2,
+    //   3,
+    //   3,
+    //   0
+    // ))
+    
+    // await worldNote.connect(wallets[0]).vote(world.address, true)
+    // await worldNote.connect(wallets[1]).vote(world.address, true)
+    // await worldNote.connect(wallets[2]).vote(world.address, true)
+    // await worldNote.connect(wallets[3]).vote(world.address, true)
+    // await worldNote.connect(wallets[4]).vote(world.address, true)
+    // await worldNote.connect(wallets[5]).vote(world.address, true)
+    // await worldNote.connect(wallets[6]).vote(world.address, true)
+    // await worldNote.connect(wallets[7]).vote(world.address, true)
+    // console.log("worldNote.vote==============>Done", await worldNote.percentiles(world.address), await worldNote.getGaugeNColor(world.address,0))
+
+    // console.log("worldHelper.codeInfo==================>", await worldHelper.codeInfo(1))
+    // console.log("worldHelper2.ownerOf==================>", await worldHelper2.ownerOf(1))
+
+    // await worldHelper2.updateCategory(worldAddress, 0)
     // console.log("updateCategory==================>", await worldHelper2.getWorldType(worldAddress))
-    // await worldNote.updateProfile(worldAddress)
-    // console.log("updateProfile==================>Done")
+
+    // await worldHelper2.updateTimeFrame(26, 0)
+    // console.log("worldHelper2.updateTimeFrame==================>Done")
+    
     // await world.updateProtocol(
     //   deployer.address,
     //   tFiat.address,

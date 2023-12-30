@@ -4812,7 +4812,9 @@ library PlusCodes {
 
     function isPlusCodeLastFour(string memory a, string memory b, string memory c, string memory d) external pure returns(bool){
         require(isFirstDigit(a));
+        // require(isSecondDigit(a));
         require(isSecondDigit(b));
+        // require(isThirdOrFourthDigit(b));
         require(isThirdOrFourthDigit(c));
         require(isThirdOrFourthDigit(d));
         return true;
@@ -6600,6 +6602,7 @@ interface ISponsor {
 }
 
 interface IWorld {
+    function getPeriod() external view returns(uint);
     function getOptions(uint,uint) external view returns(string[] memory,string[] memory);
     function constructTokenURI(address,address,uint,uint,string[] memory,string[] memory) external view returns(string memory);
     function autoCharge(uint[] memory,uint) external;
@@ -6681,7 +6684,7 @@ interface IWorld {
     function safeTransferWithBountyCheck(address,address,uint,uint) external;
     function noteWithdraw(address,uint,uint) external;
     function emitUpdateMiscellaneous(uint,uint,string memory,string memory,uint,uint,address,string memory) external;
-    function getGaugeNColor(uint,WorldType) external view returns(address,COLOR);
+    function getGaugeNColor(address,WorldType) external view returns(address,COLOR);
 }
 
 interface IRouter {

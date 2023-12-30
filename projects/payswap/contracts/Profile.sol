@@ -639,7 +639,7 @@ contract ProfileHelper is ERC721Pausable {
         }
     }
 
-    function checkCrush(uint _profileId) external {
+    function checkCrush(uint _profileId) external view {
         require(crushes[_profileId][IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender)], "4");
     }
     

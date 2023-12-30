@@ -22,6 +22,7 @@ contract Sponsor {
     mapping(address => uint) public adminBountyIds;
     mapping(address => uint) public totalProcessed;
     mapping(address => uint) public addressToProtocolId;
+    mapping(uint => address) public taxContract;
     
     constructor(
         address _devaddr,
@@ -141,6 +142,10 @@ contract Sponsor {
             require(protocolInfo[addressToProtocolId[msg.sender]].bountyId == 0, "S4");
             protocolInfo[addressToProtocolId[msg.sender]].bountyId = _bountyId;
         }
+    }
+
+    function updateTaxContract(address _taxContract) external {
+        taxContract[addressToProtocolId[msg.sender]] = _taxContract;
     }
 
     function updateTokenId(uint _tokenId) external {
@@ -271,6 +276,7 @@ contract SponsorNote is ERC721Pausable {
     }
     EnumerableSet.AddressSet private gauges;
     mapping(address => uint) public treasuryFees;
+    mapping(address => mapping(uint => string)) private media;
     mapping(uint => SponsorShipNote) public notes;
     uint public tokenId = 1;
     uint public tradingFee = 100;
@@ -475,19 +481,20 @@ contract SponsorNote is ERC721Pausable {
         require(gauges.contains(msg.sender), "SN09");
         emit UpdateContents(msg.sender, _contentName, _add);
     }
-
+    
     function emitUpdateProtocol(
         uint protocolId,
         address owner,
-        string memory media,
+        string memory _media,
         string memory description
     ) external {
         require(gauges.contains(msg.sender), "SN10");
+        media[msg.sender][protocolId] = _media;
         emit UpdateProtocol(
             protocolId, 
             msg.sender,
             owner,
-            media,
+            _media,
             description
         );
     }
@@ -506,7 +513,7 @@ contract SponsorNote is ERC721Pausable {
         return (tm2 - tm1) / Math.max(1,_period);
     }
 
-    function getDuePayable(address _sponsor, address _protocol, uint _numPeriods) public view returns(uint, uint, int) {
+    function getDuePayable(address _sponsor, address _protocol, uint _numExtraPeriods) public view returns(uint, uint, int) {
         uint _protocolId = ISponsor(_sponsor).addressToProtocolId(_protocol);
         (,,,,uint amountPayable,uint paidPayable,uint periodPayable,uint startPayable) = 
         ISponsor(_sponsor).protocolInfo(_protocolId);
@@ -565,13 +572,15 @@ contract SponsorNote is ERC721Pausable {
     }
 
     function _constructTokenURI(uint _tokenId, address _token, string[] memory description, string[] memory optionNames, string[] memory optionValues) internal view returns(string memory) {
+        string[] memory m = new string[](1);
+        m[0] = media[msg.sender][notes[_tokenId].protocolId];
         return IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
             _tokenId,
             _token,
             ownerOf(_tokenId),
             ownerOf(_tokenId),
             address(0x0),
-            new string[](1),
+            m,
             optionNames,
             optionValues,
             description

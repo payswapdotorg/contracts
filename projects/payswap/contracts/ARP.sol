@@ -293,13 +293,13 @@ contract ARP {
             (uint _price, uint _due) = getReceivable(_tokenIds[i], _numPeriods);
             address token = protocolInfo[_tokenIds[i]].token;
             (uint payswapFees,uint adminFees) = _getFees(_price, token, true);
-            address _user = ve(helper).ownerOf(_tokenIds[i]);
+            address _user = isAdmin[msg.sender] ? ve(helper).ownerOf(_tokenIds[i]) : msg.sender;
             IERC20(token).safeTransferFrom(_user, address(this), _price);
             IERC20(token).safeTransfer(helper, payswapFees);
             IARP(helper).notifyFees(token, payswapFees);
             totalProcessed[token] += _price;
             protocolInfo[_tokenIds[i]].paidReceivable += _due;
-            // _processPaid(_due, _tokenIds[i]);
+
             if(taxContract[_tokenIds[i]] != address(0x0)) {
                 IBILL(taxContract[_tokenIds[i]]).notifyDebit(address(this), ve(helper).ownerOf(_tokenIds[i]), _price);
             }
@@ -761,8 +761,8 @@ contract ARPHelper is ERC721Pausable {
     function _getOptions(address _arp, uint _protocolId, COLOR _color) internal view returns(string[] memory optionNames, string[] memory optionValues) {
         // (,uint _bountyId,uint _profileId,uint _tokenId,uint _amountPayable,uint _amountReceivable,uint _paidPayable,uint _paidReceivable,uint _periodPayable,uint _periodReceivable,,) = IARP(_arp).protocolInfo(_protocolId);
         ARPInfo memory _p = IARP(_arp).protocolInfo(_protocolId);
-        optionNames = new string[](10);
-        optionValues = new string[](10);
+        optionNames = new string[](8);
+        optionValues = new string[](8);
         uint idx;
         uint decimals = uint(IMarketPlace(_p.token).decimals());
         optionNames[idx] = "ARP Color";
@@ -773,20 +773,16 @@ contract ARPHelper is ERC721Pausable {
         : _color == COLOR.BROWN
         ? "Brown"
         : "Black";
-        optionNames[idx] = "ARPID";
-        optionValues[idx++] = toString(addressToProfileId[_arp]);
-        optionNames[idx] = "UBID";
-        optionValues[idx++] = toString(_p.bountyId);
-        optionNames[idx] = "Profile ID";
-        optionValues[idx++] = toString(_p.profileId);
-        optionNames[idx] = "VeNFT ID";
-        optionValues[idx++] = toString(_p.tokenId);
+        optionNames[idx] = "UBID/ARPID";
+        optionValues[idx++] = string(abi.encodePacked(toString(_p.bountyId), ", " , toString(addressToProfileId[_arp])));
+        optionNames[idx] = "Profile/VeNFT ID";
+        optionValues[idx++] = string(abi.encodePacked(toString(_p.profileId), ", " , toString(_p.tokenId)));
         optionNames[idx] = "Payable";
         optionValues[idx++] = toString(_p.amountPayable);
         optionNames[idx] = "Receivable";
         optionValues[idx++] = toString(_p.amountReceivable);
         optionNames[idx] = "PP/PR";
-        optionValues[idx++] = string(abi.encodePacked(toString(_p.paidPayable / 10**decimals), ", " , toString(_p.paidReceivable / 10**decimals)));
+        optionValues[idx++] = string(abi.encodePacked(toString(_p.paidPayable), ", " , toString(_p.paidReceivable)));
         optionNames[idx] = "TP/TR";
         optionValues[idx++] = string(abi.encodePacked(toString(_p.periodPayable), ", " , toString(_p.periodReceivable)));
         optionNames[idx] = "Decimals, Symbol";
