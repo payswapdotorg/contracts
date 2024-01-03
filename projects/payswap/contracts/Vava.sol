@@ -1065,9 +1065,7 @@ contract ValuepoolHelper2 {
         uint idx;
         uint randomHash = uint(seed + block.timestamp + block.difficulty);
         for (uint i = 0; i < _maxMedia; i++) {
-            // if (!_isEmpty(_mediaData)) {
-                mediaData[idx++] = media[_vava][_sponsors[randomHash++ % _sponsors.length]];
-            // }
+            mediaData[idx++] = media[_vava][_sponsors[randomHash++ % _sponsors.length]];
         }
     }
 }

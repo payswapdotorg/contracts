@@ -1371,8 +1371,8 @@ contract MarketPlaceEvents {
         uint256 nfTicketId
     );
     event CreatePaywallARP(address subscriptionARP, uint collectionId, string tokenId);
-    event DeletePaywallARP(uint collectionId);
-    event UpdateSubscriptionInfo(uint collectionId, uint optionId, uint freeTrialPeriod);
+    event DeletePaywallARP(uint collectionId, string tokenId);
+    event UpdateSubscriptionInfo(uint collectionId, uint optionId, uint freeTrialPeriod, string tokenId);
     
     event CreateReview(
         uint indexed collectionId, 
@@ -1903,11 +1903,12 @@ contract MarketPlaceEvents {
     function emitUpdateSubscriptionInfo(
         uint _collectionId, 
         uint _optionId,
-        uint _freeTrialPeriod
+        uint _freeTrialPeriod,
+        string memory _tokenId
     ) external {
         require(IMarketPlace(IContract(contractAddress).paywallARPHelper()).isGauge(msg.sender));
 
-        emit UpdateSubscriptionInfo(_collectionId, _optionId, _freeTrialPeriod);   
+        emit UpdateSubscriptionInfo(_collectionId, _optionId, _freeTrialPeriod, _tokenId);   
     }
 
     function emitCreatePaywallARP(address _subscriptionARP, uint _collectionId, string memory _tokenId) external {
@@ -1916,10 +1917,10 @@ contract MarketPlaceEvents {
         emit CreatePaywallARP(_subscriptionARP, _collectionId, _tokenId);   
     }
 
-    function emitDeletePaywallARP(uint collectionId) external {
+    function emitDeletePaywallARP(uint collectionId, string memory _tokenId) external {
         require(msg.sender == IContract(contractAddress).paywallARPHelper());
 
-        emit DeletePaywallARP(collectionId);   
+        emit DeletePaywallARP(collectionId, _tokenId);   
     }
     
     function emitUpdateOptions(
@@ -4947,7 +4948,8 @@ contract Paywall {
         IMarketPlace(IContract(contractAddress).marketPlaceEvents()).emitUpdateSubscriptionInfo(
             collectionId, 
             _optionId, 
-            _freeTrialPeriod
+            _freeTrialPeriod,
+            tokenId
         );
     }
     
@@ -5264,10 +5266,13 @@ contract PaywallARPHelper {
         return gauges.contains(_gauge);
     }
 
-    function deleteARP(address _arp) external {
+    function deleteARP(address _arp, string memory _tokenId) external {
         require(msg.sender == IAuth(contractAddress).devaddr_() || IAuth(_arp).devaddr_() == msg.sender);
         gauges.remove(_arp);
-        IMarketPlace(IContract(contractAddress).marketPlaceEvents()).emitDeletePaywallARP(IMarketPlace(_arp).collectionId());
+        IMarketPlace(IContract(contractAddress).marketPlaceEvents()).emitDeletePaywallARP(
+            IMarketPlace(_arp).collectionId(),
+            _tokenId
+        );
     }
 
     // function getNumPeriods(uint tm1, uint tm2, uint _period) internal pure returns(uint) {

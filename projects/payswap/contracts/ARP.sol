@@ -1194,6 +1194,7 @@ contract ARPMinter {
     mapping(address => uint) public categories;
     struct ScheduledMedia {
         uint amount;
+        uint active_period;
         string message;
     }
     mapping(uint => uint) public pricePerAttachMinutes;
@@ -1204,15 +1205,11 @@ contract ARPMinter {
     mapping(address => string[]) public ratingLegend;
     uint private currentMediaIdx = 1;
     uint private maxNumMedia = 3;
-    struct Channel {
-        string message;
-        uint active_period;
-    }
     struct Vote {
         uint likes;
         uint dislikes;
     }
-    mapping(uint => mapping(string => Channel)) private channels;
+    uint seed = (block.timestamp + block.difficulty) % 100;
     mapping(uint => mapping(string => bool)) private tagRegistrations;
     mapping(uint => mapping(string => EnumerableSet.UintSet)) private excludedContents;
     mapping(uint => string) public tags;
@@ -1244,10 +1241,9 @@ contract ARPMinter {
         }
     }
 
-    function vote(address _arp, uint _profileId, bool like) external {
-        require(IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender) == _profileId && _profileId > 0, "ARPHH2");
-        SSIData memory metadata = ISSI(IContract(contractAddress).ssi()).getSSID(_profileId);
-        require(keccak256(abi.encodePacked(metadata.answer)) != keccak256(abi.encodePacked("")), "ARPHH3");
+    function vote(address _arp, bool like) external {
+        uint _profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender);
+        require(IProfile(IContract(contractAddress).profile()).isUnique(_profileId), "ARPHH3");
         _resetVote(_arp, _profileId);        
         if (like) {
             votes[_arp].likes += 1;
@@ -1300,37 +1296,37 @@ contract ARPMinter {
         IARP(_arp).autoCharge(_protocolIds, _numPeriods);
     }
 
-    function updateTags(address _arp, string memory _tag) external {
-        require(IAuth(_arp).isAdmin(msg.sender));
-        uint _arpId = IProfile(_helper()).addressToProfileId(_arp);
+    function updateTags(string memory _tag) external {
+        uint _arpId = IProfile(_helper()).addressToProfileId(msg.sender);
         tags[_arpId] = _tag;
     }
 
     function getMedia(address _arp, uint _tokenId) external view returns(string[] memory _media) {
         uint _arpId = IProfile(_helper()).addressToProfileId(_arp);
         string memory _tag = tags[_arpId];
-        if (tagRegistrations[_arpId][_tag]) {
-            _media = new string[](_scheduledMedia[1][_tag].length() + 1);
-            uint idx;
-            _media[idx++] = IARP(_arp).media(_tokenId);
-            for (uint i = 0; i < _scheduledMedia[1][_tag].length(); i++) {
-                uint _currentMediaIdx = _scheduledMedia[1][_tag].at(i);
-                _media[idx++] = scheduledMedia[_currentMediaIdx].message;
-            }
-        } else {
-            _media = new string[](_scheduledMedia[_arpId][_tag].length() + 1);
-            uint idx;
-            _media[idx++] = IARP(_arp).media(_tokenId);
-            for (uint i = 0; i < _scheduledMedia[_arpId][_tag].length(); i++) {
-                uint _currentMediaIdx = _scheduledMedia[_arpId][_tag].at(i);
-                _media[idx++] = scheduledMedia[_currentMediaIdx].message;
-            }
+        _arpId = tagRegistrations[_arpId][_tag] ? 1 : _arpId;
+        uint _length = _scheduledMedia[_arpId][_tag].length();
+        _media = new string[](Math.min(maxNumMedia, _length+1));
+        uint randomHash = uint(seed + block.timestamp + block.difficulty);
+        for (uint i = 0; i < Math.min(maxNumMedia, _length); i++) {
+            _media[i] = scheduledMedia[_scheduledMedia[_arpId][_tag].at(randomHash++ % _length)].message;
         }
+        for (uint i = Math.min(maxNumMedia, _length); i < Math.min(maxNumMedia, _length+1); i++) {
+            _media[i] = IARP(_arp).media(_tokenId);
+        }
+    }
+
+    function getAllMedia(uint _start, uint _arpId, string memory _tag) external view returns(string[] memory _media) {
+        _media = new string[](_scheduledMedia[_arpId][_tag].length() - _start);
+        for (uint i = _start; i < _scheduledMedia[_arpId][_tag].length(); i++) {
+            _media[i] = scheduledMedia[_scheduledMedia[_arpId][_tag].at(i)].message;
+        }  
     }
 
     function updateTagRegistration(string memory _tag, bool _add) external {
         address arpHelper = IContract(contractAddress).arpHelper();
         uint _arpId = IProfile(arpHelper).addressToProfileId(msg.sender);
+        require(_arpId > 0);
         tagRegistrations[_arpId][_tag] = _add;
         IARP(arpHelper).emitUpdateMiscellaneous(
             1,
@@ -1375,7 +1371,7 @@ contract ARPMinter {
     function sponsorTag(
         address _sponsor,
         address _arp,
-        uint _amount, 
+        uint _numMinutes, 
         string memory _tag, 
         string memory _message
     ) external {
@@ -1383,29 +1379,28 @@ contract ARPMinter {
         require(IAuth(_sponsor).isAdmin(msg.sender), "ARPHH6");
         require(!ISponsor(_sponsor).contentContainsAny(getExcludedContents(_arpId, _tag)), "ARPHH7");
         uint _pricePerAttachMinutes = pricePerAttachMinutes[_arpId];
-        if (_pricePerAttachMinutes > 0) {
-            uint price = _amount * _pricePerAttachMinutes;
-            IERC20(IContract(contractAddress).token()).safeTransferFrom(address(msg.sender), address(this), price);
-            uint valuepoolShare = IContract(contractAddress).valuepoolShare();
-            uint adminShare = IContract(contractAddress).adminShare();
-            valuepool += price * valuepoolShare / 10000;
-            if (_arpId > 0) {
-                treasury += price * adminShare / 10000;
-                pendingRevenue[_arpId] += price * (10000 - adminShare - valuepoolShare) / 10000;
-            } else {
-                treasury += price * (10000 - valuepoolShare) / 10000;
-            }
-            scheduledMedia[currentMediaIdx] = ScheduledMedia({
-                amount: _amount,
-                message: _message
-            });
-            _emitAddSponsor(_arpId, _sponsor, _tag, _message);
+        require(_pricePerAttachMinutes > 0, "3");
+        uint price = _numMinutes * _pricePerAttachMinutes;
+        IERC20(IContract(contractAddress).token()).safeTransferFrom(address(msg.sender), address(this), price);
+        uint valuepoolShare = IContract(contractAddress).valuepoolShare();
+        uint adminShare = IContract(contractAddress).adminShare();
+        valuepool += price * valuepoolShare / 10000;
+        if (_arpId > 0) {
+            treasury += price * adminShare / 10000;
+            pendingRevenue[_arpId] += price * (10000 - adminShare - valuepoolShare) / 10000;
+        } else {
+            treasury += price * (10000 - valuepoolShare) / 10000;
         }
+        scheduledMedia[currentMediaIdx] = ScheduledMedia({
+            amount: _numMinutes,
+            message: _message,
+            active_period: block.timestamp + _numMinutes * 60
+        });
+        _emitAddSponsor(_arpId, _sponsor, _tag, _message);
     }
 
     function _emitAddSponsor(uint _arpId, address _sponsor, string memory _tag, string memory _message) internal {
         _scheduledMedia[_arpId][_tag].add(currentMediaIdx++);
-        updateSponsorMedia(_arpId, _tag);
         IARP(IContract(contractAddress).arpNote()).emitUpdateMiscellaneous(
             2,
             _arpId,
@@ -1418,13 +1413,14 @@ contract ARPMinter {
         );
     }
 
-    function updateSponsorMedia(uint _arpId, string memory _tag) public {
-        require(channels[_arpId][_tag].active_period < block.timestamp, "ARPHH8");
-        uint idx = _scheduledMedia[_arpId][_tag].at(0);
-        channels[_arpId][_tag].active_period = block.timestamp + scheduledMedia[idx].amount*minute / minute * minute;
-        channels[_arpId][_tag].message = scheduledMedia[idx].message;
-        if (_scheduledMedia[_arpId][_tag].length() > maxNumMedia) {
-            _scheduledMedia[_arpId][_tag].remove(idx);
+    function updateSponsorMedia(uint _arpId, string memory _tag) external {
+        uint _length = _scheduledMedia[_arpId][_tag].length();
+        uint _endIdx = maxNumMedia > _length ? 0 : _length - maxNumMedia;
+        for (uint i = 0; i < _endIdx; i++) {
+            uint _currentMediaIdx = _scheduledMedia[_arpId][_tag].at(i);
+            if (scheduledMedia[_currentMediaIdx].active_period < block.timestamp) {
+                _scheduledMedia[_arpId][_tag].remove(_currentMediaIdx);
+            }
         }
     }
 

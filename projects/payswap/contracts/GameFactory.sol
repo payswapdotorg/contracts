@@ -1038,20 +1038,17 @@ contract GameHelper2 {
 
     mapping(uint => mapping(string => EnumerableSet.UintSet)) private excludedContents;
     address public contractAddress;
-    struct Channel {
-        string message;
-        uint active_period;
-    }
-    mapping(uint => mapping(string => Channel)) public channels;
     mapping(uint => mapping(string => bool)) public tagRegistrations;
     mapping(uint => mapping(uint => string)) public tags;
     struct ScheduledMedia {
         uint amount;
+        uint active_period;
         string message;
     }
     uint private maxNumMedia = 3;
     uint internal minute = 3600; // allows minting once per week (reset every Thursday 00:00 UTC)
     uint private currentMediaIdx = 1;
+    uint seed = (block.timestamp + block.difficulty) % 100;
     mapping(uint => address) public destination;
     mapping(uint => uint) public pricePerAttachMinutes;
     mapping(uint => ScheduledMedia) public scheduledMedia;
@@ -1148,21 +1145,20 @@ contract GameHelper2 {
     function getMedia(uint _tokenId) public view returns(string[] memory _media) {
         uint _collectionId = IGameNFT(IContract(contractAddress).gameMinter()).tokenIdToCollectionId(_tokenId);
         string memory _tag = tags[_collectionId][_tokenId];
-        if (tagRegistrations[_collectionId][_tag]) {
-            _media = new string[](_scheduledMedia[1][_tag].length() + 1);
-            uint idx;
-            for (uint i = 0; i < _scheduledMedia[1][_tag].length(); i++) {
-                uint _currentMediaIdx = _scheduledMedia[1][_tag].at(i);
-                _media[idx] = scheduledMedia[_currentMediaIdx].message;
-            }
-        } else {
-            _media = new string[](_scheduledMedia[_collectionId][_tag].length() + 1);
-            uint idx;
-            for (uint i = 0; i < _scheduledMedia[_collectionId][_tag].length(); i++) {
-                uint _currentMediaIdx = _scheduledMedia[_collectionId][_tag].at(i);
-                _media[idx] = scheduledMedia[_currentMediaIdx].message;
-            }
+        _collectionId = tagRegistrations[_collectionId][_tag] ? 1 : _collectionId;
+        uint _length = _scheduledMedia[_collectionId][_tag].length();
+        _media = new string[](Math.min(maxNumMedia, _length));
+        uint randomHash = uint(seed + block.timestamp + block.difficulty);
+        for (uint i = 0; i < Math.min(maxNumMedia, _length); i++) {
+            _media[i] = scheduledMedia[_scheduledMedia[_collectionId][_tag].at(randomHash++ % _length)].message;
         }
+    }
+
+    function getAllMedia(uint _start, uint _collectionId, string memory _tag) external view returns(string[] memory _media) {
+        _media = new string[](_scheduledMedia[_collectionId][_tag].length() - _start);
+        for (uint i = _start; i < _scheduledMedia[_collectionId][_tag].length(); i++) {
+            _media[i] = scheduledMedia[_scheduledMedia[_collectionId][_tag].at(i)].message;
+        }  
     }
 
     function updateTagRegistration(string memory _tag, bool _add) external {
@@ -1189,35 +1185,35 @@ contract GameHelper2 {
     function sponsorTag(
         address _sponsor,
         uint _gameProfileId,
-        uint _amount, 
+        uint _numMinutes, 
         string memory _tag, 
         string memory _message
     ) external {
         require(IAuth(_sponsor).isAdmin(msg.sender), "GM13");
         require(!ISponsor(_sponsor).contentContainsAny(_getExcludedContents(_gameProfileId, _tag)), "GM14");
         uint _pricePerAttachMinutes = pricePerAttachMinutes[_gameProfileId];
-        if (_pricePerAttachMinutes > 0) {
-            IGameNFT(IContract(contractAddress).gameMinter()).updateAfterSponsorPayment(
-                _gameProfileId,
-                _amount * _pricePerAttachMinutes,
-                msg.sender
-            );
-            scheduledMedia[currentMediaIdx] = ScheduledMedia({
-                amount: _amount,
-                message: _message
-            });
-            _scheduledMedia[_gameProfileId][_tag].add(currentMediaIdx++);
-            updateSponsorMedia(_gameProfileId, _tag);
-        }
+        require(_pricePerAttachMinutes > 0, "3");
+        IGameNFT(IContract(contractAddress).gameMinter()).updateAfterSponsorPayment(
+            _gameProfileId,
+            _numMinutes * _pricePerAttachMinutes,
+            msg.sender
+        );
+        scheduledMedia[currentMediaIdx] = ScheduledMedia({
+            amount: _numMinutes,
+            message: _message,
+            active_period: block.timestamp + _numMinutes * 60
+        });
+        _scheduledMedia[_gameProfileId][_tag].add(currentMediaIdx++);
     }
 
-    function updateSponsorMedia(uint _gameProfileId, string memory _tag) public {
-        require(channels[_gameProfileId][_tag].active_period < block.timestamp, "GM15");
-        uint idx = _scheduledMedia[_gameProfileId][_tag].at(0);
-        channels[_gameProfileId][_tag].active_period = block.timestamp + scheduledMedia[idx].amount*minute / minute * minute;
-        channels[_gameProfileId][_tag].message = scheduledMedia[idx].message;
-        if (_scheduledMedia[_gameProfileId][_tag].length() > maxNumMedia) {
-            _scheduledMedia[_gameProfileId][_tag].remove(idx);
+    function updateSponsorMedia(uint _gameProfileId, string memory _tag) external {
+        uint _length = _scheduledMedia[_gameProfileId][_tag].length();
+        uint _endIdx = maxNumMedia > _length ? 0 : _length - maxNumMedia;
+        for (uint i = 0; i < _endIdx; i++) {
+            uint _currentMediaIdx = _scheduledMedia[_gameProfileId][_tag].at(i);
+            if (scheduledMedia[_currentMediaIdx].active_period < block.timestamp) {
+                _scheduledMedia[_gameProfileId][_tag].remove(_currentMediaIdx);
+            }
         }
     }
 }

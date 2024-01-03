@@ -1169,9 +1169,7 @@ contract BettingHelper {
         string memory _tag, 
         string memory _message
     ) external {
-        address bettingMinter = IContract(contractAddress).bettingMinter();
-        require(bettingMinter == msg.sender);
-        IBetting(bettingMinter).updateSponsorMedia(_bettingProfileId, _tag);
+        require(IContract(contractAddress).bettingMinter() == msg.sender);
         emit UpdateMiscellaneous(
             2, 
             _bettingProfileId, 
@@ -1200,21 +1198,18 @@ contract BettingMinter is ERC721Pausable {
 
     struct ScheduledMedia {
         uint amount;
+        uint active_period;
         string message;
     }
+    uint seed = (block.timestamp + block.difficulty) % 100;
     mapping(uint => ScheduledMedia) public scheduledMedia;
     mapping(uint => uint) public pendingRevenue;
     mapping(uint => mapping(string => EnumerableSet.UintSet)) private _scheduledMedia;
     uint internal minute = 3600; // allows minting once per week (reset every Thursday 00:00 UTC)
     uint private currentMediaIdx = 1;
     uint private maxNumMedia = 2;
-    struct Channel {
-        string message;
-        uint active_period;
-    }
-    mapping(uint => mapping(string => Channel)) private channels;
     mapping(uint => mapping(string => bool)) private tagRegistrations;
-    mapping(uint => mapping(uint => string)) public tags;
+    mapping(uint => string) public tags;
     mapping(uint => address) public tokenIdToBetting;
     uint private tokenId = 1;
     address private contractAddress;
@@ -1255,29 +1250,38 @@ contract BettingMinter is ERC721Pausable {
         delete tokenIdToBetting[_tokenId];
     }
 
+    function updateTags(string memory _tag) external {
+        uint _bettingProfileId = IProfile(_helper()).addressToProfileId(msg.sender);
+        tags[_bettingProfileId] = _tag;
+    }
+
     function _getMedia(uint _tokenId) internal view returns(string[] memory _media) {
         address betting = tokenIdToBetting[_tokenId];
-        uint _bettingProfileId = IProfile(IContract(contractAddress).bettingHelper()).addressToProfileId(betting);
-        string memory _tag = tags[_bettingProfileId][_tokenId];
-        uint idx;
-        if (tagRegistrations[_bettingProfileId][_tag]) {
-            _media = new string[](_scheduledMedia[1][_tag].length()+1);
-            _media[idx++] = IBetting(betting).media(_tokenId);
-            for (uint i = 0; i < _scheduledMedia[1][_tag].length(); i++) {
-                _media[idx++] = scheduledMedia[_scheduledMedia[1][_tag].at(i)].message;
-            }
-        } else {
-            _media = new string[](_scheduledMedia[_bettingProfileId][_tag].length()+1);
-            _media[idx++] = IBetting(betting).media(_tokenId);
-            for (uint i = 0; i < _scheduledMedia[_bettingProfileId][_tag].length(); i++) {
-                _media[idx++] = scheduledMedia[_scheduledMedia[_bettingProfileId][_tag].at(i)].message;
-            }
+        uint _bettingProfileId = IProfile(_helper()).addressToProfileId(betting);
+        string memory _tag = tags[_bettingProfileId];
+        _bettingProfileId = tagRegistrations[_bettingProfileId][_tag] ? 1 : _bettingProfileId;
+        uint _length = _scheduledMedia[_bettingProfileId][_tag].length();
+        _media = new string[](Math.min(maxNumMedia, _length+1));
+        uint randomHash = uint(seed + block.timestamp + block.difficulty);
+        for (uint i = 0; i < Math.min(maxNumMedia, _length); i++) {
+            _media[i] = scheduledMedia[_scheduledMedia[_bettingProfileId][_tag].at(randomHash++ % _length)].message;
         }
+        for (uint i = Math.min(maxNumMedia, _length); i < Math.min(maxNumMedia, _length+1); i++) {
+            _media[i] = IBetting(betting).media(_tokenId);
+        }
+    }
+
+    function getAllMedia(uint _start, uint _bettingProfileId, string memory _tag) external view returns(string[] memory _media) {
+        _media = new string[](_scheduledMedia[_bettingProfileId][_tag].length() - _start);
+        for (uint i = _start; i < _scheduledMedia[_bettingProfileId][_tag].length(); i++) {
+            _media[i] = scheduledMedia[_scheduledMedia[_bettingProfileId][_tag].at(i)].message;
+        }  
     }
 
     function updateTagRegistration(string memory _tag, bool _add) external {
         address bettingHelper = IContract(contractAddress).bettingHelper();
         uint _bettingProfileId = IProfile(bettingHelper).addressToProfileId(msg.sender);
+        require(_bettingProfileId > 0);
         tagRegistrations[_bettingProfileId][_tag] = _add;
         IBetting(bettingHelper).emitUpdateMiscellaneous(
             1,
@@ -1292,7 +1296,7 @@ contract BettingMinter is ERC721Pausable {
     }
 
     function claimPendingRevenue() external lock {
-        uint _bettingProfileId = IProfile(IContract(contractAddress).bettingHelper()).addressToProfileId(msg.sender);
+        uint _bettingProfileId = IProfile(_helper()).addressToProfileId(msg.sender);
         IERC20(IContract(contractAddress).token()).safeTransfer(address(msg.sender), pendingRevenue[_bettingProfileId]);
         pendingRevenue[_bettingProfileId] = 0;
     }
@@ -1300,7 +1304,7 @@ contract BettingMinter is ERC721Pausable {
     function sponsorTag(
         address _sponsor,
         address _betting,
-        uint _amount, 
+        uint _numMinutes, 
         string memory _tag, 
         string memory _message
     ) external {
@@ -1309,34 +1313,35 @@ contract BettingMinter is ERC721Pausable {
         require(IAuth(_sponsor).isAdmin(msg.sender));
         require(!ISponsor(_sponsor).contentContainsAny(IBetting(bettingHelper).getExcludedContents(_bettingProfileId, _tag)));
         uint _pricePerAttachMinutes = IBetting(bettingHelper).pricePerAttachMinutes(_bettingProfileId);
-        if (_pricePerAttachMinutes > 0) {
-            uint price = _amount * _pricePerAttachMinutes;
-            IERC20(IContract(contractAddress).token()).safeTransferFrom(address(msg.sender), address(this), price);
-            uint valuepoolShare = IContract(contractAddress).valuepoolShare();
-            uint adminShare = IContract(contractAddress).adminShare();
-            valuepool += price * valuepoolShare / 10000;
-            if (_bettingProfileId > 0) {
-                treasury += price * adminShare / 10000;
-                pendingRevenue[_bettingProfileId] += price * (10000 - adminShare - valuepoolShare) / 10000;
-            } else {
-                treasury += price * (10000 - valuepoolShare) / 10000;
-            }
-            scheduledMedia[currentMediaIdx] = ScheduledMedia({
-                amount: _amount,
-                message: _message
-            });
-            _scheduledMedia[_bettingProfileId][_tag].add(currentMediaIdx);
-            IBetting(bettingHelper).emitAddSponsor(_bettingProfileId, currentMediaIdx++, _sponsor, _tag, _message);
+        require(_pricePerAttachMinutes > 0, "3");
+        uint price = _numMinutes * _pricePerAttachMinutes;
+        IERC20(IContract(contractAddress).token()).safeTransferFrom(address(msg.sender), address(this), price);
+        uint valuepoolShare = IContract(contractAddress).valuepoolShare();
+        uint adminShare = IContract(contractAddress).adminShare();
+        valuepool += price * valuepoolShare / 10000;
+        if (_bettingProfileId > 0) {
+            treasury += price * adminShare / 10000;
+            pendingRevenue[_bettingProfileId] += price * (10000 - adminShare - valuepoolShare) / 10000;
+        } else {
+            treasury += price * (10000 - valuepoolShare) / 10000;
         }
+        scheduledMedia[currentMediaIdx] = ScheduledMedia({
+            amount: _numMinutes,
+            message: _message,
+            active_period: block.timestamp + _numMinutes * 60
+        });
+        _scheduledMedia[_bettingProfileId][_tag].add(currentMediaIdx);
+        IBetting(bettingHelper).emitAddSponsor(_bettingProfileId, currentMediaIdx++, _sponsor, _tag, _message);
     }
 
     function updateSponsorMedia(uint _bettingProfileId, string memory _tag) external {
-        require(channels[_bettingProfileId][_tag].active_period < block.timestamp);
-        uint idx = _scheduledMedia[_bettingProfileId][_tag].at(0);
-        channels[_bettingProfileId][_tag].active_period = block.timestamp + scheduledMedia[idx].amount*minute / minute * minute;
-        channels[_bettingProfileId][_tag].message = scheduledMedia[idx].message;
-        if (_scheduledMedia[_bettingProfileId][_tag].length() > maxNumMedia) {
-            _scheduledMedia[_bettingProfileId][_tag].remove(idx);
+        uint _length = _scheduledMedia[_bettingProfileId][_tag].length();
+        uint _endIdx = maxNumMedia > _length ? 0 : _length - maxNumMedia;
+        for (uint i = 0; i < _endIdx; i++) {
+            uint _currentMediaIdx = _scheduledMedia[_bettingProfileId][_tag].at(i);
+            if (scheduledMedia[_currentMediaIdx].active_period < block.timestamp) {
+                _scheduledMedia[_bettingProfileId][_tag].remove(_currentMediaIdx);
+            }
         }
     }
 

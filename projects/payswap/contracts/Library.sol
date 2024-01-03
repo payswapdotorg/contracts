@@ -3728,6 +3728,17 @@ interface IBusinessVoter {
     function notifyRewardAmount(address,uint) external;
 }
 
+interface IBusinessVoter2 {
+    function isGauge(address) external returns(bool);
+    function vote(uint,uint,uint,uint,address,address,bool) external;
+    function distribute(address,address) external;
+    function getReward(address[] memory) external;
+    function maxWithdrawable() external view returns(uint);
+    function deposit(uint,uint) external;
+    function withdraw(uint,uint) external;
+    function notifyRewardAmount(address,uint) external;
+}
+
 interface IReferralVoter {
     function vote(uint,uint,uint,address,address,bool) external;
     function isGauge(address) external returns(bool);
@@ -3765,6 +3776,7 @@ interface IBribe {
     function createBribe() external returns(address);
     function _deposit(uint amount, uint tokenId) external;
     function _withdraw(uint amount, uint tokenId) external;
+    function withdraw(uint amount, uint tokenId) external;
     function getRewardForOwner(uint tokenId, address[] memory tokens) external returns(uint);
 }
 
@@ -5603,7 +5615,7 @@ interface IMarketPlace {
     function referrer(uint) external view returns(address);
     function contractAddress() external view returns(address);
     function emitCreatePaywallARP(address,uint,string memory) external;
-    function emitDeletePaywallARP(uint) external;
+    function emitDeletePaywallARP(uint,string memory) external;
     function getDueReceivable(uint) external view returns(uint, uint, int);
     function getDiscount(uint,address,string memory) external view returns(uint);
     function getGaugeNColor(SSIData memory,uint,COLOR,bool,bool) external view returns(bytes32);
@@ -5634,7 +5646,7 @@ interface IMarketPlace {
     function emitAskUpdateDiscount(uint,string memory,Status,uint,bool,bool,bool,uint[6] memory,uint[6] memory) external;
     function emitAskUpdateCashback(uint,string memory,Status,uint,bool,bool,uint[6] memory,uint[6] memory) external;
     function emitAskUpdateIdentity(uint,string memory,string memory,string memory,bool,bool,uint,COLOR) external;
-    function emitUpdateSubscriptionInfo(uint, uint, uint) external;
+    function emitUpdateSubscriptionInfo(uint, uint, uint, string memory) external;
     function emitUpdateScubscriptionTiers(uint, uint[] memory, uint[] memory) external;
     function emitAskNew(uint,string memory,uint,uint,uint,bool,uint,uint,uint,address,address) external;
     function emitAskCancel(uint,string memory) external;
@@ -6578,6 +6590,7 @@ interface IAuditor {
     function protocolInfo(uint) external view returns(address,uint,uint,uint,uint,uint,uint,uint);
     function getProtocolRatings(uint) external view returns(uint[] memory);
     function addressToProfileId(address) external view returns(uint);
+    function totalProcessed(address) external view returns(uint);
 }
 
 interface ISponsor {

@@ -242,7 +242,13 @@ contract ReferralBribe {
 
     // used by BaseV1Voter to allow batched reward claims
     function getRewardForOwner(uint tokenId, address[] memory tokens) external lock  {
-        require(msg.sender == IContract(contractAddress).referralVoter(), "Only referral voter");
+        require(
+            msg.sender == IContract(contractAddress).acceleratorVoter() || 
+            msg.sender == IContract(contractAddress).businessVoter() || 
+            msg.sender == IContract(contractAddress).contributorVoter() || 
+            msg.sender == IContract(contractAddress).referralVoter(), 
+            "Only voter"
+        );
         address _owner = ve(_ve).ownerOf(tokenId);
         for (uint i = 0; i < tokens.length; i++) {
             (rewardPerTokenStored[tokens[i]], lastUpdateTime[tokens[i]]) = _updateRewardPerToken(tokens[i]);
@@ -370,7 +376,13 @@ contract ReferralBribe {
 
     // This is an external function, but internal notation is used since it can only be called "internally" from BaseV1Gauges
     function deposit(uint amount, uint tokenId) external {
-        require(msg.sender == IContract(contractAddress).referralVoter(), "Only referral voter");
+        require(
+            msg.sender == IContract(contractAddress).acceleratorVoter() || 
+            msg.sender == IContract(contractAddress).businessVoter() || 
+            msg.sender == IContract(contractAddress).contributorVoter() || 
+            msg.sender == IContract(contractAddress).referralVoter(), 
+            "Only voter"
+        );
         totalSupply += amount;
         balanceOf[tokenId] += amount;
 
@@ -381,7 +393,13 @@ contract ReferralBribe {
     }
 
     function withdraw(uint amount, uint tokenId) external {
-        require(msg.sender == IContract(contractAddress).referralVoter(), "Only referral voter");
+        require(
+            msg.sender == IContract(contractAddress).acceleratorVoter() || 
+            msg.sender == IContract(contractAddress).businessVoter() || 
+            msg.sender == IContract(contractAddress).contributorVoter() || 
+            msg.sender == IContract(contractAddress).referralVoter(), 
+            "Only voter"
+        );
         totalSupply -= amount;
         balanceOf[tokenId] -= amount;
 

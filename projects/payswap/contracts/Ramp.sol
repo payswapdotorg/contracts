@@ -834,10 +834,9 @@ contract RampHelper2 {
         }
     }
 
-    function vote(address _ramp, uint profileId, bool like) external {
-        require(IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender) == profileId && profileId > 0);
-        SSIData memory metadata = ISSI(IContract(contractAddress).ssi()).getSSID(profileId);
-        require(keccak256(abi.encodePacked(metadata.answer)) != keccak256(abi.encodePacked("")));
+    function vote(address _ramp, bool like) external {
+        uint profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender);
+        require(IProfile(IContract(contractAddress).profile()).isUnique(profileId), "ARPHH3");
         _resetVote(_ramp, profileId);        
         if (like) {
             votes[_ramp].likes += 1;
@@ -878,25 +877,23 @@ contract RampAds is ERC721Pausable {
     uint private tokenId = 1;
     struct ScheduledMedia {
         uint amount;
+        uint active_period;
         string message;
     }
     uint public pricePerAttachMinutes;
+    uint private maxNumMedia = 2;
     mapping(uint => ScheduledMedia) public scheduledMedia;
     mapping(uint => uint) public pendingRevenue;
     mapping(address => EnumerableSet.UintSet) private _scheduledMedia;
     uint internal minute = 3600; // allows minting once per week (reset every Thursday 00:00 UTC)
     uint private currentMediaIdx = 1;
-    struct Channel {
-        string message;
-        uint active_period;
-    }
     struct RampNote {
         address token;
         uint profileId;
         uint mintedAt;
     }
     mapping(uint => RampNote) public notes;
-    mapping(address => Channel) public channels;
+    uint seed = (block.timestamp + block.difficulty) % 100;
     mapping(address => EnumerableSet.UintSet) private excludedContents;
     uint public adminFee = 100;
     uint public treasury;
@@ -1013,43 +1010,59 @@ contract RampAds is ERC721Pausable {
     function sponsorTag(
         address _sponsor,
         address _tag, 
-        uint _amount, 
+        uint _numMinutes, 
         string memory _message
     ) external {
         require(IAuth(_sponsor).isAdmin(msg.sender));
         require(!ISponsor(_sponsor).contentContainsAny(getExcludedContents(_tag)));
-        if (pricePerAttachMinutes > 0) {
-            uint price = _amount * pricePerAttachMinutes;
-            IERC20(IContract(contractAddress).token()).safeTransferFrom(msg.sender, address(this), price);
-            uint _treasuryFee = price * adminFee / 10000;
-            uint _lotteryFee = price * lotteryShare / 10000;
-            treasury += _treasuryFee;
-            lotteryRevenue += _lotteryFee;
-            totalFromSponsors += price - _treasuryFee - _lotteryFee;
-            scheduledMedia[currentMediaIdx] = ScheduledMedia({
-                amount: _amount,
-                message: _message
-            });
-            _scheduledMedia[_tag].add(currentMediaIdx++);
-            updateSponsorMedia(_tag);
-        }
+        require(pricePerAttachMinutes > 0, "3");
+        uint price = _numMinutes * pricePerAttachMinutes;
+        IERC20(IContract(contractAddress).token()).safeTransferFrom(msg.sender, address(this), price);
+        uint _treasuryFee = price * adminFee / 10000;
+        uint _lotteryFee = price * lotteryShare / 10000;
+        treasury += _treasuryFee;
+        lotteryRevenue += _lotteryFee;
+        totalFromSponsors += price - _treasuryFee - _lotteryFee;
+        scheduledMedia[currentMediaIdx] = ScheduledMedia({
+            amount: _numMinutes,
+            message: _message,
+            active_period: block.timestamp + _numMinutes * 60
+        });
+        _scheduledMedia[_tag].add(currentMediaIdx++);
+    }
+
+    function updateMaxNumMedia(uint _maxNumMedia) external {
+        require(IAuth(contractAddress).devaddr_() == msg.sender, "ARPHH5");
+        maxNumMedia = _maxNumMedia;
     }
 
     function getMedia(uint _tokenId) public view returns(string[] memory _media) {
-        _media = new string[](_scheduledMedia[notes[_tokenId].token].length());
-        for (uint i = 0; i < _scheduledMedia[notes[_tokenId].token].length(); i++) {
-            uint _currentMediaIdx = _scheduledMedia[notes[_tokenId].token].at(i);
+        uint _length = Math.min(_scheduledMedia[notes[_tokenId].token].length(), maxNumMedia);
+        _media = new string[](_length);
+        uint randomHash = uint(seed + block.timestamp + block.difficulty);
+        for (uint i = 0; i < _length; i++) {
+            uint _currentMediaIdx = _scheduledMedia[notes[_tokenId].token].at(randomHash++ % _length);
             _media[i] = scheduledMedia[_currentMediaIdx].message;
         }
-        if (_media.length == 0) _media = new string[](1);
+        if (_length == 0) _media = new string[](1);
+    }
+
+    function getAllMedia(uint _start, address _tag) external view returns(string[] memory _media) {
+        _media = new string[](_scheduledMedia[_tag].length() - _start);
+        for (uint i = _start; i < _scheduledMedia[_tag].length(); i++) {
+            _media[i] = scheduledMedia[_scheduledMedia[_tag].at(i)].message;
+        }  
     }
 
     function updateSponsorMedia(address _tag) public {
-        require(channels[_tag].active_period < block.timestamp);
-        uint idx = _scheduledMedia[_tag].at(0);
-        channels[_tag].active_period = block.timestamp + scheduledMedia[idx].amount*minute / minute * minute;
-        channels[_tag].message = scheduledMedia[idx].message;
-        _scheduledMedia[_tag].remove(idx);
+    uint _length = _scheduledMedia[_tag].length();
+        uint _endIdx = maxNumMedia > _length ? 0 : _length - maxNumMedia;
+        for (uint i = 0; i < _endIdx; i++) {
+            uint _currentMediaIdx = _scheduledMedia[_tag].at(i);
+            if (scheduledMedia[_currentMediaIdx].active_period < block.timestamp) {
+                _scheduledMedia[_tag].remove(_currentMediaIdx);
+            }
+        }
     }
 
     function claimLotteryRevenue(address _token) external {

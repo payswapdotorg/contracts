@@ -5,39 +5,42 @@ import "./Library.sol";
 
 // codifies the minting rules as per ve(3,3), abstracted from the token to support any token that allows minting
 
-contract BusinessMinter {
+contract BusinessMinter is ERC721Pausable{
+    using SafeERC20 for IERC20;
     using EnumerableSet for EnumerableSet.AddressSet;
 
-    uint internal constant week = 86400 * 7; // allows minting once per week (reset every Thursday 00:00 UTC)
-    uint internal constant year = 52*week;
+    uint public tokenId = 1;
+    uint internal constant week = 10*60;//86400 * 7; // allows minting once per week (reset every Thursday 00:00 UTC)
     mapping(address => uint) public currentDebt;
     address public contractAddress;
     uint public weekly = 1000000e18; // 1000000 initial tokens
     uint public active_period;
-    uint public next_window;
+    uint public weeksWithNoDebt;
     EnumerableSet.AddressSet private _ves;
     EnumerableSet.AddressSet private _ve_dists;
     uint internal constant lock = 86400 * 7 * 52 * 4;
     EnumerableSet.AddressSet private _payswapContracts;
     mapping(address => uint) public currentVolume;
     mapping(address => uint) public previousVolume;
-    mapping(address => uint) referralsPercent;
-    mapping(address => uint) businessesPercent;
-    mapping(address => uint) acceleratorPercent;
-    mapping(address => uint) contributorsPercent;
+    mapping(address => uint) public referralsPercent;
+    mapping(address => uint) public businessesPercent;
+    mapping(address => uint) public acceleratorPercent;
+    mapping(address => uint) public contributorsPercent;
     uint public teamPercent = 100;
-    uint public burnPercent = 900;
-    mapping(address => uint) public burnFees;
     mapping(address => uint) public treasuryFees;
     address internal initializer;
-    bool _initial = true;
+    struct DebtMasterNote {
+        address token;
+        uint amount;
+        uint createdAt;
+        uint currentDebt;
+    }
+    mapping(uint => DebtMasterNote) public notes;
 
-    event Mint(address indexed sender, address _ve, uint weekly, uint circulating_supply, uint growth);
+    event Mint(address indexed sender, address _ve, uint weekly);
 
-    constructor() {
+    constructor() ERC721("DebtMaster", "DebtMaster") {
         initializer = msg.sender;
-        active_period = (block.timestamp + (2*week)) / week * week;
-        next_window = (block.timestamp + (2*year)) / year * year;
     }
 
     function initialize() external {
@@ -47,17 +50,15 @@ contract BusinessMinter {
             underlying _token = underlying(ve(_ve).token());
             _token.mint(address(this), weekly);
             _token.approve(address(_ve), weekly);
-            ve(_ve).create_lock_for(weekly, lock, msg.sender);
-            currentVolume[_ve] = weekly;
+            IValuePool(_ve).create_lock_for(weekly*2/3, lock, 0, msg.sender);
+            treasuryFees[address(_token)] = weekly / 3;
         }
         initializer = address(0);
         active_period = (block.timestamp + week) / week * week;
-        next_window = (block.timestamp + year) / year * year;
     }
 
-    function updateParameters(uint _teamPercent, uint _burnPercent) external {
+    function updateParameters(uint _teamPercent) external {
         require(IAuth(contractAddress).devaddr_() == msg.sender);
-        burnPercent = _burnPercent;   
         teamPercent = _teamPercent;   
     }
 
@@ -68,21 +69,18 @@ contract BusinessMinter {
         }
     }
 
-    function updateVes(address[] memory __ves, address[] memory __ve_dists, bool _add) external {
+    function updateVes(address[] memory __ves, bool _add) external {
         require(msg.sender == IAuth(contractAddress).devaddr_());
-        require(__ves.length == __ve_dists.length);
         for (uint i = 0; i < __ves.length; i++) {
             if (_add) {
                 _ves.add(__ves[i]);
-                _ve_dists.add(__ve_dists[i]);
             } else {
                 _ves.remove(__ves[i]);
-                _ve_dists.remove(__ve_dists[i]);
             }
         }
     }
 
-    function _updatePercentages(address _ve) internal {
+    function _updatePercentages(address _ve) internal returns(uint,uint,uint,uint) {
         uint totalWeightReferrals = IVoter(IContract(contractAddress).referralVoter()).totalWeight(_ve);
         uint totalWeightBusinesses = IVoter(IContract(contractAddress).businessVoter()).totalWeight(_ve);
         uint totalWeightAccelerator = IVoter(IContract(contractAddress).acceleratorVoter()).totalWeight(_ve);
@@ -92,6 +90,12 @@ contract BusinessMinter {
         businessesPercent[_ve] = totalWeightBusinesses / totalWeight;
         acceleratorPercent[_ve] = totalWeightAccelerator / totalWeight;
         contributorsPercent[_ve] = totalWeightContributors / totalWeight;
+        return (
+            totalWeightReferrals * 10000 / totalWeight,
+            totalWeightBusinesses * 10000 / totalWeight,
+            totalWeightAccelerator * 10000 / totalWeight,
+            totalWeightContributors * 10000 / totalWeight
+        );
     }
 
     function setContractAddress(address _contractAddress) external {
@@ -105,10 +109,12 @@ contract BusinessMinter {
         return underlying(ve(_ve).token()).totalSupply() - ve(_ve).totalSupply();
     }
 
-    function weekly_emission(address _ve) public view returns (uint _amount) {
-        if (currentVolume[_ve] >= previousVolume[_ve] + currentDebt[_ve]) {
-            _amount = currentVolume[_ve] - previousVolume[_ve] - currentDebt[_ve];
+    function weekly_emission(address _token) public view returns (uint _amount, uint _toErase) {
+        if (currentVolume[_token] >= previousVolume[_token] + currentDebt[_token]) {
+            _amount = currentVolume[_token] - previousVolume[_token] - currentDebt[_token];
         }
+        _toErase = currentVolume[_token] > previousVolume[_token] && currentDebt[_token] > 0 
+        ? currentVolume[_token] - previousVolume[_token] : 0;
     }
 
     // calculate inflation and adjust ve balances accordingly
@@ -125,95 +131,150 @@ contract BusinessMinter {
         }
     }
 
-    function _getAllWeeklyVolume(address _ve) internal {
-        uint _totalVolume = INFTicket(IContract(contractAddress).nfticket()).transactionVolume(_ve);
+    function withdrawFees(address _token, uint _val) external returns(uint _amount) {
+        require(msg.sender == IAuth(contractAddress).devaddr_() && weeksWithNoDebt >= 3);
+        _amount = Math.min(_val, treasuryFees[_token] * 1000 / 10000);
+        IERC20(_token).safeTransfer(msg.sender, _amount);
+        treasuryFees[_token] -= _amount;
+        weeksWithNoDebt = 0;
+        return _amount;
+    }
+
+    function eraseDebtWithTreasuryFund(address _token) external {
+        if (currentDebt[_token] < treasuryFees[_token]) {
+            treasuryFees[_token] -= currentDebt[_token];
+            currentDebt[_token] = 0;
+        } else {
+            currentDebt[_token] -= treasuryFees[_token];
+            treasuryFees[_token] = 0;
+        }
+    }
+
+    function _getAllWeeklyVolume(address _token) internal {
+        uint _totalVolume = INFTicket(IContract(contractAddress).nfticket()).transactionVolume(_token);
         for (uint i = 0; i < _payswapContracts.length(); i++) {
-            uint _fee = IAuditor(_payswapContracts.at(i)).withdrawFees(ve(_ve).token());
-            treasuryFees[ve(_ve).token()] += _fee;
-            uint _percent = IARPHelper(_payswapContracts.at(i)).tradingFee();
-            _totalVolume += _fee * 10000 / _percent;
+            _totalVolume += IAuditor(_payswapContracts.at(i)).totalProcessed(_token);
         }
-        if (!_initial) {
-            previousVolume[_ve] = currentVolume[_ve];
-            currentVolume[_ve] = _totalVolume;
-            if (_totalVolume < previousVolume[_ve] + currentDebt[_ve]) {
-                currentDebt[_ve] += previousVolume[_ve] - _totalVolume;
-            }
+        previousVolume[_token] = currentVolume[_token];
+        currentVolume[_token] = _totalVolume;
+        if (_totalVolume < previousVolume[_token]) {
+            currentDebt[_token] += previousVolume[_token] - _totalVolume;
         }
-        _initial = false;
-    }
-
-    function withdrawFees(address _token) external returns(uint _amount) {
-        address team = IAuth(contractAddress).devaddr_();
-        require(msg.sender == team);
-        _amount = treasuryFees[_token];
-        require(underlying(_token).transfer(address(team), _amount));
-        treasuryFees[_token] = 0;
-        return _amount;
-    }
-
-    // If all is well, the admin can send the burnFees to the Leviathan once a year
-    function withdrawBurnFees(address _token, address _leviathan) external returns(uint _amount) {
-        address team = IAuth(contractAddress).devaddr_();
-        require(msg.sender == team && next_window < block.timestamp);
-        _amount = burnFees[_token];
-        require(underlying(_token).transfer(address(_leviathan), _amount));
-        burnFees[_token] = 0;
-        next_window = (block.timestamp + year) / year * year;
-        return _amount;
+        if (currentDebt[_token] == 0) {
+            weeksWithNoDebt += 1;
+        }
     }
 
     // update period can only be called once per cycle (1 week)
-    function update_period() external returns (uint) {
-        uint _period = active_period;
-        if (block.timestamp >= _period + week && initializer == address(0)) { // only trigger if new week
-            _period = (block.timestamp + week) / week * week;
-            active_period = _period;
+    function update_period() external {
+        if (block.timestamp >= active_period && initializer == address(0)) { // only trigger if new week
+            active_period = (block.timestamp + week) / week * week;
             for (uint i = 0; i < _ves.length(); i++) {
                 address _ve = _ves.at(i);
-                _getAllWeeklyVolume(_ve);
                 underlying _token = underlying(ve(_ve).token());
-                ve_dist _ve_dist = ve_dist(_ve_dists.at(i));
-                weekly = weekly_emission(_ve);
-                uint _growth = calculate_growth(_ve, weekly);
-                uint _required = _growth + weekly;
-                uint _balanceOf = _token.balanceOf(address(this)) - treasuryFees[address(_token)] - burnFees[address(_token)];
-                if (_balanceOf < _required) {
-                    _token.mint(address(this), _required-_balanceOf);
-                }
+                _getAllWeeklyVolume(address(_token));
+                (uint _weekly, uint _toErase) = weekly_emission(address(_token));
+                currentDebt[address(_token)] -= _toErase;
 
-                require(_token.transfer(address(_ve_dist), _growth));
-                _ve_dist.checkpoint_token(); // checkpoint token balance that was just minted in ve_dist
-                _ve_dist.checkpoint_total_supply(); // checkpoint supply
+                uint _balanceOf = _token.balanceOf(address(this)) - treasuryFees[address(_token)];
+                if (_balanceOf < _weekly) {
+                    _token.mint(address(this), _weekly - _balanceOf);
+                }
                 
                 // send team's percentage
-                uint _treasuryFee = weekly * teamPercent / 10000;
-                uint _burnFee = weekly * burnPercent / 10000;
+                uint _treasuryFee = _weekly * teamPercent / 10000;
                 treasuryFees[address(_token)] += _treasuryFee;
-                burnFees[address(_token)] += _burnFee;
-                uint _weeklyLessTeam = weekly - _treasuryFee - _burnFee;
+                uint _weeklyLessTeam = _weekly - _treasuryFee;
                 // send other percentages
-                _updatePercentages(_ve);
-
+                (
+                    uint _businessesPercent,
+                    uint _referralsPercent,
+                    uint _contributorsPercent,
+                    uint _acceleratorPercent
+                ) = _updatePercentages(_ve);
+                
                 //businesses
-                _token.approve(IContract(contractAddress).businessVoter(), _weeklyLessTeam * businessesPercent[_ve]);
-                IBusinessVoter(IContract(contractAddress).businessVoter()).notifyRewardAmount(_ve, _weeklyLessTeam * businessesPercent[_ve]);
+                _token.approve(IContract(contractAddress).businessVoter(), _weeklyLessTeam * _businessesPercent / 10000);
+                IBusinessVoter(IContract(contractAddress).businessVoter()).notifyRewardAmount(_ve, _weeklyLessTeam * _businessesPercent / 10000);
                 
                 //referrals
-                _token.approve(IContract(contractAddress).businessVoter(), _weeklyLessTeam * referralsPercent[_ve]);
-                IBusinessVoter(IContract(contractAddress).businessVoter()).notifyRewardAmount(_ve, _weeklyLessTeam * referralsPercent[_ve]);
+                _token.approve(IContract(contractAddress).businessVoter(), _weeklyLessTeam * _referralsPercent / 10000);
+                IBusinessVoter(IContract(contractAddress).businessVoter()).notifyRewardAmount(_ve, _weeklyLessTeam * _referralsPercent / 10000);
 
                 //contributors
-                _token.approve(IContract(contractAddress).businessVoter(), _weeklyLessTeam * contributorsPercent[_ve]);
-                IBusinessVoter(IContract(contractAddress).businessVoter()).notifyRewardAmount(_ve, _weeklyLessTeam * contributorsPercent[_ve]);
+                _token.approve(IContract(contractAddress).businessVoter(), _weeklyLessTeam * _contributorsPercent / 10000);
+                IBusinessVoter(IContract(contractAddress).businessVoter()).notifyRewardAmount(_ve, _weeklyLessTeam * _contributorsPercent / 10000);
                 
                 //accelerator
-                _token.approve(IContract(contractAddress).businessVoter(), _weeklyLessTeam * acceleratorPercent[_ve]);
-                IBusinessVoter(IContract(contractAddress).businessVoter()).notifyRewardAmount(_ve, _weeklyLessTeam * acceleratorPercent[_ve]);
-                
-                emit Mint(msg.sender, _ve, weekly, circulating_supply(_ve), _growth);
+                _token.approve(IContract(contractAddress).businessVoter(), _weeklyLessTeam * _acceleratorPercent / 10000);
+                IBusinessVoter(IContract(contractAddress).businessVoter()).notifyRewardAmount(_ve, _weeklyLessTeam * _acceleratorPercent / 10000);
+                emit Mint(msg.sender, _ve, weekly);
             }   
         }
-        return _period;
+    }
+
+    function eraseDebtWithDonations(address _token, uint _amount) external {
+        require(currentDebt[_token] > 0);
+        _amount = Math.min(_amount, currentDebt[_token]);
+        IERC20(_token).safeTransferFrom(msg.sender, address(this), _amount);
+        notes[tokenId] = DebtMasterNote({
+            amount: _amount,
+            currentDebt: currentDebt[_token],
+            token: _token,
+            createdAt: block.timestamp
+        });
+        currentDebt[_token] -= _amount;
+        _safeMint(msg.sender, tokenId++, msg.data);
+    }
+
+    function tokenURI(uint _tokenId) public override view returns (string memory output) {
+        uint idx;
+        string[] memory optionNames = new string[](5);
+        string[] memory optionValues = new string[](5);
+        uint decimals = uint(IMarketPlace(notes[_tokenId].token).decimals());
+        optionValues[idx++] = toString(_tokenId);
+        optionNames[idx] = "Created";
+        optionValues[idx++] = toString(notes[_tokenId].createdAt);
+        optionNames[idx] = "Symbol, Decimals";
+        optionValues[idx++] = string(abi.encodePacked(toString(uint(IMarketPlace(notes[_tokenId].token).decimals())), ", ", IMarketPlace(notes[_tokenId].token).symbol()));
+        optionNames[idx] = "Amount";
+        optionValues[idx++] = toString(notes[_tokenId].amount);
+        optionNames[idx] = "Debt At";
+        optionValues[idx++] = toString(notes[_tokenId].currentDebt);
+        string[] memory _description = new string[](1);
+        _description[0] = "This note is proof you helped alleviate the debt of the free token being displayed at the borders of this NFT";
+        return IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
+            _tokenId,
+            notes[_tokenId].token,
+            ownerOf(_tokenId),
+            ownerOf(_tokenId),
+            address(0x0),
+            new string[](1),
+            optionNames,
+            optionValues,
+            _description
+        );
+    }
+
+    function toString(uint value) internal pure returns (string memory) {
+        // Inspired by OraclizeAPI's implementation - MIT license
+        // https://github.com/oraclize/ethereum-api/blob/b42146b063c7d6ee1358846c198246239e9360e8/oraclizeAPI_0.4.25.sol
+
+        if (value == 0) {
+            return "0";
+        }
+        uint temp = value;
+        uint digits;
+        while (temp != 0) {
+            digits++;
+            temp /= 10;
+        }
+        bytes memory buffer = new bytes(digits);
+        while (value != 0) {
+            digits -= 1;
+            buffer[digits] = bytes1(uint8(48 + uint(value % 10)));
+            value /= 10;
+        }
+        return string(buffer);
     }
 }

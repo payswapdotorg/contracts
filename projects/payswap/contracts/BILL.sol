@@ -1263,6 +1263,7 @@ contract BILLHelper {
     mapping(address => uint) public categories;
     struct ScheduledMedia {
         uint amount;
+        uint active_period;
         string message;
     }
     mapping(uint => uint) public pricePerAttachMinutes;
@@ -1281,10 +1282,11 @@ contract BILLHelper {
         uint likes;
         uint dislikes;
     }
+    uint seed = (block.timestamp + block.difficulty) % 100;
     mapping(uint => mapping(string => Channel)) private channels;
     mapping(uint => mapping(string => bool)) private tagRegistrations;
     mapping(uint => mapping(string => EnumerableSet.UintSet)) private excludedContents;
-    mapping(uint => mapping(uint => string)) public tags;
+    mapping(uint => string) public tags;
     mapping(address => address) public uriGenerator;
     address private contractAddress;
     address public valuepoolAddress;
@@ -1313,10 +1315,9 @@ contract BILLHelper {
         }
     }
 
-    function vote(address _bill, uint _profileId, bool like) external {
-        require(IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender) == _profileId && _profileId > 0, "BILLHH2");
-        SSIData memory metadata = ISSI(IContract(contractAddress).ssi()).getSSID(_profileId);
-        require(keccak256(abi.encodePacked(metadata.answer)) != keccak256(abi.encodePacked("")), "BILLHH3");
+    function vote(address _bill, bool like) external {
+        uint _profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender);
+        require(IProfile(IContract(contractAddress).profile()).isUnique(_profileId), "ARPHH3");
         _resetVote(_bill, _profileId);        
         if (like) {
             votes[_bill].likes += 1;
@@ -1369,31 +1370,37 @@ contract BILLHelper {
         IBILL(_bill).autoCharge(_protocolIds, _amount);
     }
 
+    function updateTags(string memory _tag) external {
+        uint _billId = IProfile(IContract(contractAddress).billMinter()).addressToProfileId(msg.sender);
+        tags[_billId] = _tag;
+    }
+
     function getMedia(address _bill, uint _tokenId) external view returns(string[] memory _media) {
         uint _billId = IProfile(IContract(contractAddress).billMinter()).addressToProfileId(msg.sender);
-        string memory _tag = tags[_billId][_tokenId];
-        if (tagRegistrations[_billId][_tag]) {
-            _media = new string[](_scheduledMedia[1][_tag].length() + 1);
-            uint idx;
-            _media[idx++] = IBILL(_bill).media(_tokenId);
-            for (uint i = 0; i < _scheduledMedia[1][_tag].length(); i++) {
-                uint _currentMediaIdx = _scheduledMedia[1][_tag].at(i);
-                _media[idx] = scheduledMedia[_currentMediaIdx].message;
-            }
-        } else {
-            _media = new string[](_scheduledMedia[_billId][_tag].length() + 1);
-            uint idx;
-            _media[idx++] = IBILL(_bill).media(_tokenId);
-            for (uint i = 0; i < _scheduledMedia[_billId][_tag].length(); i++) {
-                uint _currentMediaIdx = _scheduledMedia[_billId][_tag].at(i);
-                _media[idx++] = scheduledMedia[_currentMediaIdx].message;
-            }
+        string memory _tag = tags[_billId];
+        _billId = tagRegistrations[_billId][_tag] ? 1 : _billId;
+        uint _length = _scheduledMedia[_billId][_tag].length();
+        _media = new string[](Math.min(maxNumMedia, _length+1));
+        uint randomHash = uint(seed + block.timestamp + block.difficulty);
+        for (uint i = 0; i < Math.min(maxNumMedia, _length); i++) {
+            _media[i] = scheduledMedia[_scheduledMedia[_billId][_tag].at(randomHash++ % _length)].message;
         }
+        for (uint i = Math.min(maxNumMedia, _length); i < Math.min(maxNumMedia, _length+1); i++) {
+            _media[i] = IBILL(_bill).media(_tokenId);
+        }
+    }
+
+    function getAllMedia(uint _start, uint _billId, string memory _tag) external view returns(string[] memory _media) {
+        _media = new string[](_scheduledMedia[_billId][_tag].length() - _start);
+        for (uint i = _start; i < _scheduledMedia[_billId][_tag].length(); i++) {
+            _media[i] = scheduledMedia[_scheduledMedia[_billId][_tag].at(i)].message;
+        }  
     }
 
     function updateTagRegistration(string memory _tag, bool _add) external {
         address billMinter = IContract(contractAddress).billMinter();
         uint _billId = IProfile(billMinter).addressToProfileId(msg.sender);
+        require(_billId > 0);
         tagRegistrations[_billId][_tag] = _add;
         IBILL(billMinter).emitUpdateMiscellaneous(
             1,
@@ -1438,7 +1445,7 @@ contract BILLHelper {
     function sponsorTag(
         address _sponsor,
         address _bill,
-        uint _amount, 
+        uint _numMinutes, 
         string memory _tag, 
         string memory _message
     ) external {
@@ -1446,29 +1453,28 @@ contract BILLHelper {
         require(IAuth(_sponsor).isAdmin(msg.sender), "BILLHH6");
         require(!ISponsor(_sponsor).contentContainsAny(getExcludedContents(_billId, _tag)), "BILLHH7");
         uint _pricePerAttachMinutes = pricePerAttachMinutes[_billId];
-        if (_pricePerAttachMinutes > 0) {
-            uint price = _amount * _pricePerAttachMinutes;
-            IERC20(IContract(contractAddress).token()).safeTransferFrom(address(msg.sender), address(this), price);
-            uint valuepoolShare = IContract(contractAddress).valuepoolShare();
-            uint adminShare = IContract(contractAddress).adminShare();
-            valuepool += price * valuepoolShare / 10000;
-            if (_billId > 0) {
-                treasury += price * adminShare / 10000;
-                pendingRevenue[_billId] += price * (10000 - adminShare - valuepoolShare) / 10000;
-            } else {
-                treasury += price * (10000 - valuepoolShare) / 10000;
-            }
-            scheduledMedia[currentMediaIdx] = ScheduledMedia({
-                amount: _amount,
-                message: _message
-            });
-            _emitAddSponsor(_billId, _sponsor, _tag, _message);
+        require(_pricePerAttachMinutes > 0, "3");
+        uint price = _numMinutes * _pricePerAttachMinutes;
+        IERC20(IContract(contractAddress).token()).safeTransferFrom(address(msg.sender), address(this), price);
+        uint valuepoolShare = IContract(contractAddress).valuepoolShare();
+        uint adminShare = IContract(contractAddress).adminShare();
+        valuepool += price * valuepoolShare / 10000;
+        if (_billId > 0) {
+            treasury += price * adminShare / 10000;
+            pendingRevenue[_billId] += price * (10000 - adminShare - valuepoolShare) / 10000;
+        } else {
+            treasury += price * (10000 - valuepoolShare) / 10000;
         }
+        scheduledMedia[currentMediaIdx] = ScheduledMedia({
+            amount: _numMinutes,
+            message: _message,
+            active_period: block.timestamp + _numMinutes * 60
+        });
+        _emitAddSponsor(_billId, _sponsor, _tag, _message);
     }
 
     function _emitAddSponsor(uint _billId, address _sponsor, string memory _tag, string memory _message) internal {
         _scheduledMedia[_billId][_tag].add(currentMediaIdx++);
-        updateSponsorMedia(_billId, _tag);
         IBILL(IContract(contractAddress).billMinter()).emitUpdateMiscellaneous(
             2,
             _billId,
@@ -1482,12 +1488,13 @@ contract BILLHelper {
     }
 
     function updateSponsorMedia(uint _billId, string memory _tag) public {
-        require(channels[_billId][_tag].active_period < block.timestamp, "BILLHH8");
-        uint idx = _scheduledMedia[_billId][_tag].at(0);
-        channels[_billId][_tag].active_period = block.timestamp + scheduledMedia[idx].amount*minute / minute * minute;
-        channels[_billId][_tag].message = scheduledMedia[idx].message;
-        if (_scheduledMedia[_billId][_tag].length() > maxNumMedia) {
-            _scheduledMedia[_billId][_tag].remove(idx);
+        uint _length = _scheduledMedia[_billId][_tag].length();
+        uint _endIdx = maxNumMedia > _length ? 0 : _length - maxNumMedia;
+        for (uint i = 0; i < _endIdx; i++) {
+            uint _currentMediaIdx = _scheduledMedia[_billId][_tag].at(i);
+            if (scheduledMedia[_currentMediaIdx].active_period < block.timestamp) {
+                _scheduledMedia[_billId][_tag].remove(_currentMediaIdx);
+            }
         }
     }
 

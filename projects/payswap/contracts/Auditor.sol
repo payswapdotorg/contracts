@@ -414,12 +414,11 @@ contract AuditorNote is ERC721Pausable {
         }
     }
 
-    function vote(address _auditor, uint profileId, bool like) external {
+    function vote(address _auditor, bool like) external {
         uint _category = IAuditor(IContract(contractAddress).auditorHelper()).categories(_auditor);
         require(_category > 0);
-        require(IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender) == profileId && profileId > 0);
-        SSIData memory metadata = ISSI(IContract(contractAddress).ssi()).getSSID(profileId);
-        require(keccak256(abi.encodePacked(metadata.answer)) != keccak256(abi.encodePacked("")));
+        uint profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender);
+        require(IProfile(IContract(contractAddress).profile()).isUnique(profileId), "AHH3");
         _resetVote(_auditor, profileId);        
         if (like) {
             votes[_auditor].likes += 1;
@@ -662,23 +661,6 @@ contract AuditorNote is ERC721Pausable {
         }
         return string(buffer);
     }
-
-    function addressToString(address x) internal pure returns (string memory) {
-        bytes memory s = new bytes(40);
-        for (uint i = 0; i < 20; i++) {
-            bytes1 b = bytes1(uint8(uint(uint160(x)) / (2**(8*(19 - i)))));
-            bytes1 hi = bytes1(uint8(b) / 16);
-            bytes1 lo = bytes1(uint8(b) - 16 * uint8(hi));
-            s[2*i] = char(hi);
-            s[2*i+1] = char(lo);            
-        }
-        return string(s);
-    }
-
-    function char(bytes1 b) internal pure returns (bytes1 c) {
-        if (uint8(b) < 10) return bytes1(uint8(b) + 0x30);
-        else return bytes1(uint8(b) + 0x57);
-    }
 }
 
 contract AuditorHelper is ERC721Pausable {
@@ -862,12 +844,14 @@ contract AuditorHelper2 {
     uint private currentMediaIdx = 1;
     struct ScheduledMedia {
         uint amount;
+        uint active_period;
         string message;
     }
+    uint seed = (block.timestamp + block.difficulty) % 100;
     mapping(uint => uint) public pricePerAttachMinutes;
     mapping(uint => ScheduledMedia) public scheduledMedia;
     mapping(uint => uint) public pendingRevenue;
-    mapping(uint => mapping(uint => string)) public tags;
+    mapping(uint => string) public tags;
     mapping(uint => mapping(string => EnumerableSet.UintSet)) private _scheduledMedia;
     mapping(address => string[]) public ratingLegend;
     mapping(uint => mapping(string => Channel)) public channels;
@@ -892,33 +876,39 @@ contract AuditorHelper2 {
         require(IAuth(contractAddress).devaddr_() == msg.sender);
         valuepoolAddress = _valuepoolAddress;
     }
+
+    function updateTags(string memory _tag) external {
+        uint _auditorId = IProfile(IContract(contractAddress).auditorNote()).addressToProfileId(msg.sender);
+        tags[_auditorId] = _tag;
+    }
     
     function getMedia(uint _tokenId) public view returns(string[] memory _media) {
         (address _auditor,) = IAuditor(IContract(contractAddress).auditorHelper()).tokenIdToAuditor(_tokenId);
-        uint _auditorId = IProfile(IContract(contractAddress).auditorNote()).addressToProfileId(msg.sender);
-        string memory _tag = tags[_auditorId][_tokenId];
-        if (tagRegistrations[_auditorId][_tag]) {
-            _media = new string[](_scheduledMedia[1][_tag].length() + 1);
-            uint idx;
-            _media[idx++] = IAuditor(_auditor).media(_tokenId);
-            for (uint i = 0; i < _scheduledMedia[1][_tag].length(); i++) {
-                uint _currentMediaIdx = _scheduledMedia[1][_tag].at(i);
-                _media[idx++] = scheduledMedia[_currentMediaIdx].message;
-            }
-        } else {
-            _media = new string[](_scheduledMedia[_auditorId][_tag].length() + 1);
-            uint idx;
-            _media[idx++] = IAuditor(_auditor).media(_tokenId);
-            for (uint i = 0; i < _scheduledMedia[_auditorId][_tag].length(); i++) {
-                uint _currentMediaIdx = _scheduledMedia[_auditorId][_tag].at(i);
-                _media[idx++] = scheduledMedia[_currentMediaIdx].message;
-            }
+        uint _auditorId = IProfile(IContract(contractAddress).auditorNote()).addressToProfileId(_auditor);
+        string memory _tag = tags[_auditorId];
+        _auditorId = tagRegistrations[_auditorId][_tag] ? 1 : _auditorId;
+        uint _length = _scheduledMedia[_auditorId][_tag].length();
+        _media = new string[](Math.min(maxNumMedia, _length+1));
+        uint randomHash = uint(seed + block.timestamp + block.difficulty);
+        for (uint i = 0; i < Math.min(maxNumMedia, _length); i++) {
+            _media[i] = scheduledMedia[_scheduledMedia[_auditorId][_tag].at(randomHash++ % _length)].message;
         }
+        for (uint i = Math.min(maxNumMedia, _length); i < Math.min(maxNumMedia, _length+1); i++) {
+            _media[i] = IAuditor(_auditor).media(_tokenId);
+        }
+    }
+
+    function getAllMedia(uint _start, uint _auditorId, string memory _tag) external view returns(string[] memory _media) {
+        _media = new string[](_scheduledMedia[_auditorId][_tag].length() - _start);
+        for (uint i = _start; i < _scheduledMedia[_auditorId][_tag].length(); i++) {
+            _media[i] = scheduledMedia[_scheduledMedia[_auditorId][_tag].at(i)].message;
+        }  
     }
 
     function updateTagRegistration(string memory _tag, bool _add) external {
         address auditorNote = IContract(contractAddress).auditorNote();
         uint _auditorId = IProfile(auditorNote).addressToProfileId(msg.sender);
+        require(_auditorId > 0);
         tagRegistrations[_auditorId][_tag] = _add;
         IAuditor(auditorNote).emitUpdateMiscellaneous(
             1,
@@ -962,7 +952,7 @@ contract AuditorHelper2 {
     function sponsorTag(
         address _sponsor,
         address _auditor,
-        uint _amount, 
+        uint _numMinutes, 
         string memory _tag, 
         string memory _message
     ) external {
@@ -970,34 +960,34 @@ contract AuditorHelper2 {
         require(IAuth(_sponsor).isAdmin(msg.sender), "NTH9");
         require(!ISponsor(_sponsor).contentContainsAny(getExcludedContents(_auditorId, _tag)), "NTH10");
         uint _pricePerAttachMinutes = pricePerAttachMinutes[_auditorId];
-        if (_pricePerAttachMinutes > 0) {
-            uint price = _amount * _pricePerAttachMinutes;
-            IERC20(IContract(contractAddress).token()).safeTransferFrom(address(msg.sender), address(this), price);
-            uint valuepoolShare = IContract(contractAddress).valuepoolShare();
-            uint adminShare = IContract(contractAddress).adminShare();
-            valuepool += price * valuepoolShare / 10000;
-            if (_auditorId > 0) {
-                treasury += price * adminShare / 10000;
-                pendingRevenue[_auditorId] += price * (10000 - adminShare - valuepoolShare) / 10000;
-            } else {
-                treasury += price * (10000 - valuepoolShare) / 10000;
-            }
-            scheduledMedia[currentMediaIdx] = ScheduledMedia({
-                amount: _amount,
-                message: _message
-            });
-            _scheduledMedia[_auditorId][_tag].add(currentMediaIdx++);
-            updateSponsorMedia(_auditorId, _tag);
+        require(_pricePerAttachMinutes > 0, "3");
+        uint price = _numMinutes * _pricePerAttachMinutes;
+        IERC20(IContract(contractAddress).token()).safeTransferFrom(address(msg.sender), address(this), price);
+        uint valuepoolShare = IContract(contractAddress).valuepoolShare();
+        uint adminShare = IContract(contractAddress).adminShare();
+        valuepool += price * valuepoolShare / 10000;
+        if (_auditorId > 0) {
+            treasury += price * adminShare / 10000;
+            pendingRevenue[_auditorId] += price * (10000 - adminShare - valuepoolShare) / 10000;
+        } else {
+            treasury += price * (10000 - valuepoolShare) / 10000;
         }
+        scheduledMedia[currentMediaIdx] = ScheduledMedia({
+            amount: _numMinutes,
+            message: _message,
+            active_period: block.timestamp + _numMinutes * 60
+        });
+        _scheduledMedia[_auditorId][_tag].add(currentMediaIdx++);
     }
 
     function updateSponsorMedia(uint _auditorId, string memory _tag) public {
-        require(channels[_auditorId][_tag].active_period < block.timestamp, "NTH12");
-        uint idx = _scheduledMedia[_auditorId][_tag].at(0);
-        channels[_auditorId][_tag].active_period = block.timestamp + scheduledMedia[idx].amount*minute / minute * minute;
-        channels[_auditorId][_tag].message = scheduledMedia[idx].message;
-        if (_scheduledMedia[_auditorId][_tag].length() > maxNumMedia) {
-            _scheduledMedia[_auditorId][_tag].remove(idx);
+        uint _length = _scheduledMedia[_auditorId][_tag].length();
+        uint _endIdx = maxNumMedia > _length ? 0 : _length - maxNumMedia;
+        for (uint i = 0; i < _endIdx; i++) {
+            uint _currentMediaIdx = _scheduledMedia[_auditorId][_tag].at(i);
+            if (scheduledMedia[_currentMediaIdx].active_period < block.timestamp) {
+                _scheduledMedia[_auditorId][_tag].remove(_currentMediaIdx);
+            }
         }
     }
 
@@ -1118,23 +1108,6 @@ contract AuditorHelper2 {
             }
             optionValues[idx++] = toString(protocolRatings[i]);
         }
-    }
-
-    function addressToString(address x) internal pure returns (string memory) {
-        bytes memory s = new bytes(40);
-        for (uint i = 0; i < 20; i++) {
-            bytes1 b = bytes1(uint8(uint(uint160(x)) / (2**(8*(19 - i)))));
-            bytes1 hi = bytes1(uint8(b) / 16);
-            bytes1 lo = bytes1(uint8(b) - 16 * uint8(hi));
-            s[2*i] = char(hi);
-            s[2*i+1] = char(lo);            
-        }
-        return string(s);
-    }
-
-    function char(bytes1 b) internal pure returns (bytes1 c) {
-        if (uint8(b) < 10) return bytes1(uint8(b) + 0x30);
-        else return bytes1(uint8(b) + 0x57);
     }
 
     function toString(uint value) internal pure returns (string memory) {

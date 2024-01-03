@@ -587,11 +587,12 @@ contract WorldHelper {
     using EnumerableSet for EnumerableSet.UintSet;
 
     uint private tokenId = 1;
+    uint seed = (block.timestamp + block.difficulty) % 100;
     mapping(uint => address) public tokenIdToWorld;
-    mapping(uint => uint) private tokenIdToParent;
-    mapping(uint => mapping(uint => string)) public tags;
+    mapping(uint => string) public tags;
     struct ScheduledMedia {
         uint amount;
+        uint active_period;
         string message;
     }
     mapping(uint => ScheduledMedia) public scheduledMedia;
@@ -605,7 +606,6 @@ contract WorldHelper {
         string message;
         uint active_period;
     }
-    mapping(uint => mapping(string => Channel)) public channels;
     mapping(uint => mapping(string => bool)) public tagRegistrations;
     // first4 => last4 => ext
     mapping(string => mapping(string => string)) public registeredCodes;
@@ -644,31 +644,38 @@ contract WorldHelper {
         valuepoolAddress = _valuepoolAddress;
     }
 
-    function getMedia(uint _tokenId) public view returns(string[] memory _media) {
+    function updateTags(address _world, string memory _tag) external {
+        require(IAuth(_world).isAdmin(msg.sender));
+        uint _worldId = IWorld(IContract(contractAddress).worldNote()).worldToProfileId(_world);
+        tags[_worldId] = _tag;
+    }
+
+    function getMedia(uint _tokenId) external view returns(string[] memory _media) {
         address _world = tokenIdToWorld[_tokenId];
         uint _worldId = IWorld(IContract(contractAddress).worldNote()).worldToProfileId(_world);
-        string memory _tag = tags[_worldId][_tokenId];
-        if (tagRegistrations[_worldId][_tag]) {
-            _media = new string[](_scheduledMedia[1][_tag].length() + 1);
-            uint idx;
-            _media[idx] = IWorld(_world).media(_tokenId);
-            for (uint i = 0; i < _scheduledMedia[1][_tag].length(); i++) {
-                uint _currentMediaIdx = _scheduledMedia[1][_tag].at(i);
-                _media[idx] = scheduledMedia[_currentMediaIdx].message;
-            }
-        } else {
-            _media = new string[](_scheduledMedia[_worldId][_tag].length() + 1);
-            uint idx;
-            _media[idx] = IWorld(_world).media(_tokenId);
-            for (uint i = 0; i < _scheduledMedia[_worldId][_tag].length(); i++) {
-                uint _currentMediaIdx = _scheduledMedia[_worldId][_tag].at(i);
-                _media[idx] = scheduledMedia[_currentMediaIdx].message;
-            }
+        string memory _tag = tags[_worldId];
+        _worldId = tagRegistrations[_worldId][_tag] ? 1 : _worldId;
+        uint _maxMedia = IWorld(IContract(contractAddress).worldHelper2()).maxNumMedia();
+        uint _length = _scheduledMedia[_worldId][_tag].length();
+        _media = new string[](Math.min(_maxMedia, _length+1));
+        uint randomHash = uint(seed + block.timestamp + block.difficulty);
+        for (uint i = 0; i < Math.min(_maxMedia, _length); i++) {
+            _media[i] = scheduledMedia[_scheduledMedia[_worldId][_tag].at(randomHash++ % _length)].message;
+        }
+        for (uint i = Math.min(_maxMedia, _length); i < Math.min(_maxMedia, _length+1); i++) {
+            _media[i] = IWorld(_world).media(_tokenId);
         }
     }
 
+    function getAllMedia(uint _start, uint _worldId, string memory _tag) external view returns(string[] memory _media) {
+        _media = new string[](_scheduledMedia[_worldId][_tag].length() - _start);
+        for (uint i = _start; i < _scheduledMedia[_worldId][_tag].length(); i++) {
+            _media[i] = scheduledMedia[_scheduledMedia[_worldId][_tag].at(i)].message;
+        }  
+    }
+
     function updateTagRegistration(string memory _tag, bool _add) external {
-        uint _worldId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender);
+        uint _worldId = IWorld(IContract(contractAddress).worldNote()).worldToProfileId(msg.sender);
         require(_worldId > 0);
         tagRegistrations[_worldId][_tag] = _add;
         IWorld(IContract(contractAddress).worldNote()).emitUpdateMiscellaneous(
@@ -708,7 +715,7 @@ contract WorldHelper {
     function sponsorTag(
         address _sponsor,
         address _world,
-        uint _amount, 
+        uint _numMinutes, 
         string memory _tag, 
         string memory _message
     ) external {
@@ -717,35 +724,35 @@ contract WorldHelper {
         require(IAuth(_sponsor).isAdmin(msg.sender), "NTH9");
         require(!ISponsor(_sponsor).contentContainsAny(IWorld(worldHelper3).getExcludedContents(_worldId, _tag)), "NTH10");
         uint _pricePerAttachMinutes = IWorld(worldHelper3).pricePerAttachMinutes(_worldId);
-        if (_pricePerAttachMinutes > 0) {
-            uint price = _amount * _pricePerAttachMinutes;
-            IERC20(IContract(contractAddress).token()).safeTransferFrom(address(msg.sender), address(this), price);
-            uint valuepoolShare = IContract(contractAddress).valuepoolShare();
-            uint adminShare = IContract(contractAddress).adminShare();
-            valuepool += price * valuepoolShare / 10000;
-            if (_worldId > 0) {
-                treasury += price * adminShare / 10000;
-                pendingRevenue[_worldId] += price * (10000 - adminShare - valuepoolShare) / 10000;
-            } else {
-                treasury += price * (10000 - valuepoolShare) / 10000;
-            }
-            scheduledMedia[currentMediaIdx] = ScheduledMedia({
-                amount: _amount,
-                message: _message
-            });
-            _scheduledMedia[_worldId][_tag].add(currentMediaIdx++);
-            updateSponsorMedia(_worldId, _tag);
+        require(_pricePerAttachMinutes > 0, "3");
+        uint price = _numMinutes * _pricePerAttachMinutes;
+        IERC20(IContract(contractAddress).token()).safeTransferFrom(address(msg.sender), address(this), price);
+        uint valuepoolShare = IContract(contractAddress).valuepoolShare();
+        uint adminShare = IContract(contractAddress).adminShare();
+        valuepool += price * valuepoolShare / 10000;
+        if (_worldId > 0) {
+            treasury += price * adminShare / 10000;
+            pendingRevenue[_worldId] += price * (10000 - adminShare - valuepoolShare) / 10000;
+        } else {
+            treasury += price * (10000 - valuepoolShare) / 10000;
         }
+        scheduledMedia[currentMediaIdx] = ScheduledMedia({
+            amount: _numMinutes,
+            message: _message,
+            active_period: block.timestamp + _numMinutes * 60
+        });
+        _scheduledMedia[_worldId][_tag].add(currentMediaIdx++);
     }
 
-    function updateSponsorMedia(uint _worldId, string memory _tag) public {
-        require(channels[_worldId][_tag].active_period < block.timestamp, "NTH12");
-        uint idx = _scheduledMedia[_worldId][_tag].at(0);
-        channels[_worldId][_tag].active_period = block.timestamp + scheduledMedia[idx].amount*minute / minute * minute;
-        channels[_worldId][_tag].message = scheduledMedia[idx].message;
-        address worldHelper2 = IContract(contractAddress).worldHelper2();
-        if (_scheduledMedia[_worldId][_tag].length() > IWorld(worldHelper2).maxNumMedia()) {
-            _scheduledMedia[_worldId][_tag].remove(idx);
+    function updateSponsorMedia(uint _worldId, string memory _tag) external {
+        uint _length = _scheduledMedia[_worldId][_tag].length();
+        uint _maxLength = IWorld(IContract(contractAddress).worldHelper2()).maxNumMedia();
+        uint _endIdx = _maxLength > _length ? 0 : _length - _maxLength;
+        for (uint i = 0; i < _endIdx; i++) {
+            uint _currentMediaIdx = _scheduledMedia[_worldId][_tag].at(i);
+            if (scheduledMedia[_currentMediaIdx].active_period < block.timestamp) {
+                _scheduledMedia[_worldId][_tag].remove(_currentMediaIdx);
+            }
         }
     }
 
@@ -899,7 +906,7 @@ contract WorldHelper {
 }
 
 contract WorldHelper2 is ERC721Pausable {
-    uint private maxNumMedia = 2;
+    uint public maxNumMedia = 2;
     mapping(address => WorldType) public categories;
     // first4 => last4 => ext
     address private contractAddress;
