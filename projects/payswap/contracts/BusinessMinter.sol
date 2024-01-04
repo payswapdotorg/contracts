@@ -10,7 +10,7 @@ contract BusinessMinter is ERC721Pausable{
     using EnumerableSet for EnumerableSet.AddressSet;
 
     uint public tokenId = 1;
-    uint internal constant week = 10*60;//86400 * 7; // allows minting once per week (reset every Thursday 00:00 UTC)
+    uint internal constant week = 86400 * 7; // allows minting once per week (reset every Thursday 00:00 UTC)
     mapping(address => uint) public currentDebt;
     address public contractAddress;
     uint public weekly = 1000000e18; // 1000000 initial tokens
@@ -86,10 +86,10 @@ contract BusinessMinter is ERC721Pausable{
         uint totalWeightAccelerator = IVoter(IContract(contractAddress).acceleratorVoter()).totalWeight(_ve);
         uint totalWeightContributors = IVoter(IContract(contractAddress).contributorVoter()).totalWeight(_ve);
         uint totalWeight = totalWeightReferrals + totalWeightBusinesses + totalWeightAccelerator + totalWeightContributors;
-        referralsPercent[_ve] = totalWeightReferrals / totalWeight;
-        businessesPercent[_ve] = totalWeightBusinesses / totalWeight;
-        acceleratorPercent[_ve] = totalWeightAccelerator / totalWeight;
-        contributorsPercent[_ve] = totalWeightContributors / totalWeight;
+        referralsPercent[_ve] = totalWeightReferrals * 10000 / totalWeight;
+        businessesPercent[_ve] = totalWeightBusinesses * 10000 / totalWeight;
+        acceleratorPercent[_ve] = totalWeightAccelerator * 10000 / totalWeight;
+        contributorsPercent[_ve] = totalWeightContributors * 10000 / totalWeight;
         return (
             totalWeightReferrals * 10000 / totalWeight,
             totalWeightBusinesses * 10000 / totalWeight,
@@ -198,16 +198,16 @@ contract BusinessMinter is ERC721Pausable{
                 IBusinessVoter(IContract(contractAddress).businessVoter()).notifyRewardAmount(_ve, _weeklyLessTeam * _businessesPercent / 10000);
                 
                 //referrals
-                _token.approve(IContract(contractAddress).businessVoter(), _weeklyLessTeam * _referralsPercent / 10000);
-                IBusinessVoter(IContract(contractAddress).businessVoter()).notifyRewardAmount(_ve, _weeklyLessTeam * _referralsPercent / 10000);
+                _token.approve(IContract(contractAddress).referralVoter(), _weeklyLessTeam * _referralsPercent / 10000);
+                IBusinessVoter(IContract(contractAddress).referralVoter()).notifyRewardAmount(_ve, _weeklyLessTeam * _referralsPercent / 10000);
 
                 //contributors
-                _token.approve(IContract(contractAddress).businessVoter(), _weeklyLessTeam * _contributorsPercent / 10000);
-                IBusinessVoter(IContract(contractAddress).businessVoter()).notifyRewardAmount(_ve, _weeklyLessTeam * _contributorsPercent / 10000);
+                _token.approve(IContract(contractAddress).contributorVoter(), _weeklyLessTeam * _contributorsPercent / 10000);
+                IBusinessVoter(IContract(contractAddress).contributorVoter()).notifyRewardAmount(_ve, _weeklyLessTeam * _contributorsPercent / 10000);
                 
                 //accelerator
-                _token.approve(IContract(contractAddress).businessVoter(), _weeklyLessTeam * _acceleratorPercent / 10000);
-                IBusinessVoter(IContract(contractAddress).businessVoter()).notifyRewardAmount(_ve, _weeklyLessTeam * _acceleratorPercent / 10000);
+                _token.approve(IContract(contractAddress).acceleratorVoter(), _weeklyLessTeam * _acceleratorPercent / 10000);
+                IBusinessVoter(IContract(contractAddress).acceleratorVoter()).notifyRewardAmount(_ve, _weeklyLessTeam * _acceleratorPercent / 10000);
                 emit Mint(msg.sender, _ve, weekly);
             }   
         }

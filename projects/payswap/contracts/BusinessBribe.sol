@@ -65,9 +65,13 @@ contract BusinessBribe {
     event NotifyReward(address indexed from, address indexed reward, uint amount);
     event ClaimRewards(address indexed from, address indexed reward, uint amount);
 
-    constructor(address __ve) { 
+    constructor(
+        address __ve, 
+        address _contractAddress
+    ) { 
         _ve = __ve; 
         factory = msg.sender;
+        contractAddress = _contractAddress;
     }
 
     // simple re-entrancy check
@@ -400,7 +404,7 @@ contract BusinessBribe {
             msg.sender == IContract(contractAddress).businessVoter() || 
             msg.sender == IContract(contractAddress).contributorVoter() || 
             msg.sender == IContract(contractAddress).referralVoter(), 
-            "Only business voter"
+            "Only voter"
         );
         totalSupply -= amount;
         balanceOf[tokenId] -= amount;
@@ -492,7 +496,7 @@ contract BusinessBribeFactory {
     }
 
     function createBribe(address _ve) external returns (address) {
-        last_gauge = address(new BusinessBribe(_ve));
+        last_gauge = address(new BusinessBribe(_ve, contractAddress));
         return last_gauge;
     }
 }

@@ -60,17 +60,15 @@ contract ContributorVoter {
             _updateFor(gauges[_collectionId][_ve], _ve);
             weights[_collectionId][_ve] -= _votes;
             votes[_tokenId][cid] -= _votes;
+            _totalWeight = _votes;
             if (_votes > 0) {
                 uint _profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender);
-                IBribe(bribes[gauges[_collectionId][_ve]])._withdraw(uint(_votes), _profileId);
-                _totalWeight += _votes;
-            } else {
-                _totalWeight -= _votes;
+                IBribe(bribes[gauges[_collectionId][_ve]]).withdraw(uint(_votes), _profileId);
             }
             emit Abstained(_tokenId, _collectionId, _ve, _votes);
         }
-        totalWeight[_ve] -= uint256(_votes);
-        usedWeights[_tokenId][_ve] = 0;
+        totalWeight[_ve] -= Math.min(totalWeight[_ve], uint256(_votes));
+        usedWeights[_tokenId][_ve] -= Math.min(usedWeights[_tokenId][_ve], uint256(_votes));
     }
 
     function _vote(
@@ -88,8 +86,8 @@ contract ContributorVoter {
         
         if (isGauge[_gauge]) {
             int256 _poolWeight = positive? _userWeight : -_userWeight;
-            require(votes[_tokenId][cid] == 0);
-            require(_poolWeight != 0);
+            require(votes[_tokenId][cid] == 0, "1");
+            require(_poolWeight != 0, "2");
             _updateFor(_gauge, _ve);
 
             weights[_collectionId][_ve] += _poolWeight;
@@ -97,7 +95,7 @@ contract ContributorVoter {
             if (positive) {
                 uint _profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender);
                 require(_profileId > 0);
-                IBusinessVoter(bribes[_gauge]).deposit(uint(_poolWeight), _profileId, msg.sender);
+                IBusinessVoter2(bribes[_gauge]).deposit(uint(_poolWeight), _profileId);
             } else {
                 _poolWeight = -_poolWeight;
             }
@@ -105,7 +103,6 @@ contract ContributorVoter {
             _totalWeight += _poolWeight;
             emit Voted(_collectionId, _tokenId, _poolWeight, _ve, positive);
         }
-        if (_usedWeight > 0) try ve(_ve).attach(_tokenId, 86400*7) {} catch{}
         totalWeight[_ve] += uint256(_totalWeight);
         usedWeights[_tokenId][_ve] = uint256(_usedWeight);
     }
@@ -119,6 +116,7 @@ contract ContributorVoter {
     ) external {
         require(ve(_ve).isApprovedOrOwner(msg.sender, tokenId));
         _vote(tokenId, _collectionId, _gauge, _ve, positive);
+        try ve(_ve).attach(tokenId, 86400*7) {} catch{}
     }
 
     function createGauge(address _ve) external returns (address) {
@@ -205,7 +203,6 @@ contract ContributorVoter {
     }
     
     function distribute(address _gauge, address _ve) public lock {
-        IMinter(IContract(contractAddress).businessMinter()).update_period();
         _updateFor(_gauge, _ve);
         uint _claimable = claimable[_gauge];
         if (_claimable > 0) {

@@ -59,13 +59,11 @@ contract AcceleratorVoter {
     function _reset(uint _tokenId, uint _collectionId, address _ve) internal {
         string memory cid = string(abi.encodePacked(_collectionId, _ve));
         int256 _votes = votes[_tokenId][cid];
-        int256 _totalWeight = 0;
 
         if (_votes != 0) {
             _updateFor(gauges[_collectionId][_ve], _ve);
             weights[_collectionId][_ve] -= _votes;
             votes[_tokenId][cid] -= _votes;
-            _totalWeight = _votes;
             if (_votes > 0) {
                 uint _profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender);
                 IBribe(bribes[gauges[_collectionId][_ve]]).withdraw(uint(_votes), _profileId);
@@ -208,7 +206,6 @@ contract AcceleratorVoter {
     }
     
     function distribute(address _gauge, address _ve) public lock {
-        IMinter(IContract(contractAddress).businessMinter()).update_period();
         _updateFor(_gauge, _ve);
         uint _claimable = claimable[_gauge];
         if (_claimable > 0) {

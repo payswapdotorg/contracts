@@ -17,11 +17,9 @@ contract BusinessVoter {
     mapping(uint => mapping(string => uint)) public votes; // nft => pool => votes
     mapping(uint => mapping(address => uint)) public usedWeights;  // nft => total voting weight of user
     mapping(address => bool) public isGauge;
-    mapping(address => bool) public initialReward;
-    uint public initialRewardValue;
 
     event GaugeCreated(uint indexed pool, address _ve, address gauge, address creator, address bribe);
-    event Voted(uint indexed _collectionId, uint tokenId, uint weight, address _ve, address voter);
+    event Voted(uint indexed _collectionId, uint tokenId, uint weight, address voter, address _ve);
     event Abstained(uint tokenId, uint _collectionId, address _ve, uint weight);
     event Deposit(address indexed lp, address indexed gauge, uint tokenId, uint amount);
     event Withdraw(address indexed lp, address indexed gauge, uint tokenId, uint amount);
@@ -43,32 +41,27 @@ contract BusinessVoter {
         contractAddress = _contractAddress;
     }
 
-    function updateInitialReward(uint _initialRewardValue) external {
-        require(msg.sender == IAuth(contractAddress).devaddr_(), "BV1");
-        initialRewardValue = _initialRewardValue;
-    }
-
     function deactivateGauge() external {
         emit DeactivateGauge(IMarketPlace(
             IContract(contractAddress).marketCollections()
         ).addressToCollectionId(msg.sender));
     }
 
-    function _reset(uint _tokenId, uint _collectionId, uint _referrerProfileId, address _ve) internal {
-        string memory cid = string(abi.encodePacked(_collectionId, _ve));
-        uint _votes = votes[_tokenId][cid];
-        if (_votes != 0) {
-            _updateFor(gauges[_collectionId][_ve], _ve);
-            weights[_collectionId][_ve] -= _votes;
-            if (_referrerProfileId > 1) {
-                IBusinessVoter(bribes[gauges[_collectionId][_ve]]).withdraw(_votes, _referrerProfileId);
-            }
-            votes[_tokenId][cid] = 0;
-            emit Abstained(_tokenId, _collectionId, _ve, _votes);
-        }
-        totalWeight[_ve] -= _votes;
-        usedWeights[_tokenId][_ve] = 0;
-    }
+    // function _reset(uint _tokenId, uint _collectionId, uint _referrerProfileId, address _ve) internal {
+    //     string memory cid = string(abi.encodePacked(_collectionId, _ve));
+    //     uint _votes = votes[_tokenId][cid];
+    //     if (_votes != 0) {
+    //         _updateFor(gauges[_collectionId][_ve], _ve);
+    //         // weights[_collectionId][_ve] -= _votes;
+    //         votes[_tokenId][cid] -= _votes;
+    //         if (_referrerProfileId > 0) {
+    //             IBusinessVoter(bribes[gauges[_collectionId][_ve]]).withdraw(_votes, _referrerProfileId);
+    //         }
+    //         emit Abstained(_tokenId, _collectionId, _ve, _votes);
+    //     }
+    //     totalWeight[_ve] -= Math.min(totalWeight[_ve], _votes);
+    //     usedWeights[_tokenId][_ve] = Math.min(usedWeights[_tokenId][_ve], _votes);
+    // }
 
     function _vote(
         uint _tokenId, 
@@ -80,24 +73,26 @@ contract BusinessVoter {
         bool _freeToken
     ) internal {
         string memory cid = string(abi.encodePacked(_collectionId, _ve));
-        if (_freeToken) _reset(_tokenId, _collectionId, _referrerProfileId, _ve);
+        // if (_freeToken) _reset(_tokenId, _collectionId, _referrerProfileId, _ve);
         address _gauge = gauges[_collectionId][_ve];
-        if (isGauge[_gauge]) {
-            if (_freeToken) require(votes[_tokenId][cid] == 0, "BV2");
-            require(_poolWeight != 0, "BV3");
-            _updateFor(_gauge, _ve);
+        require(isGauge[_gauge], "BV2");
+        // if (_freeToken) require(votes[_tokenId][cid] == 0, "BV2");
+        require(_poolWeight != 0, "BV3");
+        _updateFor(_gauge, _ve);
 
-            weights[_collectionId][_ve] += _poolWeight;
-            votes[_tokenId][cid] += _poolWeight;
-            if (_referrerProfileId > 0) {
-                address _referrer = IProfile(IContract(contractAddress).profileHelper()).getAccountAt(_referrerProfileId,0);
-                IBusinessVoter(bribes[_gauge]).deposit(_poolWeight, _referrerProfileId, _referrer);
-            }
-            emit Voted(_collectionId, _tokenId, _poolWeight, msg.sender, _ve);
+        weights[_collectionId][_ve] += _poolWeight;
+        votes[_tokenId][cid] += _poolWeight;
+        if (_referrerProfileId > 0) {
+            address _referrer = IProfile(IContract(contractAddress).profileHelper()).getAccountAt(_referrerProfileId,0);
+            IBusinessVoter(bribes[_gauge]).deposit(_poolWeight, _referrerProfileId, _referrer);
         }
-        if (_poolWeight > 0) try ve(_ve).attach(_tokenId, 86400*7) {} catch{}
+        emit Voted(_collectionId, _tokenId, _poolWeight, _user, _ve);
         totalWeight[_ve] += _poolWeight;
-        usedWeights[_tokenId][_ve] = _poolWeight;
+        usedWeights[_tokenId][_ve] += _poolWeight;
+    }
+
+    function getVotes(uint _tokenId, uint _collectionId, address _ve) external view returns(uint) {
+        return votes[_tokenId][string(abi.encodePacked(_collectionId, _ve))];
     }
 
     function vote(
@@ -112,6 +107,7 @@ contract BusinessVoter {
         require(IContract(contractAddress).nfticketHelper() == msg.sender, "BV4");
         require(ve(_ve).isApprovedOrOwner(_user, tokenId), "BV5");
         _vote(tokenId, _collectionId, _referrerProfileId, _poolWeight, _user, _ve, _freeToken);
+        try ve(_ve).attach(tokenId, 86400*7) {} catch{}
     }
 
     function createGauge(address _ve) external returns (address) {
@@ -208,13 +204,8 @@ contract BusinessVoter {
     }
     
     function distribute(address _gauge, address _ve) public lock {
-        IMinter(IContract(contractAddress).businessMinter()).update_period();
         _updateFor(_gauge, _ve);
         uint _claimable = claimable[_gauge];
-        if (!initialReward[_gauge]) {
-            initialReward[_gauge] = true;
-            _claimable += initialRewardValue;
-        }
         if (_claimable > 0) {
             claimable[_gauge] = 0;
             IGauge(_gauge).notifyRewardAmount(ve(_ve).token(), _claimable);

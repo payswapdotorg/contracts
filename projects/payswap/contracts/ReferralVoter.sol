@@ -48,19 +48,19 @@ contract ReferralVoter {
         ).addressToCollectionId(msg.sender));
     }
     
-    function _reset(uint _tokenId, uint _profileId, address _ve) internal {
-        string memory cid = string(abi.encodePacked(_profileId, _ve));
-        uint _votes = votes[_tokenId][cid];
-        if (_votes != 0) {
-            _updateFor(gauges[_profileId][_ve], _ve);
-            weights[_profileId][_ve] -= _votes;
-            IReferralVoter(bribes[gauges[_profileId][_ve]]).withdraw(_votes, _tokenId);
-            votes[_tokenId][cid] = 0;
-            emit Abstained(_tokenId, _profileId, _ve, _votes);
-        }
-        totalWeight[_ve] -= _votes;
-        usedWeights[_tokenId][_ve] = 0;
-    }
+    // function _reset(uint _tokenId, uint _profileId, address _ve) internal {
+    //     string memory cid = string(abi.encodePacked(_profileId, _ve));
+    //     uint _votes = votes[_tokenId][cid];
+    //     if (_votes != 0) {
+    //         _updateFor(gauges[_profileId][_ve], _ve);
+    //         weights[_profileId][_ve] -= _votes;
+    //         IReferralVoter(bribes[gauges[_profileId][_ve]]).withdraw(_votes, _tokenId);
+    //         votes[_tokenId][cid] -= _votes;
+    //         emit Abstained(_tokenId, _profileId, _ve, _votes);
+    //     }
+    //     totalWeight[_ve] -= Math.min(totalWeight[_ve], _votes);
+    //     usedWeights[_tokenId][_ve] -= Math.min(usedWeights[_tokenId][_ve], _votes);
+    // }
 
     function _vote(
         uint _tokenId, 
@@ -72,19 +72,18 @@ contract ReferralVoter {
     ) internal {
         string memory cid = string(abi.encodePacked(_profileId, _ve));
         if (IProfile(IContract(contractAddress).profile()).isUnique(_profileId)) {
-            if (_freeToken) _reset(_tokenId, _profileId, _ve);
+            // if (_freeToken) _reset(_tokenId, _profileId, _ve);
             address _gauge = gauges[_profileId][_ve];
-            if (isGauge[_gauge]) {
-                if (_freeToken) require(votes[_tokenId][cid] == 0, "RV1");
-                require(_poolWeight != 0, "RV2");
-                _updateFor(_gauge, _ve);
+            require(isGauge[_gauge], "RV1");
+            // if (_freeToken) require(votes[_tokenId][cid] == 0, "RV1");
+            require(_poolWeight != 0, "RV2");
+            _updateFor(_gauge, _ve);
 
-                weights[_profileId][_ve] += _poolWeight;
-                votes[_tokenId][cid] += _poolWeight;
-                IReferralVoter(bribes[_gauge]).deposit(_poolWeight, _tokenId);
-                emit Voted(_profileId, _tokenId, _poolWeight, _user, _ve);
-            }
-            if (_poolWeight > 0) try ve(_ve).attach(_tokenId, 86400*7) {} catch{}
+            weights[_profileId][_ve] += _poolWeight;
+            votes[_tokenId][cid] += _poolWeight;
+            IReferralVoter(bribes[_gauge]).deposit(_poolWeight, _tokenId);
+            emit Voted(_profileId, _tokenId, _poolWeight, _ve, _user);
+
             totalWeight[_ve] += _poolWeight;
             usedWeights[_tokenId][_ve] = _poolWeight;
         }
@@ -102,6 +101,7 @@ contract ReferralVoter {
 
         require(ve(_ve).isApprovedOrOwner(_user, tokenId), "RV4");
         _vote(tokenId, _referrerProfileId, _poolWeight, _user, _ve, _freeToken);
+        try ve(_ve).attach(tokenId, 86400*7) {} catch{}
     }
 
     function createGauge(address _ve) external returns (address) {
@@ -201,10 +201,9 @@ contract ReferralVoter {
     }
 
     function distribute(address _gauge, address _ve) public lock {
-        IMinter(IContract(contractAddress).businessMinter()).update_period();
         _updateFor(_gauge, _ve);
         uint _claimable = claimable[_gauge];
-        if (_claimable > IGauge(_gauge).left(ve(_ve).token()) && _claimable / DURATION > 0) {
+        if (_claimable > 0) {
             claimable[_gauge] = 0;
             IGauge(_gauge).notifyRewardAmount(ve(_ve).token(), _claimable);
             emit DistributeReward(msg.sender, _gauge, _claimable);

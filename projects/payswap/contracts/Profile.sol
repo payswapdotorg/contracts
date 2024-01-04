@@ -488,7 +488,7 @@ contract ProfileHelper is ERC721Pausable {
 
     address private contractAddress;
     uint constant INITIAL_PROFILE_ID = 5; // starts at 1000000
-    uint public boughtProfileId = 1;
+    uint public boughtProfileId = 3;
     uint private periodReceivable = 86400 * 7 * 52;
     uint private bidStart = 1e18;
     uint private bidDuration = 86400 * 7;
@@ -661,7 +661,7 @@ contract ProfileHelper is ERC721Pausable {
     }
 
     function getAccountAt(uint _profileId, uint index) external view returns(address) {
-        address[] memory accounts = IProfile(IContract(contractAddress).profile()).getAllFollowers(_profileId,index);
+        address[] memory accounts = IProfile(IContract(contractAddress).profile()).getAllAccounts(_profileId,index);
         return accounts[0];
     }
 

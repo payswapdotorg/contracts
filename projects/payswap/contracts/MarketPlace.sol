@@ -2654,7 +2654,7 @@ contract MarketPlaceCollection is Auth {
     mapping(uint => EnumerableSet.AddressSet) private collectionTrustWorthyAuditors;
     
     uint256 public tradingFee = 1000;
-    uint256 public lotteryFee;
+    uint256 public lotteryFee = 1000;
     mapping(address => bool) public isBlacklisted;
     mapping(uint => uint) public collectionIdToProfileId;
     uint public maxDropinTimer = 86400 * 7;

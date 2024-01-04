@@ -233,30 +233,30 @@ async function main() {
   const payswapRouter = "0xF314FC209E6f52BE35a876206a1ec7CC18AAb25f"
   const WFTM = "0x07B9c47452C41e8E00f98aC4c075F5c443281d2A"
   const INIT_CODE_PAIR_HASH = "0xc686be96020737842c8d1dc73f500c20206f43ad5e5928a27a00cbf05cf911fa"
-  const businessMinterAddress = "0x40995AbDC0E62834043Ece5855E554EF51Eb1056"
+  const businessMinterAddress = "0x601b91AA0E8Dca20a1FD5dc0ffF256cb954B335e"
   const auditorNoteAddress = "0xdaF12B05685d5A4D8449e54939F6F9E8f19D4A4f"
   const auditorHelperAddress = "0xD3855fD1b3f467cb7ED91caA037D4f7b6529698b"
   const auditorHelper2Address = "0x8c2479569146d74058A997b7Ed16CA74c9578920"
   const auditorFactoryAddress = "0x13eE93a80Fe5B9934a3C079a52Dd36566FAD3061"
-  const acceleratorVoterAddress = "0xc273b264C148E95Fcc66f143eFf1F52710ebB617"
   const futureCollateralAddress = "0xD2b2435aa749E42F3523033Fe167Ae543082375F"
   const cardAddress = "0x5133ce668Dcfe85690CCB890e175F594fb11d0D0"
-  const contributorVoterAddress = "0xBCb2E030953dC9f2E68C179C19C2C121aF348Abb"
   const vavaFactoryAddress = "0x5fdbCeEc25E02d15dE51af3450289c72Ef2d081E"
   const vavaHelperAddress = "0xC38993A66820830bfED5D92bc4c937a4bba4528D"
   const vavaHelper2Address = "0x282E20b214ec4f4ae560dB9eaF03a29D0910Cb40"
   const veFactoryAddress = "0x60496E81e744B5aD59b91d17Cfa62036d69fC856"
   const valuepoolVoterAddress = "0x3a5231DAC8755102D17b911c0Dc99cE7DC47d0bD"
-  const businessBribeFactoryAddress = "0xee1388EeFb6F9206836eB6C64F12bFBAEa14d9Cd"
+  const businessBribeFactoryAddress = "0x66290cB912Ea1E7cFF9eC48FD9E3CE9874a2C67d"
   const businessGaugeFactoryAddress = "0x3a5F4F01Bbe5729b8EC35f453d4a92A364F9eF66"
-  const referralBribeFactoryAddress = "0x287aa029f946347c43209a65286Fa010875c1bDe"
-  const businessVoterAddress = "0x3Fd9F56dE77002e267104d106A92967cd000EEC9" 
-  const referralVoterAddress = "0xF72AEF17B06C69d1c2329e8966B7821875BCd21E"
+  const referralBribeFactoryAddress = "0xc2Bdff16fa13bBffFEB42602cC15d2a514a413eD"
+  const acceleratorVoterAddress = "0xba0097Ce41B86558659F648797C4c2275a131F63"
+  const contributorVoterAddress = "0xcf3536199714C5ac3560685c5c138A6250c0Ee8d"
+  const businessVoterAddress = "0xC5Ce67cCC9Ad0eea9a8c37a5E869a78078a9d8C2" 
+  const referralVoterAddress = "0xC99F73c59fAD8466f7E18A28efB78A9FFF1A3A16"
   const sponsorFactoryAddress = "0xA23Aea1EE6835DD000d8279d5f49212869ddD863"
   const sponsorNoteAddress = "0x16bc1C7285bB312b8023ca4879F32d57bB706343"
   const ssiAddress = "0x1de9D006f209E9A7556270cae74D1F0D6864168a" //"0xFEc4d4A1aad9cE28dA66D86609c3B47aaeF5e527"
   const profileAddress = "0x3E0240b8aa46207d267225136BE0837841e53EB5" // "0x5E008DCE8095dE09BFF103Df85b566449c1dF7e2" // "0x810EBEa7d4330B6A6EFa2f73FF7E7773c57F98CD" //"0x8D531506a9Eb2E5931235a09e5192201B38b12b6"
-  const profileHelperAddress = "0x2844bAf1253669Bf37fE6480805D95d6BFB5B126" // "0x0cf9f62B1e215ba580C8445Ca9C9CBf2ad32b6DB" // "0xf2Ca8333888cf3C673E81225228a000F9b7b4338" //"0xa71B00c519d6573E0cFC37638FE712aC6dD65a2c"
+  const profileHelperAddress = "0x1a725F5cfebcb00eDa5D3eddAfEA960a0E338930" // "0x0cf9f62B1e215ba580C8445Ca9C9CBf2ad32b6DB" // "0xf2Ca8333888cf3C673E81225228a000F9b7b4338" //"0xa71B00c519d6573E0cFC37638FE712aC6dD65a2c"
   const stakeMarketAddress = "0xbf877500681AF64f10F6C3E92fA9946f800804ea"
   const stakeMarketNoteAddress = "0x2596c9eA9473AE8B1F8EB08019CD8e9844Cea34a"
   const stakeMarketHelperAddress = "0xf178d8A6661aBA43bEaFe98080e47CD213c2FC34"
@@ -361,8 +361,6 @@ async function main() {
   const auditorHelper = AuditorHelper.attach(auditorHelperAddress)
   const auditorHelper2 = AuditorHelper2.attach(auditorHelper2Address)
   const auditorFactory = AuditorFactory.attach(auditorFactoryAddress)
-  const businessVoter = BusinessVoter.attach(businessVoterAddress)
-  const referralVoter = ReferralVoter.attach(referralVoterAddress)
   const sponsorFactory = SponsorFactory.attach(sponsorFactoryAddress)
   const sponsorNote = SponsorNote.attach(sponsorNoteAddress)
   const ssi = SSI.attach(ssiAddress)
@@ -411,6 +409,8 @@ async function main() {
   const businessMinter = BusinessMinter.attach(businessMinterAddress)
   const acceleratorVoter = AcceleratorVoter.attach(acceleratorVoterAddress)
   const contributorVoter = ContributorVoter.attach(contributorVoterAddress)
+  const businessVoter = BusinessVoter.attach(businessVoterAddress)
+  const referralVoter = ReferralVoter.attach(referralVoterAddress)
   const futureCollateral = FutureCollateral.attach(futureCollateralAddress)
   const card = Card.attach(cardAddress)
   const feeTo = FeeTo.attach(feeToAddress)
@@ -981,6 +981,14 @@ async function main() {
   // await contributorVoter.deployed()
   // console.log("contributorVoter============>", contributorVoter.address)
 
+  // const businessVoter = await BusinessVoter.deploy();
+  // await businessVoter.deployed()
+  // console.log("businessVoter============>", businessVoter.address)
+
+  // const referralVoter = await ReferralVoter.deploy();
+  // await referralVoter.deployed()
+  // console.log("referralVoter============>", referralVoter.address)
+
   // const businessMinter = await BusinessMinter.deploy();
   // await businessMinter.deployed()
   // console.log("businessMinter============>", businessMinter.address)
@@ -1163,14 +1171,6 @@ async function main() {
   // const auditorFactory = await AuditorFactory.deploy();
   // await auditorFactory.deployed()
   // console.log("auditorFactory============>", auditorFactory.address)
-
-  // const businessVoter = await BusinessVoter.deploy();
-  // await businessVoter.deployed()
-  // console.log("businessVoter============>", businessVoter.address)
-
-  // const referralVoter = await ReferralVoter.deploy();
-  // await referralVoter.deployed()
-  // console.log("referralVoter============>", referralVoter.address)
 
   // const sponsorFactory = await SponsorFactory.deploy();
   // await sponsorFactory.deployed()
@@ -1391,6 +1391,12 @@ async function main() {
   // await contributorVoter.setContractAddress(contractAddresses.address)
   // console.log("contributorVoter.setContractAddress===========> Done!")
 
+  // await businessVoter.setContractAddress(contractAddresses.address)
+  // console.log("businessVoter.setContractAddress===========> Done!")
+
+  // await referralVoter.setContractAddress(contractAddresses.address)
+  // console.log("referralVoter.setContractAddress===========> Done!")
+
   // await arpFactory.setContractAddress(contractAddresses.address)
   // console.log("arpFactory.setContractAddress===========> Done!")
 
@@ -1450,12 +1456,6 @@ async function main() {
 
   // await referralBribeFactory.setContractAddress(contractAddresses.address)
   // console.log("referralBribeFactory.setContractAddress===========> Done!")
-
-  // await businessVoter.setContractAddress(contractAddresses.address)
-  // console.log("businessVoter.setContractAddress===========> Done!")
-
-  // await referralVoter.setContractAddress(contractAddresses.address)
-  // console.log("referralVoter.setContractAddress===========> Done!")
 
   // await trustBounties.setContractAddress(contractAddresses.address)
   // console.log("trustBounties.setContractAddress===========> Done!")
@@ -1596,7 +1596,12 @@ async function main() {
   // await contractAddresses.addContent('nsfw')
   // console.log("contractAddresses.addContent===========> Done!")
 
-  // await businessGaugeFactory.updateVoter([businessVoter.address, referralVoter.address], true)
+  // await businessGaugeFactory.updateVoter([
+  //   acceleratorVoter.address, 
+  //   businessVoter.address, 
+  //   contributorVoter.address, 
+  //   referralVoter.address
+  // ], true)
   // console.log("businessGaugeFactory.updateVoter===========> Done!")
 
   // await contractAddresses.setBusinessMinter(businessMinter.address)
@@ -1671,12 +1676,6 @@ async function main() {
   // await contractAddresses.setReferralBribeFactory(referralBribeFactory.address)
   // console.log("contractAddresses.setReferralBribeFactory===========> Done!")
 
-  // await contractAddresses.setBusinessVoter(businessVoter.address)
-  // console.log("contractAddresses.setBusinessVoter===========> Done!")
-
-  // await contractAddresses.setReferralVoter(referralVoter.address)
-  // console.log("contractAddresses.setReferralVoter===========> Done!")
-
   // await contractAddresses.setAuditorHelper(auditorHelper.address)
   // console.log("contractAddresses.setAuditorHelper===========> Done!")
 
@@ -1697,6 +1696,12 @@ async function main() {
 
   // await contractAddresses.setContributorVoter(contributorVoter.address)
   // console.log("contractAddresses.setContributorVoter===========> Done!")
+
+  // await contractAddresses.setBusinessVoter(businessVoter.address)
+  // console.log("contractAddresses.setBusinessVoter===========> Done!")
+
+  // await contractAddresses.setReferralVoter(referralVoter.address)
+  // console.log("contractAddresses.setReferralVoter===========> Done!")
 
   // await contractAddresses.setTrustBounty(trustBounties.address)
   // console.log("contractAddresses.setTrustBounty===========> Done!")
@@ -1745,8 +1750,11 @@ async function main() {
   // console.log("va.token===========>", await va.token(), await va.ownerOf(1))//, await va.getWithdrawable(1))
   // console.log("trustBounties.bountyInfo==================>", await trustBounties.bountyInfo(1), await trustBounties.balances(1, "0xb9858E52175Dc194686E29875570703B5C986Fe3"), await tFiat.balanceOf(trustBounties.address))
   
-  // const vaAddress = "0x06075aA921fa42E78895d3a01d31608c46258260"
+  // const vaAddress = "0xb9858E52175Dc194686E29875570703B5C986Fe3"
   // const va = Va.attach(vaAddress)
+
+  // await tFiat.approve(va.address, ethers.BigNumber.from("100000000000000000"));
+  // await va.create_lock_for(ethers.BigNumber.from("100000000000000000"), 4 * 365 * 86400, 0, "0xED00DC98e07f572d8b3071182406235d1D28D258")
   
   // await businessMinter.updateVes([vaAddress], true)
   // console.log("businessMinter.updateVes===========> Done!")
@@ -1758,32 +1766,43 @@ async function main() {
   // console.log("businessMinter.initialize===========> Done!")
 
   // console.log("================>", await va.tokenId())
-  // console.log("va.ownerOf================>", await va.ownerOf(1))
+  // console.log("va.ownerOf================>", await va.ownerOf(3), await va.balanceOfNFT(3))
   // console.log("businessMinter.getAllVes================>", await businessMinter.getAllVes(), await tFiat.balanceOf(businessMinter.address))
+  // console.log("businessVoter================>", await contractAddresses.businessVoter(), await contractAddresses.referralVoter())
+  // console.log("nfticketHelper.lotteryCredits================>", await nfticketHelper.lotteryCredits(
+  //   "0xED00DC98e07f572d8b3071182406235d1D28D258",
+  //   tFiat.address
+  // ))
+  // await marketPlaceCollection.updateParams(1000, 1000, 50)
+  // console.log("marketPlaceCollection.lotteryFee================>", await marketPlaceCollection.lotteryFee())
 
   // await businessMinter.setParams(250, 300, 555, 400, ethers.BigNumber.from("15000000000000000000000000"))
   // await businessMinter.getAllWeeklyVolume(tFiat.address)
   // console.log("businessMinter.weekly_emission=============>", await businessMinter.weekly_emission(tFiat.address))
-  // console.log("businessMinter.currentVolume================>", await businessMinter.currentVolume(tFiat.address), await businessMinter.active_period(), await businessMinter.next_window())
+  // console.log("busineter.currentVolume================>", await businessMinter.currentVolume(tFiat.address), await businessMinter.active_period())
   // console.log("businessMinter.previousVolume================>", await businessMinter.previousVolume(tFiat.address))
   // console.log("businessMinter.currentDebt================>", await businessMinter.currentDebt(tFiat.address))
   // console.log("businessMinter.businessesPercent================>", await businessMinter.businessesPercent(va.address))
   // console.log("businessMinter.referralsPercent================>", await businessMinter.referralsPercent(va.address))
   // console.log("businessMinter.contributorsPercent================>", await businessMinter.contributorsPercent(va.address))
   // console.log("businessMinter.acceleratorPercent================>", await businessMinter.acceleratorPercent(va.address))
-  // console.log("businessMinter.weeklyLessTeam================>", await businessMinter.weeklyLessTeam())
-  // console.log("businessMinter._updatePercentages================>", await businessMinter._updatePercentages(va.address))
+  // console.log("tFiat.balanceOf(acceleratorVoter)================>", await tFiat.balanceOf(acceleratorVoter.address))
+  // console.log("tFiat.balanceOf(businessVoter)================>", await tFiat.balanceOf(businessVoter.address))
+  // console.log("tFiat.balanceOf(contributorVoter)================>", await tFiat.balanceOf(contributorVoter.address))
+  // console.log("tFiat.balanceOf(referralVoter)================>", await tFiat.balanceOf(referralVoter.address))
   // await businessMinter.update_period()
   // console.log("2businessMinter.weekly_emission=============>", await businessMinter.weekly_emission(tFiat.address))
-  // console.log("2businessMinter.currentVolume================>", await businessMinter.currentVolume(tFiat.address), await businessMinter.active_period(), await businessMinter.next_window())
+  // console.log("2busineter.currentVolume================>", await businessMinter.currentVolume(tFiat.address), await businessMinter.active_period())
   // console.log("2businessMinter.previousVolume================>", await businessMinter.previousVolume(tFiat.address))
   // console.log("2businessMinter.currentDebt================>", await businessMinter.currentDebt(tFiat.address))
   // console.log("2businessMinter.businessesPercent================>", await businessMinter.businessesPercent(va.address))
   // console.log("2businessMinter.referralsPercent================>", await businessMinter.referralsPercent(va.address))
   // console.log("2businessMinter.contributorsPercent================>", await businessMinter.contributorsPercent(va.address))
   // console.log("2businessMinter.acceleratorPercent================>", await businessMinter.acceleratorPercent(va.address))
-  // console.log("2businessMinter.weeklyLessTeam================>", await businessMinter.weeklyLessTeam())
-  // console.log("2businessMinter._updatePercentages================>", await businessMinter._updatePercentages(va.address))
+  // console.log("2tFiat.balanceOf(acceleratorVoter)================>", await tFiat.balanceOf(acceleratorVoter.address))
+  // console.log("2tFiat.balanceOf(businessVoter)================>", await tFiat.balanceOf(businessVoter.address))
+  // console.log("2tFiat.balanceOf(contributorVoter)================>", await tFiat.balanceOf(contributorVoter.address))
+  // console.log("2tFiat.balanceOf(referralVoter)================>", await tFiat.balanceOf(referralVoter.address))
   // const arp = ARP.attach("0xa6f9b0f30ea16883a3e94bf734cb04a29d95c987")
   // console.log("arp.totalProcessed================>", await arp.totalProcessed(tFiat.address))
   // console.log("nfticket.transactionVolume================>", await nfticket.transactionVolume(tFiat.address))
@@ -1791,20 +1810,21 @@ async function main() {
   // console.log("businessVoter.totalWeight================>", await businessVoter.totalWeight(va.address))
   // console.log("acceleratorVoter.totalWeight================>", await acceleratorVoter.totalWeight(va.address))
   // console.log("contributorVoter.totalWeight================>", await contributorVoter.totalWeight(va.address))
-
   // await businessGaugeFactory.updateVoter([
-  //   acceleratorVoter.address,
-  //   // businessVoter.address,
+  //   // acceleratorVoter.address,
+  //   businessVoter.address,
   //   // contributorVoter.address,
   //   // referralVoter.address
   // ], true)
   // console.log("businessGaugeFactory.updateVoter==================>Done!")
-
-  // const mbribe = await ReferralBribe.deploy(va.address);
+  
+  // console.log("userTokenId==============>", await nfticket.userTokenId(11), await nfticket.ticketInfo_(11), await nfticketHelper2.ownerOf(11), await va.balanceOfNFT(3))
+  
+  // const mbribe = await ReferralBribe.deploy(va.address, contractAddress);
   // await mbribe.deployed()
   // await mbribe.setContractAddress(contractAddress)
   // await acceleratorVoter.createGauge(mbribe.address, va.address)
-  // console.log("acceleratorVoter.createGauge==================>Done", mbribe.address, await contractAddresses.referralBribeFactory(), await contractAddresses.businessGaugeFactory())
+  // console.log("acceleratorVoter.createGauge==================>Done", await contractAddresses.referralBribeFactory(), await contractAddresses.businessGaugeFactory())
   // const gaugeAddress = await acceleratorVoter.gauges(1, va.address)
   // const bribeAddress = await acceleratorVoter.bribes(gaugeAddress)
 
@@ -1812,11 +1832,53 @@ async function main() {
   
   // const pfg = await acceleratorVoter.poolForGauge(gaugeAddress)
   // console.log("gauge, bribe, pfg, isgauge=============>", gaugeAddress, bribeAddress, pfg, await acceleratorVoter.isGauge(gaugeAddress))
-  // await va.setVoter(acceleratorVoter.address)
-  // await acceleratorVoter.vote(1,1,gaugeAddress,va.address,true)
-  // await acceleratorVoter.reset(1,1,va.address)
+  // // await va.setVoter(acceleratorVoter.address)
+  // // await acceleratorVoter.vote(1,1,gaugeAddress,va.address,true)
+  // // await acceleratorVoter.reset(1,1,va.address)
   // console.log("vote=============>", await acceleratorVoter.weights(1,va.address), await acceleratorVoter.totalWeight(va.address), await acceleratorVoter.usedWeights(1,va.address), await acceleratorVoter.getVotes(1, 1, va.address))
   // console.log("mbribe.totalSupply=============>", await mbribe.totalSupply(), await mbribe.balanceOf(1))
+  // // const _claimable = ethers.BigNumber.from("1000000000000000000")
+  // // await acceleratorVoter.setClaimable(gaugeAddress, _claimable)
+  // console.log("acceleratorVoter.claimable======================>", await acceleratorVoter.claimable(gaugeAddress))
+  // // await tFiat.transfer(acceleratorVoter.address, ethers.BigNumber.from("1000000000000000000"))
+  // // console.log("tFiat.balanceOf(acceleratorVoter.address)==================>", await tFiat.balanceOf(acceleratorVoter.address), await tFiat.balanceOf(gaugeAddress))
+  // await acceleratorVoter.distribute(gaugeAddress, va.address)
+  // console.log("2acceleratorVoter.claimable======================>", await acceleratorVoter.claimable(gaugeAddress))
+  // console.log("2tFiat.balanceOf(acceleratorVoter.address)==================>", await tFiat.balanceOf(acceleratorVoter.address), await tFiat.balanceOf(gaugeAddress))
+
+  // const gaugeAddress1 = await acceleratorVoter.gauges(1, va.address)
+  // // await acceleratorVoter.distribute(gaugeAddress1, va.address)
+  // // await acceleratorVoter.updateGauge(gaugeAddress1, va.address)
+  // console.log("acceleratorVoter.claimable==================>", await acceleratorVoter.claimable(gaugeAddress1), await tFiat.balanceOf(acceleratorVoter.address), await tFiat.balanceOf(gaugeAddress1))
+  // const gaugeAddress2 = await acceleratorVoter.gauges(1, va.address)
+  // // await contributorVoter.updateGauge(gaugeAddress2, va.address)
+  // console.log("contributorVoter.claimable==================>", await contributorVoter.claimable(gaugeAddress2), await tFiat.balanceOf(contributorVoter.address), await tFiat.balanceOf(gaugeAddress2))
+  // const gaugeAddress3 = await businessVoter.gauges(1, va.address)
+  // // await businessVoter.updateGauge(gaugeAddress3, va.address)
+  // console.log("businessVoter.claimable==================>", await businessVoter.claimable(gaugeAddress3), await tFiat.balanceOf(businessVoter.address), await tFiat.balanceOf(gaugeAddress3))
+  // const gaugeAddress4 = await referralVoter.gauges(1, va.address)
+  // // await referralVoter.updateGauge(gaugeAddress4, va.address)
+  // console.log("referralVoter.claimable==================>", await referralVoter.claimable(gaugeAddress4), await tFiat.balanceOf(referralVoter.address), await tFiat.balanceOf(gaugeAddress4))
+
+  // const mbribe = await BusinessBribe.deploy(va.address, contractAddress);
+  // await mbribe.deployed()
+  // await mbribe.setContractAddress(contractAddress)
+  // await businessVoter.createGauge(va.address)
+  // console.log("businessVoter.createGauge==================>Done", await businessBribeFactory.contractAddress())
+  // const gaugeAddress = await businessVoter.gauges(1, va.address)
+  // const bribeAddress = await businessVoter.bribes(gaugeAddress)
+
+  // const mbribe = BusinessBribe.attach(bribeAddress);
+  
+  // const pfg = await businessVoter.poolForGauge(gaugeAddress)
+  // console.log("gauge, bribe, pfg, isgauge=============>", gaugeAddress, bribeAddress, pfg, await businessVoter.isGauge(gaugeAddress))
+  // await va.setVoter(businessVoter.address)
+  // const _w = await va.balanceOfNFT(3)
+  // // await businessVoter.vote(3,1,0,_w,va.address,"0xED00DC98e07f572d8b3071182406235d1D28D258",true)
+  // // await businessVoter.reset(1,1,va.address)
+  // console.log("vote=============>", await businessVoter.weights(1,va.address), await businessVoter.totalWeight(va.address), await businessVoter.usedWeights(3,va.address), await businessVoter.getVotes(3, 1, va.address))
+  // console.log("mbribe.totalSupply=============>", await mbribe.totalSupply(), await mbribe.balanceOf(1), await mbribe.ownerOf(1), await mbribe.earned(tFiat.address, 1), await mbribe.factory(), await mbribe.contractAddress())
+
 
   // await ve_dist.setDepositor(businessMinter.address)
   // console.log("ve_dist.setDepositor===========> Done!")
@@ -1829,11 +1891,20 @@ async function main() {
   // await ve.setVoter(acceleratorVoter.address)
   // console.log("ve.setVoter(acceleratorVoter)===========> Done!")
 
+  // await va.setVoter(businessVoter.address)
+  // console.log("va.setVoter(businessVoter)===========> Done!")
+
   // await ve.setVoter(businessVoter.address)
   // console.log("ve.setVoter(businessVoter)===========> Done!")
 
+  // await va.setVoter(contributorVoter.address)
+  // console.log("va.setVoter(contributorVoter)===========> Done!")
+
   // await ve.setVoter(contributorVoter.address)
   // console.log("ve.setVoter(contributorVoter)===========> Done!")
+
+  // await va.setVoter(referralVoter.address)
+  // console.log("va.setVoter(referralVoter)===========> Done!")
 
   // await ve.setVoter(referralVoter.address)
   // console.log("ve.setVoter(referralVoter)===========> Done!")
@@ -2014,6 +2085,7 @@ async function main() {
   // await marketPlaceHelper3.addVetoken("0xae6a2d4DbA638766bD3b522cD397cA90F173fDd2")
   // await marketPlaceHelper3.addVetoken("0x86130B7eec5561706Ac18877D19ee7D1A584E807")
   // await marketPlaceHelper3.addVetoken("0xb55A821877d473D972B4ECBB18E41739687c539f")
+  // await marketPlaceHelper3.addVetoken("0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62")
   // await marketPlaceHelper3.addVetoken("0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62")
   // console.log("marketPlaceHelper3.addVetoken==========>", await marketPlaceHelper3.veTokenSetContains(ve.address))
 
@@ -2457,7 +2529,7 @@ async function main() {
     // console.log("nfticketHelper2.tokenURI(6)==============>", await nfticketHelper2.tokenURI(6))
     // console.log("nfticketHelper2.tokenURI(3)==============>", await nfticketHelper2.tokenURI(3))
     // await profile.shareEmail(deployer.address)
-    // await profile.shareEmail(deployer3.address)
+    // await profile.shareEmail("0xED00DC98e07f572d8b3071182406235d1D28D258")
     // await profile.shareEmail(deployer4.address)
     // await profile.shareEmail(deployer5.address)
     // await profile.shareEmail(deployer6.address)
@@ -2478,9 +2550,10 @@ async function main() {
     // await profile.shareEmail(wallets[6].address)
     // await profile.shareEmail(wallets[7].address)
     // console.log("profile.sharedEmail==============>", await profile.sharedEmail(wallets[0].address))
+    // console.log("profile.referrerFromAddress==============>", await profile.referrerFromAddress("0xED00DC98e07f572d8b3071182406235d1D28D258"))
 
     // await profile.createSpecificProfile("Tepa",1,0)
-    // console.log("profile1==============>", await profile.profileInfo(1))
+    // console.log("profile1==============>", await profile.profileInfo(2), await profile.addressToProfileId("0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA"))
 
     // await profile.connect(wallets[0]).createProfile("a", 0)
     // await profile.connect(wallets[1]).createProfile("b", 0)

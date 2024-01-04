@@ -64,9 +64,10 @@ contract ReferralBribe {
     event NotifyReward(address indexed from, address indexed reward, uint amount);
     event ClaimRewards(address indexed from, address indexed reward, uint amount);
 
-    constructor(address __ve) {
+    constructor(address __ve, address _contractAddress) {
         _ve = __ve;
         factory = msg.sender;
+        contractAddress = _contractAddress;
     }
 
     // simple re-entrancy check
@@ -485,7 +486,7 @@ contract ReferralBribeFactory {
     }
 
     function createBribe(address _ve) external returns (address) {
-        last_gauge = address(new ReferralBribe(_ve));
+        last_gauge = address(new ReferralBribe(_ve, contractAddress));
         return last_gauge;
     }
 }
