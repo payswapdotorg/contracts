@@ -9,8 +9,8 @@ contract BusinessGauge {
 
     address public factory;
 
-    uint internal constant week = 86400 * 7; // allows minting once per week (reset every Thursday 00:00 UTC)
-    uint public active_period;
+    uint internal constant week = 86400 * 1; // allows minting once per week (reset every Thursday 00:00 UTC)
+    mapping(address => uint) public active_period;
 
     uint public collectionId;
     address public contractAddress;
@@ -33,6 +33,7 @@ contract BusinessGauge {
         tokens.add(ve(_ve).token());
         tokenToVoter[ve(_ve).token()] = _voter;
         factory = msg.sender;
+        contractAddress = IMarketPlace(msg.sender).contractAddress();
     }
 
     // simple re-entrancy check
@@ -60,18 +61,19 @@ contract BusinessGauge {
         factory = IContract(_contractAddress).businessGaugeFactory();
     }
 
-    function updateBounty(uint _bountyId) external {
-        address trustBounty = _trustBounty();
+    function updateBounty(uint _bountyId, bool _add) external {
         uint _collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
-        (address owner,address _token,,address _claimableBy,,,,,,) = ITrustBounty(trustBounty).bountyInfo(_bountyId);
-        require(owner == msg.sender && collectionId == _collectionId && _claimableBy == address(0x0), "BG3");
+        (address owner,address _token,,address _claimableBy,,,,,,) = ITrustBounty(_trustBounty()).bountyInfo(_bountyId);
+        require(owner == msg.sender && _claimableBy == address(0x0), "BG3");
         require(tokens.contains(_token), "BG4");
-        if (_bountyId > 0 && bountyIds[_token] == 0) {
-            ITrustBounty(trustBounty).attach(_bountyId);
-        } else if (_bountyId == 0 && bountyIds[_token] > 0) {
-            ITrustBounty(trustBounty).detach(_bountyId);
+        if (_add) {
+            IGauge(factory).attach(_collectionId, _bountyId);
+            bountyIds[_token] = _bountyId;
+        } else {
+            require(bountyIds[_token] == _bountyId, "BG8");
+            IGauge(factory).detach(_collectionId, _bountyId);
+            bountyIds[_token] = 0;
         }
-        bountyIds[_token] = _bountyId;
     }
 
     function depositAll(address _token) external {
@@ -87,23 +89,24 @@ contract BusinessGauge {
         emit Deposit(msg.sender, _token, amount);
     }
 
-    function withdrawAll() external {
+    function withdrawAll(uint _start) external {
         require(IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender) == collectionId && collectionId > 0);
         address trustBounty = _trustBounty();
-        for (uint i = 0; i < tokens.length(); i++) {
+        for (uint i = _start; i < tokens.length(); i++) {
+            _updateBalanceAt(i);
             uint _amount;
-            if (bountyIds[tokens.at(i)] > 0) {
+            address _token = tokens.at(i);
+            uint _max = Math.min(erc20(_token).balanceOf(address(this)), IBusinessVoter(factory).maxWithdrawable());
+            if (bountyIds[_token] > 0) {
                 uint _limit = ITrustBounty(trustBounty).getBalance(
-                    bountyIds[tokens.at(i)]
+                    bountyIds[_token]
                 );
-                (,,,,,,uint endTime,,,) = ITrustBounty(trustBounty).bountyInfo(bountyIds[tokens.at(i)]);
+                (,,,,,,uint endTime,,,) = ITrustBounty(trustBounty).bountyInfo(bountyIds[_token]);
                 require(endTime > block.timestamp, "BG7");
-                _amount = _limit - balanceOf[tokens.at(i)];
-            } else {
-                uint _max = Math.min(erc20(tokens.at(i)).balanceOf(address(this)), IBusinessVoter(factory).maxWithdrawable());
-                _amount = _max - balanceOf[tokens.at(i)];
+                _max = Math.min(erc20(_token).balanceOf(address(this)), _limit);
             }
-            withdraw(tokens.at(i), _amount);
+            _amount = _max - balanceOf[_token];
+            _withdraw(i, _amount);
         }
     }
     
@@ -111,22 +114,27 @@ contract BusinessGauge {
         supply = erc20(_token).balanceOf(address(this));
     }
 
-    function withdraw(address _token, uint amount) internal lock {
-        require(amount > 0, "BG8");
-        _updateBalances();
-        balanceOf[_token] += amount;
-        _safeTransfer(_token, msg.sender, amount);
+    function _withdraw(uint _index, uint amount) internal lock {
+        address _token = tokens.at(_index);
+        if(amount > 0) {
+            balanceOf[_token] += amount;
+            _safeTransfer(_token, msg.sender, amount);
 
-        emit Withdraw(msg.sender, _token, amount);
+            emit Withdraw(msg.sender, _token, amount);
+        }
     }
 
-    function _updateBalances() internal {
-        if (block.timestamp >= active_period) {
-            for (uint i = 0; i < tokens.length(); i++) {
-                // only reinitialize tokens with a bounty
-                if (bountyIds[tokens.at(i)] > 0) balanceOf[tokens.at(i)] = 0;
-            }
-            active_period = block.timestamp / week * week;
+    function updateBalances(uint _start) public {
+        for (uint i = _start; i < tokens.length(); i++) {
+            _updateBalanceAt(_start);
+        }
+    }
+
+    function _updateBalanceAt(uint _index) internal {
+        address _token = tokens.at(_index);
+        if (block.timestamp >= active_period[_token]) {
+            balanceOf[_token] = 0;
+            active_period[_token] = (block.timestamp + week) / week * week;
         }
     }
 
@@ -136,6 +144,13 @@ contract BusinessGauge {
             IBusinessVoter(msg.sender).distribute(address(this), _tokens[i]);
         }
         _unlocked = 2;
+    }
+
+    function getAllTokens(uint _start) external view returns(address[] memory _tokens) {
+        _tokens = new address[](tokens.length());
+        for (uint i = _start; i < tokens.length(); i++) {
+            _tokens[i] = tokens.at(i);
+        }
     }
 
     function notifyRewardAmount(address token, uint amount) external lock {
@@ -212,5 +227,15 @@ contract BusinessGaugeFactory {
     function updateMaxWithdrawable(uint _maxWithdrawable) external {
         require(IAuth(contractAddress).devaddr_() == msg.sender, "BGF3");
         maxWithdrawable = _maxWithdrawable;
+    }
+
+    function attach(uint _collectionId, uint _bountyId) external {
+        require((hasGauge[_collectionId] == msg.sender));
+        ITrustBounty(IContract(contractAddress).trustBountyHelper()).attach(_bountyId);
+    }
+
+    function detach(uint _collectionId, uint _bountyId) external {
+        require((hasGauge[_collectionId] == msg.sender));
+        ITrustBounty(IContract(contractAddress).trustBountyHelper()).detach(_bountyId);
     }
 }

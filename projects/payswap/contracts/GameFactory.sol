@@ -171,9 +171,10 @@ contract GameFactory {
         require(_creatorShare + _referrerFee + teamShare <= 10000
         , "GF2"
         );
+        require(addressToCollectionId[msg.sender] == 0, "GF3");
         // checkIdentityProof(msg.sender, false);
         uint _collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
-        require(_collectionId > 0, "GF3");
+        require(_collectionId > 0, "GF03");
         ticketInfo_[_collectionId] = GameInfo({
             owner: msg.sender,
             gameContract: _gameContract,

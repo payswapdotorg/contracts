@@ -10,7 +10,7 @@ contract BusinessMinter is ERC721Pausable{
     using EnumerableSet for EnumerableSet.AddressSet;
 
     uint public tokenId = 1;
-    uint internal constant week = 86400 * 7; // allows minting once per week (reset every Thursday 00:00 UTC)
+    uint internal constant week = 20*60; // 86400 * 7; // allows minting once per week (reset every Thursday 00:00 UTC)
     mapping(address => uint) public currentDebt;
     address public contractAddress;
     uint public weekly = 1000000e18; // 1000000 initial tokens
@@ -18,7 +18,7 @@ contract BusinessMinter is ERC721Pausable{
     uint public weeksWithNoDebt;
     EnumerableSet.AddressSet private _ves;
     EnumerableSet.AddressSet private _ve_dists;
-    uint internal constant lock = 86400 * 7 * 52 * 4;
+    uint internal constant lock = 4 * 365 * 86400;
     EnumerableSet.AddressSet private _payswapContracts;
     mapping(address => uint) public currentVolume;
     mapping(address => uint) public previousVolume;
@@ -26,9 +26,10 @@ contract BusinessMinter is ERC721Pausable{
     mapping(address => uint) public businessesPercent;
     mapping(address => uint) public acceleratorPercent;
     mapping(address => uint) public contributorsPercent;
+    mapping(address => mapping(address => bool)) public earlyAdopters;
     uint public teamPercent = 100;
     mapping(address => uint) public treasuryFees;
-    address internal initializer;
+    address public initializer;
     struct DebtMasterNote {
         address token;
         uint amount;
@@ -38,6 +39,7 @@ contract BusinessMinter is ERC721Pausable{
     mapping(uint => DebtMasterNote) public notes;
 
     event Mint(address indexed sender, address _ve, uint weekly);
+    event NFTMint(address donor, uint tokenId);
 
     constructor() ERC721("DebtMaster", "DebtMaster") {
         initializer = msg.sender;
@@ -49,12 +51,26 @@ contract BusinessMinter is ERC721Pausable{
             address _ve = _ves.at(i);
             underlying _token = underlying(ve(_ve).token());
             _token.mint(address(this), weekly);
-            _token.approve(address(_ve), weekly);
-            IValuePool(_ve).create_lock_for(weekly*2/3, lock, 0, msg.sender);
-            treasuryFees[address(_token)] = weekly / 3;
+            _token.approve(address(_ve), weekly/1000);
+            IValuePool(_ve).create_lock_for(weekly/1000, lock, 0, msg.sender);
+            treasuryFees[address(_token)] = weekly * 9 / 1000;
         }
         initializer = address(0);
         active_period = (block.timestamp + week) / week * week;
+    }
+
+    function updateEarlyAdopter(address _ve, address _user, bool _add) external {
+        require(msg.sender == IAuth(contractAddress).devaddr_());
+        earlyAdopters[_user][_ve] = _add;
+    }
+
+    function lockTokens(address _ve) external {
+        require(earlyAdopters[msg.sender][_ve], "BM1");
+        underlying _token = underlying(ve(_ve).token());
+        _token.mint(address(this), weekly/1000);
+        _token.approve(address(_ve), weekly/1000);
+        earlyAdopters[msg.sender][_ve] = false;
+        IValuePool(_ve).create_lock_for(weekly/1000, lock, 0, msg.sender);
     }
 
     function updateParameters(uint _teamPercent) external {
@@ -120,6 +136,13 @@ contract BusinessMinter is ERC721Pausable{
     // calculate inflation and adjust ve balances accordingly
     function calculate_growth(address _ve, uint _minted) public view returns (uint) {
         return ve(_ve).totalSupply() * _minted / underlying(ve(_ve).token()).totalSupply();
+    }
+
+    function getAllContracts() external view returns(address[] memory __payswapContracts) {
+        __payswapContracts = new address[](_payswapContracts.length());
+        for (uint i = 0; i < _payswapContracts.length(); i++) {
+            __payswapContracts[i] = _payswapContracts.at(i);
+        }
     }
 
     function updatePayswapContracts(address _contract, bool _add) external {
@@ -212,7 +235,7 @@ contract BusinessMinter is ERC721Pausable{
             }   
         }
     }
-
+    
     function eraseDebtWithDonations(address _token, uint _amount) external {
         require(currentDebt[_token] > 0);
         _amount = Math.min(_amount, currentDebt[_token]);
@@ -224,7 +247,8 @@ contract BusinessMinter is ERC721Pausable{
             createdAt: block.timestamp
         });
         currentDebt[_token] -= _amount;
-        _safeMint(msg.sender, tokenId++, msg.data);
+        _safeMint(msg.sender, tokenId, msg.data);
+        emit NFTMint(msg.sender, tokenId++);
     }
 
     function tokenURI(uint _tokenId) public override view returns (string memory output) {

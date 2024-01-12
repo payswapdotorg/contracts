@@ -109,8 +109,8 @@ contract TrustBounties {
         if (_token == address(0x0)) {
             _token = trustBountyHelper;
         }
-        require(_token == trustBountyHelper || 
-            ITrustBounty(trustBountyHelper).isWhiteListed(_token),"T3");
+        // require(_token == trustBountyHelper || 
+        //     ITrustBounty(trustBountyHelper).isWhiteListed(_token),"T3");
         if (_parentBountyId > 0) {
             require(bountyInfo[_parentBountyId].owner != address(0x0));
             if (!_recurring) require(!bountyInfo[_parentBountyId].recurring);
@@ -557,7 +557,7 @@ contract TrustBountiesHelper {
     using EnumerableSet for EnumerableSet.UintSet;
     using EnumerableSet for EnumerableSet.AddressSet;
 
-    EnumerableSet.AddressSet private whitelistedTokens;
+    // EnumerableSet.AddressSet private whitelistedTokens;
     EnumerableSet.AddressSet private authorizedSourceFactories;
 
     address public contractAddress;
@@ -587,7 +587,7 @@ contract TrustBountiesHelper {
         string terms
     );
     event DeleteBounty(uint indexed bountyId);
-    event UpdateWhitelistedTokens(address[] tokens, bool add);
+    // event UpdateWhitelistedTokens(address[] tokens, bool add);
     event UpdateAuthorizedSourceFactories(address[] factories, bool add);
     event AddBalance(uint indexed bountyId, address source, uint balanceAmount);
     event DeleteBalance(uint indexed bountyId, address source);
@@ -820,33 +820,33 @@ contract TrustBountiesHelper {
         );
     }
 
-    function isWhiteListed(address _token) external view returns(bool) {
-        try IERC721(_token).supportsInterface(0x80ac58cd) {
-            return true;
-        } catch {
-            try IERC721(_token).supportsInterface(0xd9b67a26) {
-                return true;
-            } catch {
-                return whitelistedTokens.contains(_token);
-            }
-        }
-    }
+    // function isWhiteListed(address _token) external view returns(bool) {
+    //     try IERC721(_token).supportsInterface(0x80ac58cd) {
+    //         return true;
+    //     } catch {
+    //         try IERC721(_token).supportsInterface(0xd9b67a26) {
+    //             return true;
+    //         } catch {
+    //             return whitelistedTokens.contains(_token);
+    //         }
+    //     }
+    // }
 
     function isAuthorizedSourceFactories(address _token) external view returns(bool) {
         return authorizedSourceFactories.contains(_token);
     }
 
-    function updateWhitelistedTokens(address[] memory _tokens, bool _add) external {
-        require(msg.sender == IAuth(contractAddress).devaddr_(), "T4");
-        for (uint i = 0; i < _tokens.length; i++) {
-            if (_add) {
-                whitelistedTokens.add(_tokens[i]);
-            } else {
-                whitelistedTokens.remove(_tokens[i]);
-            }
-        }
-        emit UpdateWhitelistedTokens(_tokens, _add);
-    }
+    // function updateWhitelistedTokens(address[] memory _tokens, bool _add) external {
+    //     require(msg.sender == IAuth(contractAddress).devaddr_(), "T4");
+    //     for (uint i = 0; i < _tokens.length; i++) {
+    //         if (_add) {
+    //             whitelistedTokens.add(_tokens[i]);
+    //         } else {
+    //             whitelistedTokens.remove(_tokens[i]);
+    //         }
+    //     }
+    //     emit UpdateWhitelistedTokens(_tokens, _add);
+    // }
     
     function updateAuthorizedSourceFactories(address[] memory _factories, bool _add) external {
         require(msg.sender == IAuth(contractAddress).devaddr_(), "T5");
@@ -860,12 +860,12 @@ contract TrustBountiesHelper {
         emit UpdateAuthorizedSourceFactories(_factories, _add);
     }
 
-    function getWhitelistedTokens(uint _start) external view returns(address[] memory _tokens) {
-        _tokens = new address[](whitelistedTokens.length() - _start);
-        for (uint i = _start; i < whitelistedTokens.length(); i++) {
-            _tokens[i] = whitelistedTokens.at(i);
-        }
-    }
+    // function getWhitelistedTokens(uint _start) external view returns(address[] memory _tokens) {
+    //     _tokens = new address[](whitelistedTokens.length() - _start);
+    //     for (uint i = _start; i < whitelistedTokens.length(); i++) {
+    //         _tokens[i] = whitelistedTokens.at(i);
+    //     }
+    // }
 
     function getAuthorizedSourceFactories(uint _start) external view returns(address[] memory _factories) {
         _factories = new address[](authorizedSourceFactories.length() - _start);
@@ -887,7 +887,7 @@ contract TrustBountiesHelper {
         uint _tradingNFTFee,
         uint _minToClaim
     ) external {
-        require(msg.sender == IAuth(contractAddress).devaddr_(), "T1");
+        require(msg.sender == IAuth(contractAddress).devaddr_(), "T01");
         tradingFee = _tradingFee;
         minToClaim = _minToClaim;
         tradingNFTFee = _tradingNFTFee;

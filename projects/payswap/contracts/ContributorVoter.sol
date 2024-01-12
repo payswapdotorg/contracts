@@ -21,9 +21,20 @@ contract ContributorVoter {
     event Voted(uint indexed collectionId, uint tokenId, int256 weight, address ve, bool positive);
     event Abstained(uint indexed collectionId, uint tokenId, address _ve, int256 weight);
     event NotifyReward(address indexed sender, address indexed ve, uint amount);
-    event UpdateContent(uint indexed collectionId, uint profileId, string title, string content, string[5] images);
+    event UpdateContent(uint indexed collectionId, uint profileId, address _ve, string title, string content, string[5] images);
     event DistributeReward(address indexed sender, address indexed gauge, uint amount);
-    event DeactivatePitch(uint indexed collectionId);
+    event DeactivatePitch(uint indexed collectionId, address _ve);
+    event UpdateMiscellaneous(
+        uint idx, 
+        uint collectionId, 
+        string paramName, 
+        string paramValue, 
+        uint paramValue2, 
+        uint paramValue3, 
+        address sender,
+        address paramValue4,
+        string paramValue5
+    );
 
     // simple re-entrancy check
     uint internal _unlocked = 1;
@@ -39,16 +50,16 @@ contract ContributorVoter {
         contractAddress = _contractAddress;
     }
 
-    function updateContent(string[5] memory _images, string memory title, string memory _content) external {
+    function updateContent(address _ve, string[5] memory _images, string memory title, string memory _content) external {
         uint _collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
         uint _profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender);
-        emit UpdateContent(_collectionId, _profileId, title, _content, _images);
+        emit UpdateContent(_collectionId, _profileId, _ve, title, _content, _images);
     }
 
-    function deactivatePitch() external {
+    function deactivatePitch(address _ve) external {
         emit DeactivatePitch(IMarketPlace(
             IContract(contractAddress).marketCollections()
-        ).addressToCollectionId(msg.sender));
+        ).addressToCollectionId(msg.sender), _ve);
     }
 
     function _reset(uint _tokenId, uint _collectionId, address _ve) internal {
@@ -210,6 +221,29 @@ contract ContributorVoter {
             IGauge(_gauge).notifyRewardAmount(ve(_ve).token(), _claimable);
         }
         emit DistributeReward(msg.sender, _gauge, _claimable);
+    }
+
+    function emitUpdateMiscellaneous(
+        uint _idx, 
+        uint _collectionId, 
+        string memory paramName, 
+        string memory paramValue, 
+        uint paramValue2, 
+        uint paramValue3,
+        address paramValue4,
+        string memory paramValue5
+    ) external {
+        emit UpdateMiscellaneous(
+            _idx, 
+            _collectionId, 
+            paramName, 
+            paramValue, 
+            paramValue2, 
+            paramValue3, 
+            msg.sender,
+            paramValue4,
+            paramValue5
+        );
     }
 
     // function distro(address _ve) external {

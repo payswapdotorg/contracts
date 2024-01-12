@@ -3,7 +3,8 @@ import { Contract, ContractFactory, utils, BigNumber } from "ethers";
 import { ethers, waffle } from "hardhat";
 import { linkLibraries } from "../util/linkLibraries";
 
-const WBNB = "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd"; // BSC TESTNET
+// const WBNB = "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd"; // BSC TESTNET
+const WBNB = "0x11851A8BB872859Abbf9936354BC6B781d9eCcE1"; // FTM TESTNET
 
 type ContractJson = { abi: any; bytecode: string };
 const artifacts: { [name: string]: ContractJson } = {
@@ -49,8 +50,8 @@ async function main() {
   const provider = waffle.provider;
   console.log("owner", owner.address);
 
-  const pancakeV3PoolDeployer_address = '0xB0edb49557c583290368e04FffaBb293FC224Ae1';
-  const pancakeV3Factory_address = '0xC200B8E8eE9A4BFd22a2F31a3a64e581A3c9e793';
+  const pancakeV3PoolDeployer_address = '0xF83721D76925aBCAA9627544eA1ee3C1EFc0faFF';
+  const pancakeV3Factory_address = '0xEB6BAEe78f943Ab5E48EC8E92D3Ca15e590C1979';
 
   const SwapRouter = new ContractFactory(artifacts.SwapRouter.abi, artifacts.SwapRouter.bytecode, owner);
   const swapRouter = await SwapRouter.deploy(pancakeV3PoolDeployer_address, pancakeV3Factory_address, WBNB);

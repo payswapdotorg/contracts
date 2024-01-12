@@ -64,8 +64,10 @@ async function main() {
 
   const deployedContracts = await import(`@pancakeswap/v3-core/deployments/${networkName}.json`)
 
-  const pancakeV3PoolDeployer_address = deployedContracts.PancakeV3PoolDeployer
-  const pancakeV3Factory_address = deployedContracts.PancakeV3Factory
+  // const pancakeV3PoolDeployer_address = deployedContracts.PancakeV3PoolDeployer
+  // const pancakeV3Factory_address = deployedContracts.PancakeV3Factory
+  const pancakeV3PoolDeployer_address = '0xF83721D76925aBCAA9627544eA1ee3C1EFc0faFF';
+  const pancakeV3Factory_address = '0xEB6BAEe78f943Ab5E48EC8E92D3Ca15e590C1979';
 
   const SwapRouter = new ContractFactory(artifacts.SwapRouter.abi, artifacts.SwapRouter.bytecode, owner)
   const swapRouter = await SwapRouter.deploy(pancakeV3PoolDeployer_address, pancakeV3Factory_address, config.WNATIVE)
@@ -126,7 +128,7 @@ async function main() {
     artifacts.NonfungibleTokenPositionDescriptorOffChain.bytecode,
     owner
   )
-  const baseTokenUri = 'https://nft.pancakeswap.com/v3/'
+  const baseTokenUri = 'https://nft.payswap.org/v3/'
   const nonfungibleTokenPositionDescriptor = await upgrades.deployProxy(NonfungibleTokenPositionDescriptor, [
     baseTokenUri,
   ])

@@ -188,7 +188,7 @@ contract Valuepool {
     function addSponsor(address _card, uint _cardId, uint _geoTag) external {
         CardInfo memory _cardInfo = ISponsorCard(_card).protocolInfoCard(_cardId);
         uint _sponsorId = IMarketPlace(_marketCollections()).addressToCollectionId(msg.sender);
-        require(_cardInfo.owner == address(this) && _cardInfo.amountPayable >= minReceivable);
+        require(_cardInfo.owner == address(this) && _cardInfo.amountPayable >= minReceivable && _cardInfo.token == token);
         require(msg.sender == ISponsorCard(_card).devaddr_() && _sponsorId > 0);
         notifyPayment(_card);
         sponsors[_card].cardId = _cardId;
@@ -491,6 +491,7 @@ contract ValuepoolHelper {
     mapping(address => string) public description;
     mapping(uint => address) private taxContracts;
     EnumerableSet.AddressSet private valuepools;
+    mapping(address => uint) public totalProcessed;
 
     event CheckRank(
         address vava, 
@@ -689,6 +690,7 @@ contract ValuepoolHelper {
         if (taxContracts[_profileId] != address(0x0) && _profileId != 0) {
             IBILL(taxContracts[_profileId]).notifyDebit(msg.sender, owner, value);
         }
+        totalProcessed[ve(msg.sender).token()] += value;
         emit Deposit(
             msg.sender, 
             vava, 
@@ -719,6 +721,7 @@ contract ValuepoolHelper {
     }
 
     function emitNotifyPayment(address _card, uint _amount, uint _percentile) external {
+        totalProcessed[ve(msg.sender).token()] += _amount;
         emit NotifyPayment(msg.sender, _card, _amount, _percentile);
     }
 

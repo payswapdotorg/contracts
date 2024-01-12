@@ -333,9 +333,9 @@ contract SSI is Ownable, ERC721Pausable {
         optionValues[idx++] = toString(_tokenId);
         optionNames[idx] = "Deadline";
         optionValues[idx++] = toString(metadata[_tokenId].deadline);
-        optionNames[idx] = "Question";
+        // optionNames[idx] = "Question";
         optionValues[idx++] = metadata[_tokenId].question;
-        optionNames[idx] = "Answer";
+        // optionNames[idx] = "Answer";
         optionValues[idx++] = metadata[_tokenId].answer;
         optionNames[idx] = "Proof Type";
         optionValues[idx++] = metadata[_tokenId].proofType == ProofType.identityProof ? "Identity" : "Share";

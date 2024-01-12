@@ -1436,14 +1436,14 @@ const abi = [
 async function main() {
   const [owner] = await ethers.getSigners();
   // Get network data from Hardhat config (see hardhat.config.ts).
-  const networkName = network.name;
+  // const networkName = network.name;
 
-  const config = configs[networkName as keyof typeof configs];
-  if (!config) {
-    throw new Error(`No config found for network ${networkName}`);
-  }
+  // const config = configs[networkName as keyof typeof configs];
+  // if (!config) {
+  //   throw new Error(`No config found for network ${networkName}`);
+  // }
 
-  const mcV3Contract = new Contract("", abi, owner);
+  const mcV3Contract = new Contract("0x37A8bEF73715A520e1e42C282246d739729293fd", abi, owner);
   try {
     await mcV3Contract.transferOwnership("");
   } catch (error) {

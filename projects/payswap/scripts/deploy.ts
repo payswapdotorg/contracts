@@ -170,7 +170,8 @@ async function main() {
       const ExtraTokenFactory = await ethers.getContractFactory("contracts/Ramp.sol:ExtraTokenFactory");
       const BusinessMinter =  await ethers.getContractFactory("BusinessMinter")
       const FeeTo =  await ethers.getContractFactory("FeeTo")
-  
+      // const CakeToken =  await ethers.getContractFactory("CakeToken")
+      
       const PaywallMarketPlaceHelper2 = await ethers.getContractFactory("contracts/PaywallMarketPlace.sol:PaywallMarketPlaceHelper2",{
         libraries: {
           Percentile: percentiles.address,
@@ -228,100 +229,150 @@ async function main() {
   const veAddress = "0xb9858E52175Dc194686E29875570703B5C986Fe3" // "0xfd045C059AC6423F9B21A456a432Ead97a93F706"
   const ve_distAddress = "0x47d59AF489bCd9A959AD80B045766305c793293D"
   const tFiatAddress = "0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe"
+  const tFiat2Address = "0xF25Be8634F9E46cd7867906412327b39dB4272F4"
+  const tFiat3Address = "0x2E4C133120fD04FF4d332A7fb0E1c2537e74dB6C"
   const feeToAddress = "0x0Fe2B9DAE99b685ce57c7160eF01022e49843Ca6"
   const payswapFactory = "0x843b8C96676018024cb14C9429De8293b9ED9Eda"
   const payswapRouter = "0xF314FC209E6f52BE35a876206a1ec7CC18AAb25f"
   const WFTM = "0x07B9c47452C41e8E00f98aC4c075F5c443281d2A"
   const INIT_CODE_PAIR_HASH = "0xc686be96020737842c8d1dc73f500c20206f43ad5e5928a27a00cbf05cf911fa"
-  const businessMinterAddress = "0x601b91AA0E8Dca20a1FD5dc0ffF256cb954B335e"
-  const auditorNoteAddress = "0xdaF12B05685d5A4D8449e54939F6F9E8f19D4A4f"
-  const auditorHelperAddress = "0xD3855fD1b3f467cb7ED91caA037D4f7b6529698b"
-  const auditorHelper2Address = "0x8c2479569146d74058A997b7Ed16CA74c9578920"
-  const auditorFactoryAddress = "0x13eE93a80Fe5B9934a3C079a52Dd36566FAD3061"
-  const futureCollateralAddress = "0xD2b2435aa749E42F3523033Fe167Ae543082375F"
-  const cardAddress = "0x5133ce668Dcfe85690CCB890e175F594fb11d0D0"
-  const vavaFactoryAddress = "0x5fdbCeEc25E02d15dE51af3450289c72Ef2d081E"
-  const vavaHelperAddress = "0xC38993A66820830bfED5D92bc4c937a4bba4528D"
-  const vavaHelper2Address = "0x282E20b214ec4f4ae560dB9eaF03a29D0910Cb40"
-  const veFactoryAddress = "0x60496E81e744B5aD59b91d17Cfa62036d69fC856"
-  const valuepoolVoterAddress = "0x3a5231DAC8755102D17b911c0Dc99cE7DC47d0bD"
-  const businessBribeFactoryAddress = "0x66290cB912Ea1E7cFF9eC48FD9E3CE9874a2C67d"
-  const businessGaugeFactoryAddress = "0x3a5F4F01Bbe5729b8EC35f453d4a92A364F9eF66"
-  const referralBribeFactoryAddress = "0xc2Bdff16fa13bBffFEB42602cC15d2a514a413eD"
-  const acceleratorVoterAddress = "0xba0097Ce41B86558659F648797C4c2275a131F63"
-  const contributorVoterAddress = "0xcf3536199714C5ac3560685c5c138A6250c0Ee8d"
-  const businessVoterAddress = "0xC5Ce67cCC9Ad0eea9a8c37a5E869a78078a9d8C2" 
-  const referralVoterAddress = "0xC99F73c59fAD8466f7E18A28efB78A9FFF1A3A16"
-  const sponsorFactoryAddress = "0xA23Aea1EE6835DD000d8279d5f49212869ddD863"
-  const sponsorNoteAddress = "0x16bc1C7285bB312b8023ca4879F32d57bB706343"
-  const ssiAddress = "0x1de9D006f209E9A7556270cae74D1F0D6864168a" //"0xFEc4d4A1aad9cE28dA66D86609c3B47aaeF5e527"
-  const profileAddress = "0x3E0240b8aa46207d267225136BE0837841e53EB5" // "0x5E008DCE8095dE09BFF103Df85b566449c1dF7e2" // "0x810EBEa7d4330B6A6EFa2f73FF7E7773c57F98CD" //"0x8D531506a9Eb2E5931235a09e5192201B38b12b6"
-  const profileHelperAddress = "0x1a725F5cfebcb00eDa5D3eddAfEA960a0E338930" // "0x0cf9f62B1e215ba580C8445Ca9C9CBf2ad32b6DB" // "0xf2Ca8333888cf3C673E81225228a000F9b7b4338" //"0xa71B00c519d6573E0cFC37638FE712aC6dD65a2c"
-  const stakeMarketAddress = "0xbf877500681AF64f10F6C3E92fA9946f800804ea"
-  const stakeMarketNoteAddress = "0x2596c9eA9473AE8B1F8EB08019CD8e9844Cea34a"
-  const stakeMarketHelperAddress = "0xf178d8A6661aBA43bEaFe98080e47CD213c2FC34"
-  const stakeMarketBribeAddress = "0x1b947A45Ad79438d5F47f45C920B9f1Dbe26f802"
-  const stakeMarketVoterAddress = "0xeAf2c655581C83D47497D9D0C68dE09b1B32Fa55"
-  const contractAddress = "0x214Cb0c088D0992d5ba36Cff283CB1333149E1e7" //"0x997068BaD1417e1d7Be77CFC9123B40a3D9Bdb92"
-  const nftsvgAddress = "0xabd6aB0c520848770B16f2b7d1d3cD58F83f82D8"
-  const nfticketAddress = "0xC4bdaB8341803547Bc8d468ef7Ee7e7B35953c89"
-  const nfticketHelperAddress = "0x8e29bd8dd5c1D62594d6826C0660312E4191593B"
-  const nfticketHelper2Address = "0xEE4a5abf0fC0978b2DCf7c2bc8d57FDc43DadB55"
-  const marketPlaceEventsAddress = "0xB891F70205643D7DC4e6c6891013E92183E43AB1"
-  const marketPlaceCollectionAddress = "0x2265a1377833F7BCCDbC5729Ba832552B48A7c92"
-  const marketPlaceOrdersAddress = "0x3DFB090975C08535462b7BB49cd2c5c3e7Eeb49E"
-  const paywallMarketPlaceOrdersAddress = "0x8127516Ff3c8fE6fdb9CE22145C6BFDb83aB54c6"
-  const nftMarketPlaceOrdersAddress = "0x8F0dE71645c5fc6dE40A0b5066d0e53BeCC3bCf5"
-  const marketPlaceTradesAddress = "0xA19fb0df53D03D88d9786B8091070D0cCbD17ADC"
-  const paywallMarketPlaceTradesAddress = "0x72925EE40442597c02bfAa3295113E7BD1479c45"
-  const nftMarketPlaceTradesAddress = "0x4C15181252952064399D593a3B868521A2Fd0425"
-  const marketPlaceHelperAddress = "0x99dbF90228302E17B0CcFaa541DCE676775A8EBA"
-  const paywallMarketPlaceHelperAddress = "0x2f01f949F9cDE9822dF361A85bBe5A0BDCb659d3"
-  const nftMarketPlaceHelperAddress = "0x9BbA15a01A3bc11A6aD200B3de333fB26930737F"
-  const marketPlaceHelper2Address = "0xeDA992166cd47e84Af047d6d355ACD841307c91f"
-  const paywallMarketPlaceHelper2Address = "0x6444FeDeD64cb196253E31527647fb5075b3F722"
-  const nftMarketPlaceHelper2Address = "0xD5C57208CD6b89c540010727D7ac1647255Ed0e3"
-  const marketPlaceHelper3Address = "0x8a61AB91ec0e1aD414c5F90D072ea8276496B167"
-  const paywallMarketPlaceHelper3Address = "0x442e00e70e71325d400F21B58eaA7b98496A237e"
-  const nftMarketPlaceHelper3Address = "0x63166f4fC06260416031A583f14E3d28BA8d76f9"
-  const paywallARPFactoryAddress = "0xD306Bc71120c7Ca5cd5Ce19Bc57f005Bf4F6D264"
-  const paywallARPHelperAddress = "0xDA1f5994a7568A6F7dED60E34fD29fAc5f466C23"
-  const minterFactoryAddress = "0x972A806DD4C5536E50F38155d7AfFD04741429a0"
-  const trustBountiesAddress = "0x99fAc8AB3f51C89AC45372d0dfDB63d979f0d5EB"
-  const trustBountiesHelperAddress = "0xcB2863E4aEd438AF8973cf28480315ba0EF3BFf2"
-  const trustBountiesVoterAddress = "0x2CD8f718BD6784873454d6288119d51DfcAe6FA4"
-  const customMinterAddress = "0xB6c2E68a43a092973512a9C154D81C5559B5eBbA"
-  const arpFactoryAddress = "0xC6B2e9ea0864a3A3171D2c303ed834471c82D1eb"
-  const arpHelperAddress = "0xc96696332D29fecb302BECD1B4e32eada684F3FA"
-  const arpMinterAddress = "0x366e179794a12041E95AbdEFA5a1dCfAe8E9Bb20"
-  const arpNoteAddress = "0xA80005eE4763d24D5bBd800B1E65D87508157C71"
-  const billFactoryAddress = "0x1CCc9309F72ca90b63071f64b053214a4953960a"
-  const billMinterAddress = "0xB86179Ca4a75c5430d62280c319508B9F1Fc8642"
-  const billHelperAddress = "0x5FFaB566e027492997f6A3e9A4CA1D7bcA63E315"
-  const billNoteAddress = "0x25702f0130bB427e7bcb2722D3C05729D7b3D6Ce"
-  const extraTokenFactoryAddress = "0x87EDbF47a1e2373282c34298F4041c0c80e328E8"
-  const willFactoryAddress = "0x586adF5F95Ff0A51fbf1135Bd48D93A4C9872600"
-  const willNoteAddress = "0x1F19f653c6fAEEE290a33d229aa63Ebdc950fE7D"
-  const gameFactoryAddress = "0xe1624A26c6faC1db81c26E9B6AED4Ce86057f6C2"
-  const gameMinterAddress = "0xF05d6037027e45C76aC339114e8cF7C07851641F"
-  const gameHelperAddress = "0x1B3a841Bfc8F7726E47BCfe17CDcA2Ed13662A80"
-  const gameHelper2Address = "0x6501C1dd23b4F9B1B6311A94D48f810Ba53CA22C"
-  const lotteryAddress = "0xa0a200D83C67fBa6386a8c901eB43CD6013104af"
-  const lotteryHelperAddress = "0x49BA1bE93992a0fD9FE475B9bdF6b6D97C685e1C"
-  const lotteryRandomNumberGeneratorAddress = "0x64e7a26A476A4D832F4ED5393a43a4e0c2D852Ce"
-  const worldFactoryAddress = "0x467343544e7e460Fd5DFC0886e9af7401A197AD8"
-  const worldNoteAddress = "0x07871934840555b530E31Ed216b5f1028775710b"
-  const worldHelperAddress = "0x28Af881b53072D2312880360Cf2FecA55a6479a0"
-  const worldHelper2Address = "0xA61c35824d47c9603aD53127E05172463ADc8A4e"
-  const worldHelper3Address = "0x7619CA8504f960261CB3f60eC077b753Dfdcd61E"
-  const rampFactoryAddress = "0xF9Eb83D872356d58a57630039E3Cec932F3f5f51"
-  const rampHelperAddress = "0x7163C18B91b99008931499b5F3990Db2dB71aa9b"
-  const rampHelper2Address = "0xA7D1c88d50B5f31cECf724be1306397e4E0B876d"
-  const rampAdsAddress = "0x93570729A733736FD06D511cD0A878e11c0856B2"
-  const bettingHelperAddress = "0xD1a149c8eF80c41927b80756D1b7E9dB56d26e1F"
-  const bettingMinterAddress = "0x2A9768883eB091E2c1fdDB8Bf4D9d243FF487D6A"
-  const bettingFactoryAddress = "0xaF9BC1531331d538428bf951a8B4DFCE3CF8C41c"
+  const businessMinterAddress = "0xBdf901C35FfA73f36dBF7FC88708Ce0Ab95089B6"
+  const auditorNoteAddress = "0xA33A895b5340ACE5caf1930F5Bf2DAa41C5D100d"
+  const auditorHelperAddress = "0xdc912057B0AE36A8C861711A15600a7B393e84F7"
+  const auditorHelper2Address = "0x1dC0EE2C95fEcB2EdD2d4737DB2ADEE844765a00"
+  const auditorFactoryAddress = "0x030D43e6521bFc57bb00CfCe08D1D6eBCd52Dd36"
+  const futureCollateralAddress = "0x182a271B308Fef8F207FE0FA5f0A9B5f9891CC3D"
+  const cardAddress = "0x2147BC7403e33f24DFDb1aA2A26ae6DCf807b8e6"
+  const vavaFactoryAddress = "0x6395A7f0989eEa4d70ABe643847558cBD1f25CA0"
+  const vavaHelperAddress = "0x3235eF5716f10372575CB394EBac70C437F99c3F"
+  const vavaHelper2Address = "0x41588Fa804a990dC0db34850f305a8c546a14d11"
+  const veFactoryAddress = "0x485B9Edfb403cFb367A322471de56DBDd54a2f4d"
+  const valuepoolVoterAddress = "0x2cC04852fD270122e8B618D257460ED7c04dc7e0"
+  const businessBribeFactoryAddress = "0x7d1A68Cd40EeEBbAC205e09b0C776bD9a21c7476"
+  const businessGaugeFactoryAddress = "0x68909e3d5aaC70D18Ae26ED8F059A56B5B058037"
+  const referralBribeFactoryAddress = "0xaec98A3EEA7B48f6a03A5750E92E896300295964"
+  const acceleratorVoterAddress = "0x514F785152Caa540A1c4FF0b7cd34E0c015E73a6"
+  const contributorVoterAddress = "0x432e6406197b31A52Ac24E553aA8dDdBB573F219"
+  const businessVoterAddress = "0x46a5a19D12ec1BEf43aCded2F00C64BE8FD2f1C8" 
+  const referralVoterAddress = "0x6604e6aEe666a8C6849a86a8519afdD92a888A46"
+  const sponsorFactoryAddress = "0x30da46CF9e60D0bB7698fad4C000D98F53a69FB6"
+  const sponsorNoteAddress = "0x2a76b60c7e58a66bc07dC628ae36595A349eB48C"
+  const ssiAddress = "0x31733Bb298D9940Ed33a37fe88c53e6f56D31888" //"0xFEc4d4A1aad9cE28dA66D86609c3B47aaeF5e527"
+  const profileAddress = "0x58EBF019aBB63CD93DE884D9DD4917515463d0eD" // "0x5E008DCE8095dE09BFF103Df85b566449c1dF7e2" // "0x810EBEa7d4330B6A6EFa2f73FF7E7773c57F98CD" //"0x8D531506a9Eb2E5931235a09e5192201B38b12b6"
+  const profileHelperAddress = "0x314b0242a5FfEf26c147E317eC8842bcd20f8640" // "0x0cf9f62B1e215ba580C8445Ca9C9CBf2ad32b6DB" // "0xf2Ca8333888cf3C673E81225228a000F9b7b4338" //"0xa71B00c519d6573E0cFC37638FE712aC6dD65a2c"
+  const stakeMarketAddress = "0xBb9B807DCD79c3Af7Fa1bCa2396EB424aE25Cc8F"
+  const stakeMarketNoteAddress = "0x9188eaFb296b6a99BB45858Ea58140287298D1eA"
+  const stakeMarketHelperAddress = "0xC9DB6887a8017f8BD57F32bcdBCB3aB12aAE6BB8"
+  const stakeMarketBribeAddress = "0xA8ad12dd7708edeB2D18cB6CFB94fbB83bfa3909"
+  const stakeMarketVoterAddress = "0x0F6dE1a86F2B0B82ec8C4831845aa2e96B7c6a5A"
+  const contractAddress = "0x57Cdd8692eF6FC8d195FcFd7601cF31c0e4e8B75" //"0x997068BaD1417e1d7Be77CFC9123B40a3D9Bdb92"
+  const nftsvgAddress = "0x4b81e883C13405D92F8986C06738Ff4Fa10d1573"
+  const nfticketAddress = "0x6E202dbEE80E9A73709a55875Ad6f336D3C5aB71"
+  const nfticketHelperAddress = "0x7488bF1615432bEF6C654d5E50bC23f0E7BeE794"
+  const nfticketHelper2Address = "0xd89685bA803882c2F387932320eA25faBA441fb4"
+  const marketPlaceEventsAddress = "0x5E62a90BDD1a3Da6E94fB5713E5E7e54516b95D7"
+  const marketPlaceCollectionAddress = "0xb0984319AA46BBA3E90bE0a17070E785BCFF03Cd"
+  const marketPlaceOrdersAddress = "0xe4eB8bD4B1c49a465aB7Da95176F4288bb7B4B35"
+  const paywallMarketPlaceOrdersAddress = "0x8A3d077ce39f08962449Cdab4076F279D6AAAAC7"
+  const nftMarketPlaceOrdersAddress = "0x376Ad710Dc04b0e9a4dd2A67b76fCAb4A2a2Af55"
+  const marketPlaceTradesAddress = "0xb09f6D0D78F64bF419E17C5BDe9c5f20bC4938E2"
+  const paywallMarketPlaceTradesAddress = "0x58CD669926351Cd4FE934315bE1f472ab32EB7DA"
+  const nftMarketPlaceTradesAddress = "0x019a80F2Dfec67A8f796cE74a4Ab7A0d4F655c0E"
+  const marketPlaceHelperAddress = "0x501883DF86eeb3F5dd63F7b12D3be0bf0E85f900"
+  const paywallMarketPlaceHelperAddress = "0x6635138A3Da2CED843598724CFc33877275d0C2F"
+  const nftMarketPlaceHelperAddress = "0xf0Aa17AF85aDf494a31DC0e10804d26071d45f08"
+  const marketPlaceHelper2Address = "0xd7A476AC95A873c8ceB661AfB615dbcdE40d3e69"
+  const paywallMarketPlaceHelper2Address = "0x53FfA2AE9b4E5F461A8250A623B5BEbEE3a8C69a"
+  const nftMarketPlaceHelper2Address = "0x921946CC84a0fC1E2394eD3aaeEF0c5a54BE6480"
+  const marketPlaceHelper3Address = "0x28B0799396a8c45118E8A50a938E14ea50544104"
+  const paywallMarketPlaceHelper3Address = "0x8d0259010F30CC3dcff49fD968A62d65A565966A"
+  const nftMarketPlaceHelper3Address = "0x1F0D9be3815D63B3A2BC747500CBEbBbE6536219"
+  const paywallARPFactoryAddress = "0x0e66291f9Fe09ceA0eC28d5c635e8E9bfb80a9F2"
+  const paywallARPHelperAddress = "0x46c803917E3E68525F1C435141ADd0aE4c76246f"
+  const minterFactoryAddress = "0xAcd5d04c9F143E1750C66E2022199e186E6a5Bbd"
+  const trustBountiesAddress = "0x005541edE5cc4d1b561e39dB95DC3784F8BBB0b1"
+  const trustBountiesHelperAddress = "0xD5a3a5EfD62592BB3F5Fd7cC5f5B6c6D3712b33d"
+  const trustBountiesVoterAddress = "0x4Bb8E20BDAb5333ad0b91674CE1A3e3a34A181A8"
+  const customMinterAddress = "0x0102838c0ba71763d1AF04261885b3E3925111aE"
+  const arpFactoryAddress = "0x1b6E21566025fEeFed2d005B394eDcf3D2fC6DFc"
+  const arpHelperAddress = "0x39Da9553d5fFaa6Bf496e11F6Ed069E17DA80B31"
+  const arpMinterAddress = "0x0FF1b06567Fba7c3CD1d96f662591AC1847D2346"
+  const arpNoteAddress = "0x08C9BE561efeb1a909b701115178E0e60621bB4a"
+  const billFactoryAddress = "0x3BD957Ca8bCF699Cc6728E05690432A4890c9C2a"
+  const billMinterAddress = "0xaC50394D310A03d6587A31B98dC591EFaEDa967A"
+  const billHelperAddress = "0x6c7014Dc578B717722F56Fb64cc4f7C65bB2a3E6"
+  const billNoteAddress = "0xF025a972E71D697B0Da86667faF6cF5F3454AD0D"
+  const extraTokenFactoryAddress = "0x7bBE3f25fB3aD6768051774F9a92163e64867Fb3"
+  const willFactoryAddress = "0xa9cEFDE6ABa8Dd220bC3d46bdD9E9D9c6103b75C"
+  const willNoteAddress = "0x76bedE2a8e6bb5190C3369593130fE134430Ef14"
+  const gameFactoryAddress = "0x5397f008Ea054A368C4DFd664c42E9e22160B34b"
+  const gameMinterAddress = "0xdCfAc7BA16655F263aE8c45608129832399B147d"
+  const gameHelperAddress = "0x53ce30dF591D9c91999B8A37263643B04d7088f2"
+  const gameHelper2Address = "0xa5B4a37b80857EE16D15c84EDe3950BFcEaE77e6"
+  const lotteryAddress = "0x3655bfE221e594e6Cee200dBA560400DAe3b89C6"
+  const lotteryHelperAddress = "0xB635fe5686C19aC309D76901593833a828170695"
+  const lotteryRandomNumberGeneratorAddress = "0x63E751b3b4533918b2adC7b7F7127b5765559e13"
+  const worldFactoryAddress = "0xdFe46b9CD5deA33635B50a5eDdc784a4e69C11bF"
+  const worldNoteAddress = "0x78b55EC0b9371aC7966367327C96e5a2b03Be8e7"
+  const worldHelperAddress = "0xb846371BFc2aCD2fa8ad6Af10EA5bF8C01Ca7dC2"
+  const worldHelper2Address = "0x4DDC7B7fDe5Ae29f8eeb08fF4a670826798DCc6d"
+  const worldHelper3Address = "0x6ab8cF61b971102471ef6276A8eD8b7Cb5bC03E7"
+  const rampFactoryAddress = "0xC09f65453cc668E0a12f3d94C98cF881190744EB"
+  const rampHelperAddress = "0xf6d10E93874d1e50831ecf41F504bE04Fd132517"
+  const rampHelper2Address = "0x708577E958AeA3575Eb5D7648D35293CF7B80168"
+  const rampAdsAddress = "0x1C57E1E05042312b47eB1258D58624c533F34cBB"
+  const bettingHelperAddress = "0x1B13e58320C0a7F490C9C576201506528C0D9Dc5"
+  const bettingMinterAddress = "0x22Ee373D092aF0626aE72Bc9124E68161ED38c90"
+  const bettingFactoryAddress = "0x8f50058B663b5949DF59F6795A27A2552BD100B4"
+  const fftAddress = "0x11D38bDe61af6baA177198b6C35de1E573782b4C"
+  const fbtAddress = "0x140eb5e979796bc233e129ED1Dc8A9AFE7F18dAA"
+  const fntAddress = "0x0a7597014ADbd0CE1C275b511E706559A5f1F07e"
+  const fttAddress = "0x47D74c85fce4c5A484467020Ae0C2c5A63620680"
+  const fhtAddress = "0x798d7ec0058654320F2513Ef7f5ca9688e398A4e"
+  const fectAddress = "0x031B80f0e15b321A52c722F128Fe389A09e96194"
+  const fretAddress = "0x5Ecc7dc2987729bcf7E0Fc749e70F518BBB3Aa56"
+  const fmtAddress = "0xAD77753F29dc30F17Dc61Bb24e68A3db86D2c9A9"
+  const flotAddress = "0xD2BC877C4ad694C05Cd1e9CB05F3941e8A749Ad6"
+  const fsttAddress = "0xA151e4494e7a0519178663d956cD1c54Fa11e7B5"
+  const fetAddress = "0x9820779cD8eDb1fC82B3B360CFC0221A7F65e768"
+  const fabtAddress = "0x61717A9427a47c959C796B7E9ef96B118380D0B2"
+  const vaFFTAddress = "0x916a1741323Ab488EB89E1ae1eC22Bd75805D554"
+  const vaFBTAddress = "0xAD9e033e99EB965dBEDDd2E52C926dDDe5Fa09CC"
+  const vaFNTAddress = "0xEbc5A777650B93dE9DF706139ee1e7e7E3CD0F26"
+  const vaFTTAddress = "0xAb9C6F27Bf60B54348D41aDaA04016ED7f545Fff"
+  const vaFHTAddress = "0x078aaD24DADD93105e88794E79316d711680eB8a"
+  const vaFECTAddress = "0x67BA3f68a1F99a941A6DcA76eAB938f9E3E5A70A"
+  const vaFRETAddress = "0xa68a8c8979dEdf77c4A36e05D06c6a6e803Bed33"
+  const vaFMTAddress = "0xc4c8fd6E3A451D490a242Fb097Fa81EC6d01139C"
+  const vaFLOTAddress = "0x25747920013905D87B5CF184bD0f87B5eC1D8986"
+  const vaFSTTAddress = "0xb2a75385638e8D264fd50D26EF3D9c11cAD17A8d"
+  const vaFETAddress = "0x00B0f1165Ff308059C80A4FB31572D307E797230"
+  const vaFABTAddress = "0x4280Ea442ddF111c81a151451516bdb9d3f78B2A"
 
+  const fabt = fiatContract.attach(fabtAddress)
+  const fet = fiatContract.attach(fetAddress)
+  const fstt = fiatContract.attach(fsttAddress)
+  const flot = fiatContract.attach(flotAddress)
+  const fmt = fiatContract.attach(fmtAddress)
+  const fret = fiatContract.attach(fretAddress)
+  const fect = fiatContract.attach(fectAddress)
+  const fht = fiatContract.attach(fhtAddress)
+  const ftt = fiatContract.attach(fttAddress)
+  const fnt = fiatContract.attach(fntAddress)
+  const fbt = fiatContract.attach(fbtAddress)
+  const fft = fiatContract.attach(fftAddress)
+  const vafabt = Va.attach(vaFABTAddress)
+  const vafet = Va.attach(vaFETAddress)
+  const vafstt = Va.attach(vaFSTTAddress)
+  const vaflot = Va.attach(vaFLOTAddress)
+  const vafmt = Va.attach(vaFMTAddress)
+  const vafret = Va.attach(vaFRETAddress)
+  const vafect = Va.attach(vaFECTAddress)
+  const vafht = Va.attach(vaFHTAddress)
+  const vaftt = Va.attach(vaFTTAddress)
+  const vafnt = Va.attach(vaFNTAddress)
+  const vafbt = Va.attach(vaFBTAddress)
+  const vafft = Va.attach(vaFFTAddress)
   const customMinter = CustomMinter.attach(customMinterAddress)
   const contractAddresses = ContractAddresses.attach(contractAddress)
   const arpFactory = ARPFactory.attach(arpFactoryAddress)
@@ -401,6 +452,8 @@ async function main() {
   const rampHelper2 = RampHelper2.attach(rampHelper2Address)
   const extraTokenFactory = ExtraTokenFactory.attach(extraTokenFactoryAddress)
   const tFiat = fiatContract.attach(tFiatAddress)
+  const tFiat2 = fiatContract.attach(tFiat2Address)
+  const tFiat3 = fiatContract.attach(tFiat3Address)
   const ve = vecontract.attach(veAddress)
   const ve_dist = ve_distContract.attach(ve_distAddress)
   const bettingHelper = BettingHelper.attach(bettingHelperAddress)
@@ -949,6 +1002,10 @@ async function main() {
   //   console.log("7wallet=============>", i, wallet._signingKey())
   // }
 
+  // const contractAddresses = await ContractAddresses.deploy()
+  // await contractAddresses.deployed()
+  // console.log("contractAddresses============>", contractAddresses.address)
+
   // const futureCollateral = await FutureCollateral.deploy(
   //   "Future Collateral",
   //   "FC",
@@ -972,6 +1029,14 @@ async function main() {
   // const feeTo = await FeeTo.deploy();
   // await feeTo.deployed()
   // console.log("feeTo============>", feeTo.address)
+
+  // const cake = await CakeToken.deploy();
+  // await cake.deployed()
+  // const cakeAddress = ""
+  // const cake = fiatContract.attach(cakeAddress)
+  // const cakeAddress = ""
+  // const cake = fiatContract.attach(cakeAddress)
+  // console.log("cake============>", protocol.protocolFees())
 
   // const acceleratorVoter = await AcceleratorVoter.deploy();
   // await acceleratorVoter.deployed()
@@ -1011,6 +1076,20 @@ async function main() {
   // await tFiat.deployed()
   // console.log("tFiat============>", tFiat.address)
 
+  // const tFiat3 = await fiatContract.deploy(
+  //   "cedi",
+  //   "cedi",
+  //   contractAddresses.address,
+  //   deployer.address,
+  //   trustBounties.address
+  // );
+  // await tFiat3.deployed()
+  // console.log("tFiat3============>", tFiat3.address)
+
+  // await tFiat3.updateMinter(deployer.address)
+  // await tFiat3.mint(deployer.address, ethers.BigNumber.from("1000000000000000000000000000"))
+  // console.log("===========================>", await tFiat3.balanceOf(deployer.address))
+
   // const onramp_tokens = [
   //   { name: "xof", symbol: "xof" },
   //   { name: "ghs", symbol: "ghs" },
@@ -1035,10 +1114,6 @@ async function main() {
   // await tFiat.approve(ve.address, ethers.BigNumber.from("500000000000000000"));
   // await ve.create_lock(ethers.BigNumber.from("500000000000000000"), 4 * 365 * 86400);
   // console.log("balanceOf===========>", await ve.balanceOfNFT(1))
-
-  // const contractAddresses = await ContractAddresses.deploy()
-  // await contractAddresses.deployed()
-  // console.log("contractAddresses============>", contractAddresses.address)
 
   // const bettingFactory = await BettingFactory.deploy(contractAddresses.address);
   // await bettingFactory.deployed()
@@ -1604,6 +1679,9 @@ async function main() {
   // ], true)
   // console.log("businessGaugeFactory.updateVoter===========> Done!")
 
+  // await trustBountiesHelper.updateCanAttach(businessGaugeFactory.address, true)
+  // console.log("trustBountiesHelper.updateCanAttach===========> Done!")
+
   // await contractAddresses.setBusinessMinter(businessMinter.address)
   // console.log("contractAddresses.setBusinessMinter===========> Done!")
 
@@ -1712,25 +1790,19 @@ async function main() {
   // await contractAddresses.setTrustBountyVoter(trustBountiesVoter.address)
   // console.log("contractAddresses.setTrustBountyVoter===========> Done!")
 
-  // await trustBountiesHelper.updateVes(veAddress, true)
-  // await trustBountiesHelper.updateVes("0x0515c86e557cc59bB575A420B69aFdF41EA873b1", true)
-  // await trustBountiesHelper.updateVes("0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc", true)
-  // await trustBountiesHelper.updateVes("0xdE46100D142FD66f50697dF99c296796100983de", true)
-  // await trustBountiesHelper.updateVes("0x2cc1F3A5A27ef2985768ff98526337db6E05C847", true)
-  // await trustBountiesHelper.updateVes("0xdC94F841AedDe3Bb8fD311a61c2b4Fe40a47393d", true)
-  // await trustBountiesHelper.updateVes("0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6", true)
-  // await trustBountiesHelper.updateVes("0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f", true)
-  // await trustBountiesHelper.updateVes("0xC853D1c9B60962a5CDB361379595BC6400aaE722", true)
-  // await trustBountiesHelper.updateVes("0xae6a2d4DbA638766bD3b522cD397cA90F173fDd2", true)
-  // await trustBountiesHelper.updateVes("0x86130B7eec5561706Ac18877D19ee7D1A584E807", true)
-  // await trustBountiesHelper.updateVes("0xb55A821877d473D972B4ECBB18E41739687c539f", true)
-  // await trustBountiesHelper.updateVes("0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62", true)
-  // await trustBountiesHelper.updateVes("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", true)
-  // await trustBountiesHelper.updateVes("0xb9858E52175Dc194686E29875570703B5C986Fe3", true)
+  // await trustBountiesHelper.updateVes(vaFABTAddress, true)
+  // await trustBountiesHelper.updateVes(vaFETAddress, true)
+  // await trustBountiesHelper.updateVes(vaFSTTAddress, true)
+  // await trustBountiesHelper.updateVes(vaFLOTAddress, true)
+  // await trustBountiesHelper.updateVes(vaFMTAddress, true)
+  // await trustBountiesHelper.updateVes(vaFRETAddress, true)
+  // await trustBountiesHelper.updateVes(vaFECTAddress, true)
+  // await trustBountiesHelper.updateVes(vaFHTAddress, true)
+  // await trustBountiesHelper.updateVes(vaFTTAddress, true)
+  // await trustBountiesHelper.updateVes(vaFNTAddress, true)
+  // await trustBountiesHelper.updateVes(vaFBTAddress, true)
+  // await trustBountiesHelper.updateVes(vaFFTAddress, true)
   // console.log("trustBountiesHelper.updateVes===========> Done!")
-
-  // await trustBountiesHelper.updateWhitelistedTokens([futureCollateral.address, tFiat.address, nfticketHelper2.address], true)
-  // console.log("trustBountiesHelper.updateWhitelistedTokens===========> Done!")
 
   // await trustBountiesHelper.updateCanAttach(marketPlaceEvents.address, true)
   // console.log("trustBountiesHelper.updateCanAttach===========> Done!")
@@ -1749,25 +1821,235 @@ async function main() {
   // let va = await Va.attach("0xb9858E52175Dc194686E29875570703B5C986Fe3")
   // console.log("va.token===========>", await va.token(), await va.ownerOf(1))//, await va.getWithdrawable(1))
   // console.log("trustBounties.bountyInfo==================>", await trustBounties.bountyInfo(1), await trustBounties.balances(1, "0xb9858E52175Dc194686E29875570703B5C986Fe3"), await tFiat.balanceOf(trustBounties.address))
-  
-  // const vaAddress = "0xb9858E52175Dc194686E29875570703B5C986Fe3"
-  // const va = Va.attach(vaAddress)
 
-  // await tFiat.approve(va.address, ethers.BigNumber.from("100000000000000000"));
-  // await va.create_lock_for(ethers.BigNumber.from("100000000000000000"), 4 * 365 * 86400, 0, "0xED00DC98e07f572d8b3071182406235d1D28D258")
-  
-  // await businessMinter.updateVes([vaAddress], true)
+  // await businessMinter.updateVes([
+  //   vafabt.address,
+  //   vafet.address,
+  //   vafstt.address,
+  //   vaflot.address,
+  //   vafmt.address,
+  //   vafret.address,
+  //   vafect.address,
+  //   vafht.address,
+  //   vaftt.address,
+  //   vafnt.address,
+  //   vafbt.address,
+  //   vafft.address,
+  // ], true)
   // console.log("businessMinter.updateVes===========> Done!")
 
-  // await tFiat.updateMinter(businessMinter.address)
-  // console.log("tFiat.minter================>", await tFiat.minter())
+  // const vaAddress = "0xAD9e033e99EB965dBEDDd2E52C926dDDe5Fa09CC"
+  // const va = Va.attach(vaAddress)
+  
+  // await businessGaugeFactory.updateMaxWithdrawable(ethers.BigNumber.from("500000000000000000"))
+  // console.log("businessGaugeFactory.maxWithdrawable===================>", await businessGaugeFactory.maxWithdrawable())
+
+  // // const businessGauge = await BusinessGauge.deploy("1", va.address, businessVoter.address)
+  // // await businessGauge.deployed()
+  // // await businessGauge.setContractAddress(contractAddress)
+
+  // const businessGaugeAddress = "0xe111759a87b3c0e1517e7E91Ca05B871534EbaDF"
+  // const businessGauge = BusinessGauge.attach(businessGaugeAddress)
+  // console.log("businessGauge===================>", businessGauge.address, await businessGauge.factory())
+
+  // // await tFiat.approve(businessGauge.address, ethers.BigNumber.from("1000000000000000000"))
+  // // await businessGauge.deposit(tFiat.address, ethers.BigNumber.from("1000000000000000000"))
+  // console.log("tFiat.balanceOf===============>", await tFiat.balanceOf(businessGauge.address))
+
+  // // console.log("businessGauge.bountyIds=======================>", await businessGauge.bountyIds(tFiat.address))
+  // // await businessGauge.updateBounty(1, false)
+  // console.log("2businessGauge.bountyIds=======================>", await businessGauge.bountyIds(tFiat.address))
+  
+  // console.log("businessGauge.active_period=======================>", await businessGauge.active_period(tFiat.address), await businessGauge.balanceOf(tFiat.address))
+  // // await businessGauge.updateBalances(0)
+  // await businessGauge.withdrawAll(0)
+  // console.log("2businessGauge.active_period=======================>", await businessGauge.active_period(tFiat.address), await businessGauge.balanceOf(tFiat.address))
+  // console.log("2tFiat.balanceOf===============>", await tFiat.balanceOf(businessGauge.address))
+
+  // const fabt = await fiatContract.deploy(
+  //   "Free Apparel & Beauty & Cosmetics Token",
+  //   "FABT",
+  //   contractAddresses.address,
+  //   deployer.address,
+  //   trustBounties.address
+  // );
+  // await fabt.deployed()
+  // console.log("fabt====================>", fabt.address)
+
+  // const _tFiat2 = await fiatContract.deploy(
+  //   "Free Beverage Token",
+  //   "FBT",
+  //   contractAddresses.address,
+  //   deployer.address,
+  //   trustBounties.address
+  // );
+  // await _tFiat2.deployed()
+  // console.log("_tFiat2====================>", _tFiat2.address)
+    
+  // await marketPlaceHelper3.addVetoken(_tFiat2.address)
+  // await _tFiat2.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
+  // await _tFiat2.updateMinter(businessMinter.address)
+
+  // const _tFiat3 = await fiatContract.deploy(
+  //   "Free Culture & Entertainment Token",
+  //   "FECT",
+  //   contractAddresses.address,
+  //   deployer.address,
+  //   trustBounties.address
+  // );
+  // await _tFiat3.deployed()
+  // console.log("_tFiat3====================>", _tFiat3.address)
+    
+  // await marketPlaceHelper3.addVetoken(_tFiat3.address)
+  // await _tFiat3.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
+  // await _tFiat3.updateMinter(businessMinter.address)
+
+  // const tFiat4 = await fiatContract.deploy(
+  //   "Free Energy Token",
+  //   "FET",
+  //   contractAddresses.address,
+  //   deployer.address,
+  //   trustBounties.address
+  // );
+  // await tFiat4.deployed()
+  // console.log("tFiat4====================>", tFiat4.address)
+    
+  // await marketPlaceHelper3.addVetoken(tFiat4.address)
+  // await tFiat4.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
+  // await tFiat4.updateMinter(businessMinter.address)
+
+  // const tFiat5 = await fiatContract.deploy(
+  //   "Free Food Token",
+  //   "FFT",
+  //   contractAddresses.address,
+  //   deployer.address,
+  //   trustBounties.address
+  // );
+  // await tFiat5.deployed()
+  // console.log("tFiat5====================>", tFiat5.address)
+    
+  // await marketPlaceHelper3.addVetoken(tFiat5.address)
+  // await tFiat5.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
+  // await tFiat5.updateMinter(businessMinter.address)
+
+  // const tFiat6 = await fiatContract.deploy(
+  //   "Free HealthCare Token",
+  //   "FHT",
+  //   contractAddresses.address,
+  //   deployer.address,
+  //   trustBounties.address
+  // );
+  // await tFiat6.deployed()
+  // console.log("tFiat6====================>", tFiat6.address)
+    
+  // await marketPlaceHelper3.addVetoken(tFiat6.address)
+  // await tFiat6.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
+  // await tFiat6.updateMinter(businessMinter.address)
+
+  // const tFiat7 = await fiatContract.deploy(
+  //   "Free Law & Order Token",
+  //   "FLOT",
+  //   contractAddresses.address,
+  //   deployer.address,
+  //   trustBounties.address
+  // );
+  // await tFiat7.deployed()
+  // console.log("tFiat7====================>", tFiat7.address)
+  // await marketPlaceHelper3.addVetoken(tFiat7.address)
+  // await tFiat7.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
+  // await tFiat7.updateMinter(businessMinter.address)
+
+  // const tFiat8 = await fiatContract.deploy(
+  //   "Free Mining Token",
+  //   "FMT",
+  //   contractAddresses.address,
+  //   deployer.address,
+  //   trustBounties.address
+  // );
+  // await tFiat8.deployed()
+  // console.log("tFiat8====================>", tFiat8.address)
+  // await marketPlaceHelper3.addVetoken(tFiat8.address)
+  // await tFiat8.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
+  // await tFiat8.updateMinter(businessMinter.address)
+
+  // const tFiat9 = await fiatContract.deploy(
+  //   "Free NSFW Token",
+  //   "FNT",
+  //   contractAddresses.address,
+  //   deployer.address,
+  //   trustBounties.address
+  // );
+  // await tFiat9.deployed()
+  // console.log("tFiat9====================>", tFiat9.address)
+  // await marketPlaceHelper3.addVetoken(tFiat9.address)
+  // await tFiat9.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
+  // await tFiat9.updateMinter(businessMinter.address)
+
+  // const tFiat10 = await fiatContract.deploy(
+  //   "Free Real Estate Token",
+  //   "FRET",
+  //   contractAddresses.address,
+  //   deployer.address,
+  //   trustBounties.address
+  // );
+  // await tFiat10.deployed()
+  // console.log("tFiat10====================>", tFiat10.address)
+  // await marketPlaceHelper3.addVetoken(tFiat10.address)
+  // await tFiat10.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
+  // await tFiat10.updateMinter(businessMinter.address)
+
+  // const tFiat11 = await fiatContract.deploy(
+  //   "Free Software & Telecommunication Token",
+  //   "FSTT",
+  //   contractAddresses.address,
+  //   deployer.address,
+  //   trustBounties.address
+  // );
+  // await tFiat11.deployed()
+  // console.log("tFiat11====================>", tFiat11.address)
+  // await marketPlaceHelper3.addVetoken(tFiat11.address)
+  // await tFiat11.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
+  // await tFiat11.updateMinter(businessMinter.address)
+
+  // const tFiat12 = await fiatContract.deploy(
+  //   "Free Transportation Token",
+  //   "FTT",
+  //   contractAddresses.address,
+  //   deployer.address,
+  //   trustBounties.address
+  // );
+  // await tFiat12.deployed()
+  // console.log("tFiat12====================>", tFiat12.address)
+  // await marketPlaceHelper3.addVetoken(tFiat12.address)
+  // await tFiat12.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
+  // await tFiat12.updateMinter(businessMinter.address)
+
+  // await fabt.mint(deployer.address, ethers.BigNumber.from("1000000000000000000"))
+
+  // await fabt.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
+  // console.log("fabt.updateLimits====================>Done", await fabt.platform(), await fabt.limitWithProfileFactor())
+
+  // // await fabt.approve(va.address, ethers.BigNumber.from("100000000000000000"));
+  // // await va.create_lock_for(ethers.BigNumber.from("100000000000000000"), 4 * 365 * 86400, 0, deployer.address)
+
+  // await fabt.updateMinter(businessMinter.address)
+  // console.log("fabt.minter================>", await fabt.minter(), await va.token(), await fabt.balanceOf(businessMinter.address), await fabt.balanceOf(deployer.address))
 
   // await businessMinter.initialize()
   // console.log("businessMinter.initialize===========> Done!")
 
+  // await businessMinter.updateEarlyAdopter(
+  //   va.address,
+  //   "0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA",
+  //   true
+  // )
+  // 997020198000000000000000
+  // 9020000000000000000000
+  // 2000000000000000000000
+  // console.log("businessMinter.updateEarlyAdopter=======================>", await businessMinter.earlyAdopters("0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA", va.address))
   // console.log("================>", await va.tokenId())
-  // console.log("va.ownerOf================>", await va.ownerOf(3), await va.balanceOfNFT(3))
-  // console.log("businessMinter.getAllVes================>", await businessMinter.getAllVes(), await tFiat.balanceOf(businessMinter.address))
+  // console.log("va.ownerOf================>", await va.ownerOf(1), await va.balanceOfNFT(1))
+  // console.log("businessMinter.getAllVes================>", await businessMinter.initializer(), await businessMinter.getAllVes(), await fabt.balanceOf(businessMinter.address), await businessMinter.treasuryFees(fabt.address))
   // console.log("businessVoter================>", await contractAddresses.businessVoter(), await contractAddresses.referralVoter())
   // console.log("nfticketHelper.lotteryCredits================>", await nfticketHelper.lotteryCredits(
   //   "0xED00DC98e07f572d8b3071182406235d1D28D258",
@@ -1776,33 +2058,37 @@ async function main() {
   // await marketPlaceCollection.updateParams(1000, 1000, 50)
   // console.log("marketPlaceCollection.lotteryFee================>", await marketPlaceCollection.lotteryFee())
 
+  // await businessMinter.updatePayswapContracts(vavaHelper.address, true)
+  // console.log("vavaHelper.totalProcessed===========>", await vavaHelper.totalProcessed(fabt.address))
+  // console.log("businessMinter.getAllContracts===========>", await businessMinter.getAllContracts())
+
   // await businessMinter.setParams(250, 300, 555, 400, ethers.BigNumber.from("15000000000000000000000000"))
-  // await businessMinter.getAllWeeklyVolume(tFiat.address)
-  // console.log("businessMinter.weekly_emission=============>", await businessMinter.weekly_emission(tFiat.address))
-  // console.log("busineter.currentVolume================>", await businessMinter.currentVolume(tFiat.address), await businessMinter.active_period())
-  // console.log("businessMinter.previousVolume================>", await businessMinter.previousVolume(tFiat.address))
-  // console.log("businessMinter.currentDebt================>", await businessMinter.currentDebt(tFiat.address))
+  // await businessMinter.getAllWeeklyVolume(fabt.address)
+  // console.log("businessMinter.weekly_emission=============>", await businessMinter.weekly_emission(fabt.address))
+  // console.log("busineter.currentVolume================>", await businessMinter.currentVolume(fabt.address), await businessMinter.active_period())
+  // console.log("businessMinter.previousVolume================>", await businessMinter.previousVolume(fabt.address))
+  // console.log("businessMinter.currentDebt================>", await businessMinter.currentDebt(fabt.address))
   // console.log("businessMinter.businessesPercent================>", await businessMinter.businessesPercent(va.address))
   // console.log("businessMinter.referralsPercent================>", await businessMinter.referralsPercent(va.address))
   // console.log("businessMinter.contributorsPercent================>", await businessMinter.contributorsPercent(va.address))
   // console.log("businessMinter.acceleratorPercent================>", await businessMinter.acceleratorPercent(va.address))
-  // console.log("tFiat.balanceOf(acceleratorVoter)================>", await tFiat.balanceOf(acceleratorVoter.address))
-  // console.log("tFiat.balanceOf(businessVoter)================>", await tFiat.balanceOf(businessVoter.address))
-  // console.log("tFiat.balanceOf(contributorVoter)================>", await tFiat.balanceOf(contributorVoter.address))
-  // console.log("tFiat.balanceOf(referralVoter)================>", await tFiat.balanceOf(referralVoter.address))
+  // console.log("fabt.balanceOf(acceleratorVoter)================>", await fabt.balanceOf(acceleratorVoter.address))
+  // console.log("fabt.balanceOf(businessVoter)================>", await fabt.balanceOf(businessVoter.address))
+  // console.log("fabt.balanceOf(contributorVoter)================>", await fabt.balanceOf(contributorVoter.address))
+  // console.log("fabt.balanceOf(referralVoter)================>", await fabt.balanceOf(referralVoter.address))
   // await businessMinter.update_period()
-  // console.log("2businessMinter.weekly_emission=============>", await businessMinter.weekly_emission(tFiat.address))
-  // console.log("2busineter.currentVolume================>", await businessMinter.currentVolume(tFiat.address), await businessMinter.active_period())
-  // console.log("2businessMinter.previousVolume================>", await businessMinter.previousVolume(tFiat.address))
-  // console.log("2businessMinter.currentDebt================>", await businessMinter.currentDebt(tFiat.address))
+  // console.log("2businessMinter.weekly_emission=============>", await businessMinter.weekly_emission(fabt.address))
+  // console.log("2busineter.currentVolume================>", await businessMinter.currentVolume(fabt.address), await businessMinter.active_period())
+  // console.log("2businessMinter.previousVolume================>", await businessMinter.previousVolume(fabt.address))
+  // console.log("2businessMinter.currentDebt================>", await businessMinter.currentDebt(fabt.address))
   // console.log("2businessMinter.businessesPercent================>", await businessMinter.businessesPercent(va.address))
   // console.log("2businessMinter.referralsPercent================>", await businessMinter.referralsPercent(va.address))
   // console.log("2businessMinter.contributorsPercent================>", await businessMinter.contributorsPercent(va.address))
   // console.log("2businessMinter.acceleratorPercent================>", await businessMinter.acceleratorPercent(va.address))
-  // console.log("2tFiat.balanceOf(acceleratorVoter)================>", await tFiat.balanceOf(acceleratorVoter.address))
-  // console.log("2tFiat.balanceOf(businessVoter)================>", await tFiat.balanceOf(businessVoter.address))
-  // console.log("2tFiat.balanceOf(contributorVoter)================>", await tFiat.balanceOf(contributorVoter.address))
-  // console.log("2tFiat.balanceOf(referralVoter)================>", await tFiat.balanceOf(referralVoter.address))
+  // console.log("2fabt.balanceOf(acceleratorVoter)================>", await fabt.balanceOf(acceleratorVoter.address))
+  // console.log("2fabt.balanceOf(businessVoter)================>", await fabt.balanceOf(businessVoter.address))
+  // console.log("2fabt.balanceOf(contributorVoter)================>", await fabt.balanceOf(contributorVoter.address))
+  // console.log("2fabt.balanceOf(referralVoter)================>", await fabt.balanceOf(referralVoter.address))
   // const arp = ARP.attach("0xa6f9b0f30ea16883a3e94bf734cb04a29d95c987")
   // console.log("arp.totalProcessed================>", await arp.totalProcessed(tFiat.address))
   // console.log("nfticket.transactionVolume================>", await nfticket.transactionVolume(tFiat.address))
@@ -1832,7 +2118,7 @@ async function main() {
   
   // const pfg = await acceleratorVoter.poolForGauge(gaugeAddress)
   // console.log("gauge, bribe, pfg, isgauge=============>", gaugeAddress, bribeAddress, pfg, await acceleratorVoter.isGauge(gaugeAddress))
-  // // await va.setVoter(acceleratorVoter.address)
+  // await va.setVoter(acceleratorVoter.address)
   // // await acceleratorVoter.vote(1,1,gaugeAddress,va.address,true)
   // // await acceleratorVoter.reset(1,1,va.address)
   // console.log("vote=============>", await acceleratorVoter.weights(1,va.address), await acceleratorVoter.totalWeight(va.address), await acceleratorVoter.usedWeights(1,va.address), await acceleratorVoter.getVotes(1, 1, va.address))
@@ -2060,34 +2346,33 @@ async function main() {
   // console.log("contractAddresses.setBettingMinter===========> Done!")
 
   // await marketPlaceHelper3.addDtoken(tFiat.address)
-  // await marketPlaceHelper3.addDtoken("0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D")
-  // await marketPlaceHelper3.addDtoken("0x023803056E3532348E8a6Deac35dafD4732F792b")
-  // await marketPlaceHelper3.addDtoken("0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9")
-  // await marketPlaceHelper3.addDtoken("0x7D797d2D96EA6187E85008B8B2F386a552C86d6b")
-  // await marketPlaceHelper3.addDtoken("0x77B0e504900997eE937c0C10E027236aeCD386EF")
-  // await marketPlaceHelper3.addDtoken("0x05Da08335F8B187769E60F3D92254e69ed5dF3EE")
-  // await marketPlaceHelper3.addDtoken("0x59013988E3730A66A9A973a812fb94056E6e7855")
-  // await marketPlaceHelper3.addDtoken("0xd17C814f5609889609720D95e1A7369f9F798aB4")
-  // await marketPlaceHelper3.addDtoken("0xd1a7aB1a1E1aaDD5CD51F51570885c7896bb3139")
-  // await marketPlaceHelper3.addDtoken("0xBa9fCa9130BF46FbB09740A3b02d5Ce9deB6ae11")
-  // await marketPlaceHelper3.addDtoken("0x406BD6A54A4807E207823D28AB908b0E9466678E")
-  // await marketPlaceHelper3.addDtoken("0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0")
-  // console.log("marketPlaceHelper3.addDtoken==========>", await marketPlaceHelper3.dTokenSetContains(tFiat.address))
-  // await marketPlaceHelper3.addVetoken(veAddress)
-  // await marketPlaceHelper3.addVetoken("0x0515c86e557cc59bB575A420B69aFdF41EA873b1")
-  // await marketPlaceHelper3.addVetoken("0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc")
-  // await marketPlaceHelper3.addVetoken("0xdE46100D142FD66f50697dF99c296796100983de")
-  // await marketPlaceHelper3.addVetoken("0x2cc1F3A5A27ef2985768ff98526337db6E05C847")
-  // await marketPlaceHelper3.addVetoken("0xdC94F841AedDe3Bb8fD311a61c2b4Fe40a47393d")
-  // await marketPlaceHelper3.addVetoken("0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6")
-  // await marketPlaceHelper3.addVetoken("0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f")
-  // await marketPlaceHelper3.addVetoken("0xC853D1c9B60962a5CDB361379595BC6400aaE722")
-  // await marketPlaceHelper3.addVetoken("0xae6a2d4DbA638766bD3b522cD397cA90F173fDd2")
-  // await marketPlaceHelper3.addVetoken("0x86130B7eec5561706Ac18877D19ee7D1A584E807")
-  // await marketPlaceHelper3.addVetoken("0xb55A821877d473D972B4ECBB18E41739687c539f")
-  // await marketPlaceHelper3.addVetoken("0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62")
-  // await marketPlaceHelper3.addVetoken("0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62")
-  // console.log("marketPlaceHelper3.addVetoken==========>", await marketPlaceHelper3.veTokenSetContains(ve.address))
+  // await marketPlaceHelper3.addDtoken(fftAddress)
+  // await marketPlaceHelper3.addDtoken(fbtAddress)
+  // await marketPlaceHelper3.addDtoken(fntAddress)
+  // await marketPlaceHelper3.addDtoken(fttAddress)
+  // await marketPlaceHelper3.addDtoken(fhtAddress)
+  // await marketPlaceHelper3.addDtoken(fectAddress)
+  // await marketPlaceHelper3.addDtoken(fretAddress)
+  // await marketPlaceHelper3.addDtoken(fmtAddress)
+  // await marketPlaceHelper3.addDtoken(flotAddress)
+  // await marketPlaceHelper3.addDtoken(fsttAddress)
+  // await marketPlaceHelper3.addDtoken(fetAddress)
+  // await marketPlaceHelper3.addDtoken(fabtAddress)
+  // console.log("marketPlaceHelper3.addDtoken==========>Done", await marketPlaceHelper3.dTokenSetContains(tFiat.address))
+  // // await marketPlaceHelper3.addVetoken(veAddress)
+  // await marketPlaceHelper3.addVetoken(vaFFTAddress)
+  // await marketPlaceHelper3.addVetoken(vaFBTAddress)
+  // await marketPlaceHelper3.addVetoken(vaFNTAddress)
+  // await marketPlaceHelper3.addVetoken(vaFTTAddress)
+  // await marketPlaceHelper3.addVetoken(vaFHTAddress)
+  // await marketPlaceHelper3.addVetoken(vaFECTAddress)
+  // await marketPlaceHelper3.addVetoken(vaFRETAddress)
+  // await marketPlaceHelper3.addVetoken(vaFMTAddress)
+  // await marketPlaceHelper3.addVetoken(vaFLOTAddress)
+  // await marketPlaceHelper3.addVetoken(vaFSTTAddress)
+  // await marketPlaceHelper3.addVetoken(vaFETAddress)
+  // await marketPlaceHelper3.addVetoken(vaFABTAddress)
+  // console.log("marketPlaceHelper3.addVetoken==========>Done", await marketPlaceHelper3.veTokenSetContains("0xAD9e033e99EB965dBEDDd2E52C926dDDe5Fa09CC"))
 
   // await marketPlaceHelper.updateBurnTokenForCredit(
   //   "0xAB45391c5Ee3270880565E2e9b6BA1d01A4A2cCF",
@@ -2155,7 +2440,8 @@ async function main() {
   // await tFiat.updateMinter(rampHelper.address)
   // console.log("tFiat.updateMinter==========>Done", await tFiat.minter())
 
-  // await tFiat.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
+  // await tFiat2.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
+  // await tFiat3.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
   // console.log("======>Done", await tFiat.attachedProfileId(deployer.address), await tFiat.limitWithProfile(), await tFiat.limitWithoutProfile(), await tFiat.transferedSoFar(worldHelper.address), await tFiat.minimBalance(worldHelper.address))
 
   // await marketPlaceCollection.addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
@@ -2549,7 +2835,10 @@ async function main() {
     // await profile.shareEmail(wallets[5].address)
     // await profile.shareEmail(wallets[6].address)
     // await profile.shareEmail(wallets[7].address)
-    // console.log("profile.sharedEmail==============>", await profile.sharedEmail(wallets[0].address))
+    // console.log(await profile.updateFollowerAuditor(5, true))
+    // console.log(await ssi.updateAuthorization(5,5,true))
+    // console.log(await profile.referrerFromAddress(deployer2.address))
+    // console.log("profile.sharedEmail==============>", await profile.sharedEmail("0xD9aB7FdA3EC89d0f7672a8E4B06Ea23C4B8D757d"), await profile.addressToProfileId(deployer.address))
     // console.log("profile.referrerFromAddress==============>", await profile.referrerFromAddress("0xED00DC98e07f572d8b3071182406235d1D28D258"))
 
     // await profile.createSpecificProfile("Tepa",1,0)
@@ -2782,8 +3071,8 @@ async function main() {
     // console.log("worldHelper3.tokenURI==================>", await worldHelper3.tokenURI(1))
 
     // await bettingFactory.createGauge(1, deployer.address, "0x0000000000000000000000000000000000000000")
-    // let bettingAddress = (await bettingHelper.getAllBettings(0))[0]
-    // const betting = Betting.attach(bettingAddress)
+    let bettingAddress = (await bettingHelper.getAllBettings(0))[0]
+    const betting = Betting.attach(bettingAddress)
     // const betting = await Betting.deploy(
     //   deployer.address,
     //   bettingHelper.address,
@@ -3004,7 +3293,20 @@ async function main() {
     // const val5 = "messi mbappe"
     // console.log("============================>", encodeAlphabet(val5, 38))
     // console.log("============================>", decodeAlphabet(encodeAlphabet(val5, 38), 38))
-
+  // await betting.updateBettingEvent(
+  //   tFiat.address,
+  //   true,
+  //   0,
+  //   "0",
+  //   "0",
+  //   [0, 0, 2592000, '100000000000000000', 300],
+  //   [0, 0, 0, 0, 0, 10000],
+  //   "How many anchors will we have by the end of this period?",
+  //   "https://i.ibb.co/T2SZLbJ/520.jpg",
+  //   "dRamp anchor's betting event",
+  //   "1-10,11-20,21-30,31-40,41-50,51-60,61-70,71-80,81-90,91-100"
+  // )
+  // console.log("betting.updateBettingEvent=================>Done")
 
     // await lotteryHelper.startLottery(
     //     deployer.address,
@@ -3270,6 +3572,30 @@ async function main() {
     // console.log("gameMinter.gameInfo_(1)================>", await gameMinter.gameInfo_(1))
     // console.log("gameHelper2.uriGenerator(1)================>", await gameHelper2.uriGenerator(1))
     // console.log("gameHelper.tokenURI(1)================>", await gameHelper.tokenURI(1))
+    // await gameFactory.emitUpdateMiscellaneous(
+    //   '4',
+    //   '1',
+    //   "All",
+    //   "All",
+    //   "0",
+    //   "0",
+    //   "0x0000000000000000000000000000000000000000",
+    //   "mario"
+    // )
+    // console.log("gameFactory.emitUpdateMiscellaneous================>Done")
+
+    // await gameFactory.emitUpdateMiscellaneous(
+    //   "0",
+    //   "1",
+    //   "https://mario-blond.vercel.app/",
+    //   "mario",
+    //   "0",
+    //   "0",
+    //   "0x0000000000000000000000000000000000000000",
+    //   ""
+    // )
+    // console.log("gameFactory.emitUpdateMiscellaneous================>Done")
+
 
     // create sponsor
     // const sponsor = await Sponsor.deploy(
@@ -8112,7 +8438,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[233]).updateCollection(
   //   "SocialAvatars",
-  //   "Welcome to SocialAvatars, your one-stop platform for bringing life to your social media content! Need a captivating voice or a charismatic face for your videos? Look no further. With SocialAvatars, you can easily connect with a diverse array of models, actors, and virtual characters who can either lend their voices to your content or make a stunning appearance, adding that extra flair to your social media presence. Whether you're a content creator, marketer, or just someone looking to make your social media posts shine, SocialAvatars is your creative partner in crafting engaging and memorable content that stands out in the digital crowd. Join us today and let your imagination run wild as you discover the perfect avatar to elevate your online content!",
+  //   "Welcome to SocialAvatars, your one-stop platform for bringing life to your social media content! Need a captivating voice or a charismatic face for your videos, human caption, or experts to dub your video in multiple languanges? Look no further. With SocialAvatars, you can easily connect with a diverse array of models, actors, and virtual characters who can either lend their voices to your content or make a stunning appearance, adding that extra flair to your social media presence. Whether you're a content creator, marketer, or just someone looking to make your social media posts shine, SocialAvatars is your creative partner in crafting engaging and memorable content that stands out in the digital crowd. Join us today and let your imagination run wild as you discover the perfect avatar to elevate your online content!",
   //   "https://i.ibb.co/mG2LJxz/418.jpg",
   //   "https://i.ibb.co/mG2LJxz/418.jpg",
   //   "https://i.ibb.co/TPdRtjB/428-2.jpg",
@@ -12480,6 +12806,24 @@ async function main() {
   //   ""
   // );
   // console.log("476marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 477
+  // await marketPlaceCollection.connect(wallets[474]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[474]).updateCollection(
+  //   "WorkPools",
+  //   "Find and apply to join a workpool. Workpools are groups of workers that send their workers on various gigs or more permanent positions inside of companies which instead of paying the workers, pay the workpool which in turn acquires and provides all necessary utilities to their workers. Workpools are a formidable way for people to provide for themselves and not suffer from layoffs, or issues that might prevent them from working. Some workpools provide for their retirees.",
+  //   "https://i.ibb.co/wwc5D0Y/324.jpg",
+  //   "https://i.ibb.co/wwc5D0Y/324.jpg",
+  //   "https://i.ibb.co/v1XTLCG/304-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("477marketPlaceCollection.updateCollection===========> Done!")
 
 
   }

@@ -3162,7 +3162,7 @@ contract MarketPlaceOrders {
             minBidIncrementPercentage: _minBidIncrementPercentage,
             transferrable: _transferrable,
             rsrcTokenId: _rsrcTokenId,
-            maxSupply: _maxSupply > 0 ? _maxSupply : type(uint).max,
+            maxSupply: _maxSupply,
             dropinTimer: block.timestamp + _dropinTimer,
             identityProof: IdentityProof({
                 minIDBadgeColor: COLOR.BLACK,

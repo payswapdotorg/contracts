@@ -2,18 +2,19 @@ export default {
   factoryV2: {
     hardhat: "0x6725f303b657a9451d8ba641348b6761a6cc7a17",
     bscTestnet: "0x6725f303b657a9451d8ba641348b6761a6cc7a17",
-    ftmTestnet: "0x843b8C96676018024cb14C9429De8293b9ED9Eda",
+    ftmTestnet: "0x1E2BF4F0806DC66cE5c2C1298d67C578E9FC1Ff1", //"0x843b8C96676018024cb14C9429De8293b9ED9Eda",
     goerli: "0x1097053Fd2ea711dad45caCcc45EfF7548fCB362",
   },
   factoryV3: {
     hardhat: "0x6725f303b657a9451d8ba641348b6761a6cc7a17",
     bscTestnet: "0xB46d40a16E949270B44940B0482F1b0951a67046",
-    ftmTestnet: "0x0Fae6d68151bf8468C5b0c15398416cfE49Cb2fF",
+    ftmTestnet: "0xEB6BAEe78f943Ab5E48EC8E92D3Ca15e590C1979",
     goerli: "0x6e906fC1d75c9559E4E8b0F1Fa002C4a9724988f",
   },
   positionManager: {
     hardhat: "0x6725f303b657a9451d8ba641348b6761a6cc7a17",
     bscTestnet: "0x8F78BECb5DECc1C083BfC3B182ec09c844a68532",
+    ftmTestnet: "0x51D8aC527Bd2E827ef0Baf7c393C3f5B9A1E3198",
     goerli: "0x09C65bC891bf39DAF771e85F2203B898402fF3CF",
   },
   stableFactory: {
@@ -29,6 +30,7 @@ export default {
   WETH: {
     hardhat: "0x6725f303b657a9451d8ba641348b6761a6cc7a17",
     bscTestnet: "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+    ftmTestnet: "0x11851A8BB872859Abbf9936354BC6B781d9eCcE1",
     goerli: "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
   },
 };

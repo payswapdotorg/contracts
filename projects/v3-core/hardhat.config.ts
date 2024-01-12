@@ -90,6 +90,7 @@ export default {
     ...(process.env.KEY_MAINNET && { bscMainnet }),
     ...(process.env.KEY_GOERLI && { goerli }),
     ...(process.env.KEY_ETH && { eth }),
+    testnet: ftmTestnet,
     // mainnet: bscMainnet,
   },
   etherscan: {

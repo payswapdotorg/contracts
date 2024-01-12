@@ -19,8 +19,8 @@ async function main() {
     throw new Error(`No config found for network ${networkName}`);
   }
 
-  const v3PeripheryDeployedContracts = await import(`@pancakeswap/v3-periphery/deployments/${networkName}.json`);
-  const positionManager_address = v3PeripheryDeployedContracts.NonfungiblePositionManager;
+  // const v3PeripheryDeployedContracts = await import(`@pancakeswap/v3-periphery/deployments/${networkName}.json`);
+  const positionManager_address = "0x51D8aC527Bd2E827ef0Baf7c393C3f5B9A1E3198" // v3PeripheryDeployedContracts.NonfungiblePositionManager;
 
   const MasterChefV3 = await ethers.getContractFactory("MasterChefV3");
   const masterChefV3 = await MasterChefV3.deploy(config.cake, positionManager_address, config.WNATIVE);

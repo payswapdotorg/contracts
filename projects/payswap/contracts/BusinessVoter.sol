@@ -25,7 +25,18 @@ contract BusinessVoter {
     event Withdraw(address indexed lp, address indexed gauge, uint tokenId, uint amount);
     event NotifyReward(address indexed sender, address indexed ve, uint amount);
     event DistributeReward(address indexed sender, address indexed gauge, uint amount);
-    event DeactivateGauge(uint indexed collectionId);
+    event DeactivateGauge(uint indexed collectionId, address _ve);
+    event UpdateMiscellaneous(
+        uint idx, 
+        uint collectionId, 
+        string paramName, 
+        string paramValue, 
+        uint paramValue2, 
+        uint paramValue3, 
+        address sender,
+        address paramValue4,
+        string paramValue5
+    );
 
     // simple re-entrancy check
     uint internal _unlocked = 1;
@@ -41,10 +52,10 @@ contract BusinessVoter {
         contractAddress = _contractAddress;
     }
 
-    function deactivateGauge() external {
+    function deactivateGauge(address _ve) external {
         emit DeactivateGauge(IMarketPlace(
             IContract(contractAddress).marketCollections()
-        ).addressToCollectionId(msg.sender));
+        ).addressToCollectionId(msg.sender), _ve);
     }
 
     // function _reset(uint _tokenId, uint _collectionId, uint _referrerProfileId, address _ve) internal {
@@ -211,6 +222,29 @@ contract BusinessVoter {
             IGauge(_gauge).notifyRewardAmount(ve(_ve).token(), _claimable);
         }
         emit DistributeReward(msg.sender, _gauge, _claimable);
+    }
+
+    function emitUpdateMiscellaneous(
+        uint _idx, 
+        uint _collectionId, 
+        string memory paramName, 
+        string memory paramValue, 
+        uint paramValue2, 
+        uint paramValue3,
+        address paramValue4,
+        string memory paramValue5
+    ) external {
+        emit UpdateMiscellaneous(
+            _idx, 
+            _collectionId, 
+            paramName, 
+            paramValue, 
+            paramValue2, 
+            paramValue3, 
+            msg.sender,
+            paramValue4,
+            paramValue5
+        );
     }
 
     // function distro(address _ve) external {

@@ -24,7 +24,7 @@ async function main() {
   const smartRouterHelper = await SmartRouterHelper.deploy()
   console.log('SmartRouterHelper deployed to:', smartRouterHelper.address)
   // await tryVerify(smartRouterHelper)
-
+  console.log("config===========================>", config)
   /** SmartRouter */
   console.log('Deploying SmartRouter...')
   const SmartRouter = await ethers.getContractFactory('SmartRouter', {

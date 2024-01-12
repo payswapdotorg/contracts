@@ -3769,6 +3769,8 @@ interface IGauge {
     function left(address token) external view returns (uint);
     function createGauge(uint,address) external returns(address);
     function addToken(address,address) external;
+    function attach(uint,uint) external;
+    function detach(uint,uint) external;
 }
 
 interface IBribe {
@@ -3924,8 +3926,8 @@ abstract contract Ownable is Context {
 
 contract AML is ERC20Votes, Ownable {
     address public contractAddress;
-    uint public limitWithoutProfileFactor = 1000e18;
-    uint public limitWithProfileFactor = 10000e18;
+    uint public limitWithoutProfileFactor = 10000e18;
+    uint public limitWithProfileFactor = 1000000e18;
     uint public bufferTime = 14 days;
     uint internal constant month = 86400 * 7 * 4;
     mapping(address => uint) public attachedProfileId;
@@ -4214,6 +4216,11 @@ contract AML is ERC20Votes, Ownable {
         attachedBountyId[_profileId] = 0;
         emit DetachProfile(_profileId, msg.sender);
     }
+}
+
+interface IFactory {
+    function collectProtocolFees(address,address,uint128,uint128) external;
+    function setOwner(address) external;
 }
 
 interface ISponsorCard {

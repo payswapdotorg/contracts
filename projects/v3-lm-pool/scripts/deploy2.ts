@@ -19,10 +19,12 @@ async function main() {
   const v3DeployedContracts = await import(`@pancakeswap/v3-core/deployments/${networkName}.json`)
   const mcV3DeployedContracts = await import(`@pancakeswap/masterchef-v3/deployments/${networkName}.json`)
 
-  const pancakeV3Factory_address = v3DeployedContracts.PancakeV3Factory
+  const pancakeV3Factory_address = "0x0BFbCF9fa4f9C56B0F40a671Ad40E0805A091865" // v3DeployedContracts.PancakeV3Factory
 
   const PancakeV3LmPoolDeployer = await ethers.getContractFactory('PancakeV3LmPoolDeployer')
-  const pancakeV3LmPoolDeployer = await PancakeV3LmPoolDeployer.deploy(mcV3DeployedContracts.MasterChefV3)
+  const pancakeV3LmPoolDeployer = await PancakeV3LmPoolDeployer.deploy(
+    "0x37A8bEF73715A520e1e42C282246d739729293fd" // mcV3DeployedContracts.MasterChefV3
+  )
 
   console.log('pancakeV3LmPoolDeployer deployed to:', pancakeV3LmPoolDeployer.address)
 

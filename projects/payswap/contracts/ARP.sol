@@ -18,7 +18,7 @@ contract ARP {
     address public immutable valuepool;
     bool public immutable immutableContract;
     uint public adminBountyRequired;
-    uint public period = 86400 * 7 * 30; // 1 month
+    uint public period = 86400 * 30; // 1 month
     address contractAddress;
     mapping(uint => bool) public isAutoChargeable;
     mapping(address => uint) public adminBountyId;

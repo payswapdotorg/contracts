@@ -30,6 +30,25 @@ contract FeeTo {
         pendingRevenue[_token] = 0;
     }
 
+    function updateOwner(address _factory, address _owner) external {
+        IFactory(_factory).setOwner(_owner);
+    }
+
+    // function collectProtocolFees(
+    //     address _factory,
+    //     address pool,
+    //     address recipient,
+    //     uint128 amount0Requested,
+    //     uint128 amount1Requested
+    // ) external {
+    //     IFactory(_factory).collectProtocol(
+    //         pool,
+    //         recipient,
+    //         amount0Requested,
+    //         amount1Requested
+    //     );
+    // }
+
     function distribute(address _token) public {
         uint _period = activePeriod[_token];
         if (block.timestamp >= _period + week) { // only trigger if new week
