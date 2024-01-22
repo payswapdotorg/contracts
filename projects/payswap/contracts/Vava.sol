@@ -2571,7 +2571,7 @@ contract Ve {
         optionValues = new string[](8);
         uint idx;
         (uint _percentile,) = IValuePool(valuepool).userInfo(_tokenId);
-        optionValues[idx++] = string(abi.encodePacked(name, ", ", symbol));
+        optionValues[idx++] = symbol;
         optionNames[idx] = "Balance";
         optionValues[idx++] = toString(_balanceOfNFT(_tokenId, block.timestamp) / 10**decimals);
         optionNames[idx] = "Locked";

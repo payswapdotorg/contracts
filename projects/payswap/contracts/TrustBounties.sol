@@ -149,8 +149,11 @@ contract TrustBounties {
     }
     
     function updateBountyEndTime(uint _bountyId, uint _buffer) external {
-        require(ITrustBounty(_trustBountyHelper()).isAuthorizedSourceFactories(msg.sender));
-        bountyInfo[_bountyId].endTime = block.timestamp + _buffer;
+        if(ITrustBounty(_trustBountyHelper()).isAuthorizedSourceFactories(msg.sender)) {
+            bountyInfo[_bountyId].endTime = block.timestamp + _buffer;
+        } else if (bountyInfo[_bountyId].owner == msg.sender) {
+            bountyInfo[_bountyId].endTime += _buffer;
+        }
     }
 
     function addApproval(uint _bountyId, uint _partnerBounty, uint _amount, uint _deadline) external {
@@ -266,9 +269,10 @@ contract TrustBounties {
     }
 
     function _deleteBalance(uint _bountyId, address _source, address _user) internal lock {
+        address trustBountyHelper = _trustBountyHelper();
+        require(ITrustBounty(trustBountyHelper).attachments(_bountyId) == 0);
         uint _balanceAmount = balances[_bountyId][_source].amount;
         uint _tokenId = balances[_bountyId][_source].tokenId;
-        address trustBountyHelper = _trustBountyHelper();
         delete balances[_bountyId][_source];
         balanceSources[_bountyId].remove(_source);
         if (_source == address(this)) {

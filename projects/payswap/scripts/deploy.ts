@@ -266,7 +266,7 @@ async function main() {
   const stakeMarketBribeAddress = "0xA8ad12dd7708edeB2D18cB6CFB94fbB83bfa3909"
   const stakeMarketVoterAddress = "0x0F6dE1a86F2B0B82ec8C4831845aa2e96B7c6a5A"
   const contractAddress = "0x57Cdd8692eF6FC8d195FcFd7601cF31c0e4e8B75" //"0x997068BaD1417e1d7Be77CFC9123B40a3D9Bdb92"
-  const nftsvgAddress = "0x4b81e883C13405D92F8986C06738Ff4Fa10d1573"
+  const nftsvgAddress = "0x194e19d9851BE5d62d4D47F945C4098AfA747626"
   const nfticketAddress = "0x6E202dbEE80E9A73709a55875Ad6f336D3C5aB71"
   const nfticketHelperAddress = "0x7488bF1615432bEF6C654d5E50bC23f0E7BeE794"
   const nfticketHelper2Address = "0xd89685bA803882c2F387932320eA25faBA441fb4"
@@ -294,10 +294,10 @@ async function main() {
   const trustBountiesHelperAddress = "0xD5a3a5EfD62592BB3F5Fd7cC5f5B6c6D3712b33d"
   const trustBountiesVoterAddress = "0x4Bb8E20BDAb5333ad0b91674CE1A3e3a34A181A8"
   const customMinterAddress = "0x0102838c0ba71763d1AF04261885b3E3925111aE"
-  const arpFactoryAddress = "0x1b6E21566025fEeFed2d005B394eDcf3D2fC6DFc"
-  const arpHelperAddress = "0x39Da9553d5fFaa6Bf496e11F6Ed069E17DA80B31"
-  const arpMinterAddress = "0x0FF1b06567Fba7c3CD1d96f662591AC1847D2346"
-  const arpNoteAddress = "0x08C9BE561efeb1a909b701115178E0e60621bB4a"
+  const arpFactoryAddress = "0x02a405E1d2c074e44e2592e926a19a777c5dA1a2"
+  const arpHelperAddress = "0xB9A79b30271068FB06Cf11dFF599f5E48c7d456d"
+  const arpMinterAddress = "0x4119E487e0A8480A3e840DB3B9D35BF621d658E5"
+  const arpNoteAddress = "0x5a95702857e641140d96D72704c6DC108EcbDaA6"
   const billFactoryAddress = "0x3BD957Ca8bCF699Cc6728E05690432A4890c9C2a"
   const billMinterAddress = "0xaC50394D310A03d6587A31B98dC591EFaEDa967A"
   const billHelperAddress = "0x6c7014Dc578B717722F56Fb64cc4f7C65bB2a3E6"
@@ -317,10 +317,10 @@ async function main() {
   const worldHelperAddress = "0xb846371BFc2aCD2fa8ad6Af10EA5bF8C01Ca7dC2"
   const worldHelper2Address = "0x4DDC7B7fDe5Ae29f8eeb08fF4a670826798DCc6d"
   const worldHelper3Address = "0x6ab8cF61b971102471ef6276A8eD8b7Cb5bC03E7"
-  const rampFactoryAddress = "0xC09f65453cc668E0a12f3d94C98cF881190744EB"
-  const rampHelperAddress = "0xf6d10E93874d1e50831ecf41F504bE04Fd132517"
-  const rampHelper2Address = "0x708577E958AeA3575Eb5D7648D35293CF7B80168"
-  const rampAdsAddress = "0x1C57E1E05042312b47eB1258D58624c533F34cBB"
+  const rampHelperAddress = "0x596a04c451C941cAe2183C7696c387ca46212C10"
+  const rampHelper2Address = "0x5C9493Ce9f4fB25f7EfA7A9C7e1a9E1e82bBdCc7"
+  const rampFactoryAddress = "0x2ED6528322295f890d42b400DAF1050D467639eA"
+  const rampAdsAddress = "0x5FB6e149B1ce390d69CeE7a4f177e7B6FC299E07"
   const bettingHelperAddress = "0x1B13e58320C0a7F490C9C576201506528C0D9Dc5"
   const bettingMinterAddress = "0x22Ee373D092aF0626aE72Bc9124E68161ED38c90"
   const bettingFactoryAddress = "0x8f50058B663b5949DF59F6795A27A2552BD100B4"
@@ -1127,7 +1127,7 @@ async function main() {
   // await bettingHelper.deployed()
   // console.log("bettingHelper============>", bettingHelper.address)
 
-  // const arpFactory = await ARPFactory.deploy();
+  // const arpFactory = await ARPFactory.deploy(contractAddresses.address);
   // await arpFactory.deployed()
   // console.log("arpFactory============>", arpFactory.address)
 
@@ -1433,7 +1433,7 @@ async function main() {
   // await extraTokenFactory.deployed()
   // console.log("extraTokenFactory============>", extraTokenFactory.address)
 
-  // const rampHelper = await RampHelper.deploy(tFiat.address, 1)
+  // const rampHelper = await RampHelper.deploy(contractAddresses.address, 1)
   // await rampHelper.deployed()
   // console.log("rampHelper============>", rampHelper.address)
 
@@ -1471,9 +1471,6 @@ async function main() {
 
   // await referralVoter.setContractAddress(contractAddresses.address)
   // console.log("referralVoter.setContractAddress===========> Done!")
-
-  // await arpFactory.setContractAddress(contractAddresses.address)
-  // console.log("arpFactory.setContractAddress===========> Done!")
 
   // await arpHelper.setContractAddress(contractAddresses.address)
   // console.log("arpHelper.setContractAddress===========> Done!")
@@ -1652,9 +1649,6 @@ async function main() {
   // await rampFactory.setContractAddress(contractAddresses.address)
   // console.log("rampFactory.setContractAddress===========> Done!")
 
-  // await rampHelper.setContractAddress(contractAddresses.address)
-  // console.log("rampHelper.setContractAddress===========> Done!")
-
   // await rampHelper2.setContractAddress(contractAddresses.address)
   // console.log("rampHelper2.setContractAddress===========> Done!")
 
@@ -1821,6 +1815,7 @@ async function main() {
   // let va = await Va.attach("0xb9858E52175Dc194686E29875570703B5C986Fe3")
   // console.log("va.token===========>", await va.token(), await va.ownerOf(1))//, await va.getWithdrawable(1))
   // console.log("trustBounties.bountyInfo==================>", await trustBounties.bountyInfo(1), await trustBounties.balances(1, "0xb9858E52175Dc194686E29875570703B5C986Fe3"), await tFiat.balanceOf(trustBounties.address))
+  // console.log("vaFABT=================>", await vafabt.ownerOf(2), vaFABTAddress, vafabt.address)
 
   // await businessMinter.updateVes([
   //   vafabt.address,
@@ -2432,13 +2427,6 @@ async function main() {
   // console.log("stakeMarketVoter.period====================>", await stakeMarketVoter.period())
   // console.log("stakeMarketVoter.period====================>", await stakeMarketVoter.gauges("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", 15))
   // console.log("stakeMarketVoter.period====================>", await stakeMarketVoter.gauges("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", 10))
-
-  // await rampHelper.addDtoken(veAddress)
-  // console.log("rampHelper.addDtoken==========>Done")
-  // await rampHelper.addDtoken(tFiatAddress)
-  // console.log("rampHelper.addDtoken==========>Done")
-  // await tFiat.updateMinter(rampHelper.address)
-  // console.log("tFiat.updateMinter==========>Done", await tFiat.minter())
 
   // await tFiat2.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
   // await tFiat3.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
@@ -3071,8 +3059,8 @@ async function main() {
     // console.log("worldHelper3.tokenURI==================>", await worldHelper3.tokenURI(1))
 
     // await bettingFactory.createGauge(1, deployer.address, "0x0000000000000000000000000000000000000000")
-    let bettingAddress = (await bettingHelper.getAllBettings(0))[0]
-    const betting = Betting.attach(bettingAddress)
+    // let bettingAddress = (await bettingHelper.getAllBettings(0))[0]
+    // const betting = Betting.attach(bettingAddress)
     // const betting = await Betting.deploy(
     //   deployer.address,
     //   bettingHelper.address,
@@ -3338,23 +3326,23 @@ async function main() {
   // let paywallAddress = (await paywallARPHelper.getAllARPs(0))[0]
   // let paywallARP = Paywall.attach(paywallAddress)
   // console.log("paywallARP===>", paywallAddress, paywallARPHelper.address, await paywallARP.collectionId())
-  // //   // await paywallARP.partner(1,"uber","uber",2592000)
-  // //   // console.log("partner==========>", await paywallARP.partners(1,"uber"))
+  // await paywallARP.partner(1,"uber","uber",2592000)
+  // console.log("partner==========>", await paywallARP.partners(1,"uber"))
 
   // console.log("getTicketPaywallOptions==================>", await nfticketHelper2.ownerOf(1), await nfticketHelper2.ownerOf(2))
-  // // // console.log("getTicketPaywallOptions==================>", await nfticketHelper2.ownerOf(6), await nfticketHelper2.getTicketPaywallOptions(6))
+  // console.log("getTicketPaywallOptions==================>", await nfticketHelper2.ownerOf(6), await nfticketHelper2.getTicketPaywallOptions(6))
 
-  // // // await paywallARP.updateProtocol(4, 0, [deployer.address])
-  // // console.log("referrer==================>", await nfticket.referrer(5))
-  // // console.log("userTokenId==================>", await nfticket.userTokenId(5))
-  // // console.log("getTicketPaywallOptions==================>", await nfticketHelper2.getTicketPaywallOptions(5))
-  // // console.log("ongoing==================>", await nfticketHelper2.ownerOf(7), deployer.address)
+  // await paywallARP.updateProtocol(4, 0, [deployer.address])
+  // console.log("referrer==================>", await nfticket.referrer(5))
+  // console.log("userTokenId==================>", await nfticket.userTokenId(5))
+  // console.log("getTicketPaywallOptions==================>", await nfticketHelper2.getTicketPaywallOptions(5))
+  // console.log("ongoing==================>", await nfticketHelper2.ownerOf(7), deployer.address)
   // console.log("getTicketInfo==================>", await nfticket.getTicketInfo(2))
   // console.log("partnershipEnds==================>", await paywallARP.partnershipEnds(290, "ali"))
   // console.log("partnershipEnds==================>", await paywallARP.partnershipEnds(290, "baba"))
   // console.log("collectionIdToPaywallARP==================>", await paywallARPHelper.collectionIdToPaywallARP(290))
-  // // console.log("paywallARP==================>", await paywallARP.protocolInfo(1), await paywallARP.addressToProtocolId("0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA"))
-  // // console.log("lastProtocolId==================>", await paywallARP.lastProtocolId(), await paywallARP.owner(1))
+  // console.log("paywallARP==================>", await paywallARP.protocolInfo(1), await paywallARP.addressToProtocolId("0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA"))
+  // console.log("lastProtocolId==================>", await paywallARP.lastProtocolId(), await paywallARP.owner(1))
   // console.log("getDueReceivable==================>", await paywallARP.getDueReceivable(1))
   // console.log("ongoing==================>", await paywallARP.ongoingSubscription("0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA", 0, "baba"))
   // console.log("ongoing==================>", await paywallARP.ongoingSubscription("0x2fbfd5A8B2C31DDB921211933bfb1842FF39B5eA", 20, "ali"))
@@ -3479,25 +3467,112 @@ async function main() {
     // )
     // await ramp.deployed()
     // console.log("ramp==============>", ramp.address)
-  // let rampAddress = (await rampHelper.getAllRamps(0))[0]
-  //   let ramp = Ramp.attach(rampAddress)
-  //   console.log("ramp===>", rampAddress, ramp.address)
-    
-    // console.log("ramp.protocolInfo============>", await ramp.protocolInfo(tFiat.address))
-    // console.log("getParams===============>", await ramp.getParams())
-  // await ramp.updateAdmin(deployer.address, true)
+  let rampAddress = (await rampHelper.getAllRamps(0))[0]
+  let ramp = Ramp.attach(rampAddress)
+  console.log("ramp===>", rampAddress, ramp.address)
 
+  //   console.log("devaddr_===============>", await ramp.devaddr_())
+    // await ramp.updateDevTokenId(vaFABTAddress, 1)
+    // await ramp.updateParameters(0, 0, 0, 1, true)
+    // await fabt.approve(ramp.address, 1)
+    // console.log(await ramp.connect(deployer2).buyRamp(2, []))
+    // console.log("devaddr_===============>", await ramp.devaddr_())
+  // console.log("getParams===============>", await ramp.getParams())
+  // await ramp.updateAdmin(deployer.address, true)
+    
     // await ramp.updateAdmin(card.address, true)
-    // console.log("ramp.updateAdmin===============>Done", await ramp.isAdmin(card.address))
+    // console.log("ramp.updateAdmin===============>Done", await ramp.isAdmin(deployer.address))
 
     // console.log("rampHelper.getAllRamps=====================>", await rampHelper.getAllRamps(0))
-    
+
     // await rampHelper.updateIsPayswapRamp(ramp.address, true)
     // console.log("rampHelper.updateIsPayswapRamp=====================>Done")
 
-    // console.log("rampAds.mintAvailable=====================>", await rampAds.mintAvailable(ramp.address, tFiat.address))
-    // console.log("rampHelper.isPayswapRamp=====================>", await rampHelper.isPayswapRamp(ramp.address))
+    // await trustBountiesHelper.updateCanAttach(rampHelper.address, true)
+    // console.log("trustBountiesHelper.updateCanAttach===========> Done!")
 
+    // await trustBountiesHelper.updateAuthorizedSourceFactories([rampHelper.address], true)
+    // console.log("trustBountiesHelper.updateAuthorizedSourceFactories===========> Done!")
+
+    // console.log("rampHelper.isPayswapRamp=====================>", await rampHelper.isPayswapRamp(ramp.address))
+    
+    // const tEURAddress = "0xDA2180a084956475B4C4EBeeAE649862BaD838a8"
+    // const tEUR = fiatContract.attach(tEURAddress)
+    // await rampHelper.addDtoken(tEURAddress)
+    // await tEUR.updateMinter(rampHelper.address)
+    // console.log("tEUR.updateMinter====================>Done")
+
+    // const tAEDAddress = "0x846533F4d977F89814C4cD17A44729f0F8B80323"
+    // const tAED = fiatContract.attach(tAEDAddress)
+    // await tAED.updateMinter(rampHelper.address)
+    // await rampHelper.addDtoken(tAEDAddress)
+    // console.log("tAED.updateMinter====================>Done")
+
+    // const tNGNAddress = "0x346722bD06b72F9574028F79D2BD0CC72086E569"
+    // const tNGN = fiatContract.attach(tNGNAddress)
+    // await tNGN.updateMinter(rampHelper.address)
+    // await rampHelper.addDtoken(tNGNAddress)
+    // console.log("tNGN.updateMinter====================>Done")
+
+    // const tBRLAddress = "0x33dc9963Ba5beb5Eec85DA15C8c7B70077467276"
+    // const tBRL = fiatContract.attach(tBRLAddress)
+    // await tBRL.updateMinter(rampHelper.address)
+    // await rampHelper.addDtoken(tBRLAddress)
+    // console.log("tBRL.updateMinter====================>Done")
+
+    // console.log(await ramp.protocolInfo(tEUR.address))
+    // console.log(await tEUR.balanceOf(ramp.address))
+
+    // await ramp.updateParameters(
+    //   5000,
+    //   5000,
+    //   0,
+    //   "1000000000000000000",
+    //   false
+    // )
+    // console.log("ramp.updateParameters============>Done")
+
+    // await ramp.createProtocol(tEUR.address)
+    // console.log("ramp.createProtocol============>Done")
+
+    // await ramp.updateProtocol(tEUR.address, false, 0, "1000000000000000000", 2)
+    // console.log("ramp.updateProtocol============>Done")
+
+    // await ramp.updateBounty(tEUR.address, 51)
+    // console.log("ramp.updateBounty============>Done")
+
+    // await rampHelper.updateFiatTokenPrices([tEUR.address], ["336700000000000000"])
+    // console.log("rampHelper.updateFiatTokenPrices===================>Done")
+
+    // console.log("==========>", await rampHelper.convert(tEUR.address, "1000000000000000000"))
+    // console.log("==========>", await rampHelper.convert(tAED.address, "1000000000000000000"))
+    // console.log("==========>", await rampHelper.convert(tNGN.address, "1000000000000000000"))
+    // console.log("rampAds.mintAvailable=====================>", await rampAds.mintAvailable(ramp.address, tNGN.address))
+    
+    // await ramp.connect(deployer2).addPartner(tEUR.address, 43)
+    // console.log("ramp.addPartner============>Done")
+
+    // const _veA = await ramp._ve()
+    // const veA = Va.attach(_veA)
+    // console.log("rampHelper.updateIsPayswapRamp=====================>Done", await ramp.getParams(), await veA.ownerOf(2), await ramp.getAllTokens(0), await veA.token(), await ramp.protocolInfo(tEUR.address))
+    // console.log("==================>", await trustBountiesHelper.attachments(26))
+    // console.log("==================>", await trustBountiesHelper.attachments(27))
+
+    // console.log("ramp.updateBounty===========>", await ramp.updateBounty(tAED.address, 3))
+    // console.log("rampHelper.checkBounty===========>", await rampHelper.checkBounty(deployer.address, 3))
+    // console.log("attachments===========>", await rampHelper.attached(3))
+    // console.log("ramp.protocolInfo============>", await ramp.protocolInfo(tEUR.address))
+    // console.log("ramp.getAllPartnerBounties=====================>", await ramp.getAllPartnerBounties(tEUR.address, 0))
+    // console.log("================>", await trustBounties.getBalance(6))
+    // console.log("================>", await rampAds.mintAvailable(ramp.address, tEUR.address))
+    // console.log("rampHelper.getPartnerShare=====================>", await rampHelper.getPartnerShare('5940000000000000000', 6))
+    // console.log("ramp.totalRevenue=====================>", await ramp.totalRevenue(tEUR.address))
+    // console.log("ramp.paidRevenue=====================>", await ramp.paidRevenue(tEUR.address, 6))
+    // console.log("rampHelper.claimPendingRevenue=====================>", deployer2.address, await rampHelper.claimPendingRevenue(
+    //   tEUR.address,
+    //   deployer2.address,
+    //   6
+    // ))
     // await trustBounties.createBounty(
     //   deployer.address,
     //   tFiat.address,
@@ -3687,9 +3762,11 @@ async function main() {
     // )
     // await arp.deployed()
 
-    // let arpAddress = "0xD1909Be8B3a80b23b5E6BDcb6c2c7d67b75F0a50" // (await arpHelper.getAllARPs(0))[0]
+    // let arpAddress = (await arpHelper.getAllARPs(0))[0]
     // let arp = ARP.attach(arpAddress)
     // console.log("arp===>", arpAddress, arp.address)
+    // console.log("getReceivable===============>", await arp.getReceivable(2, 0))
+    // console.log("getReceivable===============>", await arp.getReceivable(2, 1))
 
   // await arp.updateProtocol(
   //   deployer.address,
@@ -3702,7 +3779,7 @@ async function main() {
   //   "description"
   // )
   // console.log("arpHelper.isLender===================>", await arpHelper.isLender(arpAddress, "0x017aba5f9fe7673a675c9541df0e792d8118fb41", 0, 0))
-  // console.log("protocolInfo============>", await arp.protocolInfo(2))
+  // console.log("protocolInfo============>", await arp.protocolInfo(2), await arp.debt(tFiat.address))
   // await nftSvg.updateDescription(arpNote.address, "This note gives you access to revenues of the arp on the specified protocol")
   // await arp.updateAutoCharge(true, 1)
   // console.log("arpHelper.isGauge============>", await arpHelper.isGauge(arp.address), await arp.isAutoChargeable(1))
@@ -3717,7 +3794,8 @@ async function main() {
   // console.log("arpNote.adminNotes============>", await arpNote.adminNotes(1))
   // console.log("arpNote.notes============>", (await arpNote.notes(2))[0])
   // console.log("0arpNote.getDueReceivable============>", await arpNote.getDueReceivable(arp.address, 1, 0))
-  // console.log("1arpNote.getDueReceivable============>", await arpNote.getDueReceivable(arp.address, 1, 1))
+  // console.log("0arpNote.getDueReceivable============>", await arpNote.getDueReceivable(arp.address, 2, 0))
+  // console.log("0arpNote.getDuePayable============>", await arpNote.getDuePayable(arp.address, 1, 0))
   // console.log("2arpNote.getDueReceivable============>", await arpNote.getDueReceivable(arp.address, 1, 2))
     // console.log("description============>", await arp.description(1))
     // // console.log("arpHelper._getOptions============>", await arpHelper._getOptions(arp.address,1,1))
@@ -3836,7 +3914,7 @@ async function main() {
     // )
     // console.log("vavaFactory.createValuePool===============>Done")
   //   console.log("vavaHelper.getAllVavas===============>",await vavaHelper.getAllVavas(0))
-  // let vavaAddress = "0x8aFCA964b080060f4F3aA5893E5bcA3fA38FfbE0" //(await vavaHelper.getAllVavas(0))[0]
+  // let vavaAddress = "0xF0D8bd80B6c46c6486fD2bb52c82D2a2037c5595" //(await vavaHelper.getAllVavas(0))[0]
 
     // const vava =  await Vava.deploy(
     //   tFiat.address,
@@ -3848,7 +3926,8 @@ async function main() {
 
   // let vava = Vava.attach(vavaAddress)
   // console.log("vava.deployed===============>Done", vava.address)
-  
+  // console.log("==========>", await vava.getUserPercentile(2))
+
   // // fungible token loan
   // // await tFiat.approve(vava.address, ethers.BigNumber.from("1000000000000000000"))
   // // await tFiat.transfer(vava.address, ethers.BigNumber.from("1000000000000000000"))
@@ -9158,7 +9237,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[273]).updateCollection(
   //   "Awaards",
-  //   "Introducing Awaards, a groundbreaking platform set to revolutionize the world of awards ceremonies. Awaards aims to transcend traditional accolades like the Oscars, Grammys, Ballon d'Or, and others by providing a dynamic, inclusive, and transparent stage for artists, sportspeople, and creators of all kinds to be recognized and celebrated. With a global community at its heart and a commitment to fairness, Awaards empowers fans and industry experts alike to honor excellence, redefine prestige, and give rise to a new era of recognition where everyone has a voice in applauding the extraordinary talents that shape our world. Say goodbye to the old guard; Awaards is ushering in a future where recognition knows no bounds.",
+  //   "Introducing Awaards, a groundbreaking platform set to revolutionize the world of awards ceremonies. Awaards aims to transcend traditional accolades like the Oscars, Grammys, Ballon d'Or, and others by providing a dynamic, inclusive, and transparent stage for artists, sportspeople, and creators of all kinds to be recognized and celebrated. With a global community at its heart and a commitment to fairness, Awaards empowers fans and industry experts alike to honor excellence, redefine prestige, and give rise to a new era of recognition where everyone has a voice in applauding the extraordinary talents that shape our world. Say goodbye to the old guard; Awaards is ushering in a future where recognition knows no bounds. Members of the valuepools dedicated to each of the awards defined an attribute points to various actions. The award winner is the one that has accumulated the most points. Take the Ballon d'Or award for instance, members of its valuepool will vote on points to attribute to actions like scoring, making the final pass, being elected best players, number of matches played, points for each trophee, etc. After the point system has been voted, the award winner can then be objectively determined.",
   //   "https://i.ibb.co/KzZ15J4/343.jpg",
   //   "https://i.ibb.co/KzZ15J4/343.jpg",
   //   "https://i.ibb.co/PGS08rk/206.jpg",
@@ -12825,6 +12904,41 @@ async function main() {
   // );
   // console.log("477marketPlaceCollection.updateCollection===========> Done!")
 
+  // // 478
+  // await marketPlaceCollection.connect(wallets[475]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[475]).updateCollection(
+  //   "SubStick",
+  //   "Find and subscribe to a group of people working towards a common goal, you will find paywalls around goals such as running every day/week/etc, training, reading, etc. These activities are done in groups with the other subscribers and each time you miss a session, you lose your subscription for the month. If you never miss any session, you can get all your paid subscripitons back when you decide to cancel the subscription.",
+  //   "https://i.ibb.co/BrLzdYN/132.jpg",
+  //   "https://i.ibb.co/BrLzdYN/132.jpg",
+  //   "https://i.ibb.co/BKMrjRm/234.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("478marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 479
+  // await marketPlaceCollection.connect(wallets[476]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[476]).updateCollection(
+  //   "Indices",
+  //   "Find and join valuepools that DCA into a set of companies just like an index fund. Find valuepools that invest in the top 500 companies in the US, China, etc.; valuepools that invest in the top 500 companies in the world, the top crypto tokens, the top NFTs, etc.",
+  //   "https://i.ibb.co/vxPSGXs/31.jpg",
+  //   "https://i.ibb.co/vxPSGXs/31.jpg",
+  //   "https://i.ibb.co/ZBV2VKT/30-2.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("479marketPlaceCollection.updateCollection===========> Done!")
 
   }
   

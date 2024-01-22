@@ -4095,6 +4095,7 @@ contract AML is ERC20Votes, Ownable {
     }
 
     function createClaim(
+        address _recipient,
         uint _bountyId, 
         uint _amountToClaim,
         bool _lockBounty,
@@ -4108,6 +4109,7 @@ contract AML is ERC20Votes, Ownable {
         erc20(address(this)).approve(trustBounty, _minToClaim);
         ITrustBounty(trustBounty).createClaim(
             address(this),
+            _recipient,
             _bountyId,
             _amountToClaim,
             _lockBounty,
@@ -5127,7 +5129,7 @@ interface ITrustBounty {
     function ves(address) external view returns(bool);
     function attach(uint) external;
     function detach(uint) external;
-    function createClaim(address, uint, uint, bool, string memory, string memory, string memory) external;
+    function createClaim(address, address, uint, uint, bool, string memory, string memory, string memory) external;
     function createClaimETH(address, uint, uint, bool, string memory, string memory, string memory) external payable;
     function getBalance(uint _bountyId) external view returns(uint _balance);
     function bountyInfo(uint _bountyId) external view returns(address,address,address,address,uint,uint,uint,uint,NFTYPE,bool);
@@ -5531,8 +5533,13 @@ interface INFTMarketPlace {
 
 interface IRamp {
     function endBounty(uint) external;
+    function attach(uint) external;
+    function detach(uint) external;
     function postMint(string memory) external;
+    function emitBuyRamp(address) external;
     function mint(address,address,uint,uint,string memory) external;
+    function automatic() external view returns(bool);
+    function cap() external view returns(uint);
     function isPayswapRamp(address) external view returns(bool);
     function checkAuditor(address) external view returns(bool);
     function emitClaimPendingRevenue(address,address,address,uint) external;
@@ -5558,7 +5565,7 @@ interface IRamp {
     function nativeCoin() external view returns(address);
     function badgeNFT() external view returns(address);
     function dTokenSetContains(address) external view returns(bool);
-    function mint(address, address, uint, uint, uint, string memory) external;
+    function mintToken(address, address, bool, uint, uint, uint, uint, string memory) external;
     function mint(address, uint) external;
     function mintTo(address, uint) external;
     function burn(address, uint) external;
@@ -6134,6 +6141,7 @@ interface INoteEmitter {
 }
 
 interface ILottery {
+    function injectFunds(uint256,uint256,address,bool) external;
     function deleteReward(address,address,uint) external;
     function getPendingReward(uint,address,address,bool) external view returns(uint);
     function withdrawPendingReward(address,uint,uint) external;
@@ -6371,6 +6379,8 @@ interface IARP {
     function attach(uint) external;
     function detach(uint) external;
     function protocolInfo(uint) external view returns(ARPInfo memory);
+    function paidPeriodPayable(uint) external view returns(uint);
+    function paidPeriodReceivable(uint) external view returns(uint);
     function percentiles(address) external view returns(uint);
     function getMedia(address,uint) external view returns(string[] memory);
     function collectionId() external view returns(uint);

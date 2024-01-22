@@ -5551,10 +5551,10 @@ contract NFTSVG {
                 'if (',
                 _hasTask ? "true" : "false",
                 '){document.getElementById("task").setAttribute("style","display:show;");',
-                'document.getElementById("default").setAttribute("style","display:none;");',
-                '}else{document.getElementById("default").setAttribute("style","display:show;");',
+                '}else{document.getElementById(1).setAttribute("style","display:show;");',
                 'document.getElementById("task").setAttribute("style","display:none;");}',
                 'document.getElementById("superchat").setAttribute("style","display:none;");'
+                'document.getElementById("default").setAttribute("style","display:none;");'
             )
         );
     }

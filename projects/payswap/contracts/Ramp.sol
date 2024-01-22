@@ -104,15 +104,10 @@ contract Ramp {
     
     function updateBounty(address _token, uint _bountyId) external {
         IRamp(helper).checkBounty(msg.sender, _bountyId);
-        require(isAdmin[msg.sender]);
-        require(protocolInfo[_token].bountyId == 0);
+        require(isAdmin[msg.sender], "R0");
+        require(protocolInfo[_token].bountyId == 0, "R4");
         protocolInfo[_token].bountyId = _bountyId;
-    }
-
-    function setContractAddress(address _contractAddress) external {
-        require(contractAddress == address(0x0) || helper == msg.sender);
-        contractAddress = _contractAddress;
-        helper = IContract(_contractAddress).rampHelper();
+        IRamp(helper).attach(_bountyId);
     }
 
     function _updateBounty(address _token, uint _bountyId) internal {
@@ -121,10 +116,11 @@ contract Ramp {
             address _trustBounty = IContract(contractAddress).trustBounty();
             uint newBalance = ITrustBounty(_trustBounty).getBalance(_bountyId);
             uint oldBalance = ITrustBounty(_trustBounty).getBalance(protocolInfo[_token].bountyId);
-            require(newBalance >= oldBalance);
+            require(newBalance >= oldBalance, "R03");
             _unlockBounty(_token);
         } 
         protocolInfo[_token].bountyId = _bountyId;
+        IRamp(helper).attach(_bountyId);
     }
 
     function getAllPartnerBounties(address _token, uint _start) external view returns(uint[] memory _partners) {
@@ -137,23 +133,39 @@ contract Ramp {
     function addPartner(address _token, uint _bountyId) external {
         address rampAds = IContract(contractAddress).rampAds();
         (,,CollateralStatus _status) = IRamp(rampAds).mintAvailable(address(this), _token);
-        if (_status == CollateralStatus.UnderCollateralized ||
+        require(_status == CollateralStatus.UnderCollateralized ||
             protocolInfo[_token].maxParters > protocolPartners[_token].length()
-        ) {
-            IRamp(helper).checkBounty(msg.sender, _bountyId);
-            require(!isAdmin[msg.sender]);
-            require(protocolPartners[_token].length() < IContract(contractAddress).maximumSize());
-            protocolPartners[_token].add(_bountyId);
-            uint _share = ITrustBounty(IContract(contractAddress).trustBounty()).getBalance(_bountyId) * 10000 / IRamp(helper).getTotalBalance(address(this), _token);
-            // do not account for past revenue for new partners
-            paidRevenue[_token][_bountyId] += _share * totalRevenue[_token]/ 10000;
+        ); 
+        IRamp(helper).checkBounty(msg.sender, _bountyId);
+        require(!isAdmin[msg.sender]);
+        require(protocolPartners[_token].length() < IContract(contractAddress).maximumSize());
+        (,uint _totalBalance,) = IRamp(IContract(contractAddress).rampAds()).mintAvailable(address(this), _token);
+        _totalBalance += ITrustBounty(IContract(contractAddress).trustBounty()).getBalance(_bountyId);
+        uint _share = IRamp(helper).getPartnerShare(_totalBalance, _bountyId);
+        uint _share2 = IRamp(helper).getPartnerShare(_totalBalance, protocolInfo[_token].bountyId);
+        paidRevenue[_token][_bountyId] = _share * totalRevenue[_token]/ 10000;
+        paidRevenue[_token][protocolInfo[_token].bountyId] = _share2 * totalRevenue[_token]/ 10000;
+        for (uint i = 0; i < protocolPartners[_token].length(); i++) {
+            uint __bountyId = protocolPartners[_token].at(i);
+            uint __share = IRamp(helper).getPartnerShare(_totalBalance, __bountyId);
+            paidRevenue[_token][__bountyId] = __share * totalRevenue[_token]/ 10000;
         }
+        protocolPartners[_token].add(_bountyId);
+        IRamp(helper).attach(_bountyId);
     }
         
     function updateProfile(address _token, uint _profileId) external {
         require(IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender) == _profileId);
-        require(isAdmin[msg.sender]);
+        require(isAdmin[msg.sender] || ve(_ve).ownerOf(protocolInfo[_token].tokenId) == msg.sender);
         protocolInfo[_token].profileId = _profileId;
+    }
+
+    // recovers access to a sold account in case of loss of wallet/Leviathan token 
+    function updateTokenIdFromProfile(address _token, uint _tokenId) external {
+        require(protocolInfo[_token].profileId > 0 && protocolInfo[_token].profileId == IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender));
+        if (AllProtocols.contains(_token)) {
+            protocolInfo[_token].tokenId = _tokenId;
+        }
     }
 
     function _updateTokenId(address _token, uint _tokenId) internal {
@@ -163,8 +175,7 @@ contract Ramp {
         }
     }
 
-    function updateDevTokenId(address __ve, uint _tokenId) public {
-        require(ve(__ve).ownerOf(_tokenId) == msg.sender);
+    function updateDevTokenId(address __ve, uint _tokenId) external {
         require(isAdmin[msg.sender]);
         _ve = __ve;
         tokenId = _tokenId;
@@ -176,9 +187,9 @@ contract Ramp {
         protocolInfo[_token].badgeId = _badgeId;
     }
 
-    function updateDevFromToken(uint _tokenId) external {
-        require(ve(_ve).ownerOf(_tokenId) == msg.sender);
-        require(tokenId == _tokenId);
+    function updateDevFromCollectionId() external {
+        require(IMarketPlace(IContract(contractAddress).marketCollections())
+        .addressToCollectionId(msg.sender) == collectionId);
         isAdmin[devaddr_] = false;
         devaddr_ = msg.sender;
         isAdmin[msg.sender] = true;
@@ -188,37 +199,37 @@ contract Ramp {
         require(protocolInfo[_token].salePrice > 0);
         require(ve(_ve).ownerOf(_tokenId) == msg.sender);
         
-        IERC20(ve(_ve).token()).safeTransferFrom(msg.sender, address(this), protocolInfo[_token].salePrice);
+        address _recipient = protocolInfo[_token].tokenId == 0 ? devaddr_ : ve(_ve).ownerOf(protocolInfo[_token].tokenId);
+        IERC20(ve(_ve).token()).safeTransferFrom(msg.sender, _recipient, protocolInfo[_token].salePrice);
         protocolInfo[_token].salePrice = 0;
         soldAccounts += 1;
         _updateBounty(_token, _bountyId);
         _updateTokenId(_token, _tokenId);
     }
 
-    function buyRamp(address __ve, uint _tokenId, uint[] memory _bountyIds) external {
-        require(salePrice > 0 && ve(_ve).ownerOf(_tokenId) == msg.sender);
-        require(AllProtocols.length() - soldAccounts == _bountyIds.length);
+    function buyRamp(uint _tokenId, uint[] memory _bountyIds) external {
+        require(IRamp(helper).checkAuditor(msg.sender), "R001");
+        require(salePrice > 0 && ve(_ve).ownerOf(_tokenId) == msg.sender, "R00");
         
-        IERC20(ve(_ve).token()).safeTransferFrom(msg.sender, address(this), salePrice);
+        IERC20(ve(_ve).token()).safeTransferFrom(msg.sender, devaddr_, salePrice);
         for(uint i = 0; i < AllProtocols.length(); i++) {
-            uint __tokenId = protocolInfo[AllProtocols.at(i)].tokenId;
-            if (isAdmin[ve(_ve).ownerOf(__tokenId)]) {
+            if (protocolInfo[AllProtocols.at(i)].tokenId == 0 || isAdmin[ve(_ve).ownerOf(protocolInfo[AllProtocols.at(i)].tokenId)]) {
                 _updateBounty(AllProtocols.at(i), _bountyIds[i]);
             }
         }
         isAdmin[msg.sender] = true;
         isAdmin[devaddr_] = false;
         devaddr_ = msg.sender;
-        updateDevTokenId(__ve, _tokenId);
+        tokenId = _tokenId;
+        collectionId = IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender);
+        IRamp(helper).emitBuyRamp(msg.sender);
     } 
 
-    function createProtocol(address _token, uint _tokenId) external onlyAdmin {
+    function createProtocol(address _token) external onlyAdmin {
         require(IRamp(helper).dTokenSetContains(_token));
         if(!AllProtocols.contains(_token)) {
             AllProtocols.add(_token);
             protocolInfo[_token].status = RampStatus.Open;
-            if (_tokenId > 0) _updateTokenId(_token, _tokenId);
-
             IRamp(helper).emitCreateProtocol(msg.sender, _token);
         }
     }
@@ -265,7 +276,7 @@ contract Ramp {
         } else if (protocolInfo[_token].status == RampStatus.Close) {
             protocolInfo[_token].status = RampStatus.Open;
         }
-        if (_cap >= IRamp(helper).minCap(_token)) {
+        if (_cap > 0 && _cap >= IRamp(helper).minCap(_token)) {
             protocolInfo[_token].cap = _cap;    
         }
         protocolInfo[_token].salePrice = _salePrice;
@@ -284,15 +295,19 @@ contract Ramp {
             uint _payswapFee;
             if (protocolInfo[_token].cap > 0) {
                 _fee = Math.min(_toMint * mintFee / 10000, protocolInfo[_token].cap);
-                _payswapFee = Math.min(_toMint * IRamp(helper).tradingFee() / 10000, protocolInfo[_token].cap);
             } else {
                 _fee = _toMint * mintFee / 10000;
+            }
+            uint _paySwapCap = IRamp(helper).cap();
+            if (_paySwapCap > 0) {
+                _payswapFee = Math.min(_toMint * IRamp(helper).tradingFee() / 10000, _paySwapCap);
+            } else {
                 _payswapFee = _toMint * IRamp(helper).tradingFee() / 10000;
             }
+            protocolInfo[_token].minted += _toMint;
             totalRevenue[_token] += _fee;
             _toMint = _toMint - _fee - _payswapFee;
-            protocolInfo[_token].minted += _toMint;
-            IRamp(helper).mint(_token, to, _toMint, _payswapFee, _identityTokenId, _sessionId);
+            IRamp(helper).mintToken(_token, to, automatic, _toMint, _fee, _payswapFee, _identityTokenId, _sessionId);
         }
     }
 
@@ -307,10 +322,14 @@ contract Ramp {
         uint _payswapFee;
         if (protocolInfo[_token].cap > 0) {
             _fee = Math.min(_toBurn * burnFee / 10000, protocolInfo[_token].cap);
-            _payswapFee = Math.min(IRamp(helper).tradingFee() * _toBurn / 10000, protocolInfo[_token].cap);
         } else {
             _fee = _toBurn * burnFee / 10000;
-            _payswapFee = IRamp(helper).tradingFee() * _toBurn / 10000;
+        }
+        uint _paySwapCap = IRamp(helper).cap();
+        if (_paySwapCap > 0) {
+            _payswapFee = Math.min(_toBurn * IRamp(helper).tradingFee() / 10000, _paySwapCap);
+        } else {
+            _payswapFee = _toBurn * IRamp(helper).tradingFee() / 10000;
         }
         _toBurn = _toBurn - _fee - _payswapFee;
         totalRevenue[_token] += _fee;
@@ -319,31 +338,36 @@ contract Ramp {
     }
 
     function claimPendingRevenue(address _token, uint _partnerBountyId) external {
-        require(!isAdmin[msg.sender] && protocolPartners[_token].contains(_partnerBountyId));
+        require(!isAdmin[msg.sender] && protocolPartners[_token].contains(_partnerBountyId) || _partnerBountyId == 0 || _partnerBountyId == protocolInfo[_token].bountyId);
+        _partnerBountyId = _partnerBountyId == 0 ? protocolInfo[_token].bountyId : _partnerBountyId;
         uint _toPay = IRamp(helper).claimPendingRevenue(_token, msg.sender, _partnerBountyId);
-        protocolInfo[_token].minted += _toPay;
+        // protocolInfo[_token].minted += _toPay;
         paidRevenue[_token][_partnerBountyId] += _toPay;
+        _toPay = Math.min(totalRevenue[_token], _toPay);
         IERC20(_token).safeTransfer(msg.sender, _toPay);
     }
 
     function unlockBounty(address _token, uint _bountyId) external {
-        require(protocolInfo[_token].minted == protocolInfo[_token].burnt);
+        require(protocolInfo[_token].minted <= protocolInfo[_token].burnt);
         if(isAdmin[msg.sender]) {
             IRamp(helper).endBounty(protocolInfo[_token].bountyId);
+            IRamp(helper).detach(protocolInfo[_token].bountyId);
             protocolInfo[_token].bountyId = 0;
         } else if (protocolPartners[_token].contains(_bountyId)) {
             IRamp(helper).endBounty(_bountyId);
+            IRamp(helper).detach(_bountyId);
             protocolPartners[_token].remove(_bountyId);
         }
     }
     
     function _unlockBounty(address _token) internal {
         IRamp(helper).endBounty(protocolInfo[_token].bountyId);
+        IRamp(helper).detach(protocolInfo[_token].bountyId);
         protocolInfo[_token].bountyId = 0;
     }
 
     function deleteProtocol(address _token) public onlyAdmin {
-        require(protocolInfo[_token].minted == protocolInfo[_token].burnt);
+        require(protocolInfo[_token].minted <= protocolInfo[_token].burnt);
         require(protocolInfo[_token].bountyId == 0);
         delete protocolInfo[_token];
         AllProtocols.remove(_token);
@@ -352,6 +376,7 @@ contract Ramp {
     }
 
     function withdraw(address _token, uint amount) external onlyAdmin {
+        require(!AllProtocols.contains(_token));
         IERC20(_token).safeTransfer(msg.sender, amount);
     }
 }
@@ -361,8 +386,9 @@ contract RampHelper {
     using EnumerableSet for EnumerableSet.AddressSet;
 
     EnumerableSet.AddressSet private gauges;
-    address private nativeCoin;
     uint public tradingFee;
+    bool check;
+    uint public cap;
     uint private bufferTime;
     address private badgeNFT;
     mapping(address => uint) public minCap;
@@ -401,6 +427,7 @@ contract RampHelper {
     event DeleteProtocol(address ramp, address from, address token);
     event LinkAccount(string accountId, string channel, string[] moreInfo, address owner);
     event Blacklist(address ramp, address user, bool blacklist);
+    event DeleteRamp(address ramp);
     event UpdateRampInfo(
         address ramp,
         uint profileId,
@@ -424,9 +451,9 @@ contract RampHelper {
         string paramValue5
     );
 
-    constructor(address _nativeCoin, uint _collectionId) {
-        nativeCoin = _nativeCoin;
+    constructor(address _contractAddress, uint _collectionId) {
         collectionId = _collectionId;
+        contractAddress = _contractAddress;
     }
     
     modifier onlyAdmin() {
@@ -434,25 +461,19 @@ contract RampHelper {
         _;
     }
 
-    function setContractAddress(address _contractAddress) external {
-        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender, "NT2");
-        contractAddress = _contractAddress;
-    }
-
-    function setContractAddressAt(address _ramp) external {
-        IMarketPlace(_ramp).setContractAddress(contractAddress);
-    }
-
     function linkAccount(string memory _channel, string memory _accountId, string[] memory moreInfo) external {
         emit LinkAccount(_accountId, _channel, moreInfo, msg.sender);
     }
     
-    function checkAuditor(address _ramp) external view returns(bool) {
-        address _profile = IContract(contractAddress).profile();
-        uint _rampProfileId = IProfile(_profile).addressToProfileId(IAuth(_ramp).devaddr_());
-        SSIData memory metadata = ISSI(IContract(contractAddress).ssi()).getSSID(_rampProfileId);
-        (,bool dk,) = IAuditor(IContract(contractAddress).auditorNote()).getGaugeNColor(metadata.auditorProfileId);
-        return IProfile(_profile).isUnique(_rampProfileId) && dk;
+    function checkAuditor(address _user) external view returns(bool) {
+        if (check) {        
+            address _profile = IContract(contractAddress).profile();
+            uint _rampProfileId = IProfile(_profile).addressToProfileId(_user);
+            SSIData memory metadata = ISSI(IContract(contractAddress).ssi()).getSSID(_rampProfileId);
+            (,bool dk,) = IAuditor(IContract(contractAddress).auditorNote()).getGaugeNColor(metadata.auditorProfileId);
+            return IProfile(_profile).isUnique(_rampProfileId) && dk;
+        }
+        return true;
     }
 
     function updateBlacklist(address ramp, address _user, bool _blacklist) external {
@@ -484,6 +505,7 @@ contract RampHelper {
             paramValue5
         );
     }
+
     function preMint(
         address ramp, 
         address to, 
@@ -525,8 +547,6 @@ contract RampHelper {
     ) external {
         require(IAuth(_ramp).isAdmin(msg.sender));
         require(IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender) == _profileId && _profileId > 0);
-        SSIData memory metadata = ISSI(IContract(contractAddress).ssi()).getSSID(_profileId);
-        require(keccak256(abi.encodePacked(metadata.answer)) != keccak256(abi.encodePacked("")));
 
         emit UpdateRampInfo(
             _ramp,
@@ -597,14 +617,25 @@ contract RampHelper {
         isPayswapRamp[_ramp] = _add;
     }
 
-    function checkBounty(address _user, uint _bountyId) external {
+    function attach(uint _bountyId) external {
+        require(gauges.contains(msg.sender));
+        ITrustBounty(IContract(contractAddress).trustBountyHelper()).attach(_bountyId);
+    }
+
+    function detach(uint _bountyId) external {
+        require(gauges.contains(msg.sender));
+        ITrustBounty(IContract(contractAddress).trustBountyHelper()).detach(_bountyId);
+    }
+
+    function checkBounty(address _user, uint _bountyId) external view {
         require(gauges.contains(msg.sender));
         if (!isPayswapRamp[msg.sender]) {
+            address trustBountyHelper = IContract(contractAddress).trustBountyHelper();
+            require(ITrustBounty(trustBountyHelper).attachments(_bountyId) == 0);
             (address owner,address token,,address claimableBy,,,uint endTime,,,) = 
             ITrustBounty(IContract(contractAddress).trustBounty()).bountyInfo(_bountyId);
-            require(owner == _user && nativeCoin == token && claimableBy == address(this));
+            require(owner == _user && trustBountyHelper == token && claimableBy == IContract(contractAddress).rampHelper2());
             require(endTime >= block.timestamp + bufferTime);
-            ITrustBounty(IContract(contractAddress).trustBountyHelper()).attach(_bountyId);
         }
     }
     
@@ -626,7 +657,7 @@ contract RampHelper {
 
     function getPartnerShare(uint _total, uint _partnerBountyId) public view returns(uint) {
         uint balance = ITrustBounty(IContract(contractAddress).trustBounty()).getBalance(_partnerBountyId);
-        return balance * 10000 / _total;
+        return balance * 10000 / Math.max(1,_total);
     }
 
     function getTotalBalance(address _ramp, address _token) external view returns(uint balance) {
@@ -669,21 +700,20 @@ contract RampHelper {
         tokenPriceInNative[_token] = uint256(currentPrice);
     }
 
-    function getChainID() internal view returns (uint256) {
-        uint256 id;
-        assembly {
-            id := chainid()
+    function updateFiatTokenPrices(address[] memory _tokens, uint[] memory _prices) external onlyAdmin {
+        require(IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender));
+        for (uint i = 0; i < _tokens.length; i++) {
+            tokenPriceInNative[_tokens[i]] = _prices[i];
+            nextOracleUpdateTime[tokenToOracle[_tokens[i]]] = block.timestamp + 86400;
         }
-        return id;
     }
 
     function convert(address tokenAddress, uint _balance) public view returns(uint amountOut) {
-        if (getChainID() == 4002) return _balance;
         require(
             tokenPriceInNative[tokenAddress] > 0 && 
             nextOracleUpdateTime[tokenToOracle[tokenAddress]] > block.timestamp
         );
-        amountOut = tokenPriceInNative[tokenAddress] * _balance;
+        amountOut = tokenPriceInNative[tokenAddress] * _balance / 10**18;
     }
 
     function getAllRamps(uint _start) external view returns(address[] memory ramps) {
@@ -709,6 +739,16 @@ contract RampHelper {
     function deleteRamp(address _ramp) external {
         require(msg.sender == IAuth(contractAddress).devaddr_() || IAuth(_ramp).isAdmin(msg.sender));
         gauges.remove(_ramp);
+        emit DeleteRamp(_ramp);
+    }
+
+    function emitBuyRamp(address _owner) external {
+        require(gauges.contains(msg.sender));
+        emit CreateGauge(
+            msg.sender, 
+            _owner,
+            IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(_owner)
+        );
     }
 
     function emitVoted(address _ramp, uint profileId, uint likes, uint dislikes, bool like) external {
@@ -730,31 +770,38 @@ contract RampHelper {
     }
 
     function updateParameters(
+        uint _cap,
         uint _tradingFee, 
         uint _bufferTime,
+        bool _check,
         address _badgeNFT
     ) external onlyAdmin {
+        cap = _cap;
+        check = _check;
+        badgeNFT = _badgeNFT;
         tradingFee = _tradingFee;
         bufferTime = _bufferTime;
-        badgeNFT = _badgeNFT;
     }
 
-    function mint(
+    function mintToken(
         address _token, 
         address _user, 
+        bool _automatic,
         uint _toMint, 
+        uint _fee, 
         uint _payswapFee,
         uint _identityTokenId,
         string memory _sessionId
     ) external {
         require(gauges.contains(msg.sender));
         require(_dtokenSet.contains(_token) || _extraSet[msg.sender].contains(_token));
-        require(activeSession[keccak256(abi.encodePacked(_sessionId))]);
+        require(!_automatic || activeSession[keccak256(abi.encodePacked(_sessionId))]);
         require(!isBlacklisted[msg.sender][_user]);
         IMarketPlace(IContract(contractAddress).marketHelpers2())
         .checkUserIdentityProof(collectionId, _identityTokenId, IAuth(msg.sender).devaddr_());
 
         erc20(_token).mint(_user, _toMint);
+        erc20(_token).mint(msg.sender, _fee);
         erc20(_token).mint(address(this), _payswapFee);
         pendingRevenue[_token] += _payswapFee;
 
@@ -777,27 +824,6 @@ contract RampHelper {
         IERC20(_token).safeTransfer(msg.sender, _amount);
         pendingRevenue[_token] = 0;
         return _amount;
-    }
-
-    function createClaim(
-        address _ramp, 
-        address _token,
-        uint amount,
-        uint _bountyId,
-        bool _lockBounty,
-        string memory _title, 
-        string memory _content,
-        string memory _tags
-    ) external payable {
-        ITrustBounty(IContract(contractAddress).trustBounty()).createClaim(
-            msg.sender, 
-            _bountyId, 
-            amount,
-            _lockBounty,
-            _title,
-            _content,
-            _tags
-        );
     }
 }
 
@@ -832,6 +858,27 @@ contract RampHelper2 {
         } else if (voted[profileId][_ramp] < 0) {
             votes[_ramp].dislikes -= 1;
         }
+    }
+
+    function createClaim(
+        address _recipient,
+        uint _amount,
+        uint _bountyId,
+        bool _lockBounty,
+        string memory _title, 
+        string memory _content,
+        string memory _tags
+    ) external {
+        ITrustBounty(IContract(contractAddress).trustBounty()).createClaim(
+            msg.sender, 
+            _recipient,
+            _bountyId, 
+            _amount,
+            _lockBounty,
+            _title,
+            _content,
+            _tags
+        );
     }
 
     function vote(address _ramp, bool like) external {
@@ -880,7 +927,7 @@ contract RampAds is ERC721Pausable {
         uint active_period;
         string message;
     }
-    uint public pricePerAttachMinutes;
+    uint public pricePerAttachMinutes = 1e18;
     uint private maxNumMedia = 2;
     mapping(uint => ScheduledMedia) public scheduledMedia;
     mapping(uint => uint) public pendingRevenue;
@@ -896,6 +943,7 @@ contract RampAds is ERC721Pausable {
     uint seed = (block.timestamp + block.difficulty) % 100;
     mapping(address => EnumerableSet.UintSet) private excludedContents;
     uint public adminFee = 100;
+    uint public lotteryShare;
     uint public treasury;
     address contractAddress;
     uint public totalFromSponsors;
@@ -903,9 +951,9 @@ contract RampAds is ERC721Pausable {
     uint public minToMint;
     mapping(uint => bool) public isMinted;
     address private uriGenerator;
-    uint public lotteryShare;
     uint public lotteryRevenue;
-    address private lotteryAddress;
+    uint public lotteryId;
+    address public valuepoolAddress;
 
     mapping(address => uint) public mintFactor;
     uint public defaultMintFactor = 8000;
@@ -956,9 +1004,9 @@ contract RampAds is ERC721Pausable {
         uint _convertedBalance = IRamp(rampHelper).convert(_token, balance);
         uint _mintFactor = mintFactor[_token] > 0 ? mintFactor[_token] : defaultMintFactor;
         uint _totalMintable = _mintFactor * _convertedBalance / 10000;
-        uint _circulatingSupply = protocolInfo.minted - protocolInfo.burnt;
+        uint _circulatingSupply = protocolInfo.minted > protocolInfo.burnt ? protocolInfo.minted - protocolInfo.burnt : 0;
         mintable = _totalMintable > _circulatingSupply ? _totalMintable - _circulatingSupply : 0;
-        bool _isValid = IRamp(rampHelper).checkAuditor(_ramp);
+        bool _isValid = IRamp(rampHelper).checkAuditor(IAuth(_ramp).devaddr_());
         if (!_isValid) mintable = mintable / 2;
         if (mintable > 0) {
             status = CollateralStatus.OverCollateralized;
@@ -971,39 +1019,22 @@ contract RampAds is ERC721Pausable {
         }
     }
     
-    function claimPendingRevenueFromSponsors(address _ramp) external lock {
-        require(IAuth(_ramp).isAdmin(msg.sender) && IRamp(IContract(contractAddress).rampHelper()).isGauge(_ramp));
-        uint _totalMinted;
-        uint _totalSupply;
-        address[] memory _allTokens = IRamp(_ramp).getAllTokens(0);
-        for (uint i = 0; i < _allTokens.length; i++) {
-             _totalMinted += (IRamp(_ramp).protocolInfo(_allTokens[i])).minted;
-             _totalSupply += erc20(_allTokens[i]).totalSupply();
-        }
-        uint earnings = totalFromSponsors * _totalMinted / _totalSupply;
-        if (earnings > paidPayable[_ramp]) {
-            earnings -= paidPayable[_ramp];
-        } else {
-            earnings = 0;
-        }
-        paidPayable[_ramp] += earnings;
-        IERC20(IContract(contractAddress).token()).safeTransfer(_ramp, earnings);
-    }
-    
     function updateParams(
         uint _pricePerAttachMinutes, 
         uint _minToMint, 
         uint _adminFee,
         uint _lotteryShare,
+        uint _lotteryId,
         address _uriGenerator,
-        address _lotteryAddress
+        address _valuepoolAddress
     ) external {
         require(IAuth(contractAddress).devaddr_() == msg.sender);
         adminFee = _adminFee;
         minToMint = _minToMint;
+        lotteryId = _lotteryId;
         uriGenerator = _uriGenerator;
         lotteryShare = _lotteryShare;
-        lotteryAddress = _lotteryAddress;
+        valuepoolAddress = _valuepoolAddress;
         pricePerAttachMinutes = _pricePerAttachMinutes;
     }
 
@@ -1044,7 +1075,7 @@ contract RampAds is ERC721Pausable {
             uint _currentMediaIdx = _scheduledMedia[notes[_tokenId].token].at(randomHash++ % _length);
             _media[i] = scheduledMedia[_currentMediaIdx].message;
         }
-        if (_length == 0) _media = new string[](1);
+        if (_length == 0) _media = new string[](0);
     }
 
     function getAllMedia(uint _start, address _tag) external view returns(string[] memory _media) {
@@ -1055,7 +1086,7 @@ contract RampAds is ERC721Pausable {
     }
 
     function updateSponsorMedia(address _tag) public {
-    uint _length = _scheduledMedia[_tag].length();
+        uint _length = _scheduledMedia[_tag].length();
         uint _endIdx = maxNumMedia > _length ? 0 : _length - maxNumMedia;
         for (uint i = 0; i < _endIdx; i++) {
             uint _currentMediaIdx = _scheduledMedia[_tag].at(i);
@@ -1066,9 +1097,11 @@ contract RampAds is ERC721Pausable {
     }
 
     function claimLotteryRevenue(address _token) external {
-        require(msg.sender == lotteryAddress);
+        require(lotteryId != 0);
         if (_token == IContract(contractAddress).token()) lotteryRevenue = 0;
-        IERC20(_token).safeTransfer(msg.sender, lotteryRevenue);
+        address lotteryAddress = IContract(contractAddress).lotteryAddress();
+        erc20(_token).approve(lotteryAddress, lotteryRevenue);
+        ILottery(lotteryAddress).injectFunds(lotteryId, lotteryRevenue, _token, false);
     }
 
     function claimTreasuryRevenue(address _token, uint _amount) external {
@@ -1076,13 +1109,18 @@ contract RampAds is ERC721Pausable {
         if (_token == IContract(contractAddress).token()) treasury -= _amount;
         IERC20(_token).safeTransfer(msg.sender, _amount);
     }
+
+    function claimValuepoolRevenue(address _token) external {
+        require(valuepoolAddress != address(0));
+        IERC20(_token).safeTransfer(valuepoolAddress, totalFromSponsors);
+    }
     
     function mint(address _token) external returns(uint) {
         require(erc20(_token).balanceOf(msg.sender) >= 
         IRamp(IContract(contractAddress).rampHelper()).convert(_token, minToMint));
         address profile = IContract(contractAddress).profile();
         uint _profileId = IProfile(profile).addressToProfileId(msg.sender);
-        require(IProfile(profile).isUnique(_profileId) && !isMinted[_profileId]);
+        require(IProfile(profile).isUnique(_profileId) && !isMinted[_profileId], "RA1");
         isMinted[_profileId] = true;
         notes[tokenId] = RampNote({
             token: _token,
@@ -1130,17 +1168,17 @@ contract RampAds is ERC721Pausable {
 
     function tokenURI(uint _tokenId) public override view returns (string memory output) {
         uint idx;
-        string[] memory optionNames = new string[](4);
-        string[] memory optionValues = new string[](4);
-        uint decimals = uint(IMarketPlace(notes[_tokenId].token).decimals());
-        uint balance = erc20(notes[_tokenId].token).balanceOf(ownerOf(_tokenId));
+        string[] memory optionNames = new string[](5);
+        string[] memory optionValues = new string[](5);
         optionValues[idx++] = toString(_tokenId);
         optionNames[idx] = "PID";
         optionValues[idx++] = toString(notes[_tokenId].profileId);
         optionNames[idx] = "Start";
         optionValues[idx++] = toString(notes[_tokenId].mintedAt);
         optionNames[idx] = "Amount";
-        optionValues[idx++] = string(abi.encodePacked(toString(balance/10**decimals), " " ,IMarketPlace(notes[_tokenId].token).symbol()));
+        optionValues[idx++] = toString(erc20(notes[_tokenId].token).balanceOf(ownerOf(_tokenId)));
+        optionNames[idx] = "Decimals, Symbol";
+        optionValues[idx++] = string(abi.encodePacked(toString(uint(IMarketPlace(notes[_tokenId].token).decimals())), ", ", IMarketPlace(notes[_tokenId].token).symbol()));
         string[] memory _description = new string[](1);
         _description[0] = "This note grants you rights only accessible to others that have minted this currency";
         output = _constructTokenURI(
@@ -1174,16 +1212,10 @@ contract RampAds is ERC721Pausable {
         return string(buffer);
     }
 
-    function _sumArr(uint[] memory _arr) internal pure returns(uint _total) {
-        for (uint i = 0; i < _arr.length; i++) {
-            _total += _arr[i];
-        }
-    }
-
 }
 
 contract ExtraToken is AML {
-    address public minter;
+    address minter;
 
     constructor(
         string memory _name, 
@@ -1213,14 +1245,15 @@ contract ExtraToken is AML {
 
 contract ExtraTokenFactory {
     address contractAddress;
-
+    mapping(address => bool) public isExtraToken;
+    
     constructor(address _contractAddress) {
         contractAddress = _contractAddress;
     }
 
     function mintExtraToken(string memory _name, string memory _symbol, address _devaddr) external {
-        require(IRamp(IContract(contractAddress).rampHelper()).trustWorthyAuditors(msg.sender));
-        address(new ExtraToken(_name, _symbol, _devaddr, contractAddress));
+        address lastToken = address(new ExtraToken(_name, _symbol, _devaddr, contractAddress));
+        isExtraToken[lastToken] = true;
     }
 }
 
