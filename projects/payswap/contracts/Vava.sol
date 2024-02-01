@@ -1579,8 +1579,8 @@ contract Ve {
     using Percentile for *;
 
     uint internal constant WEEK = 1 weeks;
-    uint internal constant MAXTIME = 4 * 365 * 86400;
-    int128 internal constant iMAXTIME = 4 * 365 * 86400;
+    uint internal MAXTIME = 4 * 365 * 86400;
+    int128 internal iMAXTIME = 4 * 365 * 86400;
     uint internal constant MULTIPLIER = 1 ether;
 
     address immutable public token;
@@ -1711,13 +1711,14 @@ contract Ve {
         }
     }
 
-    function getParams() external view returns(uint,uint,uint,uint,uint) {
+    function getParams() external view returns(uint,uint,uint,uint,uint,uint) {
         return (
             supply,
             maxSupply,
             estimatedSize,
             minTicketPrice,
-            minToSwitch
+            minToSwitch,
+            MAXTIME
         );
     }
 
@@ -1729,6 +1730,7 @@ contract Ve {
         uint _maxSupply,
         uint _estimatedSize,
         uint _minTicketPrice,
+        uint _maxTime,
         bool _withdrawable
     ) external {
         if (decimals == 0) {
@@ -1739,6 +1741,10 @@ contract Ve {
             minTicketPrice = _minTicketPrice;
             minToSwitch = _minToSwitch;
             withdrawable = _withdrawable;
+            if (_maxTime > 0) {
+                MAXTIME = _maxTime;
+                iMAXTIME = int128(int(_maxTime));
+            }
             maxSupply = maxSupply == 0 ? type(uint).max : _maxSupply;
             IValuePool(valuepoolHelper).emitSetParams(
                 valuepool,

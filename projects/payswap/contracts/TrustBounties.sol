@@ -30,16 +30,7 @@ contract TrustBounties {
     }
     mapping(uint => mapping(uint => Approval)) public isApprovedForAmount;
     uint private bountyId = 1;
-    struct Claim {
-        uint bountyId;
-        address hunter;
-        address recipient;
-        uint endTime;
-        uint amountToClaim;
-        bool friendly;
-        address winner;
-        StakeStatusEnum status;
-    }
+    
     mapping(uint => Claim[]) public claims;
     struct Balance {
         uint tokenId;
@@ -86,7 +77,10 @@ contract TrustBounties {
                     _balance = isApprovedForAmount[_bountyId][approvals[_bountyId].at(i)].amount;
                 }
             }
-            _balance = _balance / Math.max(ITrustBounty(_trustBountyHelper()).attachments(_bountyId),1);
+            uint _attachments = ITrustBounty(_trustBountyHelper()).attachments(_bountyId);
+            _balance = bountyInfo[_bountyId].isNFT != NFTYPE.not && _attachments > 1
+            ? 0
+            :  _balance / Math.max(_attachments,1);
         }
     }
 
@@ -230,22 +224,15 @@ contract TrustBounties {
             require(getBalance(_bountyId) == 0); // one nft per bounty
         }
         address trustBountyHelper = _trustBountyHelper();
+        uint _fees;
         if (_source == address(this)) {
-            uint _fees;
             if (bountyInfo[_bountyId].isNFT == NFTYPE.not) {
                 _fees = _amount * ITrustBounty(trustBountyHelper).tradingFee() / 10000;
-                _amount = _amount - _fees;
                 ITrustBounty(trustBountyHelper).notifyFees(bountyInfo[_bountyId].token, _fees);
             } else {
-                _fees = ITrustBounty(trustBountyHelper).tradingNFTFee();
-                IERC20(IContract(contractAddress).token()).safeTransferFrom(
-                    msg.sender,
-                    trustBountyHelper,
-                    _fees
-                );
                 ITrustBounty(trustBountyHelper).notifyFees(
                     IContract(contractAddress).token(), 
-                    _fees
+                    ITrustBounty(trustBountyHelper).tradingNFTFee()
                 );
             }
             if (bountyInfo[_bountyId].token != trustBountyHelper) {
@@ -262,7 +249,7 @@ contract TrustBounties {
             );
         }
         balances[_bountyId][_source].tokenId = _tokenId;
-        balances[_bountyId][_source].amount += _amount;
+        balances[_bountyId][_source].amount += _amount - _fees;
         balanceSources[_bountyId].add(_source);
         
         ITrustBounty(trustBountyHelper).emitAddBalance(_bountyId, _source, _amount);
@@ -288,12 +275,12 @@ contract TrustBounties {
         ITrustBounty(trustBountyHelper).emitDeleteBalance(_bountyId, _source);
     }
 
-    function deleteBounty(uint _bountyId) external {
+    function deleteBounty(uint _bountyId, address _user) external {
         require(bountyInfo[_bountyId].owner == msg.sender);
         require(bountyInfo[_bountyId].endTime < block.timestamp);
         // delete all balances attached
         for (uint i = 0; i < balanceSources[_bountyId].length(); i++) {
-            _deleteBalance(_bountyId, balanceSources[_bountyId].at(i), msg.sender);
+            _deleteBalance(_bountyId, balanceSources[_bountyId].at(i), _user);
         }
         delete bountyInfo[_bountyId];
         bounties.remove(_bountyId);
@@ -316,11 +303,11 @@ contract TrustBounties {
         if (claims[_bountyId].length > 0) {
             require(claims[_bountyId][claims[_bountyId].length - 1].winner != address(0x0));
         }
-        address trustBountyHelper = _trustBountyHelper();
-        address trustBountyVoter = _trustBountyVoter();
+        // address trustBountyHelper = _trustBountyHelper();
+        // address trustBountyVoter = _trustBountyVoter();
         // address _token = bountyInfo[_bountyId].isNFT == NFTYPE.not ? bountyInfo[_bountyId].token : IContract(contractAddress).token();
-        uint _minToClaim = bountyInfo[_bountyId].isNFT == NFTYPE.not ? _amountToClaim * ITrustBounty(trustBountyHelper).minToClaim() / 10000
-        : ITrustBounty(trustBountyHelper).tradingNFTFee() * _amountToClaim;
+        uint _minToClaim = bountyInfo[_bountyId].isNFT == NFTYPE.not ? _amountToClaim * ITrustBounty(_trustBountyHelper()).minToClaim() / 10000
+        : ITrustBounty(_trustBountyHelper()).tradingNFTFee();
         claims[_bountyId].push(Claim({
             bountyId: _bountyId,
             hunter: _attacker,
@@ -333,23 +320,23 @@ contract TrustBounties {
         }));
         lockedBounties[_bountyId] = _lockBounty;
         // erc20(_token).approve(trustBountyVoter, _minToClaim);
-        ITrustBountiesVoter(trustBountyVoter).createGauge(
+        ITrustBountiesVoter(_trustBountyVoter()).createGauge(
             _attacker,
             bountyInfo[_bountyId].ve, 
-            bountyInfo[_bountyId].token == trustBountyHelper 
+            bountyInfo[_bountyId].token == _trustBountyHelper() 
             ? IContract(contractAddress).token() 
             : bountyInfo[_bountyId].isNFT == NFTYPE.not 
             ? bountyInfo[_bountyId].token 
             : IContract(contractAddress).token(), 
-            claims[_bountyId].length,
+            claims[_bountyId].length + _bountyId,
             _bountyId, 
             _minToClaim,
             _title,
             _content,
             _tags
         );
-        ITrustBounty(trustBountyHelper).emitCreateClaim(
-            claims[_bountyId].length,
+        ITrustBounty(_trustBountyHelper()).emitCreateClaim(
+            claims[_bountyId].length + _bountyId,
             _bountyId, 
             _amountToClaim, 
             _attacker,
@@ -358,14 +345,8 @@ contract TrustBounties {
         );
     }
 
-    function updateStakeFromVoter(uint _winnerId, uint _looserId) external {
+    function updateStakeFromVoter(uint _bountyId, uint _winnerId, uint _looserId) external {
         require(_trustBountyVoter() == msg.sender);
-        uint _bountyId; 
-        if (claims[_winnerId].length >= _looserId) {
-            _bountyId = claims[_winnerId][_looserId-1].bountyId == _winnerId ? _winnerId : _looserId;
-        } else {
-            _bountyId = _looserId;
-        }
         if (claims[_bountyId].length > 0) {
             uint _lastClaim = claims[_bountyId].length - 1;
             require(claims[_bountyId][_lastClaim].winner == address(0x0));
@@ -434,7 +415,7 @@ contract TrustBounties {
         string memory _content,
         string memory _tags
     ) external lock {
-        _claimId = _claimId - 1;
+        _claimId = _claimId - _bountyId - 1;
         require(claims[_bountyId][_claimId].winner != address(0x0) && claims[_bountyId][_claimId].status != StakeStatusEnum.AtPeace);
         address trustBountyHelper = _trustBountyHelper();
         if (_amountToClaim > 0) { // appealing
@@ -451,12 +432,10 @@ contract TrustBounties {
                 _amountToClaim = balances[_bountyId][address(this)].amount;
                 balances[_bountyId][address(this)].amount = 0;
             }
-            uint _fees = _amountToClaim * ITrustBounty(trustBountyHelper).tradingFee() / 10000;
-            ITrustBounty(trustBountyHelper).notifyFees(bountyInfo[_bountyId].token, _fees);
             ITrustBounty(trustBountyHelper).safeTransfer(
                 _bountyId, 
                 claims[_bountyId][_claimId].recipient, 
-                _amountToClaim - _fees
+                _amountToClaim
             );
         } else if (claims[_bountyId][_claimId].winner == bountyInfo[_bountyId].owner) {
             lockedBounties[_bountyId] = false;
@@ -933,11 +912,13 @@ contract TrustBountiesHelper {
         require(msg.sender == trustBounty, "TH9");
         (,address token,,,,,,,NFTYPE isNFT,) = ITrustBounty(trustBounty).bountyInfo(_bountyId);
         if (isNFT == NFTYPE.erc721) {
-            require(// value == 1 && _bountyId == 
-                to == trustBounty, "GG");
+            // require(// value == 1 && _bountyId == 
+            //     to == trustBounty, "GG");
             IERC721(token).safeTransferFrom(from, to, value);
+            IERC20(IContract(contractAddress).token()).safeTransferFrom(from, to, tradingNFTFee);
         } else if (isNFT == NFTYPE.erc1155) { 
             IERC1155(token).safeTransferFrom(from, to, value, 1, msg.data);
+            IERC20(IContract(contractAddress).token()).safeTransferFrom(from, to, tradingNFTFee);
         } else {
             IERC20(token).safeTransferFrom(from, to, value);
         }

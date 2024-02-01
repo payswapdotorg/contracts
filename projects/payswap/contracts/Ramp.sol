@@ -405,7 +405,7 @@ contract RampHelper {
     address private contractAddress;
     mapping(address => bool) public trustWorthyAuditors;
     mapping(address => bool) public isPayswapRamp;
-    uint collectionId;
+    uint private collectionId;
     
     event AddToken(address dtoken);
     event RemoveToken(address dtoken);
@@ -701,7 +701,6 @@ contract RampHelper {
     }
 
     function updateFiatTokenPrices(address[] memory _tokens, uint[] memory _prices) external onlyAdmin {
-        require(IMarketPlace(IContract(contractAddress).marketCollections()).addressToCollectionId(msg.sender));
         for (uint i = 0; i < _tokens.length; i++) {
             tokenPriceInNative[_tokens[i]] = _prices[i];
             nextOracleUpdateTime[tokenToOracle[_tokens[i]]] = block.timestamp + 86400;
@@ -810,7 +809,7 @@ contract RampHelper {
     }
 
     function burn(address _token, address _user, uint _toBurn, uint _fee, uint _payswapFee) external {
-        require(gauges.contains(msg.sender) && _dtokenSet.contains(_token));
+        require(gauges.contains(msg.sender) && (_dtokenSet.contains(_token) || _extraSet[msg.sender].contains(_token)));
         require(!isBlacklisted[msg.sender][_user]);
         erc20(_token).burn(_user, _toBurn);
         IERC20(_token).safeTransferFrom(_user, msg.sender, _fee);
@@ -819,11 +818,9 @@ contract RampHelper {
         emit Burn(msg.sender, _token, _user, _toBurn);
     }
 
-    function withdrawFees(address _token) external onlyAdmin returns(uint _amount) {
-        _amount = pendingRevenue[_token];
-        IERC20(_token).safeTransfer(msg.sender, _amount);
+    function withdrawFees(address _token) external onlyAdmin {
+        IERC20(_token).safeTransfer(msg.sender, pendingRevenue[_token]);
         pendingRevenue[_token] = 0;
-        return _amount;
     }
 }
 
@@ -1222,7 +1219,8 @@ contract ExtraToken is AML {
         string memory _symbol,
         address _devaddr,
         address _contractAddress
-    ) AML(_contractAddress, _devaddr, _name, _symbol) {}
+    ) AML(_contractAddress, _devaddr, _name, _symbol) {
+    }
 
     modifier onlyMinter() {
         require(msg.sender == minter);
@@ -1245,15 +1243,26 @@ contract ExtraToken is AML {
 
 contract ExtraTokenFactory {
     address contractAddress;
-    mapping(address => bool) public isExtraToken;
-    
+    mapping(address => address) public isExtraToken;
+
+    event CreateGauge(address owner, address token, string callObject);
+
     constructor(address _contractAddress) {
         contractAddress = _contractAddress;
     }
 
-    function mintExtraToken(string memory _name, string memory _symbol, address _devaddr) external {
-        address lastToken = address(new ExtraToken(_name, _symbol, _devaddr, contractAddress));
-        isExtraToken[lastToken] = true;
+    function mintExtraToken(
+        string memory _name, 
+        string memory _symbol, 
+        string memory _callObject,
+        bool _update,
+        address _devaddr
+    ) external {
+        address lastToken = isExtraToken[_devaddr] == address(0) || !_update
+        ? address(new ExtraToken(_name, _symbol, _devaddr, contractAddress))
+        : isExtraToken[_devaddr];
+        isExtraToken[_devaddr] = lastToken;
+        emit CreateGauge(_devaddr, lastToken, _callObject);
     }
 }
 

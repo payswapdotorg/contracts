@@ -27,51 +27,55 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     // Mapping from owner to operator approvals
     mapping(address => mapping(address => bool)) private _operatorApprovals;
 
-    address public token;
+    address private token;
     uint private tokenId = 1;
-    uint public treasury;
-    uint public treasuryFee;
+    uint treasury;
+    uint treasuryFee;
     mapping(uint => uint) public fund;
     uint constant WEEKS_PER_YEAR = 52;
-    uint public bufferTime = 86400 * 7 * WEEKS_PER_YEAR;
+    uint bufferTime = 86400 * 7 * WEEKS_PER_YEAR;
     uint constant week = 86400 * 7;
-    uint public minBountyPercent = 10000;
+    uint minBountyPercent = 10000;
     mapping(address => bool) public isAdmin;
-    mapping(uint => uint) public attachments;
+    struct Attachments {
+        uint userBountyId;
+        uint auditorBountyId;
+    }
+    mapping(uint => Attachments) private attachments;
     mapping(uint => address) public isAuditor;
-    mapping(uint => address) public channelToValuepool;
     mapping(address => uint) public paymentCredits;
     address private contractAddress;
     struct Collateral {
         uint channel;
         uint startTime;
+        uint toBorrow;
         address owner;
     }
     mapping(uint => Collateral) public collateral;
-    mapping(uint => uint) private profileIdToTokenId;
+    mapping(uint => uint) public profileIdToTokenId;
     mapping(uint => uint[WEEKS_PER_YEAR]) public estimationTable;
     COLOR updateColor = COLOR.GOLD;
     COLOR minColor = COLOR.BLACK;
-    uint public minToBlacklist;
-    uint constant FC_IDX = 3;
+    uint minToBlacklist = 5;
+    uint constant FC_IDX = 16;
     mapping(uint => uint) public channels;
     mapping(uint => EnumerableSet.UintSet) private isBlacklisted;
-    uint public nextChannelId = 1;
-    uint public credit_divisor = 1;
+    uint nextChannelId = 1;
+    uint credit_divisor = 1;
+    address valuepool;
     mapping(uint => uint) public channelStartTime;
     
     event Mint (
         address _auditor,
         address _to, 
-        uint _stakeId,
         uint _userBountyId, 
         uint _auditorBountyId, 
         uint _channel,
         uint _tokenId
     );
-    event Burn(uint profileId);
-    event EraseDebt(uint profileId);
-    event SellCollateral(uint profileId);
+    event Burn(uint tokenId);
+    event EraseDebt(uint tokenId);
+    event SellCollateral(uint tokenId);
     event AddToChannel(uint profileId, uint channel);
     event UpdateEstimationTable(uint channel, uint[WEEKS_PER_YEAR] table);
 
@@ -97,6 +101,15 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
         _unlocked = 1;
     }
 
+    function init() external {
+        address trustBounty = IContract(contractAddress).trustBounty();
+        address trustBountyHelper = IContract(contractAddress).trustBountyHelper();
+        _setApprovalForAll(address(this), trustBounty, true);
+        _setApprovalForAll(address(this), trustBountyHelper, true);
+        erc20(token).approve(trustBounty, type(uint).max);
+        erc20(token).approve(trustBountyHelper, type(uint).max);
+    }
+
     modifier checkMinAuditor() {
         if (IAuth(contractAddress).devaddr_() != msg.sender) {
             address profile = IContract(contractAddress).profile();
@@ -110,6 +123,17 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
         _;
     }
     
+    function getParams() external view returns(uint,uint,uint,uint,uint,uint,address) {
+        return (
+            treasury,
+            treasuryFee,
+            bufferTime,
+            minBountyPercent,
+            minToBlacklist,
+            credit_divisor,
+            valuepool
+        );
+    }
 
     /**
      * @dev See {IERC165-supportsInterface}.
@@ -415,7 +439,7 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
                 return retval == IERC721Receiver.onERC721Received.selector;
             } catch (bytes memory reason) {
                 if (reason.length == 0) {
-                    revert("ERC721: transfer to non ERC721Receiver implementer");
+                    revert("ERC721:1");
                 } else {
                     assembly {
                         revert(add(32, reason), mload(reason))
@@ -427,7 +451,7 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
         }
     }
 
-    function updateDev(address _devaddr, bool _add) external {
+    function updateAdmin(address _devaddr, bool _add) external {
         require(isAdmin[msg.sender]);
         isAdmin[_devaddr] = _add;
     }
@@ -468,6 +492,7 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
         uint _bufferTime,
         uint _minToBlacklist,
         uint _minBountyPercent,
+        address _valuepool,
         COLOR _updateColor,
         COLOR _minColor
     ) external {
@@ -478,6 +503,7 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
         minBountyPercent = _minBountyPercent;
         updateColor = _updateColor;
         minColor = _minColor;
+        valuepool = _valuepool;
     }
 
     function updateDivisor(uint _credit_divisor) external {
@@ -492,9 +518,13 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     }
 
     function getPriceAt(uint _tokenId, uint _time) public view returns(uint _price) {
-        uint _numOfWeeks = (block.timestamp + _time - channelStartTime[collateral[_tokenId].channel])/ week;
-        _price = estimationTable[collateral[_tokenId].channel][_numOfWeeks % WEEKS_PER_YEAR];
-        _price += estimationTable[collateral[_tokenId].channel][WEEKS_PER_YEAR-1] * _numOfWeeks / WEEKS_PER_YEAR;
+        return getChannelPriceAt(collateral[_tokenId].channel, _time);
+    }
+
+    function getChannelPriceAt(uint _channel, uint _time) public view returns(uint _price) {
+        uint _numOfWeeks = (block.timestamp + _time - channelStartTime[_channel])/ week;
+        _price = estimationTable[_channel][_numOfWeeks % WEEKS_PER_YEAR];
+        _price += estimationTable[_channel][WEEKS_PER_YEAR-1] * (_numOfWeeks / WEEKS_PER_YEAR);
     }
 
     function _profile() internal view returns(address) {
@@ -508,29 +538,25 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     function mint(
         address _auditor,
         address _to, 
-        uint _stakeId,
         uint _userBountyId, 
         uint _auditorBountyId, 
-        uint _channel
+        uint _channel,
+        uint _toBorrow
     ) external {
-        _mintTo(_to, _channel);
+        _mintTo(_to, _channel, _toBorrow);
         address trustBounty = _trustBounty();
         _updateAuditor(
             _auditor,
             _to, 
             tokenId, 
-            _stakeId,
             _userBountyId, 
             _auditorBountyId
         );
-
-        _approve(IContract(contractAddress).trustBountyHelper(), tokenId);
         ITrustBounty(trustBounty).addBalance(_userBountyId, trustBounty, 0, tokenId);
 
         emit Mint(
             _auditor,
             _to, 
-            _stakeId,
             _userBountyId, 
             _auditorBountyId, 
             _channel,
@@ -538,15 +564,17 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
         );
     }
     
-    function _mintTo(address _to, uint _channel) internal lock {
+    function _mintTo(address _to, uint _channel, uint _toBorrow) internal lock {
         address profile = _profile();
-        uint _profileId = IProfile(profile).addressToProfileId(msg.sender);
+        uint _profileId = IProfile(profile).addressToProfileId(_to);
         require(IProfile(profile).isUnique(_profileId));
         require(profileIdToTokenId[_profileId] == 0);
         require(channels[_profileId] == _channel);
         
-        uint _price = estimationTable[_channel][0];
-        IERC20(token).safeTransferFrom(msg.sender, address(this), _price);
+        address trustBountyHelper = IContract(contractAddress).trustBountyHelper();
+        uint _price = getChannelPriceAt(_channel, 0);
+        uint _fees = ITrustBounty(trustBountyHelper).tradingNFTFee();
+        IERC20(token).safeTransferFrom(msg.sender, address(this), _price + _fees);
         paymentCredits[_to] = _price / (2 * credit_divisor);
         _mint(address(this), tokenId);
         
@@ -557,6 +585,41 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
         collateral[tokenId].owner = _to;
         collateral[tokenId].channel = _channel;
         collateral[tokenId].startTime = block.timestamp;
+        collateral[tokenId].toBorrow = _toBorrow;
+    }
+
+
+    function _updateAuditor(
+        address _auditor, 
+        address _user,
+        uint _tokenId, 
+        uint _userBountyId, 
+        uint _auditorBountyId
+    ) internal {
+        // Bounty checks
+        address trustBounty = _trustBounty();
+        address trustBountyHelper = IContract(contractAddress).trustBountyHelper();
+        (address _owner,address _token,,address claimableBy,,,,,,) = ITrustBounty(trustBounty).bountyInfo(_userBountyId);
+        require(_owner == _user && _token == address(this) && claimableBy == address(0));
+        // bounty actually contains requested token id
+        _auditorBountyCheck(_auditorBountyId, _tokenId, _auditor);
+        ITrustBounty(trustBountyHelper).attach(_auditorBountyId);
+        ITrustBounty(trustBountyHelper).attach(_userBountyId);
+        attachments[_tokenId].userBountyId = _userBountyId;
+        attachments[_tokenId].auditorBountyId = _auditorBountyId;
+        isAuditor[_tokenId] = _auditor;
+    }
+
+    function _auditorBountyCheck(
+        uint _auditorBountyId, 
+        uint _tokenId,
+        address _auditor
+    ) internal view {
+        address trustBounty = _trustBounty();
+        (address _owner2,address _token2,,address claimableBy2,,,uint endTime,,,) = ITrustBounty(trustBounty).bountyInfo(_auditorBountyId);
+        require(_owner2 == _auditor && _token2 == IContract(contractAddress).token() && claimableBy2 == address(0x0) && block.timestamp + bufferTime < endTime);
+        uint _balance = ITrustBounty(trustBounty).getBalance(_auditorBountyId);
+        require(_balance >= getPriceAt(_tokenId, 0) * minBountyPercent / 10000);
     }
 
     function notifyReward(uint _channel, uint _amount) external {
@@ -565,55 +628,62 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
         paymentCredits[msg.sender] = _amount / credit_divisor;
     }
 
-    function burn(address _from) external {
-        address profile = _profile();
-        uint _profileId = IProfile(profile).addressToProfileId(_from);
+    function burn() external {
+        uint _profileId = IProfile(_profile()).addressToProfileId(msg.sender);
         uint _tokenId = profileIdToTokenId[_profileId];
-        require(_tokenId > 0 && ownerOf(_tokenId) == msg.sender);
+        address _owner = ownerOf(_tokenId);
+        require(_owner == msg.sender || _owner == address(this));
+        address trustBountyHelper = IContract(contractAddress).trustBountyHelper();
 
         _burn(_tokenId);
-        
+
+        ITrustBounty(trustBountyHelper).detach(attachments[_tokenId].userBountyId);
+        ITrustBounty(trustBountyHelper).detach(attachments[_tokenId].auditorBountyId);
+
         delete collateral[_tokenId];
+        delete attachments[_tokenId];
         delete profileIdToTokenId[_profileId];
 
         emit Burn(_tokenId);
     }
 
     function eraseDebt(address _account) external lock {
-        address profile = _profile();
-        uint _profileId = IProfile(profile).addressToProfileId(_account);
+        uint _profileId = IProfile(_profile()).addressToProfileId(_account);
         uint _tokenId = profileIdToTokenId[_profileId];
 
         
-        IERC20(token).safeTransferFrom(msg.sender, address(this), getPriceAt(_tokenId, 0));
+        uint _due = getPriceAt(_tokenId, 0);
+        IERC20(token).safeTransferFrom(msg.sender, address(this), _due);
+        fund[collateral[_tokenId].channel] += _due;
 
         delete collateral[_tokenId];
         delete profileIdToTokenId[_profileId];
 
-        emit EraseDebt(_profileId);
+        emit EraseDebt(_tokenId);
     }
 
-    function getProfileId(address _account) external view returns(uint) {
-        address profile = _profile();
-        uint _profileId = IProfile(profile).addressToProfileId(_account);
-        return profileIdToTokenId[_profileId];
-    }
-
-    function sellCollateral(address _from) external lock {
-        address profile = _profile();
-        uint _profileId = IProfile(profile).addressToProfileId(_from);
+    function sellCollateral(address _borrower, uint _bountyId, uint _claimId) external lock {
+        address trustBounty = _trustBounty();
+        address trustBountyHelper = IContract(contractAddress).trustBountyHelper();
+        address _bountyOwner = ITrustBounty(trustBounty).getOwner(_bountyId);
+        Claim memory _claim = ITrustBounty(trustBounty).claims(_bountyId, _claimId - _bountyId - 1);
+        require(_claim.winner == msg.sender && _claim.status == StakeStatusEnum.AtPeace && !_claim.friendly && _bountyOwner == _borrower);
+        uint _profileId = IProfile(_profile()).addressToProfileId(_borrower);
         uint _tokenId = profileIdToTokenId[_profileId];
-        uint _due = getPriceAt(_tokenId, 0);
-        require(fund[collateral[_tokenId].channel] >= _due);
+        uint _due = Math.min(getPriceAt(_tokenId, 0), collateral[_tokenId].toBorrow);
+        require(fund[collateral[_tokenId].channel] > _due && isAuditor[_tokenId] == msg.sender);
+        require(ownerOf(_tokenId) == address(this));
 
-        require(_tokenId > 0 && ownerOf(_tokenId) == msg.sender);
-        ITrustBounty(IContract(contractAddress).trustBountyHelper()).detach(attachments[_tokenId]);
+        ITrustBounty(trustBountyHelper).detach(_bountyId);
+        ITrustBounty(trustBountyHelper).detach(attachments[_tokenId].auditorBountyId);
         
         _burn(_tokenId);
+        delete attachments[_tokenId];
+
         fund[collateral[_tokenId].channel] -= _due;
         IERC20(token).safeTransfer(msg.sender, _due);
 
-        emit SellCollateral(_profileId);
+        emit SellCollateral(_tokenId);
     }
 
     function _constructTokenURI(uint _tokenId, string[] memory optionNames, string[] memory optionValues) internal view returns(string memory) {
@@ -623,7 +693,7 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
             isAuditor[_tokenId],
             collateral[_tokenId].owner,
             address(0x0),
-            new string[](1),
+            IValuePool(IContract(contractAddress).valuepoolHelper2()).getMedia(valuepool,_tokenId),
             optionNames,
             optionValues,
             new string[](1)
@@ -637,19 +707,19 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
         address profile = IContract(contractAddress).profile();
         optionValues[idx++] = toString(_tokenId);
         optionNames[idx] = "AID";
-        optionValues[idx++] = toString(attachments[_tokenId]);
+        optionValues[idx++] = toString(attachments[_tokenId].auditorBountyId);
         optionNames[idx] = "PID";
         optionValues[idx++] = toString(IProfile(profile).addressToProfileId(collateral[_tokenId].owner));
         optionNames[idx] = "Channel";
         optionValues[idx++] = toString(collateral[_tokenId].channel);
-        optionNames[idx] = "Channel Balance";
+        optionNames[idx] = "Balance";
         optionValues[idx++] = toString(fund[collateral[_tokenId].channel]);
-        optionNames[idx] = "Start";
+        optionNames[idx] = "Mint Date";
         optionValues[idx++] = toString(collateral[_tokenId].startTime);
-        optionNames[idx] = "Current Price";
+        optionNames[idx] = "Price";
         optionValues[idx++] = toString(getPriceAt(_tokenId, 0));
         optionNames[idx] = "Token";
-        optionValues[idx++] = string(abi.encodePacked(IMarketPlace(token).symbol()));
+        optionValues[idx++] = IMarketPlace(token).symbol();
         output = _constructTokenURI(
             _tokenId, 
             optionNames, 
@@ -697,10 +767,7 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
     {
         // super._beforeTokenTransfer(from, to, _tokenId);
         if (from != address(this) && to != address(this)) {
-            require(
-                (isAdmin[from] || isAuditor[_tokenId] == from) &&
-                (isAdmin[to] || isAuditor[_tokenId] == from)
-            );
+            require(isAdmin[from] || isAdmin[to]);
         }
     }
 
@@ -722,49 +789,16 @@ contract FutureCollateral is Context, ERC165, IERC721, IERC721Metadata {
         uint256 _tokenId
     ) internal virtual {}
 
-    function _updateAuditor(
-        address _auditor, 
-        address _user,
-        uint _tokenId, 
-        uint _stakeId,
-        uint _userBountyId, 
-        uint _auditorBountyId
-    ) internal {
-        // Bounty checks
-        address trustBounty = _trustBounty();
-        (address _owner,address _token,,address claimableBy,,,,,,) = ITrustBounty(trustBounty).bountyInfo(_userBountyId);
-        require(_owner == _user && _token == address(this));
-        // bounty actually contains requested token id
-        _auditorBountyCheck(_auditorBountyId, _tokenId, _auditor);
-        ITrustBounty(IContract(contractAddress).trustBountyHelper()).attach(_auditorBountyId);
-        attachments[_tokenId] = _auditorBountyId;
-        // stake checks
-        _stateCheck(_stakeId, _auditor, _user);
-        isAuditor[_tokenId] = _auditor;
-    }
-
-    function _auditorBountyCheck(
-        uint _auditorBountyId, 
-        uint _tokenId,
-        address _auditor
-    ) internal view {
-        address trustBounty = _trustBounty();
-        (address _owner2,address _token2,,address claimableBy2,,,uint endTime,,,) = ITrustBounty(trustBounty).bountyInfo(_auditorBountyId);
-        require(_owner2 == _auditor && _token2 == IContract(contractAddress).token() && claimableBy2 == address(0x0) && block.timestamp + bufferTime < endTime);
-        uint _balance = ITrustBounty(trustBounty).getBalance(_auditorBountyId);
-        require(_balance >= getPriceAt(_tokenId, 0) * minBountyPercent / 10000);
-    }
-
-    function _stateCheck(uint _stakeId, address _auditor, address _user) internal view {
-        address stakeMarket = IContract(contractAddress).stakeMarket();
-        Stake memory stake = IStakeMarket(stakeMarket).getStake(_stakeId);
-        Stake memory parentStake = IStakeMarket(stakeMarket).getStake(stake.parentStakeId);
-        require(IStakeMarket(stakeMarket).isStake(_stakeId) && IStakeMarket(stakeMarket).isStake(stake.parentStakeId));
-        require(
-            (stake.owner == _auditor && parentStake.owner == _user) ||
-            (stake.owner == _user && parentStake.owner == _auditor)
-        );
-    }
+    // function _stateCheck(uint _stakeId, address _auditor, address _user) internal view {
+    //     address stakeMarket = IContract(contractAddress).stakeMarket();
+    //     Stake memory stake = IStakeMarket(stakeMarket).getStake(_stakeId);
+    //     Stake memory parentStake = IStakeMarket(stakeMarket).getStake(stake.parentStakeId);
+    //     require(IStakeMarket(stakeMarket).isStake(_stakeId) && IStakeMarket(stakeMarket).isStake(stake.parentStakeId));
+    //     require(
+    //         (stake.owner == _auditor && parentStake.owner == _user) ||
+    //         (stake.owner == _user && parentStake.owner == _auditor)
+    //     );
+    // }
 
     function onERC721Received(address,address,uint256,bytes memory) public virtual returns (bytes4) {
         return this.onERC721Received.selector; 

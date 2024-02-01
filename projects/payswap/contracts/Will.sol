@@ -6,17 +6,17 @@ import "./Library.sol";
 // Gauges are used to incentivize pools, they emit reward tokens over 7 days for staked LP tokens
 contract WILL {
     using SafeERC20 for IERC20;
-    using EnumerableSet for EnumerableSet.UintSet;
     using EnumerableSet for EnumerableSet.AddressSet;
 
     address private devaddr_;
     address private helper;
-    string public media;
-    mapping(address => uint) public adminBountyId;
+    // string public media;
     mapping(address => uint) public totalProcessed;
+    mapping(uint => mapping(address => uint)) public paidPayable;
     struct ProtocolInfo {
         uint createdAt;
         uint updatedAt;
+        string ssid;
         string media;
         string description;
     }
@@ -39,8 +39,7 @@ contract WILL {
     bool public unlocked = false;
     address private contractAddress;
     address profile;
-    mapping(uint => address) private taxContract;
-    mapping(address => mapping(uint => uint)) public lockedBalance;
+    // mapping(address => mapping(uint => uint)) public lockedBalance;
     mapping(uint => bool) public locked;
 
     constructor(
@@ -51,7 +50,7 @@ contract WILL {
         profile = IContract(__contractAddress).profile();
         profileId = IProfile(profile).addressToProfileId(_devaddr);
         collectionId = IMarketPlace(IContract(__contractAddress).marketCollections()).addressToCollectionId(_devaddr);
-        require(profileId > 0 && collectionId > 0);
+        require(profileId > 0);
         helper = _helper;
         devaddr_ = _devaddr;
         contractAddress = __contractAddress;
@@ -92,11 +91,11 @@ contract WILL {
         devaddr_ = _devaddr;
     }
 
-    function updateMedia(string memory _media) external onlyAdmin {
-        // useful to leave message regarding decisions to make about your body after you die
-        // or guidelines on decisions when you are not conscious to make them
-        media = _media;
-    }
+    // function updateMedia(string memory _media) external onlyAdmin {
+    //     // useful to leave message regarding decisions to make about your body after you die
+    //     // or guidelines on decisions when you are not conscious to make them
+    //     media = _media;
+    // }
 
     function getProtocolInfo(uint _profileId, uint _position, uint _amount) external view returns(
         bool isNFT,
@@ -114,9 +113,9 @@ contract WILL {
             msg.sender == helper
         );
         token = tokens[_profileId][_position];
-        isNFT = tokenType[token] > NFTYPE.not;
-        value = tokenType[token] > NFTYPE.not ? balanceOf[token] : balanceOf[token] * percentages[_profileId][_position] / 10000;
-        percentage = tokenType[token] > NFTYPE.not ? 10000 : percentages[_profileId][_position];
+        isNFT = tokenType[token] != NFTYPE.not;
+        value = tokenType[token] != NFTYPE.not ? balanceOf[token] : balanceOf[token] * percentages[_profileId][_position] / 10000;
+        percentage = tokenType[token] != NFTYPE.not ? 10000 : percentages[_profileId][_position];
         if (tokenType[token] == NFTYPE.not && _amount > 0) {
             value = Math.min(_amount, value);
             percentage = value * 10000 / balanceOf[token];
@@ -134,20 +133,18 @@ contract WILL {
         uint _maxNFTWithdrawableNow,
         uint _willWithdrawalPeriod
     ) external onlyAdmin {
-        if (activePeriod == 0 || activePeriod < block.timestamp) {
+        if (activePeriod < block.timestamp) {
             updatePeriod = _updatePeriod;
             willWithdrawalPeriod = _willWithdrawalPeriod;
             maxWithdrawableNow = _maxWithdrawableNow;
             maxNFTWithdrawableNow = _maxNFTWithdrawableNow;
-        } else {
-            activePeriod = (block.timestamp + updatePeriod) / activePeriod * activePeriod;
+            activePeriod = block.timestamp + updatePeriod;
         }
         if (_profileId > 0) {
-            // address profile = IContract(contractAddress).profile();
             profileId = IProfile(profile).addressToProfileId(msg.sender);
             require(IProfile(profile).addressToProfileId(msg.sender) > 0);
         }
-        IWill(_note()).emitUpdateParameters(
+        IWill(helper).emitUpdateParameters(
             _profileId,
             _updatePeriod,
             _maxWithdrawableNow,
@@ -170,25 +167,29 @@ contract WILL {
             tokenTypes[i] = tokenType[_tokens[i]];
         }    
     }
-
-    function setContractAddress(address _contractAddress) external {
-        require(helper == msg.sender);
-        profile = IContract(_contractAddress).profile();
-        helper = IContract(_contractAddress).willNote();
-    }
     
-    function addBalance(address _token, uint _value, NFTYPE _tokenType) external {
+
+    function addBalanceETH(address _from) external payable lock {
+        IWETH(address(this)).deposit{value: msg.value}();
+        addBalance(helper, _from, msg.value, NFTYPE.not);
+    }
+
+    function deposit() public payable returns (uint256) {}
+
+    function addBalance(address _token, address _from, uint _value, NFTYPE _tokenType) public {
         if (_tokenType == NFTYPE.not) {
-            IERC20(_token).safeTransferFrom(msg.sender, address(this), _value);
+            if (_token != helper) {
+               IERC20(_token).safeTransferFrom(_from, address(this), _value);
+            }
         } else if (_tokenType == NFTYPE.erc721) {
-            IERC721(_token).safeTransferFrom(msg.sender, address(this), _value);
+            IERC721(_token).safeTransferFrom(_from, address(this), _value);
         } else {
-            IERC1155(_token).safeTransferFrom(msg.sender, address(this), _value, 1, msg.data);
+            IERC1155(_token).safeTransferFrom(_from, address(this), _value, 1, msg.data);
         }
         tokenType[_token] = _tokenType;
         balanceOf[_token]+= _value;
         _allTokens.add(_token);
-        IWill(_note()).emitAddBalance(
+        IWill(helper).emitAddBalance(
             _token,
             _value,
             _tokenType
@@ -227,26 +228,29 @@ contract WILL {
     }
 
     function removeBalance(address _token, uint _value) external onlyAdmin {
-        require(lockedBalance[_token][1] + _value <= balanceOf[_token]);
+        // require(lockedBalance[_token][1] + _value <= balanceOf[_token]);
         updateActivePeriod(_token);
-        require(totalRemoved[_token] + _value <= balanceOf[_token] * maxWithdrawableNow / 10000);
-        address note = _note();
+        require(totalRemoved[_token] + _value <= balanceOf[_token] * maxWithdrawableNow / 10000, "W2");
         if (tokenType[_token] == NFTYPE.not) {
             uint payswapFees = Math.min(
-                _value * IWill(note).tradingFee(true) / 10000, 
+                _value * IWill(helper).tradingFee(true) / 10000, 
                 IContract(contractAddress).cap(_token) > 0 
                 ? IContract(contractAddress).cap(_token) : type(uint).max
             );
-            erc20(_token).approve(note, payswapFees);
-            IWill(note).notifyFees(_token, payswapFees);
-            IERC20(_token).safeTransfer(msg.sender, _value - payswapFees);
+            if (_token != helper) {
+                erc20(_token).approve(helper, payswapFees);
+            } else {
+                _safeTransfer(_token, helper, payswapFees);
+            }
+            IWill(helper).notifyFees(_token, payswapFees);
+            _safeTransfer(_token, msg.sender, _value - payswapFees);
             totalRemoved[_token] += _value;
             if (balanceOf[_token] == _value) {
                 delete tokenType[_token];
                 _allTokens.remove(_token);
             }
             balanceOf[_token] -= _value;
-            IWill(note).emitRemoveBalance(
+            IWill(helper).emitRemoveBalance(
                 _token,
                 _value,
                 NFTYPE.not
@@ -255,18 +259,17 @@ contract WILL {
     }
 
     function removeNFTBalance(address _token, uint _value) external onlyAdmin {
-        require(lockedBalance[_token][_value] != _value);
+        // require(lockedBalance[_token][_value] != _value);
         updateActivePeriod(address(this));
         require(tokenType[_token] != NFTYPE.not);
         require(totalRemoved[address(this)] < maxNFTWithdrawableNow);
-        address note = _note();
-        IWill(note).notifyNFTFees(msg.sender);
+        IWill(helper).notifyNFTFees(msg.sender);
         if (tokenType[_token] == NFTYPE.erc721) {
             IERC721(_token).safeTransferFrom(address(this), msg.sender, _value);
         } else {
             IERC1155(_token).safeTransferFrom(address(this), msg.sender, _value, 1, msg.data);
         }
-        IWill(note).emitRemoveBalance(
+        IWill(helper).emitRemoveBalance(
             _token,
             _value,
             tokenType[_token]
@@ -290,20 +293,23 @@ contract WILL {
         address _owner,
         address[] memory _tokens,
         uint[] memory _percentages,
+        string memory _ssid,
         string memory _media,
         string memory _description
     ) external onlyAdmin {
-        require(!locked[_profileId], "W2");
         if(protocolInfo[_profileId].createdAt == 0) {
-            require(_profileId > 0, "W3");
+            require(_profileId > 0);
             protocolInfo[_profileId].createdAt = block.timestamp;
         }
         protocolInfo[_profileId].media = _media;
+        protocolInfo[_profileId].ssid = _ssid;
         protocolInfo[_profileId].description = _description;
         protocolInfo[_profileId].updatedAt = block.timestamp;
-        tokens[_profileId] = _tokens;
-        percentages[_profileId] = _percentages;
-        IWill(_note()).emitUpdateProtocol(
+        if (!locked[_profileId]) {
+            tokens[_profileId] = _tokens;
+            percentages[_profileId] = _percentages;
+        }
+        IWill(helper).emitUpdateProtocol(
             _profileId,
             _owner,
             _media,
@@ -313,79 +319,92 @@ contract WILL {
         );
     }
 
-    function _note() internal view returns(address) {
-        return IContract(contractAddress).willNote();
-    }
-
-    function updateTaxContract(address _taxContract) external {
-        taxContract[IProfile(profile).addressToProfileId(msg.sender)] = _taxContract;
-    }
-
     function deleteProtocol (uint _profileId) external onlyAdmin {
         require(!locked[_profileId]);
         delete protocolInfo[_profileId];
+        IWill(helper).emitDeleteProtocol(_profileId);
     }
 
-    function payInvoicePayable(uint _profileId, uint _position) external lock {
+    function payInvoicePayable(uint _profileId, uint _position) external payable lock {
+        uint __profileId = IProfile(profile).addressToProfileId(msg.sender);
+        SSIData memory metadata = ISSI(IContract(contractAddress).ssi()).getSSID(__profileId);
         require(
-            (IProfile(profile).addressToProfileId(msg.sender) == _profileId) 
+            (__profileId == _profileId) || keccak256(abi.encodePacked(protocolInfo[_profileId].ssid)) == keccak256(abi.encodePacked(metadata.answer))
         );
         if (willWithdrawalActivePeriod < block.timestamp && willWithdrawalActivePeriod != 0) { 
             unlocked = true;
-            address note = _note();
             address token = tokens[_profileId][_position];
-            uint _percentage = percentages[_profileId][_position];
-            uint duePayable = _percentage * balanceOf[token] / 10000;
+            uint _percentage = tokenType[token] == NFTYPE.not ? percentages[_profileId][_position] : 10000;
+            uint duePayable = _percentage * balanceOf[token] / 10000 - paidPayable[_profileId][token];
+            paidPayable[_profileId][token] += duePayable;
             uint payswapFees = tokenType[token] == NFTYPE.not ? Math.min(
-                duePayable * IWill(note).tradingFee(false) / 10000, 
+                duePayable * IWill(helper).tradingFee(false) / 10000, 
                 IContract(contractAddress).cap(token) > 0 
                 ? IContract(contractAddress).cap(token) : type(uint).max
             ) : 0;
+
             if (tokenType[token] == NFTYPE.not) {
+                uint value = duePayable - payswapFees;
                 totalProcessed[token] += duePayable;
-                if(taxContract[_profileId] != address(0x0)) {
-                    IBILL(taxContract[_profileId]).notifyCredit(address(this), msg.sender, duePayable);
+                if (token != helper) {
+                    erc20(token).approve(helper, payswapFees);
+                } else {
+                    _safeTransfer(token, helper, payswapFees);
                 }
-                erc20(token).approve(helper, payswapFees);
                 IWill(helper).notifyFees(token, payswapFees);
-                IERC20(token).safeTransfer(msg.sender, duePayable - payswapFees);
+                _safeTransfer(token, msg.sender, value);
             } else if (tokenType[token] == NFTYPE.erc721) {
                 IERC721(token).safeTransferFrom(address(this), msg.sender, duePayable);
             } else {
                 IERC1155(token).safeTransferFrom(address(this), msg.sender, duePayable, 1, msg.data);
             }
-            if (tokenType[token] > NFTYPE.not) {
-                IWill(note).notifyNFTFees(msg.sender);
+            if (tokenType[token] != NFTYPE.not) {
+                IWill(helper).notifyNFTFees(msg.sender);
             }
             IWill(helper).emitPayInvoicePayable(duePayable);
         } else {
-            willWithdrawalActivePeriod = (block.timestamp + willWithdrawalPeriod) / willWithdrawalPeriod * willWithdrawalPeriod;
+            willWithdrawalActivePeriod = block.timestamp + willWithdrawalPeriod;
             IWill(helper).emitStartWillWithdrawalCountDown(_profileId);
         }
     }
 
-    function updatePercentage(uint _profileId, uint _position, uint _value, uint _percentage) external {
-        require(msg.sender == helper);
-        address token = tokens[_profileId][_position];
-        percentages[_profileId][_position] = percentages[_profileId][_position] - _percentage;
-        _value = tokenType[token] == NFTYPE.not ? percentages[_profileId][_position] * balanceOf[token] / 10000 : _value;
-        uint _pos = tokenType[token] == NFTYPE.not ? 1 : _value;
+    function updatePercentage(address _token, uint _profileId, uint _position, uint _percentage) external {
+        require(msg.sender == helper && tokens[_profileId][_position] == _token, "W1");
+        percentages[_profileId][_position] -= _percentage;
         locked[_profileId] = true;
-        lockedBalance[token][_pos] = _value;
     }
 
     function stopWillWithdrawalCountdown() external onlyAdmin {
         willWithdrawalActivePeriod = 0;
     }
 
-    function noteWithdraw(address _to, address _token, uint amount) external {
-        require(msg.sender == _note(), "BILL10");
-        if (tokenType[_token] == NFTYPE.not) {
-            IERC20(_token).safeTransfer(_to, amount);     
-        } else if (tokenType[_token] == NFTYPE.erc721) {
-            IERC721(_token).safeTransferFrom(address(this), _to, amount);
+    function _safeTransfer(address _token, address to, uint256 value) internal {
+        if (_token == helper) {
+            (bool success, ) = to.call{value: value}(new bytes(0));
+            require(success);
         } else {
-            IERC1155(_token).safeTransferFrom(address(this), _to, amount, 1, msg.data);
+            (bool success, bytes memory data) =
+            _token.call(abi.encodeWithSelector(erc20.transfer.selector, to, value));
+            require(success && (data.length == 0 || abi.decode(data, (bool))));
+        }
+    }
+
+    function noteWithdraw(address _to, address _token, uint _profileId, uint duePayable, uint payswapFees) external payable {
+        require(msg.sender == helper);
+        locked[_profileId] = false;
+        if (tokenType[_token] == NFTYPE.not) {
+            uint value = duePayable - payswapFees;
+            totalProcessed[_token] += duePayable;
+            if (_token != helper) {
+                erc20(_token).approve(helper, payswapFees);
+            } else {
+                _safeTransfer(_token, helper, payswapFees);
+            }
+            _safeTransfer(_token, msg.sender, value);
+        } else if (tokenType[_token] == NFTYPE.erc721) {
+            IERC721(_token).safeTransferFrom(address(this), _to, duePayable);
+        } else {
+            IERC1155(_token).safeTransferFrom(address(this), _to, duePayable, 1, msg.data);
         }
     }
 }
@@ -393,11 +412,10 @@ contract WILL {
 contract WILLNote is ERC721Pausable {
     using SafeERC20 for IERC20;
     using EnumerableSet for EnumerableSet.AddressSet;
-    using EnumerableSet for EnumerableSet.UintSet;
 
-    uint public tokenId = 1;
+    uint tokenId = 1;
     EnumerableSet.AddressSet private gauges;
-    address public contractAddress;
+    address contractAddress;
     mapping(address => uint) public treasuryFees;
     mapping(address => EnumerableSet.AddressSet) private _whereIHaveMyMoney;
     uint private tradingFeeAdmin = 100;
@@ -405,20 +423,18 @@ contract WILLNote is ERC721Pausable {
     uint public tradingNFTFee = 1e18;
     address public valuepoolAddress;
     struct InheritanceCheque {
-        address token;
         address will;
-        bool isNFT;
-        uint due;
+        address token;
+        NFTYPE isNFT;
         uint profileId;
         uint percentage;
-        uint payswapFees; 
     }
     mapping(uint => InheritanceCheque) public notes;
 
     event PayInvoicePayable(address will, uint toPay);
     event DeleteProtocol(uint indexed protocolId, address will);
     event Withdraw(address indexed from, address will, uint amount);
-    event TransferDueToNote(address will, uint protocolId, uint tokenId, uint due, bool adminNote);
+    event TransferDueToNote(address will, uint protocolId, uint tokenId, uint percentage);
     event StartWillWithdrawalCountDown(address will, uint profileId);
     event ClaimTransferNote(uint tokenId);
     event UpdateMiscellaneous(
@@ -475,22 +491,16 @@ contract WILLNote is ERC721Pausable {
         _unlocked = 1;
     }
 
-    function _trustBounty() internal view returns(address) {
-        return IContract(contractAddress).trustBounty();
-    }
-
     function setContractAddress(address _contractAddress) external {
-        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender, "NT2");
+        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
         contractAddress = _contractAddress;
     }
 
-    function setContractAddressAt(address _will) external {
-        IMarketPlace(_will).setContractAddress(contractAddress);
-    }
-
-    function tradingFee(bool _admin) external view returns(uint) {
+    function tradingFee(bool _admin) public view returns(uint) {
         return _admin ? tradingFeeAdmin : tradingFeeUser;
     }
+
+    fallback() external payable {}
 
     function updateParams(
         uint _tradingFeeAdmin, 
@@ -525,47 +535,55 @@ contract WILLNote is ERC721Pausable {
     function transferDueToNotePayable(
         address _will,
         address _to, 
+        address _token, 
         uint _profileId,
         uint _position,
-        uint _amount
+        uint _percentage
     ) external lock {
         require(
-            // _amount > 0 && 
-            IAuth(_will).isAdmin(msg.sender), "WILLH7");
-        (bool isNFT,uint value,address token,uint percentage,,,,) = IWill(_will).getProtocolInfo(_profileId, _position, _amount);
-        value = isNFT ? value : Math.min(value,_amount);
-        uint payswapFees = isNFT ? 0 : Math.min(
-            value * tradingFeeUser / 10000, 
-            IContract(contractAddress).cap(token) > 0 
-            ? IContract(contractAddress).cap(token) : type(uint).max
+            IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender) == _profileId, 
+            "WILLH7"
         );
-        value -= payswapFees;
         notes[tokenId] = InheritanceCheque({
-            token: token,
-            percentage: percentage,
-            isNFT: isNFT,
-            payswapFees: isNFT ? tradingNFTFee : payswapFees,
-            due: value,
             will: _will,
-            profileId: _profileId
+            token: _token,
+            isNFT: IWill(_will).tokenType(_token),
+            profileId: _profileId,
+            percentage: _percentage
         });
-        IWill(_will).updatePercentage(_profileId, _position, value, percentage);
+        IWill(_will).updatePercentage(_token, _profileId, _position, _percentage);
         _safeMint(_to, tokenId, msg.data);
-        emit TransferDueToNote(_will, _profileId, tokenId++, value, false);
+        emit TransferDueToNote(_will, _profileId, tokenId++, _percentage);
     }
 
     function claimPendingRevenueFromNote(uint _tokenId) external lock {
         require(ownerOf(_tokenId) == msg.sender, "BILLH10");
         require(IWill(notes[_tokenId].will).unlocked(), "BILLH11");
-        delete notes[_tokenId];
-        _burn(_tokenId);
-        IWill(notes[_tokenId].will).noteWithdraw(address(msg.sender), notes[_tokenId].token, notes[_tokenId].due);
-        if (!notes[_tokenId].isNFT) {
-            IWill(notes[_tokenId].will).noteWithdraw(address(this), notes[_tokenId].token, notes[_tokenId].payswapFees);
-            treasuryFees[notes[_tokenId].token] += notes[_tokenId].payswapFees;
-        } else {
+
+        if (notes[_tokenId].isNFT != NFTYPE.not) {
             notifyNFTFees(msg.sender);
         }
+        address _token = notes[_tokenId].token;
+        uint _percentage = notes[_tokenId].isNFT == NFTYPE.not ? notes[_tokenId].percentage : 10000;
+        uint duePayable = _percentage * IWill(notes[_tokenId].will).balanceOf(_token) / 10000;
+        uint payswapFees = notes[_tokenId].isNFT == NFTYPE.not ? Math.min(
+            duePayable * tradingFeeUser / 10000, 
+            IContract(contractAddress).cap(_token) > 0 
+            ? IContract(contractAddress).cap(_token) : type(uint).max
+        ) : 0;
+        IWill(notes[_tokenId].will).noteWithdraw(
+            address(msg.sender), 
+            _token, 
+            notes[_tokenId].profileId, 
+            duePayable,
+            payswapFees
+        );
+        if (_token != address(this)) {
+            IERC20(_token).safeTransferFrom(notes[_tokenId].will, address(this), payswapFees);
+        } 
+        treasuryFees[_token] += payswapFees;
+        delete notes[_tokenId];
+        _burn(_tokenId);
         emit ClaimTransferNote(_tokenId);
     }
 
@@ -585,7 +603,7 @@ contract WILLNote is ERC721Pausable {
         require(IValuePool(IContract(contractAddress).valuepoolHelper()).isGauge(msg.sender));
         require(IWill(IContract(contractAddress).willNote()).isGauge(_will), "WHHH1");
         NFTYPE _tokenType = IWill(_will).tokenType(_token);
-        if (_tokenType > NFTYPE.not) {
+        if (_tokenType != NFTYPE.not) {
             IERC721(_token).setApprovalForAll(_will, true);
         } else {
             erc20(_token).approve(_will, _amount);
@@ -594,8 +612,10 @@ contract WILLNote is ERC721Pausable {
     }
 
     function notifyFees(address _token, uint _fees) external {
-        require(gauges.contains(msg.sender), "BILLH2");        
-        IERC20(_token).safeTransferFrom(msg.sender, address(this), _fees);
+        require(gauges.contains(msg.sender), "BILLH2");       
+        if (_token != address(this)) {
+            IERC20(_token).safeTransferFrom(msg.sender, address(this), _fees);
+        } 
         treasuryFees[_token] += _fees;
     }
 
@@ -667,6 +687,11 @@ contract WILLNote is ERC721Pausable {
         emit StartWillWithdrawalCountDown(msg.sender, _profileId);
     }
 
+    function emitDeleteProtocol(uint _profileId) external {
+        require(gauges.contains(msg.sender));
+        emit DeleteProtocol(_profileId, msg.sender);
+    }
+
     function emitUpdateMiscellaneous(
         uint _idx, 
         uint _willId, 
@@ -690,10 +715,15 @@ contract WILLNote is ERC721Pausable {
         );
     }
 
-    function withdrawFees(address _token) external returns(uint _amount) {
+    function withdrawFees(address _token, address to) external payable returns(uint _amount) {
         require(msg.sender == IAuth(contractAddress).devaddr_(), "BILLH13");
         _amount = treasuryFees[_token];
-        IERC20(_token).safeTransfer(msg.sender, _amount);
+        if (_token == address(this)) {
+            (bool success, ) = to.call{value: _amount}(new bytes(0));
+            require(success, "T42");
+        } else {
+            IERC20(_token).safeTransfer(to, _amount);
+        }
         treasuryFees[_token] = 0;
         return _amount;
     }
@@ -722,7 +752,7 @@ contract WILLNote is ERC721Pausable {
             ownerOf(_tokenId),
             ownerOf(_tokenId),
             address(0x0),
-            new string[](1),
+            IValuePool(IContract(contractAddress).valuepoolHelper2()).getMedia(valuepoolAddress,_tokenId),
             optionNames,
             optionValues,
             description
@@ -731,18 +761,15 @@ contract WILLNote is ERC721Pausable {
 
     function tokenURI(uint _tokenId) public override view returns (string memory output) {
         uint idx;
-        string[] memory optionNames = new string[](6);
-        string[] memory optionValues = new string[](6);
-        uint decimals = uint(IMarketPlace(notes[_tokenId].token).decimals());
+        string[] memory optionNames = new string[](5);
+        string[] memory optionValues = new string[](5);
         optionValues[idx++] = toString(_tokenId);
         optionNames[idx] = "PID";
         optionValues[idx++] = toString(notes[_tokenId].profileId);
         optionNames[idx] = "Percentage";
-        optionValues[idx++] = toString(notes[_tokenId].percentage);
+        optionValues[idx++] = string(abi.encodePacked(toString(notes[_tokenId].percentage / 100), "%"));
         optionNames[idx] = "isNFT";
-        optionValues[idx++] = notes[_tokenId].isNFT ? "Yes" : "No";
-        optionNames[idx] = "Amount";
-        optionValues[idx++] = string(abi.encodePacked(toString(notes[_tokenId].due/10**decimals), " " ,IMarketPlace(notes[_tokenId].token).symbol()));
+        optionValues[idx++] = notes[_tokenId].isNFT != NFTYPE.not ? "Yes" : "No";
         optionNames[idx] = "Unlocked";
         optionValues[idx++] = IWill(notes[_tokenId].will).unlocked() ? "Yes" : "No";
         string[] memory _description = new string[](1);

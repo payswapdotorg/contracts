@@ -378,7 +378,6 @@ contract NFTicket {
     }
 
     function withdrawTreasury(address _token, uint _amount) external onlyAdmin lock {
-        address nfticketHelper = _nfticketHelper();
         uint _price = _amount == 0 ? treasury : Math.min(_amount, treasury);
         if (_token ==  IContract(contractAddress).token()) {
             treasury -= _price;
@@ -711,6 +710,7 @@ contract NFTicketHelper {
     function withdrawTreasury(address _token, uint _amount) external lock {
         address token = IContract(contractAddress).token();
         address devaddr_ = IAuth(contractAddress).devaddr_();
+        require(msg.sender == devaddr_);
         _token = _token == address(0x0) ? token : _token;
         uint _price = _amount == 0 ? treasury : Math.min(_amount, treasury);
         if (_token == token) {

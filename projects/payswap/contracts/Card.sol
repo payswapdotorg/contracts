@@ -17,6 +17,7 @@ contract Card {
     mapping(address => uint) public treasury;
     mapping(string => uint) public profileId;
     mapping(string => uint) public accountId;
+    mapping(uint => string) public usernames;
     mapping(string => mapping(address => uint)) public toBurn;
 
     event UpdatePassword(string _username, string _password, uint _accountId);
@@ -61,11 +62,12 @@ contract Card {
         require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
         contractAddress = _contractAddress;
     }
-
+    
     function createAccount(string memory _username, string memory _password) external {
         require(_isEmpty(accounts[_username]));
         accounts[_username] = _password;
         accountId[_username] = protocolId;
+        usernames[protocolId] = _username;
         emit UpdatePassword(_username, _password, protocolId++);
     }
 
@@ -83,7 +85,7 @@ contract Card {
     }
 
     function updatePasswordWithProfile(string memory _username, string memory _password) external {
-        require(_isEmpty(accounts[_username]));
+        require(!_isEmpty(accounts[_username]));
         uint _profileId = IProfile(IContract(contractAddress).profile()).addressToProfileId(msg.sender);
         require(profileId[_username] == _profileId && _profileId > 0);
         accounts[_username] = _password;
@@ -155,21 +157,22 @@ contract Card {
     function transferBalance(
         string memory _username, 
         string memory _password, 
-        string memory _recipientUsername, 
         address _token, 
+        uint  _recipientAccountId, 
         uint _amount
     ) external onlyAuth(_username) {
         require(_isAccountOwner(_username, _password), "C8");
-        if (balance[_username][_token] == _amount || _amount == 0) {
+        if (balance[_username][_token] <= _amount || _amount == 0) {
             _tokens[_username].remove(_token);
-            balance[_recipientUsername][_token] += balance[_username][_token];
+            balance[usernames[_recipientAccountId]][_token] += balance[_username][_token];
+            _amount = balance[_username][_token];
             balance[_username][_token] = 0;
         } else {
-            balance[_recipientUsername][_token] += _amount;
+            balance[usernames[_recipientAccountId]][_token] += _amount;
             balance[_username][_token] -= _amount;
         }
 
-        emit TransferBalance(accountId[_username], accountId[_recipientUsername], _token, _amount);
+        emit TransferBalance(accountId[_username], _recipientAccountId, _token, _amount);
     }
 
     function executePurchase(

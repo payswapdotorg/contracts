@@ -211,6 +211,16 @@ struct RampInfo {
     uint maxParters;
     uint cap;
 }
+struct Claim {
+    uint bountyId;
+    address hunter;
+    address recipient;
+    uint endTime;
+    uint amountToClaim;
+    bool friendly;
+    address winner;
+    StakeStatusEnum status;
+}
 enum DepositType {
     DEPOSIT_FOR_TYPE,
     CREATE_LOCK_TYPE,
@@ -3924,7 +3934,7 @@ abstract contract Ownable is Context {
     }
 }
 
-contract AML is ERC20Votes, Ownable {
+contract AML is ERC20Votes {
     address public contractAddress;
     uint public limitWithoutProfileFactor = 10000e18;
     uint public limitWithProfileFactor = 1000000e18;
@@ -3939,7 +3949,6 @@ contract AML is ERC20Votes, Ownable {
     mapping(uint => bool) public blacklistedProfile;
     mapping(address => bool) public isSourceWhitelisted;
     mapping(address => bool) public isDestWhitelisted;
-    uint public tokenPriceInDollar = 1;
     address public platform;
 
     event AttachProfile(uint indexed profileId, address account);
@@ -3956,6 +3965,14 @@ contract AML is ERC20Votes, Ownable {
         platform = _devaddr;
     }
     
+    /**
+     * @dev Throws if called by any account other than the owner.
+     */
+    modifier onlyOwner() {
+        require(platform == msg.sender, "Ownable: caller is not the owner");
+        _;
+    }
+
     modifier notInBlacklist(address _user) {
         if (attachedProfileId[_user] > 0) {
             require(!blacklistedProfile[attachedProfileId[_user]]);
@@ -3964,21 +3981,18 @@ contract AML is ERC20Votes, Ownable {
         _;
     }
 
-    function setContractAddress(address __contractAddress) external {
+    function setContractAddress(address __contractAddress, address _platform) external {
         require(contractAddress == address(0x0) || platform == msg.sender);
         contractAddress = __contractAddress;
-    }
-
-    function updateTokenPriceInDollar(uint _tokenPriceInDollar) external onlyOwner {
-        tokenPriceInDollar = _tokenPriceInDollar;
+        platform = _platform;
     }
 
     function limitWithProfile() public view returns(uint) {
-        return tokenPriceInDollar * limitWithProfileFactor;
+        return IRamp(IContract(contractAddress).rampHelper()).convert(address(this), limitWithProfileFactor);
     }
 
     function limitWithoutProfile() public view returns(uint) {
-        return tokenPriceInDollar * limitWithoutProfileFactor;
+        return IRamp(IContract(contractAddress).rampHelper()).convert(address(this), limitWithoutProfileFactor);
     }
 
     function getLimit(address _user) public returns(uint) {
@@ -4007,7 +4021,7 @@ contract AML is ERC20Votes, Ownable {
         if (attachedProfileId[_from] != attachedProfileId[_to] || 
             attachedProfileId[_from] == 0
         ) {
-            require(getLimit(_from) >= _amount, "Limit lower than amount");
+            require(getLimit(_from) >= _amount, "L1");
             transferedSoFar[_from] += _amount; 
         }
     }
@@ -4138,26 +4152,22 @@ contract AML is ERC20Votes, Ownable {
         );
     }
     
-    function endBounty(uint _bountyId) external {
-        address trustBounty = IContract(contractAddress).trustBounty();
-        ITrustBounty(trustBounty).updateBountyEndTime(_bountyId, bufferTime);
-    }
+    // function endBounty(uint _bountyId) external {
+    //     ITrustBounty(IContract(contractAddress).trustBounty()).updateBountyEndTime(_bountyId, bufferTime);
+    // }
     
     function updateMinimumBalance(address _owner, uint _tokenId, uint _amount, uint _deadline) external {
-        address trustBounty = IContract(contractAddress).trustBounty();
-        require(msg.sender == trustBounty);
+        require(msg.sender == IContract(contractAddress).trustBounty());
         minimBalance[_owner] += _amount;
     }
 
     function deleteMinimumBalance(address _owner, uint _tokenId, uint _amount) external {
-        address trustBounty = IContract(contractAddress).trustBounty();
-        require(msg.sender == trustBounty);
+        require(msg.sender == IContract(contractAddress).trustBounty());
         minimBalance[_owner] -= _amount;
     }
 
     function updateLimits(uint _limitWithProfileFactor, uint _limitWithoutProfileFactor) external {
         require(msg.sender == platform);
-        require(_limitWithProfileFactor >= _limitWithoutProfileFactor * 10);
         limitWithProfileFactor = _limitWithProfileFactor;
         limitWithoutProfileFactor = _limitWithoutProfileFactor;
     }
@@ -4173,10 +4183,6 @@ contract AML is ERC20Votes, Ownable {
 
     function updateBlacklistAccount(address _account, bool _add) external onlyOwner {
         blacklistedAccount[_account] = _add;
-    }
-
-    function updatePlatform(address _platform) external onlyOwner {
-        platform = _platform;
     }
 
     function updateBufferTime(uint _bufferTime) external onlyOwner {
@@ -5114,6 +5120,8 @@ interface ICollectionWhitelistChecker2 {
 
 interface ITrustBounty {
     function emitDeleteBounty(uint) external;
+    function updateStakeFromVoter(uint, uint, uint) external;
+    function getOwner(uint) external view returns(address);
     function emitUpdateBounty(uint,uint,string memory,string memory) external;
     function emitCreateBounty(uint,address,address,uint,uint,string memory,string memory) external;
     function emitAddBalance(uint,address,uint) external;
@@ -5123,7 +5131,7 @@ interface ITrustBounty {
     function emitAddApproval(uint,uint,uint,uint) external;
     function emitRemoveApproval(uint,uint,uint,bool) external;
     function notifyFees(address,uint) external;
-    function claims(uint) external view returns(uint[] memory);
+    function claims(uint,uint) external view returns(Claim memory);
     function updateBountyEndTime(uint,uint) external;
     function attachments(uint) external view returns(uint);
     function ves(address) external view returns(bool);
@@ -5326,6 +5334,7 @@ interface IERC1155 is IERC165 {
 }
 
 interface IGameNFT {
+    function updateGame(address,address) external;
     function updateTotalScore(uint,address,uint,uint) external;
     function destination(uint) external view returns(address);
     function getDescription(uint) external view returns(string[] memory);
@@ -5537,6 +5546,7 @@ interface IRamp {
     function detach(uint) external;
     function postMint(string memory) external;
     function emitBuyRamp(address) external;
+    function transferOwnership(address) external;
     function mint(address,address,uint,uint,string memory) external;
     function automatic() external view returns(bool);
     function cap() external view returns(uint);
@@ -6829,6 +6839,7 @@ interface IPancakeSwapLottery {
 }
 
 interface IWill {
+    function emitDeleteProtocol(uint) external;
     function notifyNFTFees(address) external;
     function setApprovalForAll(address,bool) external;
     function emitUpdateProtocol(uint,address,string memory,string memory,address[] memory,uint[] memory) external;
@@ -6838,16 +6849,17 @@ interface IWill {
     function emitRemoveBalance(address,uint,NFTYPE) external;
     function getProtocolInfo(uint,uint,uint) external view returns(bool,uint,address,uint,address[] memory,uint[] memory,string memory,string memory);
     function unlocked() external view returns(bool);
-    function noteWithdraw(address,address,uint) external;
+    function noteWithdraw(address,address,uint,uint,uint) external;
     function tokenType(address) external view returns(NFTYPE);
     function updateGauge(address) external;
     function isGauge(address) external view returns(bool);
     function addBalance(uint[] memory,uint,NFTYPE) external;
     function tradingFee(bool) external view returns(uint);
+    function balanceOf(address) external view returns(uint);
     function notifyFees(address,uint) external;
     function emitPayInvoicePayable(uint) external;
     function emitStartWillWithdrawalCountDown(uint) external;
-    function updatePercentage(uint,uint,uint,uint) external;
+    function updatePercentage(address,uint,uint,uint) external;
 }
 
 interface IFutureCollateral {

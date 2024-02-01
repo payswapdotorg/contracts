@@ -241,8 +241,8 @@ async function main() {
   const auditorHelperAddress = "0xdc912057B0AE36A8C861711A15600a7B393e84F7"
   const auditorHelper2Address = "0x1dC0EE2C95fEcB2EdD2d4737DB2ADEE844765a00"
   const auditorFactoryAddress = "0x030D43e6521bFc57bb00CfCe08D1D6eBCd52Dd36"
-  const futureCollateralAddress = "0x182a271B308Fef8F207FE0FA5f0A9B5f9891CC3D"
-  const cardAddress = "0x2147BC7403e33f24DFDb1aA2A26ae6DCf807b8e6"
+  const futureCollateralAddress = "0xA7D5DE11Ab5262A2A2F3E69A7bEC6C5AF7973f9E"
+  const cardAddress = "0x19ad7453898E6E12b7F3bc9956725964596141FD"
   const vavaFactoryAddress = "0x6395A7f0989eEa4d70ABe643847558cBD1f25CA0"
   const vavaHelperAddress = "0x3235eF5716f10372575CB394EBac70C437F99c3F"
   const vavaHelper2Address = "0x41588Fa804a990dC0db34850f305a8c546a14d11"
@@ -290,9 +290,9 @@ async function main() {
   const paywallARPFactoryAddress = "0x0e66291f9Fe09ceA0eC28d5c635e8E9bfb80a9F2"
   const paywallARPHelperAddress = "0x46c803917E3E68525F1C435141ADd0aE4c76246f"
   const minterFactoryAddress = "0xAcd5d04c9F143E1750C66E2022199e186E6a5Bbd"
-  const trustBountiesAddress = "0x005541edE5cc4d1b561e39dB95DC3784F8BBB0b1"
-  const trustBountiesHelperAddress = "0xD5a3a5EfD62592BB3F5Fd7cC5f5B6c6D3712b33d"
-  const trustBountiesVoterAddress = "0x4Bb8E20BDAb5333ad0b91674CE1A3e3a34A181A8"
+  const trustBountiesAddress = "0xD5F3356DC9027388240e01c891Deb1B1a92eF7C9"
+  const trustBountiesHelperAddress = "0x8C9362d28A1588bAf99434bE55ca23F293F69a97"
+  const trustBountiesVoterAddress = "0x4771fA4669BBE8D692F88D11e3D60Cf6cEE1905b"
   const customMinterAddress = "0x0102838c0ba71763d1AF04261885b3E3925111aE"
   const arpFactoryAddress = "0x02a405E1d2c074e44e2592e926a19a777c5dA1a2"
   const arpHelperAddress = "0xB9A79b30271068FB06Cf11dFF599f5E48c7d456d"
@@ -302,13 +302,13 @@ async function main() {
   const billMinterAddress = "0xaC50394D310A03d6587A31B98dC591EFaEDa967A"
   const billHelperAddress = "0x6c7014Dc578B717722F56Fb64cc4f7C65bB2a3E6"
   const billNoteAddress = "0xF025a972E71D697B0Da86667faF6cF5F3454AD0D"
-  const extraTokenFactoryAddress = "0x7bBE3f25fB3aD6768051774F9a92163e64867Fb3"
-  const willFactoryAddress = "0xa9cEFDE6ABa8Dd220bC3d46bdD9E9D9c6103b75C"
-  const willNoteAddress = "0x76bedE2a8e6bb5190C3369593130fE134430Ef14"
-  const gameFactoryAddress = "0x5397f008Ea054A368C4DFd664c42E9e22160B34b"
-  const gameMinterAddress = "0xdCfAc7BA16655F263aE8c45608129832399B147d"
-  const gameHelperAddress = "0x53ce30dF591D9c91999B8A37263643B04d7088f2"
-  const gameHelper2Address = "0xa5B4a37b80857EE16D15c84EDe3950BFcEaE77e6"
+  const extraTokenFactoryAddress = "0xff801300e587C491b12AD0D82F6E3C672033dFC2"
+  const willFactoryAddress = "0x39Df1914b0631B3FBcae40AAB391536b59D863ad"
+  const willNoteAddress = "0x56495afeC24660414758fA3209609a7eC2730903"
+  const gameFactoryAddress = "0xb179a10acc97B6fB78aA018FA5a115bb5677d646"
+  const gameMinterAddress = "0x7dbfAe0C27A205412637afE3BfDaBfA76fc11B94"
+  const gameHelperAddress = "0xB1a682A0a2615C04A1C06AC615dcA926aBA06F9D"
+  const gameHelper2Address = "0xAcD0bff4bF00d5e3244B68cf02f37142e4773FaD"
   const lotteryAddress = "0x3655bfE221e594e6Cee200dBA560400DAe3b89C6"
   const lotteryHelperAddress = "0xB635fe5686C19aC309D76901593833a828170695"
   const lotteryRandomNumberGeneratorAddress = "0x63E751b3b4533918b2adC7b7F7127b5765559e13"
@@ -1255,7 +1255,7 @@ async function main() {
   // await sponsorNote.deployed()
   // console.log("sponsorNote============>", sponsorNote.address)
 
-  // const ssi = await SSI.deploy()
+  // const ssi = await SSI.deploy(5)
   // await ssi.deployed()
   // console.log("ssi============>", ssi.address)
 
@@ -1816,6 +1816,12 @@ async function main() {
   // console.log("va.token===========>", await va.token(), await va.ownerOf(1))//, await va.getWithdrawable(1))
   // console.log("trustBounties.bountyInfo==================>", await trustBounties.bountyInfo(1), await trustBounties.balances(1, "0xb9858E52175Dc194686E29875570703B5C986Fe3"), await tFiat.balanceOf(trustBounties.address))
   // console.log("vaFABT=================>", await vafabt.ownerOf(2), vaFABTAddress, vafabt.address)
+
+  // await ethers.provider.getBalance("0x1aae9a7ccda9b47d4ab0279d83f5ac62fa5377e7").then((balance) => {
+  //   // convert a currency unit from wei to ether
+  //   const balanceInEth = ethers.utils.formatEther(balance)
+  //   console.log(`2balance: ${balanceInEth} ${balance} ETH`)
+  // })
 
   // await businessMinter.updateVes([
   //   vafabt.address,
@@ -2402,12 +2408,13 @@ async function main() {
   // await trustBountiesHelper.updateParameters(
   //   86400 * 7,
   //   600,
-  //   600,
+  //   60,
   //   100,
   //   1,
   //   100
   // )
   // console.log("trustBountiesHelper.updateParameters============>Done")
+
   // await trustBountiesVoter.vote(1,"0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41",1,1,1,1)
   // await trustBountiesVoter.reset("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41",1,1)
   // console.log("totalSupply====================>", await stakeMarketBribe.totalSupply("0xbE04187288D198ed6F0d90eCAAca0fE42Dd434Fe"))
@@ -2902,7 +2909,12 @@ async function main() {
     // console.log("after profile.silverReported====================>", await profile.silverReported("0xD1909Be8B3a80b23b5E6BDcb6c2c7d67b75F0a50", 1))
     // console.log("after profile.brownReported====================>", await profile.brownReported("0xD1909Be8B3a80b23b5E6BDcb6c2c7d67b75F0a50", 1))
     // console.log("after profile.blackReported====================>", await profile.blackReported("0xD1909Be8B3a80b23b5E6BDcb6c2c7d67b75F0a50", 1))
-
+    
+    // await ssi.connect(deployer2).updateAuthorization(6, 5, true)
+    // await tFiat.approve(futureCollateral.address, "10000000000000000000")
+    // await tFiat.transfer(futureCollateral.address, "10000000000000000000")
+    // console.log(await tFiat.balanceOf(futureCollateral.address))
+    
     // await ssi.generateIdentityProof(deployer.address,1,1,86700 * 7,"ssid","tepa")
     // await ssi.generateIdentityProof(deployer.address,1,1,86700 * 7 * 4,"testify_age","gt_18")
     // console.log("ssi.generateIdentityProof==============>", await ssi.metadata(1), await ssi.metadata(2))
@@ -2919,7 +2931,31 @@ async function main() {
       // await willFactory.createGauge(deployer.address)
       // let willAddress = (await willNote.getAllWills(0))[0]
       // let will = WILL.attach(willAddress)
+      // const will = await WILL.deploy(
+      //   deployer.address,
+      //   willNote.address,
+      //   contractAddresses.address
+      // )
+      // await will.deployed()
+
       // console.log("willAddress==================>", willAddress, will.address)
+      // console.log("totalRemoved(usd)==============>", await will.totalRemoved(tFiat.address), await will.balanceOf(tFiat.address))
+      // console.log("totalRemoved(fbt)==============>", await will.totalRemoved(fbt.address), await will.balanceOf(fbt.address))
+     
+      // await will.addBalanceETH(deployer.address, { value: "1000000000000000000"});
+      // console.log("will.addBalanceETH==============+> Done")
+      // await ethers.provider.getBalance(will.address).then((balance) => {
+      //   // convert a currency unit from wei to ether
+      //   const balanceInEth = ethers.utils.formatEther(balance)
+      //   console.log(`balance: ${balanceInEth} ETH`)
+      // })
+      // await will.payInvoicePayable(0,0,"400000000000000000", "100000000000000000")
+      // console.log("will.payInvoicePayable==============+> Done")
+      // await ethers.provider.getBalance(will.address).then((balance) => {
+      //   // convert a currency unit from wei to ether
+      //   const balanceInEth = ethers.utils.formatEther(balance)
+      //   console.log(`3balance: ${balanceInEth} ETH`)
+      // })
       // await will.updateProtocol(
       //   1,
       //   deployer.address,
@@ -3420,7 +3456,70 @@ async function main() {
   // console.log("trustBountiesHelper.balances=================>", await trustBounties.balances(1, trustBountiesHelper.address))
 
   // await futureCollateral.updateValidChannel(1, true)
-    // await futureCollateral.addToChannel(1, 1)
+  //   await futureCollateral.addToChannel(1, 1)
+  // await futureCollateral.updateParams(
+  //   100,
+  //   86400,
+  //   2,
+  //   10000,
+  //   "0xF0D8bd80B6c46c6486fD2bb52c82D2a2037c5595",
+  //   1,
+  //   1
+  // )
+
+  // function channel1 () {
+  //   let res = [1]
+  //   for (let i = 1; i < 52; i++) {
+  //     if (i % 4 === 0) {
+  //       res.push(res[i-1] * 2)
+  //     } else {
+  //       res.push(res[i-1])
+  //     } 
+  //   }
+  //   return res
+  // }
+  // const mch1 = channel1()?.map((v) => `${v?.toString()}000000000000000000`)
+  // await futureCollateral.updateEstimationTable(mch1)
+  // console.log("Doubles every week=================>", mch1, mch1.length)
+  // console.log("channel1=================+>", await futureCollateral.estimationTable(1, 51))
+
+  // function channel2 () {
+  //   let res = [1]
+  //   for (let i = 1; i < 52; i++) {
+  //     res.push(res[i-1] + 10)
+  //   }
+  //   return res
+  // }
+  // const mch2 = channel2()?.map((v) => `${v?.toString()}000000000000000000`)
+  // await futureCollateral.updateEstimationTable(mch2)
+  // console.log("weekly appreciates by 10=================>", mch2, mch2.length)
+  // console.log("channel2=================+>", await futureCollateral.estimationTable(2, 51))
+
+  // function channel3 () {
+  //   let res = [10]
+  //   for (let i = 1; i < 52; i++) {
+  //     res.push(Math.ceil(res[i-1] * 1.1))
+  //   }
+  //   return res
+  // }
+  // const mch3 = channel3()?.map((v) => `${v?.toString()}000000000000000000`)
+  // await futureCollateral.updateEstimationTable(mch3)
+  // console.log("10% weekly appreciation=================>", mch3, mch3.length)
+  // console.log("channel3=================+>", await futureCollateral.estimationTable(3, 51))
+
+  // await futureCollateral.init()
+  // await futureCollateral.updateAdmin(trustBounties.address, true)
+  // await futureCollateral.updateAdmin(trustBountiesHelper.address, true)
+  // console.log(await futureCollateral.nextChannelId(), await futureCollateral.isAdmin(trustBounties.address), await futureCollateral.isAdmin(trustBountiesHelper.address), await futureCollateral.channels(6))
+  // console.log(await futureCollateral.getPriceAt(1, 0), await futureCollateral.channelStartTime(2))
+  // console.log(await futureCollateral.getChannelPriceAt(4, 0), await futureCollateral.profileIdToTokenId(6))
+
+  // console.log(await futureCollateral.ownerOf(1), await futureCollateral.balanceOf(futureCollateral.address))
+  // await trustBountiesVoter.veto(vaFABTAddress, 1, 2, 2, 1)
+  // console.log("===============>", await trustBountiesVoter.isGauge(vaFABTAddress, 1))
+
+  // console.log(await trustBounties.claims(3,0), await trustBounties.getOwner(3))
+  // console.log(await trustBounties.balances(3, trustBounties.address), await trustBounties.getBalance(3))
 
     // await tFiat.approve(stakeMarket.address, 10)
     // await stakeMarket.createStake(
@@ -3467,9 +3566,9 @@ async function main() {
     // )
     // await ramp.deployed()
     // console.log("ramp==============>", ramp.address)
-  let rampAddress = (await rampHelper.getAllRamps(0))[0]
-  let ramp = Ramp.attach(rampAddress)
-  console.log("ramp===>", rampAddress, ramp.address)
+  // let rampAddress = (await rampHelper.getAllRamps(0))[0]
+  // let ramp = Ramp.attach(rampAddress)
+  // console.log("ramp===>", rampAddress, ramp.address)
 
   //   console.log("devaddr_===============>", await ramp.devaddr_())
     // await ramp.updateDevTokenId(vaFABTAddress, 1)
@@ -3486,7 +3585,7 @@ async function main() {
     // console.log("rampHelper.getAllRamps=====================>", await rampHelper.getAllRamps(0))
 
     // await rampHelper.updateIsPayswapRamp(ramp.address, true)
-    // console.log("rampHelper.updateIsPayswapRamp=====================>Done")
+    // console.log("rampHelper.updateIsPayswapRamp=====================>Done", await rampHelper.isPayswapRamp(ramp.address))
 
     // await trustBountiesHelper.updateCanAttach(rampHelper.address, true)
     // console.log("trustBountiesHelper.updateCanAttach===========> Done!")
@@ -3508,27 +3607,38 @@ async function main() {
     // await rampHelper.addDtoken(tAEDAddress)
     // console.log("tAED.updateMinter====================>Done")
 
+    // const tUSDAddress = "0x960F885Cdd31487f17b2BD07ef31e1916df6a306"
+    // const tUSD = fiatContract.attach(tUSDAddress)
+    // await tUSD.updateMinter(rampHelper.address)
+    // await rampHelper.addDtoken(tUSDAddress)
+    // console.log("tUSD.updateMinter====================>Done")
+    
     // const tNGNAddress = "0x346722bD06b72F9574028F79D2BD0CC72086E569"
     // const tNGN = fiatContract.attach(tNGNAddress)
     // await tNGN.updateMinter(rampHelper.address)
     // await rampHelper.addDtoken(tNGNAddress)
     // console.log("tNGN.updateMinter====================>Done")
-
     // const tBRLAddress = "0x33dc9963Ba5beb5Eec85DA15C8c7B70077467276"
     // const tBRL = fiatContract.attach(tBRLAddress)
     // await tBRL.updateMinter(rampHelper.address)
     // await rampHelper.addDtoken(tBRLAddress)
     // console.log("tBRL.updateMinter====================>Done")
 
+    // const tslaAddress = "0x6B8C0A707a1C0A7970bbf07906Ef8DcC2Bf4ef82"
+    // const tsla = fiatContract.attach(tslaAddress)
+    // await tsla.updateMinter(rampHelper.address)
+    // await rampHelper.addExtratoken(ramp.address, tBRLAddress, 0)
+    // console.log("tsla.updateMinter====================>Done")
+
     // console.log(await ramp.protocolInfo(tEUR.address))
     // console.log(await tEUR.balanceOf(ramp.address))
 
     // await ramp.updateParameters(
-    //   5000,
-    //   5000,
+    //   0,
+    //   0,
     //   0,
     //   "1000000000000000000",
-    //   false
+    //   true
     // )
     // console.log("ramp.updateParameters============>Done")
 
@@ -3914,7 +4024,7 @@ async function main() {
     // )
     // console.log("vavaFactory.createValuePool===============>Done")
   //   console.log("vavaHelper.getAllVavas===============>",await vavaHelper.getAllVavas(0))
-  // let vavaAddress = "0xF0D8bd80B6c46c6486fD2bb52c82D2a2037c5595" //(await vavaHelper.getAllVavas(0))[0]
+  // let vavaAddress = (await vavaHelper.getAllVavas(0))[0]
 
     // const vava =  await Vava.deploy(
     //   tFiat.address,
@@ -5691,7 +5801,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[74]).updateCollection(
   //   "BookClubs",
-  //   "Introducing BookClubs: Where Literature Meets Cinematography! Are you an aspiring writer dreaming of seeing your stories come to life on the big screen? Are you a book club looking for fresh and captivating stories to explore? Welcome to BookClubs, the groundbreaking platform that bridges the world of literature and cinema.",
+  //   "Introducing BookClubs: Where Literature Meets Cinematography! Are you an aspiring writer dreaming of seeing your stories come to life on the big screen? Are you a book club looking for fresh and captivating stories to explore? Are you a fan fiction writer looking for your community ? Welcome to BookClubs, the groundbreaking platform that bridges the world of literature and cinema.",
   //   "https://i.ibb.co/FB4tT79/125.jpg",
   //   "https://i.ibb.co/FB4tT79/125.jpg",
   //   "https://i.ibb.co/sRwTxr5/228.jpg",
@@ -12939,6 +13049,42 @@ async function main() {
   //   ""
   // );
   // console.log("479marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 480
+  // await marketPlaceCollection.connect(wallets[476]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[476]).updateCollection(
+  //   "PadPal",
+  //   "Find someone you can rent a place with and leave a review after you stop renting places together. You can find nice arrangements like renting a place with someone that works all night and is only home during the day if you work all day and are only home during the night for instance. You just need to create a request and specify in the terms what it is that you really want, adding some tags to your request might help you find a roommate faster.",
+  //   "https://i.ibb.co/tJ0GsZg/201.jpg",
+  //   "https://i.ibb.co/tJ0GsZg/201.jpg",
+  //   "https://i.ibb.co/s6cd4RT/31-2.jpg",
+  //   "",
+  //   "",
+  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("480marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 481
+  // await marketPlaceCollection.connect(wallets[477]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[477]).updateCollection(
+  //   "LegoManiac",
+  //   "Find or sell lego pieces just like on bricklink.",
+  //   "https://i.ibb.co/sVcVJgS/481.jpg",
+  //   "https://i.ibb.co/sVcVJgS/481.jpg",
+  //   "https://i.ibb.co/ZHzpFpB/235.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("481marketPlaceCollection.updateCollection===========> Done!")
 
   }
   

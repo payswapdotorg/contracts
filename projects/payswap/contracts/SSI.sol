@@ -9,6 +9,7 @@ contract SSI is Ownable, ERC721Pausable {
         string publicKey;
         string encryptedPrivateKey;
     }
+    uint private PAYSWAP_PROFILE_ID;
     uint private SSID_CATEGORY;
     COLOR public minBadgeColor = COLOR.BLACK;
     uint private ssiCollectionId = 1;
@@ -68,7 +69,9 @@ contract SSI is Ownable, ERC721Pausable {
         string paramValue5
     );
 
-    constructor() ERC721("NFT Proof", "NFTProof") {}
+    constructor(uint _payswapProfileId) ERC721("NFT Proof", "NFTProof") {
+        PAYSWAP_PROFILE_ID = _payswapProfileId;
+    }
 
     function setContractAddress(address _contractAddress) external {
         require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
@@ -116,7 +119,7 @@ contract SSI is Ownable, ERC721Pausable {
 
     function verifyNFT(uint _tokenId, uint merchantId, string memory item) external view returns(uint) {
         if(metadata[_tokenId].proofType == ProofType.shareProof &&
-           (metadata[_tokenId].auditorProfileId == 1 ||
+           (metadata[_tokenId].auditorProfileId == PAYSWAP_PROFILE_ID ||
             _authorizations[merchantId].contains(metadata[_tokenId].auditorProfileId)) &&
             keccak256(abi.encodePacked(item)) == keccak256(abi.encodePacked(metadata[_tokenId].question))
         ) {
@@ -232,7 +235,7 @@ contract SSI is Ownable, ERC721Pausable {
         string memory _encryptedAnswer
     ) external {
         address profile = _profile();
-        require(_authorizations[_senderProfileId].contains(_auditorProfileId) || _auditorProfileId == 1, "SSI10");
+        require(_authorizations[_senderProfileId].contains(_auditorProfileId) || _auditorProfileId == PAYSWAP_PROFILE_ID, "SSI10");
         require(msg.sender == IAuth(contractAddress).devaddr_() || 
             (IProfile(profile).addressToProfileId(msg.sender) == _auditorProfileId  && _auditorProfileId > 0), 
             "SSI11"
@@ -272,7 +275,7 @@ contract SSI is Ownable, ERC721Pausable {
         string memory _question,
         string memory _answer
     ) external {
-        require(_auditorProfileId == 1 || _authorizations[_senderProfileId].contains(_auditorProfileId), "SSI13");
+        require(_auditorProfileId == PAYSWAP_PROFILE_ID || _authorizations[_senderProfileId].contains(_auditorProfileId), "SSI13");
         require(msg.sender == IAuth(contractAddress).devaddr_() || 
             (IProfile(_profile()).addressToProfileId(msg.sender) == _auditorProfileId  && _auditorProfileId > 0), 
             "SSI14"

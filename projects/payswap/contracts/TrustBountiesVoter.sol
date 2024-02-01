@@ -251,7 +251,8 @@ contract TrustBountiesVoter {
 
     function veto(address _ve, uint _litigationId, uint _attackerId, uint _winnerId, uint _loserId) external {
         require(IAuth(contractAddress).devaddr_() == msg.sender);
-        IStakeMarket(litigations[_litigationId].market).updateStakeFromVoter(
+        ITrustBounty(litigations[_litigationId].market).updateStakeFromVoter(
+            litigations[_litigationId].defenderId,
             _winnerId, 
             _loserId
         );
@@ -266,7 +267,8 @@ contract TrustBountiesVoter {
 
     function updateStakeFromVoter(address _ve, uint _litigationId) external {
         require(gauges[_ve][litigations[_litigationId].attackerId].endTime < block.timestamp, "TB13");
-        IStakeMarket(litigations[_litigationId].market).updateStakeFromVoter(
+        ITrustBounty(litigations[_litigationId].market).updateStakeFromVoter(
+            litigations[_litigationId].defenderId,
             weights[_ve][litigations[_litigationId].attackerId] > 0 ? litigations[_litigationId].attackerId : litigations[_litigationId].defenderId, 
             weights[_ve][litigations[_litigationId].attackerId] > 0 ? litigations[_litigationId].defenderId : litigations[_litigationId].attackerId
         );
