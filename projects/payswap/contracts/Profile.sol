@@ -487,7 +487,7 @@ contract ProfileHelper is ERC721Pausable {
     using SafeERC20 for IERC20;
 
     address private contractAddress;
-    uint constant INITIAL_PROFILE_ID = 5; // starts at 1000000
+    uint constant INITIAL_PROFILE_ID = 1000000; // starts at 1000000
     uint public boughtProfileId = 3;
     uint private periodReceivable = 86400 * 7 * 52;
     uint private bidStart = 1e18;
@@ -708,10 +708,10 @@ contract ProfileHelper is ERC721Pausable {
             ownerOf(_tokenId),
             ownerOf(_tokenId),
             address(0x0),
-            _media.length > 0 ? _media : new string[](1),
+            _media,
             optionNames,
             optionValues,
-            _description.length > 0 ? _description : new string[](1)
+            _description
         );
     }
 

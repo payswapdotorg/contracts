@@ -593,7 +593,7 @@ contract AuditorNote is ERC721Pausable {
             ownerOf(_tokenId),
             ownerOf(_tokenId),
             address(0x0),
-            new string[](1),
+            IAuditor((IContract(contractAddress).auditorHelper2())).getMedia(_tokenId),
             optionNames,
             optionValues,
             description
@@ -604,7 +604,6 @@ contract AuditorNote is ERC721Pausable {
         uint idx;
         string[] memory optionNames = new string[](6);
         string[] memory optionValues = new string[](6);
-        uint decimals = uint(IMarketPlace(notes[_tokenId].token).decimals());
         optionValues[idx++] = toString(_tokenId);
         optionNames[idx] = "PID";
         optionValues[idx++] = toString(notes[_tokenId].protocolId);
@@ -886,15 +885,20 @@ contract AuditorHelper2 {
         (address _auditor,) = IAuditor(IContract(contractAddress).auditorHelper()).tokenIdToAuditor(_tokenId);
         uint _auditorId = IProfile(IContract(contractAddress).auditorNote()).addressToProfileId(_auditor);
         string memory _tag = tags[_auditorId];
+        string memory _userMedia = IAuditor(_auditor).media(_tokenId);
         _auditorId = tagRegistrations[_auditorId][_tag] ? 1 : _auditorId;
         uint _length = _scheduledMedia[_auditorId][_tag].length();
+        if (!tagRegistrations[_auditorId][_tag] && _length == 0 && keccak256(abi.encodePacked(_userMedia)) == keccak256(abi.encodePacked(""))) {
+            _auditorId = 1;
+            _length = _scheduledMedia[1][_tag].length();
+        }
         _media = new string[](Math.min(maxNumMedia, _length+1));
         uint randomHash = uint(seed + block.timestamp + block.difficulty);
         for (uint i = 0; i < Math.min(maxNumMedia, _length); i++) {
             _media[i] = scheduledMedia[_scheduledMedia[_auditorId][_tag].at(randomHash++ % _length)].message;
         }
         for (uint i = Math.min(maxNumMedia, _length); i < Math.min(maxNumMedia, _length+1); i++) {
-            _media[i] = IAuditor(_auditor).media(_tokenId);
+            _media[i] = _userMedia;
         }
     }
 

@@ -856,11 +856,17 @@ contract StakeMarketNote {
 contract StakeMarketHelper is ERC721Pausable {
     address public contractAddress;
     uint public tokenId = 1;
+    address public valuepool;
     constructor() ERC721("StakeMarketNote", "nSTM") {}
 
     function setContractAddress(address _contractAddress) external {
         require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
         contractAddress = _contractAddress;
+    }
+
+    function updateValuepool(address _valuepool) external {
+        require(IAuth(contractAddress).devaddr_() == msg.sender);
+        valuepool = _valuepool;
     }
 
     function _stakeMarket() internal view returns(address) {
@@ -962,7 +968,7 @@ contract StakeMarketHelper is ERC721Pausable {
             ownerOf(_tokenId),
             ownerOf(_tokenId),
             address(0x0),
-            new string[](1),
+            IValuePool(IContract(contractAddress).valuepoolHelper2()).getMedia(valuepool,_tokenId),
             optionNames,
             optionValues,
             description

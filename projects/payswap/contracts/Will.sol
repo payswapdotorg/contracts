@@ -331,7 +331,7 @@ contract WILL {
         require(
             (__profileId == _profileId) || keccak256(abi.encodePacked(protocolInfo[_profileId].ssid)) == keccak256(abi.encodePacked(metadata.answer))
         );
-        if (willWithdrawalActivePeriod < block.timestamp && willWithdrawalActivePeriod != 0) { 
+        if (willWithdrawalActivePeriod <= block.timestamp && willWithdrawalActivePeriod != 0) { 
             unlocked = true;
             address token = tokens[_profileId][_position];
             uint _percentage = tokenType[token] == NFTYPE.not ? percentages[_profileId][_position] : 10000;

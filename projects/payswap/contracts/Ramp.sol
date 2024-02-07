@@ -1072,7 +1072,7 @@ contract RampAds is ERC721Pausable {
             uint _currentMediaIdx = _scheduledMedia[notes[_tokenId].token].at(randomHash++ % _length);
             _media[i] = scheduledMedia[_currentMediaIdx].message;
         }
-        if (_length == 0) _media = new string[](0);
+        if (_length == 0) _media = IValuePool(IContract(contractAddress).valuepoolHelper2()).getMedia(valuepoolAddress,_tokenId);
     }
 
     function getAllMedia(uint _start, address _tag) external view returns(string[] memory _media) {

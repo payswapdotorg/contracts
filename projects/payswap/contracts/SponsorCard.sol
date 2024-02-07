@@ -276,12 +276,12 @@ contract SponsorNote is ERC721Pausable {
     }
     EnumerableSet.AddressSet private gauges;
     mapping(address => uint) public treasuryFees;
-    mapping(address => mapping(uint => string)) private media;
+    mapping(address => mapping(uint => string)) public media;
     mapping(uint => SponsorShipNote) public notes;
     uint public tokenId = 1;
     uint public tradingFee = 100;
     uint public minBountyPercent = 100;
-    uint private sum_of_diff_squared;
+    uint public sum_of_diff_squared;
     EnumerableSet.UintSet private _allVoters;
     mapping(address => uint) public percentiles;
     struct Vote {
@@ -291,8 +291,9 @@ contract SponsorNote is ERC721Pausable {
     mapping(uint => address) public profiles;
     mapping(address => Vote) public  votes;
     mapping(uint => mapping(address => int)) public voted;
-    mapping(address => mapping(uint => uint)) private protocolNotes;
+    mapping(address => mapping(uint => uint)) public protocolNotes;
     address public contractAddress;
+    address public valuepool;
 
     event Voted(address indexed sponsor, uint profileId, uint likes, uint dislikes, bool like);
     event UpdateProtocol(
@@ -346,10 +347,6 @@ contract SponsorNote is ERC721Pausable {
         return IContract(contractAddress).profile();
     }
 
-    function _ssi() internal view returns(address) {
-        return IContract(contractAddress).ssi();
-    }
-
     function emitUpdateMiscellaneous(
         uint _idx, 
         uint _collectionId, 
@@ -395,9 +392,10 @@ contract SponsorNote is ERC721Pausable {
         ITrustBounty(IContract(contractAddress).trustBountyHelper()).detach(_bountyId);
     }
 
-    function updateMinBountyPercent(uint _minBountyPercent) external {
-        require(msg.sender == IAuth(contractAddress).devaddr_(), "SN3");
+    function updateMinBountyPercent(uint _minBountyPercent, address _valuepool) external {
+        require(msg.sender == IAuth(contractAddress).devaddr_());
         minBountyPercent = _minBountyPercent;
+        valuepool = _valuepool;
     }
 
     function deleteSponsor(address _sponsor) external {
@@ -414,10 +412,9 @@ contract SponsorNote is ERC721Pausable {
         }
     }
     
-    function vote(address _sponsor, uint profileId, bool like) external {
-        require(IProfile(_profile()).addressToProfileId(msg.sender) == profileId, "SN5");
-        SSIData memory metadata = ISSI(_ssi()).getSSID(profileId);
-        require(keccak256(abi.encodePacked(metadata.answer)) != keccak256(abi.encodePacked("")), "SN6");
+    function vote(address _sponsor, bool like) external {
+        uint profileId = IProfile(_profile()).addressToProfileId(msg.sender);
+        require(IProfile(_profile()).isUnique(profileId), "SN5");
         _resetVote(_sponsor, profileId);        
         if (like) {
             votes[_sponsor].likes += 1;
@@ -443,7 +440,7 @@ contract SponsorNote is ERC721Pausable {
         emit Voted(_sponsor, profileId, votes[_sponsor].likes, votes[_sponsor].dislikes, like);
     }
     
-    function _getColor(uint _percentile) internal pure returns(COLOR) {
+    function getColor(uint _percentile) external pure returns(COLOR) {
         if (_percentile > 75) {
             return COLOR.GOLD;
         } else if (_percentile > 50) {
@@ -455,30 +452,23 @@ contract SponsorNote is ERC721Pausable {
         }
     }
 
-    function getGaugeNColor(uint _ssidAuditorProfileId) external view returns(address, COLOR) {
-        return (
-            profiles[_ssidAuditorProfileId],
-            _getColor(percentiles[profiles[_ssidAuditorProfileId]])
-        );
-    }
-
     function emitWithdraw(address from, uint amount) external {
-        require(gauges.contains(msg.sender), "SN7");
+        require(gauges.contains(msg.sender));
         emit Withdraw(from, msg.sender, amount);
     }
     
     function emitDeleteProtocol(uint protocolId) external {
-        require(gauges.contains(msg.sender), "SN8");
+        require(gauges.contains(msg.sender));
         emit DeleteProtocol(protocolId, msg.sender);
     }
 
     function emitPayInvoicePayable(uint protocolId, uint paidPayable) external {
-        require(gauges.contains(msg.sender), "SN9");
+        require(gauges.contains(msg.sender));
         emit PayInvoicePayable(protocolId, msg.sender, paidPayable);
     }
 
     function emitUpdateContents(string memory _contentName, bool _add) external {
-        require(gauges.contains(msg.sender), "SN09");
+        require(gauges.contains(msg.sender));
         emit UpdateContents(msg.sender, _contentName, _add);
     }
     
@@ -488,7 +478,7 @@ contract SponsorNote is ERC721Pausable {
         string memory _media,
         string memory description
     ) external {
-        require(gauges.contains(msg.sender), "SN10");
+        require(gauges.contains(msg.sender));
         media[msg.sender][protocolId] = _media;
         emit UpdateProtocol(
             protocolId, 
@@ -500,7 +490,7 @@ contract SponsorNote is ERC721Pausable {
     }
 
     function setContractAddress(address _contractAddress) external {
-        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender, "NT2");
+        require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
         contractAddress = _contractAddress;
     }
 
@@ -572,15 +562,13 @@ contract SponsorNote is ERC721Pausable {
     }
 
     function _constructTokenURI(uint _tokenId, address _token, string[] memory description, string[] memory optionNames, string[] memory optionValues) internal view returns(string memory) {
-        string[] memory m = new string[](1);
-        m[0] = media[msg.sender][notes[_tokenId].protocolId];
         return IMarketPlace(IContract(contractAddress).nftSvg()).constructTokenURI(
             _tokenId,
             _token,
             ownerOf(_tokenId),
             ownerOf(_tokenId),
             address(0x0),
-            m,
+            IValuePool(IContract(contractAddress).valuepoolHelper2()).getMedia(valuepool,_tokenId),
             optionNames,
             optionValues,
             description

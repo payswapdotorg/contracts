@@ -471,10 +471,6 @@ contract LotteryContract {
         } else {
             IERC20(_token).safeTransferFrom(address(msg.sender), address(this), _amount);
         }
-        if (amountCollected[_lotteryId][_token] + _amount >= MINIMUM_REWARD) {
-            _lotteryTokens[_lotteryId].add(_token);
-        }
-        amountCollected[_lotteryId][_token] += _amount;
 
         emit LotteryInjection(_lotteryId, _amount, _token);
     }

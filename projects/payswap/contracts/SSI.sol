@@ -14,6 +14,7 @@ contract SSI is Ownable, ERC721Pausable {
     COLOR public minBadgeColor = COLOR.BLACK;
     uint private ssiCollectionId = 1;
     address private contractAddress;
+    address public valuepool;
     uint private tokenId = 1;
     mapping(uint => string[]) internal media;
     string public idValueName = "ssid";
@@ -82,11 +83,12 @@ contract SSI is Ownable, ERC721Pausable {
         return metadata[_tokenId];
     }
     
-    function updateParams(COLOR _minBadgeColor, uint _categoryIndex, uint _ssiCollectionId) external {
+    function updateParams(COLOR _minBadgeColor, uint _categoryIndex, uint _ssiCollectionId, address _valuepool) external {
         require(IAuth(contractAddress).devaddr_() == msg.sender);
         minBadgeColor = _minBadgeColor;
         SSID_CATEGORY = _categoryIndex;
         ssiCollectionId = _ssiCollectionId;
+        valuepool = _valuepool;
     }
 
     function emitUpdateMiscellaneous(
@@ -315,7 +317,7 @@ contract SSI is Ownable, ERC721Pausable {
             ownerOf(_tokenId),
             ownerOf(_tokenId),
             address(0x0),
-            media[_tokenId].length > 0 ? media[_tokenId] : new string[](1),
+            media[_tokenId].length > 0 ? media[_tokenId] : IValuePool(IContract(contractAddress).valuepoolHelper2()).getMedia(valuepool,_tokenId),
             optionNames,
             optionValues,
             description

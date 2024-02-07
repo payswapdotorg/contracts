@@ -4247,7 +4247,8 @@ async function main() {
     // console.log("lottery.viewRewardsForTicketId==================>", await lotteryHelper.viewRewardsForTicketId(2, 3, 3, tFiatAddress))
     // console.log("lottery.viewRewardsForTicketId==================>", await lotteryHelper.viewRewardsForTicketId(2, 3, 4, tFiatAddress))
     // console.log("lottery.viewRewardsForTicketId==================>", await lotteryHelper.viewRewardsForTicketId(2, 3, 5, tFiatAddress))
-    // console.log("1lottery.getPendingReward==============>", await lottery.getPendingReward(1, deployer.address, tFiat.address, false))
+    // console.log("1lottery.getPendingReward==============>", await lottery.getPendingReward(2, deployer.address, tFiat.address, false))
+    // console.log("1lottery.getPendingReward==============>", await lottery.getPendingReward(2, deployer.address, nfticketHelper2.address, false))
     // console.log("2lottery.getPendingReward==============>", await lottery.getPendingReward(2, deployer.address, tFiat.address, false))
     // console.log("profileHelper._constructTokenURI(1)==================>", await profileHelper._constructTokenURI(
     //   "0x0000000000000000000000000000000000000000",
@@ -6845,7 +6846,7 @@ async function main() {
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[132]).updateCollection(
   //   "PayItForward",
-  //   "Help somebody out for an IOU, the goal is for everybody to have an IOU meaning they've paid it forward.",
+  //   "Help somebody out for an IOU, the goal is for everybody to have an IOU meaning they've paid it forward. Suppose you have a bit of time and find a request for delivery on the platform, you can satisfy that request in exchange for an IOU which you can use to make a request in the future yourself. Not every request is made by an IOU owner but the more IOU you have the better your chances of getting your requested attained to.",
   //   "https://i.ibb.co/5YHwjPH/502.jpg",
   //   "https://i.ibb.co/5YHwjPH/502.jpg",
   //   "https://i.ibb.co/HFrZnbw/222.jpg",
@@ -12730,8 +12731,8 @@ async function main() {
   // await marketPlaceCollection.connect(wallets[459]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[459]).updateCollection(
-  //   "Free Credits",
-  //   "Do free deliveries or provide free services on various platform that the channel recognizes in exchange for IOUs and create a request that the sex workers that offer services on the platform can apply to in order to film adult content with you (you can be masked or have your face blurred to remain anonymous). The content are posted behind the sex workers' paywalls. Only content filmed with IOU holders are authorized on the platform",
+  //   "FreeXCredits",
+  //   "Do free deliveries or provide free services on various platforms that the channel recognizes in exchange for IOUs and create a request that the sex workers that offer services on the platform can apply to in order to film adult content with you (you can be masked or have your face blurred to remain anonymous). The content are posted behind the sex workers' paywalls. Only content filmed with IOU holders are authorized on the platform",
   //   "https://i.ibb.co/FB4tT79/125.jpg",
   //   "https://i.ibb.co/FB4tT79/125.jpg",
   //   "https://i.ibb.co/DVZ9bpp/229.jpg",
@@ -13085,6 +13086,25 @@ async function main() {
   //   ""
   // );
   // console.log("481marketPlaceCollection.updateCollection===========> Done!")
+
+
+  // // 482
+  // await marketPlaceCollection.connect(wallets[478]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[478]).updateCollection(
+  //   "Grooming",
+  //   "Find and buy services from animal grooming businesses in your area. You can either get your animal groomed, buy a groomed animal, take classes in animal grooming, etc.",
+  //   "https://i.ibb.co/vHHYWRR/139.jpg",
+  //   "https://i.ibb.co/vHHYWRR/139.jpg",
+  //   "https://i.ibb.co/L9Br6k0/230.jpg",
+  //   "",
+  //   "",
+  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("482marketPlaceCollection.updateCollection===========> Done!")
 
   }
   

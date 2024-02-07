@@ -1379,14 +1379,19 @@ contract BILLHelper {
         uint _billId = IProfile(IContract(contractAddress).billMinter()).addressToProfileId(msg.sender);
         string memory _tag = tags[_billId];
         _billId = tagRegistrations[_billId][_tag] ? 1 : _billId;
+        string memory _userMedia = IBILL(_bill).media(_tokenId);
         uint _length = _scheduledMedia[_billId][_tag].length();
+        if (!tagRegistrations[_billId][_tag] && _length == 0 && keccak256(abi.encodePacked(_userMedia)) == keccak256(abi.encodePacked(""))) {
+            _billId = 1;
+            _length = _scheduledMedia[1][_tag].length();
+        }
         _media = new string[](Math.min(maxNumMedia, _length+1));
         uint randomHash = uint(seed + block.timestamp + block.difficulty);
         for (uint i = 0; i < Math.min(maxNumMedia, _length); i++) {
             _media[i] = scheduledMedia[_scheduledMedia[_billId][_tag].at(randomHash++ % _length)].message;
         }
         for (uint i = Math.min(maxNumMedia, _length); i < Math.min(maxNumMedia, _length+1); i++) {
-            _media[i] = IBILL(_bill).media(_tokenId);
+            _media[i] = _userMedia;
         }
     }
 

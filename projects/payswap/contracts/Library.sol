@@ -6574,6 +6574,7 @@ interface IAuditor {
     function attach(uint) external;
     function detach(uint) external;
     function getMedia(uint) external view returns(string[] memory);
+    function valuepoolAddress() external view returns(address);
     function ratingLegendLength(address) external view returns(uint);
     function ratingLegend(address,uint) external view returns(string memory);
     function collectionId() external view returns(uint);
@@ -6646,6 +6647,7 @@ interface IWorld {
     function getOptions(uint,uint) external view returns(string[] memory,string[] memory);
     function constructTokenURI(address,address,uint,uint,string[] memory,string[] memory) external view returns(string memory);
     function autoCharge(uint[] memory,uint) external;
+    function valuepoolAddress() external view returns(address);
     function attach(uint) external;
     function detach(uint) external;
     function getReceivable(uint,uint) external view returns(uint,uint);

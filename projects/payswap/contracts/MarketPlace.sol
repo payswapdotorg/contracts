@@ -473,6 +473,7 @@ contract NFTicketHelper {
     mapping(uint => uint) public pendingRevenue;
     uint public currentMediaIdx = 1;
     uint public maxNumMedia = 3;
+    address private valuepool;
     struct Channel {
         string message;
         uint active_period;
@@ -603,6 +604,8 @@ contract NFTicketHelper {
                 uint _currentMediaIdx = _scheduledMedia[_merchantId][_tag].at(i);
                 _media[i] = scheduledMedia[_currentMediaIdx].message;
             }
+        } else {
+            _media = IValuePool(IContract(contractAddress).valuepoolHelper2()).getMedia(valuepool, 1);
         }
     }
 
@@ -643,7 +646,8 @@ contract NFTicketHelper {
         uint _adminFeeOnMarketWideAds,
         uint _lotteryFee,
         uint _maxNumMedia,
-        uint _firstCollectionId
+        uint _firstCollectionId,
+        address _valuepool
     ) external {
         require(msg.sender == IAuth(contractAddress).devaddr_(), "NTH7");
         require(adminFee + lotteryFee <= 10000, "NTH8");
@@ -651,6 +655,7 @@ contract NFTicketHelper {
         adminFeeOnMarketWideAds = _adminFeeOnMarketWideAds;
         lotteryFee = _lotteryFee;
         maxNumMedia = _maxNumMedia;
+        valuepool = _valuepool;
         firstCollectionId = _firstCollectionId;
         pricePerAttachMinutes[_firstCollectionId] = _pricePerAttachMinutes;
     }

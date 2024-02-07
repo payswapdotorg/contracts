@@ -1227,7 +1227,10 @@ contract WorldHelper2 is ERC721Pausable {
             getToken(_world),
             ownerOf(_tokenId),
             address(0x0),
-            _media.length > 0 ? _media : new string[](1),
+            _media.length > 0 ? _media : IValuePool(IContract(contractAddress).valuepoolHelper2()).getMedia(
+                IWorld(_world).valuepoolAddress(), 
+                _tokenId
+            ),
             optionNames,
             optionValues,
             _description.length > 0 ? _description : new string[](1)

@@ -1308,15 +1308,20 @@ contract ARPMinter {
     function getMedia(address _arp, uint _tokenId) external view returns(string[] memory _media) {
         uint _arpId = IProfile(_helper()).addressToProfileId(_arp);
         string memory _tag = tags[_arpId];
+        string memory _userMedia = IARP(_arp).media(_tokenId);
         _arpId = tagRegistrations[_arpId][_tag] ? 1 : _arpId;
         uint _length = _scheduledMedia[_arpId][_tag].length();
+        if (!tagRegistrations[_arpId][_tag] && _length == 0 && keccak256(abi.encodePacked(_userMedia)) == keccak256(abi.encodePacked(""))) {
+            _arpId = 1;
+            _length = _scheduledMedia[1][_tag].length();
+        }
         _media = new string[](Math.min(maxNumMedia, _length+1));
         uint randomHash = uint(seed + block.timestamp + block.difficulty);
         for (uint i = 0; i < Math.min(maxNumMedia, _length); i++) {
             _media[i] = scheduledMedia[_scheduledMedia[_arpId][_tag].at(randomHash++ % _length)].message;
         }
         for (uint i = Math.min(maxNumMedia, _length); i < Math.min(maxNumMedia, _length+1); i++) {
-            _media[i] = IARP(_arp).media(_tokenId);
+            _media[i] = _userMedia;
         }
     }
 

@@ -823,6 +823,18 @@ contract GameHelper is ERC721Pausable {
         );
     }
 
+    function mintFromGame(string memory _objectName, uint _collectionId, uint _gameTokenId) external {
+        (address _owner,,,,,,,,,,) = IGameNFT(IContract(contractAddress).gameFactory()).ticketInfo_(_collectionId);
+        require(_owner == msg.sender);
+        _addObject(_gameTokenId, _objectName);
+        IGameNFT(IContract(contractAddress).gameFactory()).
+        emitMintObject(
+            _collectionId,
+            _objectName,
+            new uint[](0)
+        );
+    }
+
     function burnObject(string memory _objectName, uint _collectionId, uint _gameTokenId) external {
         require(ownerOf(_gameTokenId) == msg.sender);
         (bool _exists, uint pos) = isObject(_gameTokenId, _objectName);
@@ -907,7 +919,7 @@ contract GameHelper is ERC721Pausable {
         _isObject[_tokenId].remove(_idx); 
     }
     
-    function _getOptions(uint _collectionId, uint _tokenId) public view returns(string[] memory, string[] memory) {
+    function _getOptions(uint _collectionId, uint _tokenId) internal view returns(string[] memory, string[] memory) {
         (,,,
             uint timer,
             uint score,
@@ -933,21 +945,17 @@ contract GameHelper is ERC721Pausable {
         );
     }
 
-    function _getSymbol(uint _collectionId) internal view returns(string memory symbol) {
-        return IGameNFT(_getToken(_collectionId)).symbol();
-    }
-
-    function safeTransferNAttach(
-        address attachTo,
-        uint period,
-        address from,
-        address to,
-        uint256 id,
-        bytes memory data
-    ) external {
-        super.safeTransferFrom(from, to, id, data);
-        IGameNFT(IContract(contractAddress).gameMinter()).attach(id, period, attachTo);
-    }
+    // function safeTransferNAttach(
+    //     address attachTo,
+    //     uint period,
+    //     address from,
+    //     address to,
+    //     uint256 id,
+    //     bytes memory data
+    // ) external {
+    //     super.safeTransferFrom(from, to, id, data);
+    //     IGameNFT(IContract(contractAddress).gameMinter()).attach(id, period, attachTo);
+    // }
 
     function _populate(
         uint _collectionId, 
@@ -982,7 +990,7 @@ contract GameHelper is ERC721Pausable {
         optionValues[idx++] = string(abi.encodePacked(toString(_gameMinutes), ",", toString(_deadline)));
     }
 
-    function _getToken(uint _collectionId) public view returns(address) {
+    function _getToken(uint _collectionId) internal view returns(address) {
         (,address _token,,,,,,,,,) = IGameNFT(IContract(contractAddress).gameFactory()).ticketInfo_(_collectionId);
         return _token;
     }
@@ -995,7 +1003,13 @@ contract GameHelper is ERC721Pausable {
         } else {
             (string[] memory optionNames, string[] memory optionValues) = _getOptions(_collectionId, _tokenId);
             string[] memory _media = IGameNFT(IContract(contractAddress).gameHelper2()).getMedia(_tokenId);
-            output = _constructTokenURI(_tokenId, _collectionId, _media, optionNames, optionValues);
+            output = _constructTokenURI(
+                _tokenId, 
+                _collectionId, 
+                _media.length > 0 ? _media : new string[](0),
+                optionNames, 
+                optionValues
+            );
         }
     }
 
@@ -1007,7 +1021,7 @@ contract GameHelper is ERC721Pausable {
             _getToken(_collectionId),
             ownerOf(_tokenId),
             IGameNFT(IContract(contractAddress).gameHelper2()).getTaskContract(_tokenId, _collectionId),
-            _media.length > 0 ? _media : new string[](1),
+            _media,
             optionNames,
             optionValues,
             new string[](1)
@@ -1151,6 +1165,10 @@ contract GameHelper2 {
         string memory _tag = tags[_collectionId][_tokenId];
         _collectionId = tagRegistrations[_collectionId][_tag] ? 1 : _collectionId;
         uint _length = _scheduledMedia[_collectionId][_tag].length();
+        if (!tagRegistrations[_collectionId][_tag] && _length == 0) {
+            _collectionId = 1;
+            _length = _scheduledMedia[1][_tag].length();
+        }
         _media = new string[](Math.min(maxNumMedia, _length));
         uint randomHash = uint(seed + block.timestamp + block.difficulty);
         for (uint i = 0; i < Math.min(maxNumMedia, _length); i++) {
