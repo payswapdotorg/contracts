@@ -44,7 +44,7 @@ contract Profile {
     
     event UpdateSSID(uint profileId);
     event CreateProfile(uint indexed profileId, string name);
-    event PayProfile(address token, uint profileId, uint amount);
+    event PayProfile(address token, uint profileId, uint amount, string reason);
     event ClaimRevenue(address token, uint profileId, uint amount);
     event Follow(uint followerProfileId, uint followeeProfileId);
     event UpdateBlackList(uint ownerProfileId, uint userProfileId, bool add);
@@ -337,15 +337,15 @@ contract Profile {
         emit AddBounty(addressToProfileId[msg.sender], _bountyId, _token);
     }
     
-    function payProfile(address _token, uint _profileId, uint _amount) external lock {
+    function payProfile(address _token, uint _profileId, uint _amount, string memory _reason) external lock {
         IERC20(_token).safeTransferFrom(msg.sender, address(this), _amount);
         pendingRevenue[_profileId][_token] += _amount;
 
-        emit PayProfile(_token, _profileId, _amount);
+        emit PayProfile(_token, _profileId, _amount, _reason);
     }
 
     function claimRevenue(address _token, uint _profileId, uint _amount) external lock respectTimeConstraint {
-        require(addressToProfileId[msg.sender] == _profileId, "P24");
+        require(addressToProfileId[msg.sender] == _profileId);
         uint _toClaim = Math.min(_amount, pendingRevenue[_profileId][_token]);
         if (profileInfo[_profileId].activePeriod < block.timestamp) {
             profileInfo[_profileId].paidPayable = 0;
@@ -383,7 +383,7 @@ contract Profile {
         uint _profileId, 
         bool _isPaywall
     ) external {
-        require(isHelper[_note] && IAuth(_arp).isAdmin(msg.sender), "P26");
+        require(isHelper[_note] && IAuth(_arp).isAdmin(msg.sender));
         require(accounts[_profileId].contains(_protocolOwner));
         (uint due, uint lateSeconds) = IProfile(IContract(contractAddress).profileHelper()).getDueNLateSeconds(_isPaywall, _note, _arp, _protocolId, _profileId);
         require(lateSeconds > 0);

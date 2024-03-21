@@ -243,11 +243,11 @@ async function main() {
   const auditorFactoryAddress = "0x030D43e6521bFc57bb00CfCe08D1D6eBCd52Dd36"
   const futureCollateralAddress = "0xA7D5DE11Ab5262A2A2F3E69A7bEC6C5AF7973f9E"
   const cardAddress = "0x19ad7453898E6E12b7F3bc9956725964596141FD"
-  const vavaFactoryAddress = "0x6395A7f0989eEa4d70ABe643847558cBD1f25CA0"
-  const vavaHelperAddress = "0x3235eF5716f10372575CB394EBac70C437F99c3F"
-  const vavaHelper2Address = "0x41588Fa804a990dC0db34850f305a8c546a14d11"
-  const veFactoryAddress = "0x485B9Edfb403cFb367A322471de56DBDd54a2f4d"
-  const valuepoolVoterAddress = "0x2cC04852fD270122e8B618D257460ED7c04dc7e0"
+  const vavaFactoryAddress = "0x120b4006e108afa9bf41bD20F031C9D14bdaAbd8"
+  const vavaHelperAddress = "0x9Ae77f049fE16694764F974AAc385C2bA9E294e3"
+  const vavaHelper2Address = "0x1F71DC35Bf1C4b1157fF2dC5d464e9320f61A022"
+  const veFactoryAddress = "0x1B92Ba3b0d2760feb1888b621784a86d9ED35aA2"
+  const valuepoolVoterAddress = "0xC764F0dd756e39801c4418BCa54914633c951D3F"
   const businessBribeFactoryAddress = "0x7d1A68Cd40EeEBbAC205e09b0C776bD9a21c7476"
   const businessGaugeFactoryAddress = "0x68909e3d5aaC70D18Ae26ED8F059A56B5B058037"
   const referralBribeFactoryAddress = "0xaec98A3EEA7B48f6a03A5750E92E896300295964"
@@ -305,10 +305,10 @@ async function main() {
   const extraTokenFactoryAddress = "0xff801300e587C491b12AD0D82F6E3C672033dFC2"
   const willFactoryAddress = "0x39Df1914b0631B3FBcae40AAB391536b59D863ad"
   const willNoteAddress = "0x56495afeC24660414758fA3209609a7eC2730903"
-  const gameFactoryAddress = "0xb179a10acc97B6fB78aA018FA5a115bb5677d646"
-  const gameMinterAddress = "0x7dbfAe0C27A205412637afE3BfDaBfA76fc11B94"
-  const gameHelperAddress = "0xB1a682A0a2615C04A1C06AC615dcA926aBA06F9D"
-  const gameHelper2Address = "0xAcD0bff4bF00d5e3244B68cf02f37142e4773FaD"
+  const gameFactoryAddress = "0x8254Ef868026c5231E073F559e3CC207948F2d33"
+  const gameMinterAddress = "0x0E28ad2C10E4404A5f0bbCa7F856B517f3b4a523"
+  const gameHelperAddress = "0x5484BA34cf91419B274B1c099280241b64bF5080"
+  const gameHelper2Address = "0x97c704f5888A83264e526cE6984e06B3dB6819D6"
   const lotteryAddress = "0x3655bfE221e594e6Cee200dBA560400DAe3b89C6"
   const lotteryHelperAddress = "0xB635fe5686C19aC309D76901593833a828170695"
   const lotteryRandomNumberGeneratorAddress = "0x63E751b3b4533918b2adC7b7F7127b5765559e13"
@@ -317,10 +317,10 @@ async function main() {
   const worldHelperAddress = "0xb846371BFc2aCD2fa8ad6Af10EA5bF8C01Ca7dC2"
   const worldHelper2Address = "0x4DDC7B7fDe5Ae29f8eeb08fF4a670826798DCc6d"
   const worldHelper3Address = "0x6ab8cF61b971102471ef6276A8eD8b7Cb5bC03E7"
-  const rampHelperAddress = "0x596a04c451C941cAe2183C7696c387ca46212C10"
-  const rampHelper2Address = "0x5C9493Ce9f4fB25f7EfA7A9C7e1a9E1e82bBdCc7"
-  const rampFactoryAddress = "0x2ED6528322295f890d42b400DAF1050D467639eA"
-  const rampAdsAddress = "0x5FB6e149B1ce390d69CeE7a4f177e7B6FC299E07"
+  const rampHelperAddress = "0xca9D43de7f14164f25C497EC98DC35b19f471a9e"
+  const rampHelper2Address = "0xbf33b9a33d155730708f05Fb029eCC36A32EEC31"
+  const rampFactoryAddress = "0x729a91ee2E9F40341aa841D687A985924976d9A9"
+  const rampAdsAddress = "0x4aDB049fF7069635F93A552a7af2a28bF3e81420"
   const bettingHelperAddress = "0x1B13e58320C0a7F490C9C576201506528C0D9Dc5"
   const bettingMinterAddress = "0x22Ee373D092aF0626aE72Bc9124E68161ED38c90"
   const bettingFactoryAddress = "0x8f50058B663b5949DF59F6795A27A2552BD100B4"
@@ -336,18 +336,18 @@ async function main() {
   const fsttAddress = "0xA151e4494e7a0519178663d956cD1c54Fa11e7B5"
   const fetAddress = "0x9820779cD8eDb1fC82B3B360CFC0221A7F65e768"
   const fabtAddress = "0x61717A9427a47c959C796B7E9ef96B118380D0B2"
-  const vaFFTAddress = "0x916a1741323Ab488EB89E1ae1eC22Bd75805D554"
-  const vaFBTAddress = "0xAD9e033e99EB965dBEDDd2E52C926dDDe5Fa09CC"
-  const vaFNTAddress = "0xEbc5A777650B93dE9DF706139ee1e7e7E3CD0F26"
-  const vaFTTAddress = "0xAb9C6F27Bf60B54348D41aDaA04016ED7f545Fff"
-  const vaFHTAddress = "0x078aaD24DADD93105e88794E79316d711680eB8a"
-  const vaFECTAddress = "0x67BA3f68a1F99a941A6DcA76eAB938f9E3E5A70A"
-  const vaFRETAddress = "0xa68a8c8979dEdf77c4A36e05D06c6a6e803Bed33"
-  const vaFMTAddress = "0xc4c8fd6E3A451D490a242Fb097Fa81EC6d01139C"
-  const vaFLOTAddress = "0x25747920013905D87B5CF184bD0f87B5eC1D8986"
-  const vaFSTTAddress = "0xb2a75385638e8D264fd50D26EF3D9c11cAD17A8d"
-  const vaFETAddress = "0x00B0f1165Ff308059C80A4FB31572D307E797230"
-  const vaFABTAddress = "0x4280Ea442ddF111c81a151451516bdb9d3f78B2A"
+  const vaFFTAddress = "0x353E18DC5B89D54a2684e17682571CC244d85C1D"
+  const vaFBTAddress = "0xAa93790CA7D6EDaE01deac106a489EDbD6639c48"
+  const vaFNTAddress = "0x786cef4AaAe0110bCc6d09bC10B5A6488788dbDB"
+  const vaFTTAddress = "0x02589b1dcfb2a16302010fa199d5370C34A3bEF9"
+  const vaFHTAddress = "0x2a98Eb3a789db6Eae4F2a99E4443c3272cb2cF31"
+  const vaFECTAddress = "0x32654ceb3386Fd1Ab109bd00d3dd46ECE2286416"
+  const vaFRETAddress = "0xE3cA082baa5411aBEE8914Bb90044679aeEbDbb6"
+  const vaFMTAddress = "0x87bd7ec1d33F3901B7CD858a23B84b5Af6e41e1E"
+  const vaFLOTAddress = "0x4C92804352811b1d008c5354295052e2497AAb95"
+  const vaFSTTAddress = "0x2264cd9F42F4967Ffef73381c86AF5B774c7c0D7"
+  const vaFETAddress = "0x51C7c882c7655354239b0B7A0cC185f35DE450aA"
+  const vaFABTAddress = "0xa540CC2b7F852DA16EcF809b688034CB05EF952f"
 
   const fabt = fiatContract.attach(fabtAddress)
   const fet = fiatContract.attach(fetAddress)
@@ -2439,7 +2439,7 @@ async function main() {
   // await tFiat3.updateLimits(ethers.BigNumber.from("10000000000000000000000000000"), ethers.BigNumber.from("1000000000000000000000000000"))
   // console.log("======>Done", await tFiat.attachedProfileId(deployer.address), await tFiat.limitWithProfile(), await tFiat.limitWithoutProfile(), await tFiat.transferedSoFar(worldHelper.address), await tFiat.minimBalance(worldHelper.address))
 
-  // await marketPlaceCollection.addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
   // await marketPlaceCollection.updateCollection(
   //   "Payswap Support",
@@ -2449,14 +2449,14 @@ async function main() {
   //   "https://i.ibb.co/bs9B2mg/221.jpg",
   //   "email,payswap",
   //   "support@payswap.org,support@payswap.org",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "All",
   //   ""
   // );
   // console.log("marketPlaceCollection.updateCollection===========> Done!")
 
-  // await marketPlaceCollection.connect(deployer2).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(deployer2).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
   // await marketPlaceCollection.connect(deployer2).updateCollection(
   //   "Money Bank",
@@ -2466,14 +2466,14 @@ async function main() {
   //   "https://i.ibb.co/bs9B2mg/221.jpg",
   //   "email,payswap",
   //   "support@payswap.org,support@payswap.org",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "All",
   //   ""
   // );
   // console.log("marketPlaceCollection.updateCollection===========> Done!")
 
-  // await marketPlaceCollection.connect(deployer3).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(deployer3).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
   // await marketPlaceCollection.connect(deployer3).updateCollection(
   //   "Real Estate Leviathan",
@@ -2483,14 +2483,14 @@ async function main() {
   //   "https://i.ibb.co/HFrZnbw/222.jpg",
   //   "email,payswap",
   //   "support@payswap.org,support@payswap.org",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "All",
   //   ""
   // );
   // console.log("marketPlaceCollection.updateCollection===========> Done!")
 
-  // await marketPlaceCollection.connect(deployer4).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // await marketPlaceCollection.connect(deployer4).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
   // await marketPlaceCollection.connect(deployer4).updateCollection(
   //   "Healthcare Leviathan",
@@ -2500,14 +2500,14 @@ async function main() {
   //   "https://i.ibb.co/44SXFQM/223.jpg",
   //   "email,payswap",
   //   "support@payswap.org,support@payswap.org",
-  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   vaFHT.address,
   //   "All",
   //   "All",
   //   ""
   // );
   // console.log("marketPlaceCollection.updateCollection===========> Done!")
 
-  // await marketPlaceCollection.connect(deployer5).addCollection(0, 0, 0, 0, 0, 0, "0xd1a7aB1a1E1aaDD5CD51F51570885c7896bb3139", false, false);
+  // await marketPlaceCollection.connect(deployer5).addCollection(0, 0, 0, 0, 0, 0, fet.address, false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
   // await marketPlaceCollection.connect(deployer5).updateCollection(
   //   "Energy Leviathan",
@@ -2517,14 +2517,14 @@ async function main() {
   //   "https://i.ibb.co/HCqK6C9/224.jpg",
   //   "email,payswap",
   //   "support@payswap.org,support@payswap.org",
-  //   "0xae6a2d4DbA638766bD3b522cD397cA90F173fDd2",
+  //   vaFET.address,
   //   "All",
   //   "All",
   //   ""
   // );
   // console.log("marketPlaceCollection.updateCollection===========> Done!")
 
-  // await marketPlaceCollection.connect(deployer6).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  // await marketPlaceCollection.connect(deployer6).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
   // await marketPlaceCollection.connect(deployer6).updateCollection(
   //   "Food Leviathan",
@@ -2534,14 +2534,14 @@ async function main() {
   //   "https://i.ibb.co/0XTcvxJ/226.jpg",
   //   "email,payswap",
   //   "support@payswap.org,support@payswap.org",
-  //   "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //   vaFFT.address,
   //   "All",
   //   "All",
   //   ""
   // );
   // console.log("marketPlaceCollection.updateCollection===========> Done!")
 
-  // await marketPlaceCollection.connect(deployer7).addCollection(0, 0, 0, 0, 0, 0, "0x77B0e504900997eE937c0C10E027236aeCD386EF", false, false);
+  // await marketPlaceCollection.connect(deployer7).addCollection(0, 0, 0, 0, 0, 0, fbt.address, false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
   // await marketPlaceCollection.connect(deployer7).updateCollection(
   //   "Beverage Leviathan",
@@ -2551,14 +2551,14 @@ async function main() {
   //   "https://i.ibb.co/5G434QR/227.jpg",
   //   "email,payswap",
   //   "support@payswap.org,support@payswap.org",
-  //   "0xdC94F841AedDe3Bb8fD311a61c2b4Fe40a47393d",
+  //   vaFBT.address,
   //   "All",
   //   "All",
   //   ""
   // );
   // console.log("marketPlaceCollection.updateCollection===========> Done!")
 
-  // await marketPlaceCollection.connect(deployer8).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(deployer8).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
   // await marketPlaceCollection.connect(deployer8).updateCollection(
   //   "Law & Order Leviathan",
@@ -2568,14 +2568,14 @@ async function main() {
   //   "https://i.ibb.co/sRwTxr5/228.jpg",
   //   "email,payswap",
   //   "support@payswap.org,support@payswap.org",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "All",
   //   ""
   // );
   // console.log("marketPlaceCollection.updateCollection===========> Done!")
 
-  // await marketPlaceCollection.connect(deployer9).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(deployer9).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
   // await marketPlaceCollection.connect(deployer9).updateCollection(
   //   "NSFW Leviathan",
@@ -2585,14 +2585,14 @@ async function main() {
   //   "https://i.ibb.co/DVZ9bpp/229.jpg",
   //   "email,payswap",
   //   "support@payswap.org,support@payswap.org",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "All",
   //   ""
   // );
   // console.log("marketPlaceCollection.updateCollection===========> Done!")
 
-  // await marketPlaceCollection.connect(deployer10).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(deployer10).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
   // await marketPlaceCollection.connect(deployer10).updateCollection(
   //   "Software & Telecommunication & Other Leviathan",
@@ -2602,14 +2602,14 @@ async function main() {
   //   "https://i.ibb.co/L9Br6k0/230.jpg",
   //   "email,payswap",
   //   "support@payswap.org,support@payswap.org",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "All",
   //   ""
   // );
   // console.log("marketPlaceCollection.updateCollection===========> Done!")
 
-  // await marketPlaceCollection.connect(deployer11).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  // await marketPlaceCollection.connect(deployer11).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
   // await marketPlaceCollection.connect(deployer11).updateCollection(
   //   "Transportation Leviathan",
@@ -2619,14 +2619,14 @@ async function main() {
   //   "https://i.ibb.co/5hZTrBZ/231.jpg",
   //   "email,payswap",
   //   "support@payswap.org,support@payswap.org",
-  //   "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //   vaFTT.address,
   //   "All",
   //   "All",
   //   ""
   // );
   // console.log("marketPlaceCollection.updateCollection===========> Done!")
 
-  // await marketPlaceCollection.connect(deployer12).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(deployer12).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
   // await marketPlaceCollection.connect(deployer12).updateCollection(
   //   "Culture & Entertainment Leviathan",
@@ -2636,14 +2636,14 @@ async function main() {
   //   "https://i.ibb.co/TvvmDnv/232.jpg",
   //   "email,payswap",
   //   "support@payswap.org,support@payswap.org",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "All",
   //   ""
   // );
   // console.log("marketPlaceCollection.updateCollection===========> Done!")
 
-  // await marketPlaceCollection.connect(deployer13).addCollection(0, 0, 0, 0, 0, 0, "0xBa9fCa9130BF46FbB09740A3b02d5Ce9deB6ae11", false, false);
+  // await marketPlaceCollection.connect(deployer13).addCollection(0, 0, 0, 0, 0, 0, fmt.address, false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
   // await marketPlaceCollection.connect(deployer13).updateCollection(
   //   "Mining Leviathan",
@@ -2653,14 +2653,14 @@ async function main() {
   //   "https://i.ibb.co/yhxBQLY/233.jpg",
   //   "email,payswap",
   //   "support@payswap.org,support@payswap.org",
-  //   "0x86130B7eec5561706Ac18877D19ee7D1A584E807",
+  //   vaFMT.address,
   //   "All",
   //   "All",
   //   ""
   // );
   // console.log("marketPlaceCollection.updateCollection===========> Done!")
 
-  // await marketPlaceCollection.connect(deployer14).addCollection(0, 0, 0, 0, 0, 0, "0xd17C814f5609889609720D95e1A7369f9F798aB4", false, false);
+  // await marketPlaceCollection.connect(deployer14).addCollection(0, 0, 0, 0, 0, 0, fabt.address, false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
   // await marketPlaceCollection.connect(deployer14).updateCollection(
   //   "Apparel & Beauty & Cosmetics Leviathan",
@@ -2670,14 +2670,14 @@ async function main() {
   //   "https://i.ibb.co/BKMrjRm/234.jpg",
   //   "email,payswap",
   //   "support@payswap.org,support@payswap.org",
-  //   "0xC853D1c9B60962a5CDB361379595BC6400aaE722",
+  //   vaFABT.address,
   //   "All",
   //   "All",
   //   ""
   // );
   // console.log("marketPlaceCollection.updateCollection===========> Done!")
 
-    // await marketPlaceCollection.addCollection(0, 0, 0, 0, 0, 0, tFiat.address, false, false);
+    // await marketPlaceCollection.addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
     // console.log("marketPlaceCollection.addCollection===========> Done!")
     // await marketPlaceCollection.updateCollection(
     //   "Payswap",
@@ -2687,7 +2687,7 @@ async function main() {
     //   "https://static-nft.pancakeswap.com/mainnet/0x012f90E777bdb2B4CA132f0f6EB9e7959075E9b2/avatar.png",
     //   "email,telegram",
     //   "ekontetevi@gmail.com,+22892227100",
-    //   "0xfd045C059AC6423F9B21A456a432Ead97a93F706",
+    //   vaFSST.address,
     //   "Togo",
     //   "Lome-Togo",
     //   "All"
@@ -3558,7 +3558,7 @@ async function main() {
     // console.log("futureCollateral========>Done", await futureCollateral.ownerOf(1))
     // console.log("futureCollateral.tokenURI========>", await futureCollateral.tokenURI(1))
 
-    // // create ramp
+    // create ramp
     // const ramp = await Ramp.deploy(
     //   deployer.address,
     //   rampHelper.address,
@@ -3566,9 +3566,24 @@ async function main() {
     // )
     // await ramp.deployed()
     // console.log("ramp==============>", ramp.address)
+
   // let rampAddress = (await rampHelper.getAllRamps(0))[0]
   // let ramp = Ramp.attach(rampAddress)
   // console.log("ramp===>", rampAddress, ramp.address)
+
+  // await ramp.addBalanceETH("1000000000000000000", {
+  //   value: "1000000000000000000"
+  // })
+  // console.log("ramp.addBalanceETH==================>Done")
+
+  // await ramp.buyNative(deployer.address, "1000000000000000000")
+  // console.log("ramp.buyNative====================>Done")
+
+  // await ethers.provider.getBalance(ramp.address).then((balance) => {
+  //     // convert a currency unit from wei to ether
+  //     const balanceInEth = ethers.utils.formatEther(balance)
+  //     console.log(`balance: ${balanceInEth} ETH`)
+  //   })
 
   //   console.log("devaddr_===============>", await ramp.devaddr_())
     // await ramp.updateDevTokenId(vaFABTAddress, 1)
@@ -3594,7 +3609,10 @@ async function main() {
     // console.log("trustBountiesHelper.updateAuthorizedSourceFactories===========> Done!")
 
     // console.log("rampHelper.isPayswapRamp=====================>", await rampHelper.isPayswapRamp(ramp.address))
-    
+
+    // await rampHelper.addDtoken(rampHelper.address)
+    // console.log("rampHelper.addDtoken====================>Done")
+
     // const tEURAddress = "0xDA2180a084956475B4C4EBeeAE649862BaD838a8"
     // const tEUR = fiatContract.attach(tEURAddress)
     // await rampHelper.addDtoken(tEURAddress)
@@ -4035,6 +4053,7 @@ async function main() {
     // await vava.deployed()
 
   // let vava = Vava.attach(vavaAddress)
+  // await vavaHelper.deleteVava(vavaAddress)
   // console.log("vava.deployed===============>Done", vava.address)
   // console.log("==========>", await vava.getUserPercentile(2))
 
@@ -4110,13 +4129,13 @@ async function main() {
     // await va.deployed()
     // let vaAddress = await vava._ve()
     // let va = Va.attach(vaAddress)
-    // console.log("va.deployed==============>", va.address, await vava._ve())
+    // console.log("va.deployed==============>", va.address, vaAddress, await vava.token())
     // await va.setContractAddress(contractAddresses.address)
     // console.log("va.setContractAddress===============>Done")
     // // console.log("va===>", vaAddress, va.address, await va.getParams(), await va.ownerOf(1))
     // await va.setParams(
-    //   "vaNFT",
-    //   "vaNFT",
+    //   "Vested Acquisition Free Transportation Token",
+    //   "vaFTT",
     //   18,
     //   0,
     //   0,
@@ -4129,17 +4148,17 @@ async function main() {
     // console.log("vava.getAllSponsors|true===============>", await vava.getAllSponsors(0, 0, true))
     // await vavaHelper2.updateMaxNumMedia(3)
     // console.log("va.tokenURI===============>", await va.ownerOf(1))
-    // // await valuepoolVoter.addVa(
-    // //   vavaAddress,
-    // //   1,
-    // //   87700,
-    // //   1,
-    // //   1,
-    // //   0,
-    // //   0,
-    // //   1
-    // // )
-  // // // console.log("valuepoolVoter.addVa===============>Done")
+    // await valuepoolVoter.addVa(
+    //   vavaAddress,
+    //   1,
+    //   87700,
+    //   1,
+    //   1,
+    //   0,
+    //   0,
+    //   1
+    // )
+  // console.log("valuepoolVoter.addVa===============>Done")
   // console.log("valuepoolVoter.collectionId===============>", await valuepoolVoter.collectionId("0x017aba5f9fe7673a675c9541df0e792d8118fb41"))
   // console.log("marketPlaceHelper2.checkUserIdentityProof===============>", await marketPlaceHelper2.checkUserIdentityProof(290, 0, deployer.address))
   // console.log("vava._ve==================>", await vava._ve(), await tFiat.balanceOf(vavaAddress))
@@ -4147,8 +4166,8 @@ async function main() {
   // console.log("getBalance==================>", await valuepoolVoter.getBalance("0x017aBa5F9Fe7673a675c9541DF0e792D8118FB41", "0x4237d714c33ebaccc45eb51b24f5445a4119f245"))
 
   // await tFiat.approve(va.address, ethers.BigNumber.from("100000000000000000"));
-    // await va.create_lock_for(ethers.BigNumber.from("100000000000000000"), 4 * 365 * 86400, 0, deployer.address)
-    // console.log("va.create_lock_for===============>Done")
+  //   await va.create_lock_for(ethers.BigNumber.from("100000000000000000"), 4 * 365 * 86400, 0, deployer.address)
+  //   console.log("va.create_lock_for===============>Done")
     // console.log("va.isApprovedOrOwner==============>", await va.ownerOf(1), await va.balanceOfNFT(1), await va.isApprovedOrOwner(deployer.address, 1))
 
     // // console.log("vavaHelper================>", await vava.contractAddress())
@@ -4484,7 +4503,7 @@ async function main() {
 
 
   // // 1
-  // await marketPlaceCollection.connect(wallets[0]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[0]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[0]).updateCollection(
   //   "Auto Insurances",
@@ -4494,7 +4513,7 @@ async function main() {
   //   "https://i.ibb.co/cxywJwC/295.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -4502,7 +4521,7 @@ async function main() {
   // console.log("1marketPlaceCollection.updateCollection===========> Done!")
 
   // // 2
-  // await marketPlaceCollection.connect(wallets[2]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[2]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[2]).updateCollection(
   //   "SBWP",
@@ -4512,7 +4531,7 @@ async function main() {
   //   "https://i.ibb.co/P4P8hY9/29-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -4520,7 +4539,7 @@ async function main() {
   // console.log("2marketPlaceCollection.updateCollection===========> Done!")
 
   // // 3
-  // await marketPlaceCollection.connect(wallets[3]).addCollection(0, 0, 0, 0, 0, 0, "0xd17C814f5609889609720D95e1A7369f9F798aB4", false, false);
+  // await marketPlaceCollection.connect(wallets[3]).addCollection(0, 0, 0, 0, 0, 0, fabt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[3]).updateCollection(
   //   "LuxurySwap",
@@ -4530,7 +4549,7 @@ async function main() {
   //   "https://i.ibb.co/ZBV2VKT/30-2.jpg",
   //   "",
   //   "",
-  //   "0xC853D1c9B60962a5CDB361379595BC6400aaE722",
+  //   vaFABT.address,
   //   "All",
   //   "",
   //   ""
@@ -4538,7 +4557,7 @@ async function main() {
   // console.log("3marketPlaceCollection.updateCollection===========> Done!")
 
   // // 4
-  // await marketPlaceCollection.connect(wallets[4]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[4]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[4]).updateCollection(
   //   "PlayList",
@@ -4548,7 +4567,7 @@ async function main() {
   //   "https://i.ibb.co/s6cd4RT/31-2.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -4556,7 +4575,7 @@ async function main() {
   // console.log("4marketPlaceCollection.updateCollection===========> Done!")
 
   // // 5
-  // await marketPlaceCollection.connect(wallets[5]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[5]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[5]).updateCollection(
   //   "PaypalBridge",
@@ -4566,7 +4585,7 @@ async function main() {
   //   "https://i.ibb.co/RQLJcq0/32-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -4574,7 +4593,7 @@ async function main() {
   // console.log("5marketPlaceCollection.updateCollection===========> Done!")
 
   // // 6
-  // await marketPlaceCollection.connect(wallets[6]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[6]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[6]).updateCollection(
   //   "CashDrop",
@@ -4584,7 +4603,7 @@ async function main() {
   //   "https://i.ibb.co/0VtKSfX/34-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -4592,7 +4611,7 @@ async function main() {
   // console.log("6marketPlaceCollection.updateCollection===========> Done!")
 
   // // 7
-  // await marketPlaceCollection.connect(wallets[7]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  // await marketPlaceCollection.connect(wallets[7]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[7]).updateCollection(
   //   "FoodServiceLink",
@@ -4602,7 +4621,7 @@ async function main() {
   //   "https://i.ibb.co/d287FNg/35-2.jpg",
   //   "",
   //   "",
-  //   "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //   vaFFT.address,
   //   "All",
   //   "",
   //   ""
@@ -4610,7 +4629,7 @@ async function main() {
   // console.log("7marketPlaceCollection.updateCollection===========> Done!")
 
   // // 8
-  // await marketPlaceCollection.connect(wallets[8]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[8]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[8]).updateCollection(
   //   "HomeServeHub",
@@ -4620,7 +4639,7 @@ async function main() {
   //   "https://i.ibb.co/s1mDPGp/37-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -4628,7 +4647,7 @@ async function main() {
   // console.log("8marketPlaceCollection.updateCollection===========> Done!")
 
   // // 9
-  // await marketPlaceCollection.connect(wallets[9]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[9]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[9]).updateCollection(
   //   "NFTMarketX",
@@ -4638,7 +4657,7 @@ async function main() {
   //   "https://i.ibb.co/NV8X2H2/38-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -4646,7 +4665,7 @@ async function main() {
   // console.log("9marketPlaceCollection.updateCollection===========> Done!")
 
   // // 10
-  // await marketPlaceCollection.connect(wallets[10]).addCollection(0, 0, 0, 0, 0, 0, "0xd17C814f5609889609720D95e1A7369f9F798aB4", false, false);
+  // await marketPlaceCollection.connect(wallets[10]).addCollection(0, 0, 0, 0, 0, 0, fabt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[10]).updateCollection(
   //   "ReVogue",
@@ -4656,7 +4675,7 @@ async function main() {
   //   "https://i.ibb.co/4tBKnp7/292.jpg",
   //   "",
   //   "",
-  //   "0xC853D1c9B60962a5CDB361379595BC6400aaE722",
+  //   vaFABT.address,
   //   "All",
   //   "",
   //   ""
@@ -4664,7 +4683,7 @@ async function main() {
   // console.log("10marketPlaceCollection.updateCollection===========> Done!")
 
   // // 11
-  // await marketPlaceCollection.connect(wallets[11]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[11]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[11]).updateCollection(
   //   "FantasyPlay",
@@ -4674,7 +4693,7 @@ async function main() {
   //   "https://i.ibb.co/8DgzGWJ/291.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -4682,7 +4701,7 @@ async function main() {
   // console.log("11marketPlaceCollection.updateCollection===========> Done!")
 
   // // 12
-  // await marketPlaceCollection.connect(wallets[12]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[12]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[12]).updateCollection(
   //   "BetTrust",
@@ -4692,7 +4711,7 @@ async function main() {
   //   "https://i.ibb.co/bKtsN1B/290.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -4700,7 +4719,7 @@ async function main() {
   // console.log("12marketPlaceCollection.updateCollection===========> Done!")
 
   // // 13
-  // await marketPlaceCollection.connect(wallets[13]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[13]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[13]).updateCollection(
   //   "Wi-Free",
@@ -4710,7 +4729,7 @@ async function main() {
   //   "https://i.ibb.co/0XmYrqL/289.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -4718,7 +4737,7 @@ async function main() {
   // console.log("13marketPlaceCollection.updateCollection===========> Done!")
 
   // // 14
-  // await marketPlaceCollection.connect(wallets[14]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[14]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[14]).updateCollection(
   //   "FaithStream",
@@ -4728,7 +4747,7 @@ async function main() {
   //   "https://i.ibb.co/4WQGdhY/288.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -4736,7 +4755,7 @@ async function main() {
   // console.log("14marketPlaceCollection.updateCollection===========> Done!")
 
   // // 15
-  // await marketPlaceCollection.connect(wallets[15]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  // await marketPlaceCollection.connect(wallets[15]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[15]).updateCollection(
   //   "VendSpotter",
@@ -4746,7 +4765,7 @@ async function main() {
   //   "https://i.ibb.co/qyrKwFn/287.jpg",
   //   "",
   //   "",
-  //   "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //   vaFFT.address,
   //   "All",
   //   "",
   //   ""
@@ -4754,7 +4773,7 @@ async function main() {
   // console.log("15marketPlaceCollection.updateCollection===========> Done!")
 
   // // 16
-  // await marketPlaceCollection.connect(wallets[16]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[16]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[16]).updateCollection(
   //   "ConcertManiacs",
@@ -4764,7 +4783,7 @@ async function main() {
   //   "https://i.ibb.co/vvkLbPQ/286.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -4772,7 +4791,7 @@ async function main() {
   // console.log("16marketPlaceCollection.updateCollection===========> Done!")
 
   // // 17
-  // await marketPlaceCollection.connect(wallets[17]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[17]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[17]).updateCollection(
   //   "FamilyProject",
@@ -4782,7 +4801,7 @@ async function main() {
   //   "https://i.ibb.co/zfjjqnD/285.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -4790,7 +4809,7 @@ async function main() {
   // console.log("17marketPlaceCollection.updateCollection===========> Done!")
 
   // // 18
-  // await marketPlaceCollection.connect(wallets[18]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[18]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[18]).updateCollection(
   //   "PartyPro",
@@ -4800,7 +4819,7 @@ async function main() {
   //   "https://i.ibb.co/nk1vpbB/284.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -4808,7 +4827,7 @@ async function main() {
   // console.log("18marketPlaceCollection.updateCollection===========> Done!")
 
   // // 19
-  // await marketPlaceCollection.connect(wallets[19]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[19]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[19]).updateCollection(
   //   "PMAAS",
@@ -4818,7 +4837,7 @@ async function main() {
   //   "https://i.ibb.co/ykF1P86/283.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -4826,7 +4845,7 @@ async function main() {
   // console.log("19marketPlaceCollection.updateCollection===========> Done!")
 
   // // 20
-  // await marketPlaceCollection.connect(wallets[20]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[20]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[20]).updateCollection(
   //   "FundRecruit",
@@ -4836,7 +4855,7 @@ async function main() {
   //   "https://i.ibb.co/XkQfFPf/282.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -4844,7 +4863,7 @@ async function main() {
   // console.log("20marketPlaceCollection.updateCollection===========> Done!")
 
   // // 21
-  // await marketPlaceCollection.connect(wallets[21]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[21]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[21]).updateCollection(
   //   "MatchMeet",
@@ -4854,7 +4873,7 @@ async function main() {
   //   "https://i.ibb.co/dcPM6Rs/281.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -4862,7 +4881,7 @@ async function main() {
   // console.log("21marketPlaceCollection.updateCollection===========> Done!")
 
   // // 22
-  // await marketPlaceCollection.connect(wallets[22]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[22]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[22]).updateCollection(
   //   "LottoSource",
@@ -4872,7 +4891,7 @@ async function main() {
   //   "https://i.ibb.co/Jsw1ntM/280.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -4880,7 +4899,7 @@ async function main() {
   // console.log("22marketPlaceCollection.updateCollection===========> Done!")
 
   // // 23
-  // await marketPlaceCollection.connect(wallets[23]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[23]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[23]).updateCollection(
   //   "DCAHub",
@@ -4890,7 +4909,7 @@ async function main() {
   //   "https://i.ibb.co/qBw8hm9/279.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -4898,7 +4917,7 @@ async function main() {
   // console.log("23marketPlaceCollection.updateCollection===========> Done!")
 
   // // 24
-  // await marketPlaceCollection.connect(wallets[24]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[24]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[24]).updateCollection(
   //   "ArtiFind",
@@ -4908,7 +4927,7 @@ async function main() {
   //   "https://i.ibb.co/935S3bf/278.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -4916,7 +4935,7 @@ async function main() {
   // console.log("24marketPlaceCollection.updateCollection===========> Done!")
 
   // // 25
-  // await marketPlaceCollection.connect(wallets[25]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[25]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[25]).updateCollection(
   //   "DatingPortfolio",
@@ -4926,7 +4945,7 @@ async function main() {
   //   "https://i.ibb.co/ggLzJTZ/277.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -4934,7 +4953,7 @@ async function main() {
   // console.log("25marketPlaceCollection.updateCollection===========> Done!")
 
   // // 26
-  // await marketPlaceCollection.connect(wallets[26]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  // await marketPlaceCollection.connect(wallets[26]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[26]).updateCollection(
   //   "TrafficStop",
@@ -4944,7 +4963,7 @@ async function main() {
   //   "https://i.ibb.co/6HQhYTX/276.jpg",
   //   "",
   //   "",
-  //   "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //   vaFTT.address,
   //   "All",
   //   "",
   //   ""
@@ -4952,7 +4971,7 @@ async function main() {
   // console.log("26marketPlaceCollection.updateCollection===========> Done!")
 
   // // 27
-  // await marketPlaceCollection.connect(wallets[27]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  // await marketPlaceCollection.connect(wallets[27]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[27]).updateCollection(
   //   "DAAS",
@@ -4962,7 +4981,7 @@ async function main() {
   //   "https://i.ibb.co/Z2CDrtz/275.jpg",
   //   "",
   //   "",
-  //   "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //   vaFTT.address,
   //   "All",
   //   "",
   //   ""
@@ -4970,7 +4989,7 @@ async function main() {
   // console.log("27marketPlaceCollection.updateCollection===========> Done!")
 
   // // 28
-  // await marketPlaceCollection.connect(wallets[28]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[28]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[28]).updateCollection(
   //   "GuestSub",
@@ -4980,7 +4999,7 @@ async function main() {
   //   "https://i.ibb.co/f0LkZkq/274.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -4988,7 +5007,7 @@ async function main() {
   // console.log("28marketPlaceCollection.updateCollection===========> Done!")
 
   // // 29
-  // await marketPlaceCollection.connect(wallets[29]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[29]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[29]).updateCollection(
   //   "PacketPals",
@@ -4998,7 +5017,7 @@ async function main() {
   //   "https://i.ibb.co/QMLzfhq/273.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -5006,7 +5025,7 @@ async function main() {
   // console.log("29marketPlaceCollection.updateCollection===========> Done!")
 
   // // 30
-  // await marketPlaceCollection.connect(wallets[30]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[30]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[30]).updateCollection(
   //   "ExpertBot",
@@ -5016,7 +5035,7 @@ async function main() {
   //   "https://i.ibb.co/tm9266Q/272.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -5024,7 +5043,7 @@ async function main() {
   // console.log("30marketPlaceCollection.updateCollection===========> Done!")
 
   // // 31
-  // await marketPlaceCollection.connect(wallets[31]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[31]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[31]).updateCollection(
   //   "PrankMasters",
@@ -5034,7 +5053,7 @@ async function main() {
   //   "https://i.ibb.co/sqJDw2Q/271.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5042,7 +5061,7 @@ async function main() {
   // console.log("31marketPlaceCollection.updateCollection===========> Done!")
 
   // // 32
-  // await marketPlaceCollection.connect(wallets[32]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[32]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[32]).updateCollection(
   //   "MOOCPromotions",
@@ -5052,7 +5071,7 @@ async function main() {
   //   "https://i.ibb.co/2Ps3XTT/270.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -5060,7 +5079,7 @@ async function main() {
   // console.log("32marketPlaceCollection.updateCollection===========> Done!")
 
   // // 33
-  // await marketPlaceCollection.connect(wallets[33]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[33]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[33]).updateCollection(
   //   "OFDiscovery",
@@ -5070,7 +5089,7 @@ async function main() {
   //   "https://i.ibb.co/NmzxxCb/269.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -5078,7 +5097,7 @@ async function main() {
   // console.log("33marketPlaceCollection.updateCollection===========> Done!")
 
   // // 34
-  // await marketPlaceCollection.connect(wallets[34]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[34]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[34]).updateCollection(
   //   "30.Dates",
@@ -5088,7 +5107,7 @@ async function main() {
   //   "https://i.ibb.co/52pQ4m5/268.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5096,7 +5115,7 @@ async function main() {
   // console.log("34marketPlaceCollection.updateCollection===========> Done!")
 
   // // 35
-  // await marketPlaceCollection.connect(wallets[35]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[35]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[35]).updateCollection(
   //   "30.FoundingDays",
@@ -5106,7 +5125,7 @@ async function main() {
   //   "https://i.ibb.co/mq0gKYL/267.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -5114,7 +5133,7 @@ async function main() {
   // console.log("35marketPlaceCollection.updateCollection===========> Done!")
 
   // // 36
-  // await marketPlaceCollection.connect(wallets[36]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[36]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[36]).updateCollection(
   //   "RAAS",
@@ -5124,7 +5143,7 @@ async function main() {
   //   "https://i.ibb.co/Ypx9FLR/266.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -5132,7 +5151,7 @@ async function main() {
   // console.log("36marketPlaceCollection.updateCollection===========> Done!")
 
   // // 37
-  // await marketPlaceCollection.connect(wallets[37]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[37]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[37]).updateCollection(
   //   "FeetFinder",
@@ -5142,7 +5161,7 @@ async function main() {
   //   "https://i.ibb.co/nBNqDxJ/265.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -5150,7 +5169,7 @@ async function main() {
   // console.log("37marketPlaceCollection.updateCollection===========> Done!")
 
   // // 38
-  // await marketPlaceCollection.connect(wallets[38]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[38]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[38]).updateCollection(
   //   "ConnecTech",
@@ -5160,7 +5179,7 @@ async function main() {
   //   "https://i.ibb.co/z7sMPYC/264.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -5168,7 +5187,7 @@ async function main() {
   // console.log("38marketPlaceCollection.updateCollection===========> Done!")
 
   // // 39
-  // await marketPlaceCollection.connect(wallets[39]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[39]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[39]).updateCollection(
   //   "QualiHire",
@@ -5178,7 +5197,7 @@ async function main() {
   //   "https://i.ibb.co/wgF98tj/263.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -5186,7 +5205,7 @@ async function main() {
   // console.log("39marketPlaceCollection.updateCollection===========> Done!")
 
   // // 40
-  // await marketPlaceCollection.connect(wallets[40]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[40]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[40]).updateCollection(
   //   "JobExams",
@@ -5196,7 +5215,7 @@ async function main() {
   //   "https://i.ibb.co/tP3b6tf/262.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5204,7 +5223,7 @@ async function main() {
   // console.log("40marketPlaceCollection.updateCollection===========> Done!")
 
   // // 41
-  // await marketPlaceCollection.connect(wallets[41]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[41]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[41]).updateCollection(
   //   "MaleBikini",
@@ -5214,7 +5233,7 @@ async function main() {
   //   "https://i.ibb.co/HG35ztb/261.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5222,7 +5241,7 @@ async function main() {
   // console.log("41marketPlaceCollection.updateCollection===========> Done!")
 
   // // 42
-  // await marketPlaceCollection.connect(wallets[42]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[42]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[42]).updateCollection(
   //   "Familotto",
@@ -5232,7 +5251,7 @@ async function main() {
   //   "https://i.ibb.co/MnC3702/260.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5240,7 +5259,7 @@ async function main() {
   // console.log("42marketPlaceCollection.updateCollection===========> Done!")
 
   // // 43
-  // await marketPlaceCollection.connect(wallets[43]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[43]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[43]).updateCollection(
   //   "Bogetta",
@@ -5250,7 +5269,7 @@ async function main() {
   //   "https://i.ibb.co/ZMnLyS1/259.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5258,7 +5277,7 @@ async function main() {
   // console.log("43marketPlaceCollection.updateCollection===========> Done!")
 
   // // 44
-  // await marketPlaceCollection.connect(wallets[44]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[44]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[44]).updateCollection(
   //   "CookDate",
@@ -5268,7 +5287,7 @@ async function main() {
   //   "https://i.ibb.co/0Jg0twR/258.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5276,7 +5295,7 @@ async function main() {
   // console.log("44marketPlaceCollection.updateCollection===========> Done!")
 
   // // 45
-  // await marketPlaceCollection.connect(wallets[45]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[45]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[45]).updateCollection(
   //   "RealEstateTontines",
@@ -5286,7 +5305,7 @@ async function main() {
   //   "https://i.ibb.co/0qS11Tt/257.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -5294,7 +5313,7 @@ async function main() {
   // console.log("45marketPlaceCollection.updateCollection===========> Done!")
 
   // // 46
-  // await marketPlaceCollection.connect(wallets[46]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[46]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[46]).updateCollection(
   //   "RentalInsurance",
@@ -5304,7 +5323,7 @@ async function main() {
   //   "https://i.ibb.co/yP1b15F/256.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -5312,7 +5331,7 @@ async function main() {
   // console.log("46marketPlaceCollection.updateCollection===========> Done!")
 
   // // 47
-  // await marketPlaceCollection.connect(wallets[47]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[47]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[47]).updateCollection(
   //   "RentalMap",
@@ -5322,7 +5341,7 @@ async function main() {
   //   "https://i.ibb.co/YcxgXf6/255.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -5330,7 +5349,7 @@ async function main() {
   // console.log("47marketPlaceCollection.updateCollection===========> Done!")
 
   // // 48
-  // await marketPlaceCollection.connect(wallets[48]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[48]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[48]).updateCollection(
   //   "CommodityBarter",
@@ -5340,7 +5359,7 @@ async function main() {
   //   "https://i.ibb.co/rm9ghLY/254.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -5348,7 +5367,7 @@ async function main() {
   // console.log("48marketPlaceCollection.updateCollection===========> Done!")
 
   // // 49
-  // await marketPlaceCollection.connect(wallets[49]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  // await marketPlaceCollection.connect(wallets[49]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[49]).updateCollection(
   //   "ShopSwift",
@@ -5358,7 +5377,7 @@ async function main() {
   //   "https://i.ibb.co/hyQ4xjW/253.jpg",
   //   "",
   //   "",
-  //   "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //   vaFFT.address,
   //   "All",
   //   "",
   //   ""
@@ -5366,7 +5385,7 @@ async function main() {
   // console.log("49marketPlaceCollection.updateCollection===========> Done!")
 
   // // 50
-  // await marketPlaceCollection.connect(wallets[50]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[50]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[50]).updateCollection(
   //   "Resolutions",
@@ -5376,7 +5395,7 @@ async function main() {
   //   "https://i.ibb.co/PQNhbf2/252.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -5384,7 +5403,7 @@ async function main() {
   // console.log("50marketPlaceCollection.updateCollection===========> Done!")
 
   // // 51
-  // await marketPlaceCollection.connect(wallets[51]).addCollection(0, 0, 0, 0, 0, 0, "0xd17C814f5609889609720D95e1A7369f9F798aB4", false, false);
+  // await marketPlaceCollection.connect(wallets[51]).addCollection(0, 0, 0, 0, 0, 0, fabt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[51]).updateCollection(
   //   "LaundroLocate",
@@ -5394,7 +5413,7 @@ async function main() {
   //   "https://i.ibb.co/Ky6gWQn/251.jpg",
   //   "",
   //   "",
-  //   "0xC853D1c9B60962a5CDB361379595BC6400aaE722",
+  //   vaFABT.address,
   //   "All",
   //   "",
   //   ""
@@ -5402,7 +5421,7 @@ async function main() {
   // console.log("51marketPlaceCollection.updateCollection===========> Done!")
 
   // // 52
-  // await marketPlaceCollection.connect(wallets[52]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[52]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[52]).updateCollection(
   //   "ConterfeitMap",
@@ -5412,7 +5431,7 @@ async function main() {
   //   "https://i.ibb.co/RCZHGMj/250.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -5420,7 +5439,7 @@ async function main() {
   // console.log("52marketPlaceCollection.updateCollection===========> Done!")
 
   // // 53
-  // await marketPlaceCollection.connect(wallets[53]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[53]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[53]).updateCollection(
   //   "FinPlanner",
@@ -5430,7 +5449,7 @@ async function main() {
   //   "https://i.ibb.co/YTgvmx7/249.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -5438,7 +5457,7 @@ async function main() {
   // console.log("53marketPlaceCollection.updateCollection===========> Done!")
 
   // // 54
-  // await marketPlaceCollection.connect(wallets[54]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  // await marketPlaceCollection.connect(wallets[54]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[54]).updateCollection(
   //   "BuildDeliver",
@@ -5448,7 +5467,7 @@ async function main() {
   //   "https://i.ibb.co/G3Q4jgY/248.jpg",
   //   "",
   //   "",
-  //   "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //   vaFTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5456,7 +5475,7 @@ async function main() {
   // console.log("54marketPlaceCollection.updateCollection===========> Done!")
 
   // // 55
-  // await marketPlaceCollection.connect(wallets[55]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[55]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[55]).updateCollection(
   //   "IRLMeet",
@@ -5466,7 +5485,7 @@ async function main() {
   //   "https://i.ibb.co/0KBLkbY/247.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5474,7 +5493,7 @@ async function main() {
   // console.log("55marketPlaceCollection.updateCollection===========> Done!")
 
   // // 56
-  // await marketPlaceCollection.connect(wallets[56]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[56]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[56]).updateCollection(
   //   "VirtualDating",
@@ -5484,7 +5503,7 @@ async function main() {
   //   "https://i.ibb.co/VCSygQV/246.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5492,7 +5511,7 @@ async function main() {
   // console.log("56marketPlaceCollection.updateCollection===========> Done!")
 
   // // 57
-  // await marketPlaceCollection.connect(wallets[57]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // await marketPlaceCollection.connect(wallets[57]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[57]).updateCollection(
   //   "OnlineDiagnosis",
@@ -5502,7 +5521,7 @@ async function main() {
   //   "https://i.ibb.co/K0rSK8y/245.jpg",
   //   "",
   //   "",
-  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   vaFHT.address,
   //   "All",
   //   "",
   //   ""
@@ -5510,7 +5529,7 @@ async function main() {
   // console.log("57marketPlaceCollection.updateCollection===========> Done!")
 
   // // 58
-  // await marketPlaceCollection.connect(wallets[58]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[58]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[58]).updateCollection(
   //   "MovingIn",
@@ -5520,7 +5539,7 @@ async function main() {
   //   "https://i.ibb.co/Khhk0wg/244.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5528,7 +5547,7 @@ async function main() {
   // console.log("58marketPlaceCollection.updateCollection===========> Done!")
 
   // // 59
-  // await marketPlaceCollection.connect(wallets[59]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[59]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[59]).updateCollection(
   //   "PeoplesLeagues",
@@ -5538,7 +5557,7 @@ async function main() {
   //   "https://i.ibb.co/vvNBkvM/243.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5546,7 +5565,7 @@ async function main() {
   // console.log("59marketPlaceCollection.updateCollection===========> Done!")
 
   // // 60
-  // await marketPlaceCollection.connect(wallets[60]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[60]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[60]).updateCollection(
   //   "LitiFi",
@@ -5556,7 +5575,7 @@ async function main() {
   //   "https://i.ibb.co/xMtBGQW/242.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -5564,7 +5583,7 @@ async function main() {
   // console.log("60marketPlaceCollection.updateCollection===========> Done!")
 
   // // 61
-  // await marketPlaceCollection.connect(wallets[61]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[61]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[61]).updateCollection(
   //   "PeoplesCinema",
@@ -5574,7 +5593,7 @@ async function main() {
   //   "https://i.ibb.co/WVSDKVK/241.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5582,7 +5601,7 @@ async function main() {
   // console.log("61marketPlaceCollection.updateCollection===========> Done!")
 
   // // 62
-  // await marketPlaceCollection.connect(wallets[62]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  // await marketPlaceCollection.connect(wallets[62]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[62]).updateCollection(
   //   "NutriHeal",
@@ -5592,7 +5611,7 @@ async function main() {
   //   "https://i.ibb.co/dgG19rS/240.jpg",
   //   "",
   //   "",
-  //   "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //   vaFFT.address,
   //   "All",
   //   "",
   //   ""
@@ -5600,7 +5619,7 @@ async function main() {
   // console.log("62marketPlaceCollection.updateCollection===========> Done!")
 
   // // 63
-  // await marketPlaceCollection.connect(wallets[63]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[63]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[63]).updateCollection(
   //   "SocialChannelFinder",
@@ -5610,7 +5629,7 @@ async function main() {
   //   "https://i.ibb.co/5Bhg9F5/239.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5618,7 +5637,7 @@ async function main() {
   // console.log("63marketPlaceCollection.updateCollection===========> Done!")
 
   // // 64
-  // await marketPlaceCollection.connect(wallets[64]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  // await marketPlaceCollection.connect(wallets[64]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[64]).updateCollection(
   //   "TowDotCom",
@@ -5628,7 +5647,7 @@ async function main() {
   //   "https://i.ibb.co/8z5NKck/238.jpg",
   //   "",
   //   "",
-  //   "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //   vaFTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5636,7 +5655,7 @@ async function main() {
   // console.log("64marketPlaceCollection.updateCollection===========> Done!")
 
   // // 65
-  // await marketPlaceCollection.connect(wallets[65]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[65]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[65]).updateCollection(
   //   "CrimeMap",
@@ -5646,7 +5665,7 @@ async function main() {
   //   "https://i.ibb.co/rsPyb2F/237.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -5654,7 +5673,7 @@ async function main() {
   // console.log("65marketPlaceCollection.updateCollection===========> Done!")
 
   // // 66
-  // await marketPlaceCollection.connect(wallets[66]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[66]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[66]).updateCollection(
   //   "Worlds",
@@ -5664,7 +5683,7 @@ async function main() {
   //   "https://i.ibb.co/sWRfbhZ/236.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -5672,7 +5691,7 @@ async function main() {
   // console.log("66marketPlaceCollection.updateCollection===========> Done!")
 
   // // 67
-  // await marketPlaceCollection.connect(wallets[67]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[67]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[67]).updateCollection(
   //   "DisasterDeals",
@@ -5682,7 +5701,7 @@ async function main() {
   //   "https://i.ibb.co/ZHzpFpB/235.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -5690,7 +5709,7 @@ async function main() {
   // console.log("67marketPlaceCollection.updateCollection===========> Done!")
 
   // // 68
-  // await marketPlaceCollection.connect(wallets[68]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[68]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[68]).updateCollection(
   //   "Auditors",
@@ -5700,7 +5719,7 @@ async function main() {
   //   "https://i.ibb.co/BKMrjRm/234.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -5708,7 +5727,7 @@ async function main() {
   // console.log("68marketPlaceCollection.updateCollection===========> Done!")
 
   // // 69
-  // await marketPlaceCollection.connect(wallets[69]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[69]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[69]).updateCollection(
   //   "InteriorDesign",
@@ -5718,7 +5737,7 @@ async function main() {
   //   "https://i.ibb.co/yhxBQLY/233.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -5726,7 +5745,7 @@ async function main() {
   // console.log("69marketPlaceCollection.updateCollection===========> Done!")
 
   // // 70
-  // await marketPlaceCollection.connect(wallets[70]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[70]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[70]).updateCollection(
   //   "ParkSpotter",
@@ -5736,7 +5755,7 @@ async function main() {
   //   "https://i.ibb.co/TvvmDnv/232.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -5744,7 +5763,7 @@ async function main() {
   // console.log("70marketPlaceCollection.updateCollection===========> Done!")
 
   // // 71
-  // await marketPlaceCollection.connect(wallets[71]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[71]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[71]).updateCollection(
   //   "CloudVenue",
@@ -5754,7 +5773,7 @@ async function main() {
   //   "https://i.ibb.co/5hZTrBZ/231.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -5762,7 +5781,7 @@ async function main() {
   // console.log("71marketPlaceCollection.updateCollection===========> Done!")
 
   // // 72
-  // await marketPlaceCollection.connect(wallets[72]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[72]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[72]).updateCollection(
   //   "LanguageGames",
@@ -5772,7 +5791,7 @@ async function main() {
   //   "https://i.ibb.co/L9Br6k0/230.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5780,7 +5799,7 @@ async function main() {
   // console.log("72marketPlaceCollection.updateCollection===========> Done!")
 
   // // 73
-  // await marketPlaceCollection.connect(wallets[73]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[73]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[73]).updateCollection(
   //   "Games",
@@ -5790,7 +5809,7 @@ async function main() {
   //   "https://i.ibb.co/DVZ9bpp/229.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5798,7 +5817,7 @@ async function main() {
   // console.log("73marketPlaceCollection.updateCollection===========> Done!")
 
   // // 74
-  // await marketPlaceCollection.connect(wallets[74]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[74]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[74]).updateCollection(
   //   "BookClubs",
@@ -5808,7 +5827,7 @@ async function main() {
   //   "https://i.ibb.co/sRwTxr5/228.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5816,17 +5835,17 @@ async function main() {
   // console.log("74marketPlaceCollection.updateCollection===========> Done!")
 
   // // 75
-  // await marketPlaceCollection.connect(wallets[75]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[75]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[75]).updateCollection(
   //   "SexBank",
-  //   "Are you looking to have a more consistent and vibrant sex life, find and join a group of your peers and pool resources together with them to provide payroll for your sexual partners.",
+  //   "Are you looking to have a more consistent and vibrant sex life, find and join a group of your peers and pool resources together with them to provide payroll for your sexual partners. Also join valuepool of the channel that runs lotteries which winners use their winnings to inflate their valuepool account that is in turn used to provide payroll to their sexual partners. Sexual partners can partner with the channel in order to get discovered more easily by people willing to offer them payroll or they can directly contact them.",
   //   "https://i.ibb.co/Cwwhsck/126.jpg",
   //   "https://i.ibb.co/Cwwhsck/126.jpg",
   //   "https://i.ibb.co/5G434QR/227.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -5834,7 +5853,7 @@ async function main() {
   // console.log("75marketPlaceCollection.updateCollection===========> Done!")
 
   // // 76
-  // await marketPlaceCollection.connect(wallets[76]).addCollection(0, 0, 0, 0, 0, 0, "0xd1a7aB1a1E1aaDD5CD51F51570885c7896bb3139", false, false);
+  // await marketPlaceCollection.connect(wallets[76]).addCollection(0, 0, 0, 0, 0, 0, fet.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[76]).updateCollection(
   //   "GenShare",
@@ -5844,7 +5863,7 @@ async function main() {
   //   "https://i.ibb.co/0XTcvxJ/226.jpg",
   //   "",
   //   "",
-  //   "0xae6a2d4DbA638766bD3b522cD397cA90F173fDd2",
+  //   vaFET.address,
   //   "All",
   //   "",
   //   ""
@@ -5852,7 +5871,7 @@ async function main() {
   // console.log("76marketPlaceCollection.updateCollection===========> Done!")
 
   // // 77
-  // await marketPlaceCollection.connect(wallets[77]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[77]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[77]).updateCollection(
   //   "LearnHub",
@@ -5862,7 +5881,7 @@ async function main() {
   //   "https://i.ibb.co/HCqK6C9/224.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5870,7 +5889,7 @@ async function main() {
   // console.log("77marketPlaceCollection.updateCollection===========> Done!")
 
   // // 78
-  // await marketPlaceCollection.connect(wallets[78]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[78]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[78]).updateCollection(
   //   "ProductizedServices",
@@ -5880,7 +5899,7 @@ async function main() {
   //   "https://i.ibb.co/HFrZnbw/222.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -5888,7 +5907,7 @@ async function main() {
   // console.log("78marketPlaceCollection.updateCollection===========> Done!")
 
   // // 79
-  // await marketPlaceCollection.connect(wallets[79]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[79]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[79]).updateCollection(
   //   "SMMP",
@@ -5898,7 +5917,7 @@ async function main() {
   //   "https://i.ibb.co/44SXFQM/223.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5906,7 +5925,7 @@ async function main() {
   // console.log("79marketPlaceCollection.updateCollection===========> Done!")
 
   // // 80
-  // await marketPlaceCollection.connect(wallets[80]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[80]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[80]).updateCollection(
   //   "IfNotBy",
@@ -5916,7 +5935,7 @@ async function main() {
   //   "https://i.ibb.co/bs9B2mg/221.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5924,7 +5943,7 @@ async function main() {
   // console.log("80marketPlaceCollection.updateCollection===========> Done!")
 
   // // 81
-  // await marketPlaceCollection.connect(wallets[81]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  // await marketPlaceCollection.connect(wallets[81]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[81]).updateCollection(
   //   "StatusTravelers",
@@ -5934,7 +5953,7 @@ async function main() {
   //   "https://i.ibb.co/KD398kB/220.jpg",
   //   "",
   //   "",
-  //   "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //   vaFTT.address,
   //   "All",
   //   "",
   //   ""
@@ -5942,7 +5961,7 @@ async function main() {
   // console.log("81marketPlaceCollection.updateCollection===========> Done!")
 
   // // 82
-  // await marketPlaceCollection.connect(wallets[82]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[82]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[82]).updateCollection(
   //   "PowerCircles",
@@ -5952,7 +5971,7 @@ async function main() {
   //   "https://i.ibb.co/GT87pBX/219.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -5960,7 +5979,7 @@ async function main() {
   // console.log("82marketPlaceCollection.updateCollection===========> Done!")
 
   // // 83
-  // await marketPlaceCollection.connect(wallets[83]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[83]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[83]).updateCollection(
   //   "ReversePension",
@@ -5970,7 +5989,7 @@ async function main() {
   //   "https://i.ibb.co/D1Q5Zbk/218.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -5978,7 +5997,7 @@ async function main() {
   // console.log("83marketPlaceCollection.updateCollection===========> Done!")
 
   // // 84
-  // await marketPlaceCollection.connect(wallets[84]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[84]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[84]).updateCollection(
   //   "FutureCollaterals",
@@ -5988,7 +6007,7 @@ async function main() {
   //   "https://i.ibb.co/mRryjPD/217.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -5996,7 +6015,7 @@ async function main() {
   // console.log("84marketPlaceCollection.updateCollection===========> Done!")
 
   // // 85
-  // await marketPlaceCollection.connect(wallets[85]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[85]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[85]).updateCollection(
   //   "Leviathans",
@@ -6006,7 +6025,7 @@ async function main() {
   //   "https://i.ibb.co/w7DTrnC/216.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6014,7 +6033,7 @@ async function main() {
   // console.log("85marketPlaceCollection.updateCollection===========> Done!")
 
   // // 86
-  // await marketPlaceCollection.connect(wallets[86]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[86]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[86]).updateCollection(
   //   "CelebrateJoy",
@@ -6024,7 +6043,7 @@ async function main() {
   //   "https://i.ibb.co/YX89X0R/215.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -6032,7 +6051,7 @@ async function main() {
   // console.log("86marketPlaceCollection.updateCollection===========> Done!")
 
   // // 87
-  // await marketPlaceCollection.connect(wallets[87]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[87]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[87]).updateCollection(
   //   "GroupEvents",
@@ -6042,7 +6061,7 @@ async function main() {
   //   "https://i.ibb.co/0Q7YJBC/214.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -6050,7 +6069,7 @@ async function main() {
   // console.log("87marketPlaceCollection.updateCollection===========> Done!")
 
   // // 88
-  // await marketPlaceCollection.connect(wallets[88]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[88]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[88]).updateCollection(
   //   "MarketShare",
@@ -6060,7 +6079,7 @@ async function main() {
   //   "https://i.ibb.co/vj7vcSh/213.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6068,7 +6087,7 @@ async function main() {
   // console.log("88marketPlaceCollection.updateCollection===========> Done!")
 
   // // 89
-  // await marketPlaceCollection.connect(wallets[89]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // await marketPlaceCollection.connect(wallets[89]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[89]).updateCollection(
   //   "PharmaFinder",
@@ -6078,7 +6097,7 @@ async function main() {
   //   "https://i.ibb.co/ZKp73zV/212.jpg",
   //   "",
   //   "",
-  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   vaFHT.address,
   //   "All",
   //   "",
   //   ""
@@ -6086,7 +6105,7 @@ async function main() {
   // console.log("89marketPlaceCollection.updateCollection===========> Done!")
 
   // // 90
-  // await marketPlaceCollection.connect(wallets[90]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[90]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[90]).updateCollection(
   //   "SharedDistribution",
@@ -6096,7 +6115,7 @@ async function main() {
   //   "https://i.ibb.co/Pw5GB8c/211.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6104,7 +6123,7 @@ async function main() {
   // console.log("90marketPlaceCollection.updateCollection===========> Done!")
 
   // // 91
-  // await marketPlaceCollection.connect(wallets[91]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[91]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[91]).updateCollection(
   //   "BuildToSell",
@@ -6114,7 +6133,7 @@ async function main() {
   //   "https://i.ibb.co/sv7nQ0F/210.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6122,7 +6141,7 @@ async function main() {
   // console.log("91marketPlaceCollection.updateCollection===========> Done!")
 
   // // 92
-  // await marketPlaceCollection.connect(wallets[92]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[92]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[92]).updateCollection(
   //   "DealBanks",
@@ -6132,7 +6151,7 @@ async function main() {
   //   "https://i.ibb.co/RvSSybP/209.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -6140,7 +6159,7 @@ async function main() {
   // console.log("92marketPlaceCollection.updateCollection===========> Done!")
 
   // // 93
-  // await marketPlaceCollection.connect(wallets[93]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[93]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[93]).updateCollection(
   //   "PleasurePools",
@@ -6150,7 +6169,7 @@ async function main() {
   //   "https://i.ibb.co/D7m32qZ/208.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -6158,7 +6177,7 @@ async function main() {
   // console.log("93marketPlaceCollection.updateCollection===========> Done!")
 
   // // 94
-  // await marketPlaceCollection.connect(wallets[94]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[94]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[94]).updateCollection(
   //   "SwapNShop",
@@ -6168,7 +6187,7 @@ async function main() {
   //   "https://i.ibb.co/SxCtmx5/207.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6176,7 +6195,7 @@ async function main() {
   // console.log("94marketPlaceCollection.updateCollection===========> Done!")
 
   // // 95
-  // await marketPlaceCollection.connect(wallets[95]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[95]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[95]).updateCollection(
   //   "FundFolks",
@@ -6186,7 +6205,7 @@ async function main() {
   //   "https://i.ibb.co/PGS08rk/206.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6194,7 +6213,7 @@ async function main() {
   // console.log("95marketPlaceCollection.updateCollection===========> Done!")
 
   // // 96
-  // await marketPlaceCollection.connect(wallets[96]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[96]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[96]).updateCollection(
   //   "CelebPap",
@@ -6204,7 +6223,7 @@ async function main() {
   //   "https://i.ibb.co/nRY33tn/205.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -6212,7 +6231,7 @@ async function main() {
   // console.log("96marketPlaceCollection.updateCollection===========> Done!")
 
   // // 97
-  // await marketPlaceCollection.connect(wallets[97]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[97]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[97]).updateCollection(
   //   "MarriageGuard",
@@ -6222,7 +6241,7 @@ async function main() {
   //   "https://i.ibb.co/Smr3X1b/204.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -6230,7 +6249,7 @@ async function main() {
   // console.log("97marketPlaceCollection.updateCollection===========> Done!")
 
   // // 98
-  // await marketPlaceCollection.connect(wallets[98]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[98]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[98]).updateCollection(
   //   "JobInsight",
@@ -6240,7 +6259,7 @@ async function main() {
   //   "https://i.ibb.co/5LqVjTh/203.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6248,7 +6267,7 @@ async function main() {
   // console.log("98marketPlaceCollection.updateCollection===========> Done!")
 
   // // 99
-  // await marketPlaceCollection.connect(wallets[99]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[99]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[99]).updateCollection(
   //   "ConnectPro",
@@ -6258,7 +6277,7 @@ async function main() {
   //   "https://i.ibb.co/HCqK6C9/224.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6266,7 +6285,7 @@ async function main() {
   // console.log("99marketPlaceCollection.updateCollection===========> Done!")
 
   // // 100
-  // await marketPlaceCollection.connect(wallets[100]).addCollection(0, 0, 0, 0, 0, 0, "0xd17C814f5609889609720D95e1A7369f9F798aB4", false, false);
+  // await marketPlaceCollection.connect(wallets[100]).addCollection(0, 0, 0, 0, 0, 0, fabt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[100]).updateCollection(
   //   "SalesMap",
@@ -6276,7 +6295,7 @@ async function main() {
   //   "https://i.ibb.co/tJ0GsZg/201.jpg",
   //   "",
   //   "",
-  //   "0xC853D1c9B60962a5CDB361379595BC6400aaE722",
+  //   vaFABT.address,
   //   "All",
   //   "",
   //   ""
@@ -6284,7 +6303,7 @@ async function main() {
   // console.log("100marketPlaceCollection.updateCollection===========> Done!")
 
   // // 101
-  // await marketPlaceCollection.connect(wallets[101]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[101]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[101]).updateCollection(
   //   "UtilityBills",
@@ -6294,7 +6313,7 @@ async function main() {
   //   "https://i.ibb.co/DfVRgnH/293.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6302,7 +6321,7 @@ async function main() {
   // console.log("101marketPlaceCollection.updateCollection===========> Done!")
 
   // // 102
-  // await marketPlaceCollection.connect(wallets[102]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[102]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[102]).updateCollection(
   //   "BuyPatentsOnline",
@@ -6312,7 +6331,7 @@ async function main() {
   //   "https://i.ibb.co/VtSC751/294.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6320,7 +6339,7 @@ async function main() {
   // console.log("102marketPlaceCollection.updateCollection===========> Done!")
 
   // // 103
-  // await marketPlaceCollection.connect(wallets[103]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[103]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[103]).updateCollection(
   //   "PetDayCare",
@@ -6330,7 +6349,7 @@ async function main() {
   //   "https://i.ibb.co/cwsnptG/300-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6338,7 +6357,7 @@ async function main() {
   // console.log("103marketPlaceCollection.updateCollection===========> Done!")
 
   // // 104
-  // await marketPlaceCollection.connect(wallets[104]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[104]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[104]).updateCollection(
   //   "LostAndFound",
@@ -6348,7 +6367,7 @@ async function main() {
   //   "https://i.ibb.co/2t8FF7W/296.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6356,7 +6375,7 @@ async function main() {
   // console.log("104marketPlaceCollection.updateCollection===========> Done!")
 
   // // 105
-  // await marketPlaceCollection.connect(wallets[105]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[105]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[105]).updateCollection(
   //   "AdmitGuru",
@@ -6366,7 +6385,7 @@ async function main() {
   //   "https://i.ibb.co/djCTcQy/297.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -6374,7 +6393,7 @@ async function main() {
   // console.log("105marketPlaceCollection.updateCollection===========> Done!")
 
   // // 106
-  // await marketPlaceCollection.connect(wallets[106]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[106]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[106]).updateCollection(
   //   "HangMates",
@@ -6384,7 +6403,7 @@ async function main() {
   //   "https://i.ibb.co/qWXh6d7/298.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -6392,7 +6411,7 @@ async function main() {
   // console.log("106marketPlaceCollection.updateCollection===========> Done!")
 
   // // 107
-  // await marketPlaceCollection.connect(wallets[107]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[107]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[107]).updateCollection(
   //   "BrandBoost",
@@ -6402,7 +6421,7 @@ async function main() {
   //   "https://i.ibb.co/Pcc4GQp/299.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6410,7 +6429,7 @@ async function main() {
   // console.log("107marketPlaceCollection.updateCollection===========> Done!")
 
   // // 108
-  // await marketPlaceCollection.connect(wallets[108]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[108]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[108]).updateCollection(
   //   "RoamHub",
@@ -6420,7 +6439,7 @@ async function main() {
   //   "https://i.ibb.co/mSjmYFK/300.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -6428,7 +6447,7 @@ async function main() {
   // console.log("108marketPlaceCollection.updateCollection===========> Done!")
 
   // // 109
-  // await marketPlaceCollection.connect(wallets[109]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[109]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[109]).updateCollection(
   //   "InfluenceGame",
@@ -6438,7 +6457,7 @@ async function main() {
   //   "https://i.ibb.co/7Smyk24/301.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -6446,7 +6465,7 @@ async function main() {
   // console.log("109marketPlaceCollection.updateCollection===========> Done!")
 
   // // 110
-  // await marketPlaceCollection.connect(wallets[110]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[110]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[110]).updateCollection(
   //   "StayLink",
@@ -6456,7 +6475,7 @@ async function main() {
   //   "https://i.ibb.co/HCqK6C9/224.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -6464,7 +6483,7 @@ async function main() {
   // console.log("110marketPlaceCollection.updateCollection===========> Done!")
 
   // // 111
-  // await marketPlaceCollection.connect(wallets[111]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[111]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[111]).updateCollection(
   //   "WhiteHats",
@@ -6474,7 +6493,7 @@ async function main() {
   //   "https://i.ibb.co/tJ0GsZg/201.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6482,7 +6501,7 @@ async function main() {
   // console.log("111marketPlaceCollection.updateCollection===========> Done!")
 
   // // 112
-  // await marketPlaceCollection.connect(wallets[112]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[112]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[112]).updateCollection(
   //   "WhiteCheaters",
@@ -6492,7 +6511,7 @@ async function main() {
   //   "https://i.ibb.co/sWGRP6j/202.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -6500,7 +6519,7 @@ async function main() {
   // console.log("112marketPlaceCollection.updateCollection===========> Done!")
 
   // // 113
-  // await marketPlaceCollection.connect(wallets[113]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  // await marketPlaceCollection.connect(wallets[113]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[113]).updateCollection(
   //   "FoodSub",
@@ -6510,7 +6529,7 @@ async function main() {
   //   "https://i.ibb.co/5LqVjTh/203.jpg",
   //   "",
   //   "",
-  //   "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //   vaFFT.address,
   //   "All",
   //   "",
   //   ""
@@ -6518,7 +6537,7 @@ async function main() {
   // console.log("113marketPlaceCollection.updateCollection===========> Done!")
 
   // // 114
-  // await marketPlaceCollection.connect(wallets[114]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[114]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[114]).updateCollection(
   //   "RSVPShield",
@@ -6528,7 +6547,7 @@ async function main() {
   //   "https://i.ibb.co/Smr3X1b/204.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -6536,7 +6555,7 @@ async function main() {
   // console.log("114marketPlaceCollection.updateCollection===========> Done!")
 
   // // 115
-  // await marketPlaceCollection.connect(wallets[115]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[115]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[115]).updateCollection(
   //   "WalkingBillboards",
@@ -6546,7 +6565,7 @@ async function main() {
   //   "https://i.ibb.co/nRY33tn/205.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6554,7 +6573,7 @@ async function main() {
   // console.log("115marketPlaceCollection.updateCollection===========> Done!")
 
   // // 116
-  // await marketPlaceCollection.connect(wallets[116]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  // await marketPlaceCollection.connect(wallets[116]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[116]).updateCollection(
   //   "DriveOn",
@@ -6564,7 +6583,7 @@ async function main() {
   //   "https://i.ibb.co/PGS08rk/206.jpg",
   //   "",
   //   "",
-  //   "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //   vaFTT.address,
   //   "All",
   //   "",
   //   ""
@@ -6572,7 +6591,7 @@ async function main() {
   // console.log("116marketPlaceCollection.updateCollection===========> Done!")
 
   // // 117
-  // await marketPlaceCollection.connect(wallets[117]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[117]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[117]).updateCollection(
   //   "CitizenSeed",
@@ -6582,7 +6601,7 @@ async function main() {
   //   "https://i.ibb.co/SxCtmx5/207.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6590,7 +6609,7 @@ async function main() {
   // console.log("117marketPlaceCollection.updateCollection===========> Done!")
 
   // // 118
-  // await marketPlaceCollection.connect(wallets[118]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[118]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[118]).updateCollection(
   //   "ShopStocks",
@@ -6600,7 +6619,7 @@ async function main() {
   //   "https://i.ibb.co/D7m32qZ/208.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6608,7 +6627,7 @@ async function main() {
   // console.log("118marketPlaceCollection.updateCollection===========> Done!")
 
   // // 119
-  // await marketPlaceCollection.connect(wallets[119]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[119]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[119]).updateCollection(
   //   "WashRover",
@@ -6618,7 +6637,7 @@ async function main() {
   //   "https://i.ibb.co/RvSSybP/209.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6626,7 +6645,7 @@ async function main() {
   // console.log("119marketPlaceCollection.updateCollection===========> Done!")
 
   // // 120
-  // await marketPlaceCollection.connect(wallets[120]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[120]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[120]).updateCollection(
   //   "SwapCircle",
@@ -6636,7 +6655,7 @@ async function main() {
   //   "https://i.ibb.co/sv7nQ0F/210.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6644,7 +6663,7 @@ async function main() {
   // console.log("120marketPlaceCollection.updateCollection===========> Done!")
 
   // // 121
-  // await marketPlaceCollection.connect(wallets[121]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[121]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[121]).updateCollection(
   //   "SponsorConnect",
@@ -6654,7 +6673,7 @@ async function main() {
   //   "https://i.ibb.co/Pw5GB8c/211.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6662,7 +6681,7 @@ async function main() {
   // console.log("121marketPlaceCollection.updateCollection===========> Done!")
 
   // // 122
-  // await marketPlaceCollection.connect(wallets[122]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[122]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[122]).updateCollection(
   //   "WinnersFund",
@@ -6672,7 +6691,7 @@ async function main() {
   //   "https://i.ibb.co/ZKp73zV/212.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6680,7 +6699,7 @@ async function main() {
   // console.log("122marketPlaceCollection.updateCollection===========> Done!")
 
   // // 123
-  // await marketPlaceCollection.connect(wallets[123]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[123]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[123]).updateCollection(
   //   "PaywallsForSale",
@@ -6690,7 +6709,7 @@ async function main() {
   //   "https://i.ibb.co/vj7vcSh/213.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6698,7 +6717,7 @@ async function main() {
   // console.log("123marketPlaceCollection.updateCollection===========> Done!")
 
   // // 124
-  // await marketPlaceCollection.connect(wallets[124]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[124]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[124]).updateCollection(
   //   "NetLove",
@@ -6708,7 +6727,7 @@ async function main() {
   //   "https://i.ibb.co/0Q7YJBC/214.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6716,7 +6735,7 @@ async function main() {
   // console.log("124marketPlaceCollection.updateCollection===========> Done!")
 
   // // 125
-  // await marketPlaceCollection.connect(wallets[125]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[125]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[125]).updateCollection(
   //   "HomelyEstate",
@@ -6726,7 +6745,7 @@ async function main() {
   //   "https://i.ibb.co/YX89X0R/215.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -6734,7 +6753,7 @@ async function main() {
   // console.log("125marketPlaceCollection.updateCollection===========> Done!")
 
   // // 126
-  // await marketPlaceCollection.connect(wallets[126]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[126]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[126]).updateCollection(
   //   "SCatalyst",
@@ -6744,7 +6763,7 @@ async function main() {
   //   "https://i.ibb.co/w7DTrnC/216.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6752,7 +6771,7 @@ async function main() {
   // console.log("126marketPlaceCollection.updateCollection===========> Done!")
 
   // // 127
-  // await marketPlaceCollection.connect(wallets[127]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[127]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[127]).updateCollection(
   //   "LottoDiscover",
@@ -6762,7 +6781,7 @@ async function main() {
   //   "https://i.ibb.co/mRryjPD/217.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -6770,7 +6789,7 @@ async function main() {
   // console.log("127marketPlaceCollection.updateCollection===========> Done!")
 
   // // 128
-  // await marketPlaceCollection.connect(wallets[128]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[128]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[128]).updateCollection(
   //   "ElderMates",
@@ -6780,7 +6799,7 @@ async function main() {
   //   "https://i.ibb.co/D1Q5Zbk/218.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -6788,7 +6807,7 @@ async function main() {
   // console.log("128marketPlaceCollection.updateCollection===========> Done!")
 
   // // 129
-  // await marketPlaceCollection.connect(wallets[129]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[129]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[129]).updateCollection(
   //   "Contributors",
@@ -6798,7 +6817,7 @@ async function main() {
   //   "https://i.ibb.co/GT87pBX/219.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6806,7 +6825,7 @@ async function main() {
   // console.log("129marketPlaceCollection.updateCollection===========> Done!")
 
   // // 130
-  // await marketPlaceCollection.connect(wallets[130]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[130]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[130]).updateCollection(
   //   "GriefConnect",
@@ -6816,7 +6835,7 @@ async function main() {
   //   "https://i.ibb.co/KD398kB/220.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -6824,7 +6843,7 @@ async function main() {
   // console.log("130marketPlaceCollection.updateCollection===========> Done!")
 
   // // 131
-  // await marketPlaceCollection.connect(wallets[131]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[131]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[131]).updateCollection(
   //   "GroupHacks",
@@ -6834,7 +6853,7 @@ async function main() {
   //   "https://i.ibb.co/bs9B2mg/221.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6842,7 +6861,7 @@ async function main() {
   // console.log("131marketPlaceCollection.updateCollection===========> Done!")
 
   // // 132
-  // await marketPlaceCollection.connect(wallets[132]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[132]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[132]).updateCollection(
   //   "PayItForward",
@@ -6852,7 +6871,7 @@ async function main() {
   //   "https://i.ibb.co/HFrZnbw/222.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6860,7 +6879,7 @@ async function main() {
   // console.log("132marketPlaceCollection.updateCollection===========> Done!")
 
   // // 133
-  // await marketPlaceCollection.connect(wallets[133]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // await marketPlaceCollection.connect(wallets[133]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[133]).updateCollection(
   //   "LabTest",
@@ -6870,7 +6889,7 @@ async function main() {
   //   "https://i.ibb.co/44SXFQM/223.jpg",
   //   "",
   //   "",
-  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   vaFHT.address,
   //   "All",
   //   "",
   //   ""
@@ -6878,7 +6897,7 @@ async function main() {
   // console.log("133marketPlaceCollection.updateCollection===========> Done!")
 
   // // 134
-  // await marketPlaceCollection.connect(wallets[134]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[134]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[134]).updateCollection(
   //   "InvestorConference",
@@ -6888,7 +6907,7 @@ async function main() {
   //   "https://i.ibb.co/HCqK6C9/224.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6896,7 +6915,7 @@ async function main() {
   // console.log("134marketPlaceCollection.updateCollection===========> Done!")
 
   // // 135
-  // await marketPlaceCollection.connect(wallets[135]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[135]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[135]).updateCollection(
   //   "ProductMarketFit",
@@ -6906,7 +6925,7 @@ async function main() {
   //   "https://i.ibb.co/0XTcvxJ/226.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6914,7 +6933,7 @@ async function main() {
   // console.log("135marketPlaceCollection.updateCollection===========> Done!")
 
   // // 136
-  // await marketPlaceCollection.connect(wallets[136]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[136]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[136]).updateCollection(
   //   "ePluribusUnum",
@@ -6924,7 +6943,7 @@ async function main() {
   //   "https://i.ibb.co/5G434QR/227.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6932,7 +6951,7 @@ async function main() {
   // console.log("136marketPlaceCollection.updateCollection===========> Done!")
 
   // // 137
-  // await marketPlaceCollection.connect(wallets[137]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[137]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[137]).updateCollection(
   //   "ThriftWise",
@@ -6942,7 +6961,7 @@ async function main() {
   //   "https://i.ibb.co/sRwTxr5/228.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -6950,7 +6969,7 @@ async function main() {
   // console.log("137marketPlaceCollection.updateCollection===========> Done!")
 
   // // 138
-  // await marketPlaceCollection.connect(wallets[138]).addCollection(0, 0, 0, 0, 0, 0, "0xd1a7aB1a1E1aaDD5CD51F51570885c7896bb3139", false, false);
+  // await marketPlaceCollection.connect(wallets[138]).addCollection(0, 0, 0, 0, 0, 0, fet.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[138]).updateCollection(
   //   "ChargeHub",
@@ -6960,7 +6979,7 @@ async function main() {
   //   "https://i.ibb.co/DVZ9bpp/229.jpg",
   //   "",
   //   "",
-  //   "0xae6a2d4DbA638766bD3b522cD397cA90F173fDd2",
+  //   vaFET.address,
   //   "All",
   //   "",
   //   ""
@@ -6968,7 +6987,7 @@ async function main() {
   // console.log("138marketPlaceCollection.updateCollection===========> Done!")
 
   // // 139
-  // await marketPlaceCollection.connect(wallets[139]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[139]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[139]).updateCollection(
   //   "SourceConnect",
@@ -6978,7 +6997,7 @@ async function main() {
   //   "https://i.ibb.co/L9Br6k0/230.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -6986,7 +7005,7 @@ async function main() {
   // console.log("139marketPlaceCollection.updateCollection===========> Done!")
 
   // // 140
-  // await marketPlaceCollection.connect(wallets[140]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[140]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[140]).updateCollection(
   //   "ConsentGuard",
@@ -6996,7 +7015,7 @@ async function main() {
   //   "https://i.ibb.co/5hZTrBZ/231.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -7004,7 +7023,7 @@ async function main() {
   // console.log("140marketPlaceCollection.updateCollection===========> Done!")
 
   // // 141
-  // await marketPlaceCollection.connect(wallets[141]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[141]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[141]).updateCollection(
   //   "CoReview",
@@ -7014,7 +7033,7 @@ async function main() {
   //   "https://i.ibb.co/TvvmDnv/232.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7022,7 +7041,7 @@ async function main() {
   // console.log("141marketPlaceCollection.updateCollection===========> Done!")
 
   // // 142
-  // await marketPlaceCollection.connect(wallets[142]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[142]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[142]).updateCollection(
   //   "TaxMasters",
@@ -7032,7 +7051,7 @@ async function main() {
   //   "https://i.ibb.co/yhxBQLY/233.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7040,7 +7059,7 @@ async function main() {
   // console.log("142marketPlaceCollection.updateCollection===========> Done!")
 
   // // 143
-  // await marketPlaceCollection.connect(wallets[143]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // await marketPlaceCollection.connect(wallets[143]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[143]).updateCollection(
   //   "HealVoyage",
@@ -7050,7 +7069,7 @@ async function main() {
   //   "https://i.ibb.co/BKMrjRm/234.jpg",
   //   "",
   //   "",
-  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   vaFHT.address,
   //   "All",
   //   "",
   //   ""
@@ -7058,7 +7077,7 @@ async function main() {
   // console.log("143marketPlaceCollection.updateCollection===========> Done!")
 
   // // 144
-  // await marketPlaceCollection.connect(wallets[144]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[144]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[144]).updateCollection(
   //   "Faucets",
@@ -7068,7 +7087,7 @@ async function main() {
   //   "https://i.ibb.co/ZHzpFpB/235.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7076,7 +7095,7 @@ async function main() {
   // console.log("144marketPlaceCollection.updateCollection===========> Done!")
 
   // // 145
-  // await marketPlaceCollection.connect(wallets[145]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // await marketPlaceCollection.connect(wallets[145]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[145]).updateCollection(
   //   "FertilitySpecialists",
@@ -7086,7 +7105,7 @@ async function main() {
   //   "https://i.ibb.co/sWRfbhZ/236.jpg",
   //   "",
   //   "",
-  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   vaFHT.address,
   //   "All",
   //   "",
   //   ""
@@ -7094,7 +7113,7 @@ async function main() {
   // console.log("145marketPlaceCollection.updateCollection===========> Done!")
 
   // // 146
-  // await marketPlaceCollection.connect(wallets[146]).addCollection(0, 0, 0, 0, 0, 0, "0xd17C814f5609889609720D95e1A7369f9F798aB4", false, false);
+  // await marketPlaceCollection.connect(wallets[146]).addCollection(0, 0, 0, 0, 0, 0, fabt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[146]).updateCollection(
   //   "SalonSeeker",
@@ -7104,7 +7123,7 @@ async function main() {
   //   "https://i.ibb.co/rsPyb2F/237.jpg",
   //   "",
   //   "",
-  //   "0xC853D1c9B60962a5CDB361379595BC6400aaE722",
+  //   vaFABT.address,
   //   "All",
   //   "",
   //   ""
@@ -7112,7 +7131,7 @@ async function main() {
   // console.log("146marketPlaceCollection.updateCollection===========> Done!")
 
   // // 147
-  // await marketPlaceCollection.connect(wallets[147]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // await marketPlaceCollection.connect(wallets[147]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[147]).updateCollection(
   //   "Relaxify",
@@ -7122,7 +7141,7 @@ async function main() {
   //   "https://i.ibb.co/8z5NKck/238.jpg",
   //   "",
   //   "",
-  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   vaFHT.address,
   //   "All",
   //   "",
   //   ""
@@ -7130,7 +7149,7 @@ async function main() {
   // console.log("147marketPlaceCollection.updateCollection===========> Done!")
 
   // // 148
-  // await marketPlaceCollection.connect(wallets[148]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[148]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[148]).updateCollection(
   //   "ArtSupport",
@@ -7140,7 +7159,7 @@ async function main() {
   //   "https://i.ibb.co/5Bhg9F5/239.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -7148,7 +7167,7 @@ async function main() {
   // console.log("148marketPlaceCollection.updateCollection===========> Done!")
 
   // // 149
-  // await marketPlaceCollection.connect(wallets[149]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  // await marketPlaceCollection.connect(wallets[149]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[149]).updateCollection(
   //   "Desh",
@@ -7158,7 +7177,7 @@ async function main() {
   //   "https://i.ibb.co/dgG19rS/240.jpg",
   //   "",
   //   "",
-  //   "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //   vaFTT.address,
   //   "All",
   //   "",
   //   ""
@@ -7166,7 +7185,7 @@ async function main() {
   // console.log("149marketPlaceCollection.updateCollection===========> Done!")
 
   // // 150
-  // await marketPlaceCollection.connect(wallets[150]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[150]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[150]).updateCollection(
   //   "CopReview",
@@ -7176,7 +7195,7 @@ async function main() {
   //   "https://i.ibb.co/WVSDKVK/241.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -7184,7 +7203,7 @@ async function main() {
   // console.log("150marketPlaceCollection.updateCollection===========> Done!")
 
   // // 151
-  // await marketPlaceCollection.connect(wallets[151]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[151]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[151]).updateCollection(
   //   "GameReviews",
@@ -7194,7 +7213,7 @@ async function main() {
   //   "https://i.ibb.co/xMtBGQW/242.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -7202,7 +7221,7 @@ async function main() {
   // console.log("151marketPlaceCollection.updateCollection===========> Done!")
 
   // // 152
-  // await marketPlaceCollection.connect(wallets[152]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[152]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[152]).updateCollection(
   //   "ValueSolve",
@@ -7212,7 +7231,7 @@ async function main() {
   //   "https://i.ibb.co/vvNBkvM/243.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7220,7 +7239,7 @@ async function main() {
   // console.log("152marketPlaceCollection.updateCollection===========> Done!")
 
   // // 153
-  // await marketPlaceCollection.connect(wallets[153]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // await marketPlaceCollection.connect(wallets[153]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[153]).updateCollection(
   //   "HealthConnect",
@@ -7230,7 +7249,7 @@ async function main() {
   //   "https://i.ibb.co/xMwt58W/25-2.jpg",
   //   "",
   //   "",
-  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   vaFHT.address,
   //   "All",
   //   "",
   //   ""
@@ -7238,7 +7257,7 @@ async function main() {
   // console.log("153marketPlaceCollection.updateCollection===========> Done!")
 
   // // 154
-  // await marketPlaceCollection.connect(wallets[154]).addCollection(0, 0, 0, 0, 0, 0, "0x77B0e504900997eE937c0C10E027236aeCD386EF", false, false);
+  // await marketPlaceCollection.connect(wallets[154]).addCollection(0, 0, 0, 0, 0, 0, fbt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[154]).updateCollection(
   //   "AquaWells",
@@ -7248,7 +7267,7 @@ async function main() {
   //   "https://i.ibb.co/Pj8PpKK/302-2.jpg",
   //   "",
   //   "",
-  //   "0xdC94F841AedDe3Bb8fD311a61c2b4Fe40a47393d",
+  //   vaFBT.address,
   //   "All",
   //   "",
   //   ""
@@ -7256,7 +7275,7 @@ async function main() {
   // console.log("154marketPlaceCollection.updateCollection===========> Done!")
 
   //   // 155
-  //   await marketPlaceCollection.connect(wallets[155]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  //   await marketPlaceCollection.connect(wallets[155]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   //   console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //   await marketPlaceCollection.connect(wallets[155]).updateCollection(
   //     "LifelineRide",
@@ -7266,7 +7285,7 @@ async function main() {
   //     "https://i.ibb.co/v1XTLCG/304-2.jpg",
   //     "",
   //     "",
-  //     "0xdE46100D142FD66f50697dF99c296796100983de",
+  //     vaFHT.address,
   //     "All",
   //     "",
   //     ""
@@ -7274,7 +7293,7 @@ async function main() {
   //   console.log("155marketPlaceCollection.updateCollection===========> Done!")
 
   //     // 156
-  // await marketPlaceCollection.connect(wallets[156]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // await marketPlaceCollection.connect(wallets[156]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[156]).updateCollection(
   //   "CareLink",
@@ -7284,7 +7303,7 @@ async function main() {
   //   "https://i.ibb.co/cQ3qrST/306-2.jpg",
   //   "",
   //   "",
-  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   vaFHT.address,
   //   "All",
   //   "",
   //   ""
@@ -7292,7 +7311,7 @@ async function main() {
   // console.log("156marketPlaceCollection.updateCollection===========> Done!")
 
   //   // 157
-  //   await marketPlaceCollection.connect(wallets[157]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //   await marketPlaceCollection.connect(wallets[157]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //   console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //   await marketPlaceCollection.connect(wallets[157]).updateCollection(
   //     "FundEdX",
@@ -7302,7 +7321,7 @@ async function main() {
   //     "https://i.ibb.co/CQxbvnm/308-2.jpg",
   //     "",
   //     "",
-  //     "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //     vaFSTT.address,
   //     "All",
   //     "",
   //     ""
@@ -7310,7 +7329,7 @@ async function main() {
   //   console.log("157marketPlaceCollection.updateCollection===========> Done!")
 
   //     // 158
-  // await marketPlaceCollection.connect(wallets[158]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[158]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[158]).updateCollection(
   //   "TechSupport",
@@ -7320,7 +7339,7 @@ async function main() {
   //   "https://i.ibb.co/QkQBFRT/310-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7328,7 +7347,7 @@ async function main() {
   // console.log("158marketPlaceCollection.updateCollection===========> Done!")
 
   //   // 159
-  //   await marketPlaceCollection.connect(wallets[159]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //   await marketPlaceCollection.connect(wallets[159]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //   console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //   await marketPlaceCollection.connect(wallets[159]).updateCollection(
   //     "CodeReviews",
@@ -7338,7 +7357,7 @@ async function main() {
   //     "https://i.ibb.co/4ZyCPxR/312-2.jpg",
   //     "",
   //     "",
-  //     "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //     vaFSST.address,
   //     "All",
   //     "",
   //     ""
@@ -7346,7 +7365,7 @@ async function main() {
   //   console.log("159marketPlaceCollection.updateCollection===========> Done!")
 
   //     // 160
-  // await marketPlaceCollection.connect(wallets[160]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[160]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[160]).updateCollection(
   //   "LotteryWin",
@@ -7356,7 +7375,7 @@ async function main() {
   //   "https://i.ibb.co/Khhk0wg/244.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7364,7 +7383,7 @@ async function main() {
   // console.log("160marketPlaceCollection.updateCollection===========> Done!")
 
   // // 161
-  // await marketPlaceCollection.connect(wallets[161]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[161]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[161]).updateCollection(
   //   "PitchPro",
@@ -7374,7 +7393,7 @@ async function main() {
   //   "https://i.ibb.co/WVSDKVK/241.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7382,7 +7401,7 @@ async function main() {
   // console.log("161marketPlaceCollection.updateCollection===========> Done!")
 
   // // 162
-  // await marketPlaceCollection.connect(wallets[162]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[162]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[162]).updateCollection(
   //   "AutoAccelerate",
@@ -7392,7 +7411,7 @@ async function main() {
   //   "https://i.ibb.co/xMtBGQW/242.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7400,7 +7419,7 @@ async function main() {
   // console.log("162marketPlaceCollection.updateCollection===========> Done!")
 
   // // 163
-  // await marketPlaceCollection.connect(wallets[163]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[163]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[163]).updateCollection(
   //   "FriendsNFamily",
@@ -7410,7 +7429,7 @@ async function main() {
   //   "https://i.ibb.co/PYL3gZg/313-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7418,7 +7437,7 @@ async function main() {
   // console.log("163marketPlaceCollection.updateCollection===========> Done!")
 
   // // 164
-  // await marketPlaceCollection.connect(wallets[164]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[164]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[164]).updateCollection(
   //   "CoworkerFunds",
@@ -7428,7 +7447,7 @@ async function main() {
   //   "https://i.ibb.co/c6wR5Y8/316-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7436,7 +7455,7 @@ async function main() {
   // console.log("164marketPlaceCollection.updateCollection===========> Done!")
 
   // // 165
-  // await marketPlaceCollection.connect(wallets[165]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[165]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[165]).updateCollection(
   //   "SchoolFunds",
@@ -7446,7 +7465,7 @@ async function main() {
   //   "https://i.ibb.co/tJ0GsZg/201.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7454,7 +7473,7 @@ async function main() {
   // console.log("165marketPlaceCollection.updateCollection===========> Done!")
 
   //   // 166
-  //   await marketPlaceCollection.connect(wallets[166]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //   await marketPlaceCollection.connect(wallets[166]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //   console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //   await marketPlaceCollection.connect(wallets[166]).updateCollection(
   //     "TownFunds",
@@ -7464,7 +7483,7 @@ async function main() {
   //     "https://i.ibb.co/sWGRP6j/202.jpg",
   //     "",
   //     "",
-  //     "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //     vaFSST.address,
   //     "All",
   //     "",
   //     ""
@@ -7472,7 +7491,7 @@ async function main() {
   //   console.log("166marketPlaceCollection.updateCollection===========> Done!")
 
   //     // 167
-  // await marketPlaceCollection.connect(wallets[167]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[167]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[167]).updateCollection(
   //   "DiasporaFunds",
@@ -7482,7 +7501,7 @@ async function main() {
   //   "https://i.ibb.co/5LqVjTh/203.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7490,7 +7509,7 @@ async function main() {
   // console.log("167marketPlaceCollection.updateCollection===========> Done!")
 
   //   // 168
-  //   await marketPlaceCollection.connect(wallets[168]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  //   await marketPlaceCollection.connect(wallets[168]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   //   console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //   await marketPlaceCollection.connect(wallets[168]).updateCollection(
   //     "HOA",
@@ -7500,7 +7519,7 @@ async function main() {
   //     "https://i.ibb.co/Smr3X1b/204.jpg",
   //     "",
   //     "",
-  //     "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //     vaFRET.address,
   //     "All",
   //     "",
   //     ""
@@ -7508,7 +7527,7 @@ async function main() {
   //   console.log("168marketPlaceCollection.updateCollection===========> Done!")
 
   //     // 169
-  // await marketPlaceCollection.connect(wallets[169]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[169]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[169]).updateCollection(
   //   "FixIT",
@@ -7518,7 +7537,7 @@ async function main() {
   //   "https://i.ibb.co/nRY33tn/205.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7526,7 +7545,7 @@ async function main() {
   // console.log("169marketPlaceCollection.updateCollection===========> Done!")
 
   //   // 170
-  //   await marketPlaceCollection.connect(wallets[170]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //   await marketPlaceCollection.connect(wallets[170]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //   console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //   await marketPlaceCollection.connect(wallets[170]).updateCollection(
   //     "OfflineAds",
@@ -7536,7 +7555,7 @@ async function main() {
   //     "https://i.ibb.co/PGS08rk/206.jpg",
   //     "",
   //     "",
-  //     "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //     vaFSTT.address,
   //     "All",
   //     "",
   //     ""
@@ -7544,7 +7563,7 @@ async function main() {
   //   console.log("170marketPlaceCollection.updateCollection===========> Done!")
 
   //     // 171
-  // await marketPlaceCollection.connect(wallets[171]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[171]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[171]).updateCollection(
   //   "ShareGoods",
@@ -7554,7 +7573,7 @@ async function main() {
   //   "https://i.ibb.co/SxCtmx5/207.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7562,7 +7581,7 @@ async function main() {
   // console.log("171marketPlaceCollection.updateCollection===========> Done!")
 
   // // 172
-  // await marketPlaceCollection.connect(wallets[172]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[172]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[172]).updateCollection(
   //   "RentEase",
@@ -7572,7 +7591,7 @@ async function main() {
   //   "https://i.ibb.co/D7m32qZ/208.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7580,7 +7599,7 @@ async function main() {
   // console.log("172marketPlaceCollection.updateCollection===========> Done!")
 
   // // 173
-  // await marketPlaceCollection.connect(wallets[173]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[173]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[173]).updateCollection(
   //   "DealHub",
@@ -7590,7 +7609,7 @@ async function main() {
   //   "https://i.ibb.co/RvSSybP/209.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7598,7 +7617,7 @@ async function main() {
   // console.log("173marketPlaceCollection.updateCollection===========> Done!")
 
   // // 174
-  // await marketPlaceCollection.connect(wallets[174]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[174]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[174]).updateCollection(
   //   "LenderPools",
@@ -7608,7 +7627,7 @@ async function main() {
   //   "https://i.ibb.co/sv7nQ0F/210.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7616,7 +7635,7 @@ async function main() {
   // console.log("174marketPlaceCollection.updateCollection===========> Done!")
 
   // // 175
-  // await marketPlaceCollection.connect(wallets[175]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[175]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[175]).updateCollection(
   //   "AutoGleam",
@@ -7626,7 +7645,7 @@ async function main() {
   //   "https://i.ibb.co/Pw5GB8c/211.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7634,7 +7653,7 @@ async function main() {
   // console.log("175marketPlaceCollection.updateCollection===========> Done!")
 
   // // 176
-  // await marketPlaceCollection.connect(wallets[176]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[176]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[176]).updateCollection(
   //   "Amegle",
@@ -7644,7 +7663,7 @@ async function main() {
   //   "https://i.ibb.co/ZKp73zV/212.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7652,7 +7671,7 @@ async function main() {
   // console.log("176marketPlaceCollection.updateCollection===========> Done!")
 
   // // 177
-  // await marketPlaceCollection.connect(wallets[177]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[177]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[177]).updateCollection(
   //   "MarketPrime",
@@ -7662,7 +7681,7 @@ async function main() {
   //   "https://i.ibb.co/vj7vcSh/213.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7670,7 +7689,7 @@ async function main() {
   // console.log("177marketPlaceCollection.updateCollection===========> Done!")
 
   // // 178
-  // await marketPlaceCollection.connect(wallets[178]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[178]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[178]).updateCollection(
   //   "Heaven",
@@ -7680,7 +7699,7 @@ async function main() {
   //   "https://i.ibb.co/0Q7YJBC/214.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7688,7 +7707,7 @@ async function main() {
   // console.log("178marketPlaceCollection.updateCollection===========> Done!")
 
   // // 179
-  // await marketPlaceCollection.connect(wallets[179]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  // await marketPlaceCollection.connect(wallets[179]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[179]).updateCollection(
   //   "SwiftCart",
@@ -7698,7 +7717,7 @@ async function main() {
   //   "https://i.ibb.co/YX89X0R/215.jpg",
   //   "",
   //   "",
-  //   "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //   vaFTT.address,
   //   "All",
   //   "",
   //   ""
@@ -7706,7 +7725,7 @@ async function main() {
   // console.log("179marketPlaceCollection.updateCollection===========> Done!")
 
   // // 180
-  // await marketPlaceCollection.connect(wallets[180]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[180]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[180]).updateCollection(
   //   "ShopEase",
@@ -7716,7 +7735,7 @@ async function main() {
   //   "https://i.ibb.co/w7DTrnC/216.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7724,7 +7743,7 @@ async function main() {
   // console.log("180marketPlaceCollection.updateCollection===========> Done!")
 
   // // 181
-  // await marketPlaceCollection.connect(wallets[181]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  // await marketPlaceCollection.connect(wallets[181]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[181]).updateCollection(
   //   "TastySurprise",
@@ -7734,7 +7753,7 @@ async function main() {
   //   "https://i.ibb.co/mRryjPD/217.jpg",
   //   "",
   //   "",
-  //   "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //   vaFFT.address,
   //   "All",
   //   "",
   //   ""
@@ -7742,7 +7761,7 @@ async function main() {
   // console.log("181marketPlaceCollection.updateCollection===========> Done!")
 
   // // 182
-  // await marketPlaceCollection.connect(wallets[182]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[182]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[182]).updateCollection(
   //   "GiftCrafter",
@@ -7752,7 +7771,7 @@ async function main() {
   //   "https://i.ibb.co/D1Q5Zbk/218.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7760,7 +7779,7 @@ async function main() {
   // console.log("182marketPlaceCollection.updateCollection===========> Done!")
 
   // // 183
-  // await marketPlaceCollection.connect(wallets[183]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[183]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[183]).updateCollection(
   //   "GreenBloom",
@@ -7770,7 +7789,7 @@ async function main() {
   //   "https://i.ibb.co/GT87pBX/219.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7778,7 +7797,7 @@ async function main() {
   // console.log("183marketPlaceCollection.updateCollection===========> Done!")
 
   // // 184
-  // await marketPlaceCollection.connect(wallets[184]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  // await marketPlaceCollection.connect(wallets[184]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[184]).updateCollection(
   //   "AgriFeed",
@@ -7788,7 +7807,7 @@ async function main() {
   //   "https://i.ibb.co/KD398kB/220.jpg",
   //   "",
   //   "",
-  //   "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //   vaFFT.address,
   //   "All",
   //   "",
   //   ""
@@ -7796,7 +7815,7 @@ async function main() {
   // console.log("184marketPlaceCollection.updateCollection===========> Done!")
 
   // // 185
-  // await marketPlaceCollection.connect(wallets[185]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  // await marketPlaceCollection.connect(wallets[185]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[185]).updateCollection(
   //   "GoShare",
@@ -7806,7 +7825,7 @@ async function main() {
   //   "https://i.ibb.co/bs9B2mg/221.jpg",
   //   "",
   //   "",
-  //   "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //   vaFTT.address,
   //   "All",
   //   "",
   //   ""
@@ -7814,7 +7833,7 @@ async function main() {
   // console.log("185marketPlaceCollection.updateCollection===========> Done!")
 
   // // 186
-  // await marketPlaceCollection.connect(wallets[186]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[186]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[186]).updateCollection(
   //   "StayShare",
@@ -7824,7 +7843,7 @@ async function main() {
   //   "https://i.ibb.co/HFrZnbw/222.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -7832,7 +7851,7 @@ async function main() {
   // console.log("186marketPlaceCollection.updateCollection===========> Done!")
 
   // // 187
-  // await marketPlaceCollection.connect(wallets[187]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[187]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[187]).updateCollection(
   //   "TuneBoost",
@@ -7842,7 +7861,7 @@ async function main() {
   //   "https://i.ibb.co/44SXFQM/223.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7850,7 +7869,7 @@ async function main() {
   // console.log("187marketPlaceCollection.updateCollection===========> Done!")
 
   // // 188
-  // await marketPlaceCollection.connect(wallets[188]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[188]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[188]).updateCollection(
   //   "PodPromote",
@@ -7860,7 +7879,7 @@ async function main() {
   //   "https://i.ibb.co/HCqK6C9/224.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -7868,7 +7887,7 @@ async function main() {
   // console.log("188marketPlaceCollection.updateCollection===========> Done!")
 
   // // 189
-  // await marketPlaceCollection.connect(wallets[189]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[189]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[189]).updateCollection(
   //   "TalenTrack",
@@ -7878,7 +7897,7 @@ async function main() {
   //   "https://i.ibb.co/0XTcvxJ/226.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7886,7 +7905,7 @@ async function main() {
   // console.log("189marketPlaceCollection.updateCollection===========> Done!")
 
   // // 190
-  // await marketPlaceCollection.connect(wallets[190]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[190]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[190]).updateCollection(
   //   "RecruitAssured",
@@ -7896,7 +7915,7 @@ async function main() {
   //   "https://i.ibb.co/5G434QR/227.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7904,7 +7923,7 @@ async function main() {
   // console.log("190marketPlaceCollection.updateCollection===========> Done!")
 
   // // 191
-  // await marketPlaceCollection.connect(wallets[191]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[191]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[191]).updateCollection(
   //   "TalentHub",
@@ -7914,7 +7933,7 @@ async function main() {
   //   "https://i.ibb.co/sRwTxr5/228.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7922,7 +7941,7 @@ async function main() {
   // console.log("191marketPlaceCollection.updateCollection===========> Done!")
 
   // // 192
-  // await marketPlaceCollection.connect(wallets[192]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[192]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[192]).updateCollection(
   //   "CareerLeap",
@@ -7932,7 +7951,7 @@ async function main() {
   //   "https://i.ibb.co/DVZ9bpp/229.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7940,7 +7959,7 @@ async function main() {
   // console.log("192marketPlaceCollection.updateCollection===========> Done!")
 
   // // 193
-  // await marketPlaceCollection.connect(wallets[193]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[193]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[193]).updateCollection(
   //   "AFFAJ",
@@ -7950,7 +7969,7 @@ async function main() {
   //   "https://i.ibb.co/L9Br6k0/230.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7958,7 +7977,7 @@ async function main() {
   // console.log("193marketPlaceCollection.updateCollection===========> Done!")
 
   // // 194
-  // await marketPlaceCollection.connect(wallets[194]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[194]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[194]).updateCollection(
   //   "OpportunityLink",
@@ -7968,7 +7987,7 @@ async function main() {
   //   "https://i.ibb.co/5hZTrBZ/231.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7976,7 +7995,7 @@ async function main() {
   // console.log("194marketPlaceCollection.updateCollection===========> Done!")
 
   // // 195
-  // await marketPlaceCollection.connect(wallets[195]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[195]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[195]).updateCollection(
   //   "InterviewMastery",
@@ -7986,7 +8005,7 @@ async function main() {
   //   "https://i.ibb.co/TvvmDnv/232.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -7994,7 +8013,7 @@ async function main() {
   // console.log("195marketPlaceCollection.updateCollection===========> Done!")
 
   // // 196
-  // await marketPlaceCollection.connect(wallets[196]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[196]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[196]).updateCollection(
   //   "InterviewLink",
@@ -8004,7 +8023,7 @@ async function main() {
   //   "https://i.ibb.co/yhxBQLY/233.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -8012,7 +8031,7 @@ async function main() {
   // console.log("196marketPlaceCollection.updateCollection===========> Done!")
 
   // // 197
-  // await marketPlaceCollection.connect(wallets[197]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[197]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[197]).updateCollection(
   //   "BrainRecruit",
@@ -8022,7 +8041,7 @@ async function main() {
   //   "https://i.ibb.co/BKMrjRm/234.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -8030,7 +8049,7 @@ async function main() {
   // console.log("197marketPlaceCollection.updateCollection===========> Done!")
 
   // // 198
-  // await marketPlaceCollection.connect(wallets[198]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[198]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[198]).updateCollection(
   //   "Nature Collaterals",
@@ -8040,7 +8059,7 @@ async function main() {
   //   "https://i.ibb.co/ZHzpFpB/235.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -8048,7 +8067,7 @@ async function main() {
   // console.log("198marketPlaceCollection.updateCollection===========> Done!")
 
   // // 199
-  // await marketPlaceCollection.connect(wallets[199]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[199]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[199]).updateCollection(
   //   "PensionBank",
@@ -8058,7 +8077,7 @@ async function main() {
   //   "https://i.ibb.co/sWRfbhZ/236.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -8066,7 +8085,7 @@ async function main() {
   // console.log("199marketPlaceCollection.updateCollection===========> Done!")
 
   // // 200
-  // await marketPlaceCollection.connect(wallets[200]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[200]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[200]).updateCollection(
   //   "PensionSelect",
@@ -8076,7 +8095,7 @@ async function main() {
   //   "https://i.ibb.co/rsPyb2F/237.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -8084,7 +8103,7 @@ async function main() {
   // console.log("200marketPlaceCollection.updateCollection===========> Done!")
 
   // // 201
-  // await marketPlaceCollection.connect(wallets[201]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[201]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[201]).updateCollection(
   //   "SharedPayChecks",
@@ -8094,7 +8113,7 @@ async function main() {
   //   "https://i.ibb.co/8z5NKck/238.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -8102,7 +8121,7 @@ async function main() {
   // console.log("201marketPlaceCollection.updateCollection===========> Done!")
 
   // // 202
-  // await marketPlaceCollection.connect(wallets[202]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[202]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[202]).updateCollection(
   //   "MatchMingle",
@@ -8112,7 +8131,7 @@ async function main() {
   //   "https://i.ibb.co/5Bhg9F5/239.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8120,7 +8139,7 @@ async function main() {
   // console.log("202marketPlaceCollection.updateCollection===========> Done!")
 
   // // 203
-  // await marketPlaceCollection.connect(wallets[203]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[203]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[203]).updateCollection(
   //   "WorkConnect",
@@ -8130,7 +8149,7 @@ async function main() {
   //   "https://i.ibb.co/dgG19rS/240.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8138,7 +8157,7 @@ async function main() {
   // console.log("203marketPlaceCollection.updateCollection===========> Done!")
 
   // // 204
-  // await marketPlaceCollection.connect(wallets[204]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[204]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[204]).updateCollection(
   //   "CompliGlobal",
@@ -8148,7 +8167,7 @@ async function main() {
   //   "https://i.ibb.co/WVSDKVK/241.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -8156,7 +8175,7 @@ async function main() {
   // console.log("204marketPlaceCollection.updateCollection===========> Done!")
 
   // // 205
-  // await marketPlaceCollection.connect(wallets[205]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[205]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[205]).updateCollection(
   //   "MatchMinglX",
@@ -8166,7 +8185,7 @@ async function main() {
   //   "https://i.ibb.co/xMtBGQW/242.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8174,7 +8193,7 @@ async function main() {
   // console.log("205marketPlaceCollection.updateCollection===========> Done!")
 
   // // 206
-  // await marketPlaceCollection.connect(wallets[206]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[206]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[206]).updateCollection(
   //   "ValuSync",
@@ -8184,7 +8203,7 @@ async function main() {
   //   "https://i.ibb.co/vvNBkvM/243.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -8192,7 +8211,7 @@ async function main() {
   // console.log("206marketPlaceCollection.updateCollection===========> Done!")
 
   // // 207
-  // await marketPlaceCollection.connect(wallets[207]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[207]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[207]).updateCollection(
   //   "PoolPay",
@@ -8202,7 +8221,7 @@ async function main() {
   //   "https://i.ibb.co/Khhk0wg/244.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -8210,7 +8229,7 @@ async function main() {
   // console.log("207marketPlaceCollection.updateCollection===========> Done!")
 
   // // 208
-  // await marketPlaceCollection.connect(wallets[208]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[208]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[208]).updateCollection(
   //   "EffectiveAltruism",
@@ -8220,7 +8239,7 @@ async function main() {
   //   "https://i.ibb.co/K0rSK8y/245.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -8228,7 +8247,7 @@ async function main() {
   // console.log("208marketPlaceCollection.updateCollection===========> Done!")
 
   // // 209
-  // await marketPlaceCollection.connect(wallets[209]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[209]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[209]).updateCollection(
   //   "WedFund",
@@ -8238,7 +8257,7 @@ async function main() {
   //   "https://i.ibb.co/VCSygQV/246.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8246,7 +8265,7 @@ async function main() {
   // console.log("209marketPlaceCollection.updateCollection===========> Done!")
 
   // // 210
-  // await marketPlaceCollection.connect(wallets[210]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[210]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[210]).updateCollection(
   //   "AccentsConnect",
@@ -8256,7 +8275,7 @@ async function main() {
   //   "https://i.ibb.co/0KBLkbY/247.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8264,7 +8283,7 @@ async function main() {
   // console.log("210marketPlaceCollection.updateCollection===========> Done!")
 
   // // 211
-  // await marketPlaceCollection.connect(wallets[211]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[211]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[211]).updateCollection(
   //   "EduStream",
@@ -8274,7 +8293,7 @@ async function main() {
   //   "https://i.ibb.co/G3Q4jgY/248.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8282,7 +8301,7 @@ async function main() {
   // console.log("211marketPlaceCollection.updateCollection===========> Done!")
 
   // // 213
-  // await marketPlaceCollection.connect(wallets[213]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[213]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[213]).updateCollection(
   //   "TalkSight",
@@ -8292,7 +8311,7 @@ async function main() {
   //   "https://i.ibb.co/YTgvmx7/249.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8300,7 +8319,7 @@ async function main() {
   // console.log("213marketPlaceCollection.updateCollection===========> Done!")
 
   // // 214
-  // await marketPlaceCollection.connect(wallets[214]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[214]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[214]).updateCollection(
   //   "LinguaSwap",
@@ -8310,7 +8329,7 @@ async function main() {
   //   "https://i.ibb.co/RCZHGMj/250.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8318,7 +8337,7 @@ async function main() {
   // console.log("214marketPlaceCollection.updateCollection===========> Done!")
 
   // // 215
-  // await marketPlaceCollection.connect(wallets[215]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[215]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[215]).updateCollection(
   //   "SkillSwap",
@@ -8328,7 +8347,7 @@ async function main() {
   //   "https://i.ibb.co/Ky6gWQn/251.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8336,7 +8355,7 @@ async function main() {
   // console.log("215marketPlaceCollection.updateCollection===========> Done!")
 
   // // 216
-  // await marketPlaceCollection.connect(wallets[216]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[216]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[216]).updateCollection(
   //   "NaughtyTreasureHunt",
@@ -8346,7 +8365,7 @@ async function main() {
   //   "https://i.ibb.co/PQNhbf2/252.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -8354,7 +8373,7 @@ async function main() {
   // console.log("216marketPlaceCollection.updateCollection===========> Done!")
 
   // // 217
-  // await marketPlaceCollection.connect(wallets[217]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[217]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[217]).updateCollection(
   //   "PlayToEarnAssets",
@@ -8364,7 +8383,7 @@ async function main() {
   //   "https://i.ibb.co/hyQ4xjW/253.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8372,7 +8391,7 @@ async function main() {
   // console.log("217marketPlaceCollection.updateCollection===========> Done!")
 
   // // 218
-  // await marketPlaceCollection.connect(wallets[218]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[218]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[218]).updateCollection(
   //   "GamersMap",
@@ -8382,7 +8401,7 @@ async function main() {
   //   "https://i.ibb.co/rm9ghLY/254.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8390,7 +8409,7 @@ async function main() {
   // console.log("218marketPlaceCollection.updateCollection===========> Done!")
 
   // // 219
-  // await marketPlaceCollection.connect(wallets[219]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[219]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[219]).updateCollection(
   //   "TheRatingGame",
@@ -8400,7 +8419,7 @@ async function main() {
   //   "https://i.ibb.co/YcxgXf6/255.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8408,7 +8427,7 @@ async function main() {
   // console.log("219marketPlaceCollection.updateCollection===========> Done!")
 
   // // 220
-  // await marketPlaceCollection.connect(wallets[220]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[220]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[220]).updateCollection(
   //   "TriumphGames",
@@ -8418,7 +8437,7 @@ async function main() {
   //   "https://i.ibb.co/LxvZrHQ/440-2.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8426,7 +8445,7 @@ async function main() {
   // console.log("220marketPlaceCollection.updateCollection===========> Done!")
 
   // // 221
-  // await marketPlaceCollection.connect(wallets[221]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[221]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[221]).updateCollection(
   //   "TerraToken",
@@ -8436,7 +8455,7 @@ async function main() {
   //   "https://i.ibb.co/Gs7g9dw/439-2.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -8444,7 +8463,7 @@ async function main() {
   // console.log("221marketPlaceCollection.updateCollection===========> Done!")
 
   // // 222
-  // await marketPlaceCollection.connect(wallets[222]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[222]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[222]).updateCollection(
   //   "LuxuryAuth",
@@ -8454,7 +8473,7 @@ async function main() {
   //   "https://i.ibb.co/k11SX3n/438-2.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -8462,7 +8481,7 @@ async function main() {
   // console.log("222marketPlaceCollection.updateCollection===========> Done!")
 
   // // 223
-  // await marketPlaceCollection.connect(wallets[223]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[223]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[223]).updateCollection(
   //   "CharacterTraits",
@@ -8472,7 +8491,7 @@ async function main() {
   //   "https://i.ibb.co/7YLFb81/437-2.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -8480,7 +8499,7 @@ async function main() {
   // console.log("223marketPlaceCollection.updateCollection===========> Done!")
 
   // // 224
-  // await marketPlaceCollection.connect(wallets[224]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[224]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[224]).updateCollection(
   //   "AuditEase",
@@ -8490,7 +8509,7 @@ async function main() {
   //   "https://i.ibb.co/PTzWnV4/436-2.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -8498,7 +8517,7 @@ async function main() {
   // console.log("224marketPlaceCollection.updateCollection===========> Done!")
 
   // // 225
-  // await marketPlaceCollection.connect(wallets[225]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[225]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[225]).updateCollection(
   //   "CarbonCred",
@@ -8508,7 +8527,7 @@ async function main() {
   //   "https://i.ibb.co/Hdz5c4Y/435-2.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -8516,7 +8535,7 @@ async function main() {
   // console.log("225marketPlaceCollection.updateCollection===========> Done!")
 
   // // 226
-  // await marketPlaceCollection.connect(wallets[226]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[226]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[226]).updateCollection(
   //   "GlobaLens",
@@ -8526,7 +8545,7 @@ async function main() {
   //   "https://i.ibb.co/Mc1WdgB/434-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -8534,7 +8553,7 @@ async function main() {
   // console.log("226marketPlaceCollection.updateCollection===========> Done!")
 
   // // 227
-  // await marketPlaceCollection.connect(wallets[227]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  // await marketPlaceCollection.connect(wallets[227]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[227]).updateCollection(
   //   "GeoTales",
@@ -8544,7 +8563,7 @@ async function main() {
   //   "https://i.ibb.co/VSkbQTj/433-2.jpg",
   //   "",
   //   "",
-  //   "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //   vaFTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8552,7 +8571,7 @@ async function main() {
   // console.log("227marketPlaceCollection.updateCollection===========> Done!")
 
   // // 228
-  // await marketPlaceCollection.connect(wallets[228]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  // await marketPlaceCollection.connect(wallets[228]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[228]).updateCollection(
   //   "NutriInfluence",
@@ -8562,7 +8581,7 @@ async function main() {
   //   "https://i.ibb.co/p222Jr2/432-2.jpg",
   //   "",
   //   "",
-  //   "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //   vaFFT.address,
   //   "All",
   //   "",
   //   ""
@@ -8570,7 +8589,7 @@ async function main() {
   // console.log("228marketPlaceCollection.updateCollection===========> Done!")
 
   // // 229
-  // await marketPlaceCollection.connect(wallets[229]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[229]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[229]).updateCollection(
   //   "LegalSaver",
@@ -8580,7 +8599,7 @@ async function main() {
   //   "https://i.ibb.co/nzgT3nX/431-2.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -8588,7 +8607,7 @@ async function main() {
   // console.log("229marketPlaceCollection.updateCollection===========> Done!")
 
   // // 230
-  // await marketPlaceCollection.connect(wallets[230]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[230]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[230]).updateCollection(
   //   "SnitchesGetRich",
@@ -8598,7 +8617,7 @@ async function main() {
   //   "https://i.ibb.co/87JCtgL/430-2.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -8606,7 +8625,7 @@ async function main() {
   // console.log("231marketPlaceCollection.updateCollection===========> Done!")
 
   // // 232
-  // await marketPlaceCollection.connect(wallets[232]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  // await marketPlaceCollection.connect(wallets[232]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[232]).updateCollection(
   //   "PerishableGuard",
@@ -8616,7 +8635,7 @@ async function main() {
   //   "https://i.ibb.co/cF4HV7C/429-2.jpg",
   //   "",
   //   "",
-  //   "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //   vaFFT.address,
   //   "All",
   //   "",
   //   ""
@@ -8624,7 +8643,7 @@ async function main() {
   // console.log("232marketPlaceCollection.updateCollection===========> Done!")
 
   // // 233
-  // await marketPlaceCollection.connect(wallets[233]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[233]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[233]).updateCollection(
   //   "SocialAvatars",
@@ -8634,7 +8653,7 @@ async function main() {
   //   "https://i.ibb.co/TPdRtjB/428-2.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8642,7 +8661,7 @@ async function main() {
   // console.log("233marketPlaceCollection.updateCollection===========> Done!")
 
   // // 234
-  // await marketPlaceCollection.connect(wallets[234]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[234]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[234]).updateCollection(
   //   "CelebStyle",
@@ -8652,7 +8671,7 @@ async function main() {
   //   "https://i.ibb.co/983xqvS/427-2.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8660,7 +8679,7 @@ async function main() {
   // console.log("234marketPlaceCollection.updateCollection===========> Done!")
 
   // // 235
-  // await marketPlaceCollection.connect(wallets[235]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[235]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[235]).updateCollection(
   //   "CelebFounder",
@@ -8670,7 +8689,7 @@ async function main() {
   //   "https://i.ibb.co/6gNvDMd/426-2.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8678,7 +8697,7 @@ async function main() {
   // console.log("235marketPlaceCollection.updateCollection===========> Done!")
 
   // // 236
-  // await marketPlaceCollection.connect(wallets[236]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[236]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[236]).updateCollection(
   //   "AdaLunch",
@@ -8688,7 +8707,7 @@ async function main() {
   //   "https://i.ibb.co/0CYF5Jy/425-2.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8696,7 +8715,7 @@ async function main() {
   // console.log("236marketPlaceCollection.updateCollection===========> Done!")
 
   // // 237
-  // await marketPlaceCollection.connect(wallets[237]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[237]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[237]).updateCollection(
   //   "DatedIn",
@@ -8706,7 +8725,7 @@ async function main() {
   //   "https://i.ibb.co/X4KTjZ2/424-2.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8714,7 +8733,7 @@ async function main() {
   // console.log("237marketPlaceCollection.updateCollection===========> Done!")
 
   // // 238
-  // await marketPlaceCollection.connect(wallets[238]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[238]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[238]).updateCollection(
   //   "GirlsInShowers",
@@ -8724,7 +8743,7 @@ async function main() {
   //   "https://i.ibb.co/yhSz2pj/423-2.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -8732,7 +8751,7 @@ async function main() {
   // console.log("238marketPlaceCollection.updateCollection===========> Done!")
 
   // // 239
-  // await marketPlaceCollection.connect(wallets[239]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[239]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[239]).updateCollection(
   //   "XclusiveHub",
@@ -8742,7 +8761,7 @@ async function main() {
   //   "https://i.ibb.co/Sxq1KZp/422-2.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -8750,7 +8769,7 @@ async function main() {
   // console.log("239marketPlaceCollection.updateCollection===========> Done!")
 
   // // 240
-  // await marketPlaceCollection.connect(wallets[240]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[240]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[240]).updateCollection(
   //   "SexGames",
@@ -8760,7 +8779,7 @@ async function main() {
   //   "https://i.ibb.co/tBdXyV1/421-2.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -8768,7 +8787,7 @@ async function main() {
   // console.log("240marketPlaceCollection.updateCollection===========> Done!")
 
   // // 241
-  // await marketPlaceCollection.connect(wallets[241]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[241]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[241]).updateCollection(
   //   "Sex.map",
@@ -8778,7 +8797,7 @@ async function main() {
   //   "https://i.ibb.co/L55v3Ln/420-2.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -8786,7 +8805,7 @@ async function main() {
   // console.log("241marketPlaceCollection.updateCollection===========> Done!")
 
   // // 242
-  // await marketPlaceCollection.connect(wallets[242]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[242]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[242]).updateCollection(
   //   "SexualMarketValue",
@@ -8796,7 +8815,7 @@ async function main() {
   //   "https://i.ibb.co/ZH9KrYt/419-2.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -8804,7 +8823,7 @@ async function main() {
   // console.log("241marketPlaceCollection.updateCollection===========> Done!")
 
   // // 243
-  // await marketPlaceCollection.connect(wallets[243]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[243]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[243]).updateCollection(
   //   "Sex4Loans",
@@ -8814,7 +8833,7 @@ async function main() {
   //   "https://i.ibb.co/T16vJ2w/418-2.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -8822,7 +8841,7 @@ async function main() {
   // console.log("243marketPlaceCollection.updateCollection===========> Done!")
 
   // // 244
-  // await marketPlaceCollection.connect(wallets[244]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[244]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[244]).updateCollection(
   //   "DareX",
@@ -8832,7 +8851,7 @@ async function main() {
   //   "https://i.ibb.co/xCGhCLK/417-2.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -8840,7 +8859,7 @@ async function main() {
   // console.log("244marketPlaceCollection.updateCollection===========> Done!")
 
   // // 245
-  // await marketPlaceCollection.connect(wallets[245]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[245]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[245]).updateCollection(
   //   "HitOnMe",
@@ -8850,7 +8869,7 @@ async function main() {
   //   "https://i.ibb.co/JkcKb5b/416-2.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8858,7 +8877,7 @@ async function main() {
   // console.log("245marketPlaceCollection.updateCollection===========> Done!")
 
   // // 246
-  // await marketPlaceCollection.connect(wallets[246]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[246]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[246]).updateCollection(
   //   "NewsLetter",
@@ -8868,7 +8887,7 @@ async function main() {
   //   "https://i.ibb.co/ynrtwMD/415-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -8876,7 +8895,7 @@ async function main() {
   // console.log("246marketPlaceCollection.updateCollection===========> Done!")
 
   // // 247
-  // await marketPlaceCollection.connect(wallets[247]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[247]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[247]).updateCollection(
   //   "SciPod",
@@ -8886,7 +8905,7 @@ async function main() {
   //   "https://i.ibb.co/HVtD5gY/414-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -8894,7 +8913,7 @@ async function main() {
   // console.log("247marketPlaceCollection.updateCollection===========> Done!")
 
   // // 248
-  // await marketPlaceCollection.connect(wallets[248]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[248]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[248]).updateCollection(
   //   "InterviewClub",
@@ -8904,7 +8923,7 @@ async function main() {
   //   "https://i.ibb.co/X7Ws5pg/413-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -8912,7 +8931,7 @@ async function main() {
   // console.log("248marketPlaceCollection.updateCollection===========> Done!")
 
   // // 249
-  // await marketPlaceCollection.connect(wallets[249]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[249]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[249]).updateCollection(
   //   "MoralCredit",
@@ -8922,7 +8941,7 @@ async function main() {
   //   "https://i.ibb.co/y0FQ9m6/412-2.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -8930,7 +8949,7 @@ async function main() {
   // console.log("249marketPlaceCollection.updateCollection===========> Done!")
 
   // // 250
-  // await marketPlaceCollection.connect(wallets[250]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[250]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[250]).updateCollection(
   //   "DatingCredit",
@@ -8940,7 +8959,7 @@ async function main() {
   //   "https://i.ibb.co/cXxSVLC/410-2.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -8948,7 +8967,7 @@ async function main() {
   // console.log("250marketPlaceCollection.updateCollection===========> Done!")
 
   // // 251
-  // await marketPlaceCollection.connect(wallets[251]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[251]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[251]).updateCollection(
   //   "10PercentReturn",
@@ -8958,7 +8977,7 @@ async function main() {
   //   "https://i.ibb.co/vBrM4jf/409-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -8966,7 +8985,7 @@ async function main() {
   // console.log("251marketPlaceCollection.updateCollection===========> Done!")
 
   // // 252
-  // await marketPlaceCollection.connect(wallets[252]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[252]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[252]).updateCollection(
   //   "FIRE",
@@ -8976,7 +8995,7 @@ async function main() {
   //   "https://i.ibb.co/4YSV8hM/408-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -8984,7 +9003,7 @@ async function main() {
   // console.log("252marketPlaceCollection.updateCollection===========> Done!")
 
   // // 253
-  // await marketPlaceCollection.connect(wallets[253]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[253]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[253]).updateCollection(
   //   "DataLotteries",
@@ -8994,7 +9013,7 @@ async function main() {
   //   "https://i.ibb.co/3CXYKZM/407-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -9002,7 +9021,7 @@ async function main() {
   // console.log("253marketPlaceCollection.updateCollection===========> Done!")
 
   // // 254
-  // await marketPlaceCollection.connect(wallets[254]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[254]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[254]).updateCollection(
   //   "ThoughtMatch",
@@ -9012,7 +9031,7 @@ async function main() {
   //   "https://i.ibb.co/NNZVjBf/406-2.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9020,7 +9039,7 @@ async function main() {
   // console.log("254marketPlaceCollection.updateCollection===========> Done!")
 
   // 255
-  // await marketPlaceCollection.connect(wallets[255]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[255]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[255]).updateCollection(
   //   "Playbook",
@@ -9030,7 +9049,7 @@ async function main() {
   //   "https://i.ibb.co/bdtXHnV/405-2.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9038,7 +9057,7 @@ async function main() {
   // console.log("255marketPlaceCollection.updateCollection===========> Done!")
 
   // // 256
-  // await marketPlaceCollection.connect(wallets[256]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[256]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[256]).updateCollection(
   //   "DateToLearn",
@@ -9048,7 +9067,7 @@ async function main() {
   //   "https://i.ibb.co/tqJ9HTM/322-2.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9056,7 +9075,7 @@ async function main() {
   // console.log("256marketPlaceCollection.updateCollection===========> Done!")
 
   // // 257
-  // await marketPlaceCollection.connect(wallets[257]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[257]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[257]).updateCollection(
   //   "PickMyBoo",
@@ -9066,7 +9085,7 @@ async function main() {
   //   "https://i.ibb.co/WVsqwMT/321-2.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9074,7 +9093,7 @@ async function main() {
   // console.log("257marketPlaceCollection.updateCollection===========> Done!")
 
   // 258
-  // await marketPlaceCollection.connect(wallets[258]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[258]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[258]).updateCollection(
   //   "SplitIf",
@@ -9084,7 +9103,7 @@ async function main() {
   //   "https://i.ibb.co/DfVRgnH/293.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9092,7 +9111,7 @@ async function main() {
   // console.log("258marketPlaceCollection.updateCollection===========> Done!")
 
   // // 259
-  // await marketPlaceCollection.connect(wallets[259]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[259]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[259]).updateCollection(
   //   "Hangouts",
@@ -9102,7 +9121,7 @@ async function main() {
   //   "https://i.ibb.co/VtSC751/294.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9110,7 +9129,7 @@ async function main() {
   // console.log("259marketPlaceCollection.updateCollection===========> Done!")
 
   // // 260
-  // await marketPlaceCollection.connect(wallets[260]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[260]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[260]).updateCollection(
   //   "BurnToDate",
@@ -9120,7 +9139,7 @@ async function main() {
   //   "https://i.ibb.co/1zR3Kc1/301-2.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9128,7 +9147,7 @@ async function main() {
   // console.log("260marketPlaceCollection.updateCollection===========> Done!")
 
   // // 261
-  // await marketPlaceCollection.connect(wallets[261]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[261]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[261]).updateCollection(
   //   "AllDating",
@@ -9138,7 +9157,7 @@ async function main() {
   //   "https://i.ibb.co/2t8FF7W/296.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9146,7 +9165,7 @@ async function main() {
   // console.log("261marketPlaceCollection.updateCollection===========> Done!")
 
   // 262
-  // await marketPlaceCollection.connect(wallets[262]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[262]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[262]).updateCollection(
   //   "ExpertCourse",
@@ -9156,7 +9175,7 @@ async function main() {
   //   "https://i.ibb.co/djCTcQy/297.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9164,7 +9183,7 @@ async function main() {
   // console.log("262marketPlaceCollection.updateCollection===========> Done!")
 
   // // 263
-  // await marketPlaceCollection.connect(wallets[263]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[263]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[263]).updateCollection(
   //   "DateTwins",
@@ -9174,7 +9193,7 @@ async function main() {
   //   "https://i.ibb.co/qWXh6d7/298.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9182,7 +9201,7 @@ async function main() {
   // console.log("263marketPlaceCollection.updateCollection===========> Done!")
 
   // // 264
-  // await marketPlaceCollection.connect(wallets[264]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[264]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[264]).updateCollection(
   //   "PathConnect",
@@ -9192,7 +9211,7 @@ async function main() {
   //   "https://i.ibb.co/Pcc4GQp/299.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9200,7 +9219,7 @@ async function main() {
   // console.log("264marketPlaceCollection.updateCollection===========> Done!")
 
   // // 265
-  // await marketPlaceCollection.connect(wallets[265]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[265]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[265]).updateCollection(
   //   "BlindDate",
@@ -9210,7 +9229,7 @@ async function main() {
   //   "https://i.ibb.co/7Smyk24/301.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9218,7 +9237,7 @@ async function main() {
   // console.log("265marketPlaceCollection.updateCollection===========> Done!")
 
   // // 266
-  // await marketPlaceCollection.connect(wallets[266]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[266]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[266]).updateCollection(
   //   "TheDatingScheme",
@@ -9228,7 +9247,7 @@ async function main() {
   //   "https://i.ibb.co/mSjmYFK/300.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9236,7 +9255,7 @@ async function main() {
   // console.log("266marketPlaceCollection.updateCollection===========> Done!")
 
   // // 267
-  // await marketPlaceCollection.connect(wallets[267]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[267]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[267]).updateCollection(
   //   "VirginBank",
@@ -9246,7 +9265,7 @@ async function main() {
   //   "https://i.ibb.co/HCqK6C9/224.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9254,7 +9273,7 @@ async function main() {
   // console.log("267marketPlaceCollection.updateCollection===========> Done!")
 
   // // 268
-  // await marketPlaceCollection.connect(wallets[268]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[268]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[268]).updateCollection(
   //   "VirginDowries",
@@ -9264,7 +9283,7 @@ async function main() {
   //   "https://i.ibb.co/tJ0GsZg/201.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9272,7 +9291,7 @@ async function main() {
   // console.log("268marketPlaceCollection.updateCollection===========> Done!")
 
   // // 269
-  // await marketPlaceCollection.connect(wallets[269]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[269]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[269]).updateCollection(
   //   "LotteryVirgins",
@@ -9282,7 +9301,7 @@ async function main() {
   //   "https://i.ibb.co/sWGRP6j/202.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9290,7 +9309,7 @@ async function main() {
   // console.log("269marketPlaceCollection.updateCollection===========> Done!")
 
   // // 270
-  // await marketPlaceCollection.connect(wallets[270]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[270]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[270]).updateCollection(
   //   "MintingLove",
@@ -9300,7 +9319,7 @@ async function main() {
   //   "https://i.ibb.co/5LqVjTh/203.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9308,7 +9327,7 @@ async function main() {
   // console.log("270marketPlaceCollection.updateCollection===========> Done!")
 
   // // 271
-  // await marketPlaceCollection.connect(wallets[271]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[271]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[271]).updateCollection(
   //   "ArrangedMarriage",
@@ -9318,7 +9337,7 @@ async function main() {
   //   "https://i.ibb.co/Smr3X1b/204.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9326,7 +9345,7 @@ async function main() {
   // console.log("271marketPlaceCollection.updateCollection===========> Done!")
 
   // // 272
-  // await marketPlaceCollection.connect(wallets[272]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[272]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[272]).updateCollection(
   //   "SpiritualMates",
@@ -9336,7 +9355,7 @@ async function main() {
   //   "https://i.ibb.co/nRY33tn/205.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9344,7 +9363,7 @@ async function main() {
   // console.log("272marketPlaceCollection.updateCollection===========> Done!")
 
   // // 273
-  // await marketPlaceCollection.connect(wallets[273]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[273]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[273]).updateCollection(
   //   "Awaards",
@@ -9354,7 +9373,7 @@ async function main() {
   //   "https://i.ibb.co/PGS08rk/206.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9362,7 +9381,7 @@ async function main() {
   // console.log("273marketPlaceCollection.updateCollection===========> Done!")
 
   // // 274
-  // await marketPlaceCollection.connect(wallets[274]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[274]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[274]).updateCollection(
   //   "BettingFounders",
@@ -9372,7 +9391,7 @@ async function main() {
   //   "https://i.ibb.co/SxCtmx5/207.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -9380,7 +9399,7 @@ async function main() {
   // console.log("274marketPlaceCollection.updateCollection===========> Done!")
 
   // // 275
-  // await marketPlaceCollection.connect(wallets[275]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[275]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[275]).updateCollection(
   //   "SharedMerch",
@@ -9390,7 +9409,7 @@ async function main() {
   //   "https://i.ibb.co/D7m32qZ/208.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -9398,7 +9417,7 @@ async function main() {
   // console.log("275marketPlaceCollection.updateCollection===========> Done!")
 
   // // 276
-  // await marketPlaceCollection.connect(wallets[276]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[276]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[276]).updateCollection(
   //   "CoupleGame",
@@ -9408,7 +9427,7 @@ async function main() {
   //   "https://i.ibb.co/RvSSybP/209.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9416,7 +9435,7 @@ async function main() {
   // console.log("276marketPlaceCollection.updateCollection===========> Done!")
 
   // // 277
-  // await marketPlaceCollection.connect(wallets[277]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[277]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[277]).updateCollection(
   //   "HouseSitting",
@@ -9426,7 +9445,7 @@ async function main() {
   //   "https://i.ibb.co/sv7nQ0F/210.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -9434,7 +9453,7 @@ async function main() {
   // console.log("277marketPlaceCollection.updateCollection===========> Done!")
 
   // // 278
-  // await marketPlaceCollection.connect(wallets[278]).addCollection(0, 0, 0, 0, 0, 0, "0x77B0e504900997eE937c0C10E027236aeCD386EF", false, false);
+  // await marketPlaceCollection.connect(wallets[278]).addCollection(0, 0, 0, 0, 0, 0, fbt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[278]).updateCollection(
   //   "LiquorOnline",
@@ -9444,7 +9463,7 @@ async function main() {
   //   "https://i.ibb.co/Pw5GB8c/211.jpg",
   //   "",
   //   "",
-  //   "0xdC94F841AedDe3Bb8fD311a61c2b4Fe40a47393d",
+  //   vaFBT.address,
   //   "All",
   //   "",
   //   ""
@@ -9452,7 +9471,7 @@ async function main() {
   // console.log("278marketPlaceCollection.updateCollection===========> Done!")
 
   // // 279
-  // await marketPlaceCollection.connect(wallets[279]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[279]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[279]).updateCollection(
   //   "XPromo",
@@ -9462,7 +9481,7 @@ async function main() {
   //   "https://i.ibb.co/ZKp73zV/212.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -9470,7 +9489,7 @@ async function main() {
   // console.log("279marketPlaceCollection.updateCollection===========> Done!")
 
   // // 280
-  // await marketPlaceCollection.connect(wallets[280]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  // await marketPlaceCollection.connect(wallets[280]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[280]).updateCollection(
   //   "DashDeliver",
@@ -9480,7 +9499,7 @@ async function main() {
   //   "https://i.ibb.co/vj7vcSh/213.jpg",
   //   "",
   //   "",
-  //   "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //   vaFTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9488,7 +9507,7 @@ async function main() {
   // console.log("280marketPlaceCollection.updateCollection===========> Done!")
 
   // // 282
-  // await marketPlaceCollection.connect(wallets[282]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[282]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[282]).updateCollection(
   //   "PrivateEquity",
@@ -9498,7 +9517,7 @@ async function main() {
   //   "https://i.ibb.co/0Q7YJBC/214.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -9506,7 +9525,7 @@ async function main() {
   // console.log("282marketPlaceCollection.updateCollection===========> Done!")
 
   // // 281
-  // await marketPlaceCollection.connect(wallets[281]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[281]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[281]).updateCollection(
   //   "ConstructionInsurance",
@@ -9516,7 +9535,7 @@ async function main() {
   //   "https://i.ibb.co/YX89X0R/215.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -9524,7 +9543,7 @@ async function main() {
   // console.log("281marketPlaceCollection.updateCollection===========> Done!")
 
   //   // 212
-  //   await marketPlaceCollection.connect(wallets[212]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //   await marketPlaceCollection.connect(wallets[212]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //   console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //   await marketPlaceCollection.connect(wallets[212]).updateCollection(
   //     "SoundStream",
@@ -9534,7 +9553,7 @@ async function main() {
   //     "https://i.ibb.co/BVXSv6c/411-2.jpg",
   //     "",
   //     "",
-  //     "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //     vaFSTT.address,
   //     "All",
   //     "",
   //     ""
@@ -9542,7 +9561,7 @@ async function main() {
   //   console.log("212marketPlaceCollection.updateCollection===========> Done!")
 
   //   // 285
-  //   await marketPlaceCollection.connect(wallets[285]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //   await marketPlaceCollection.connect(wallets[285]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //   console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //   await marketPlaceCollection.connect(wallets[285]).updateCollection(
   //     "Wills",
@@ -9552,7 +9571,7 @@ async function main() {
   //     "https://i.ibb.co/Khgv5Y5/314-2.jpg",
   //     "",
   //     "",
-  //     "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //     vaFSST.address,
   //     "All",
   //     "",
   //     ""
@@ -9560,7 +9579,7 @@ async function main() {
   //   console.log("285marketPlaceCollection.updateCollection===========> Done!")
 
   //   // 286
-  //   await marketPlaceCollection.connect(wallets[286]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //   await marketPlaceCollection.connect(wallets[286]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //   console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //   await marketPlaceCollection.connect(wallets[286]).updateCollection(
   //     "Bills",
@@ -9570,7 +9589,7 @@ async function main() {
   //     "https://i.ibb.co/wyWRV09/320-2.jpg",
   //     "",
   //     "",
-  //     "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //     vaFSST.address,
   //     "All",
   //     "",
   //     ""
@@ -9578,7 +9597,7 @@ async function main() {
   //   console.log("286marketPlaceCollection.updateCollection===========> Done!")
 
   //   // 287
-  //   await marketPlaceCollection.connect(wallets[287]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //   await marketPlaceCollection.connect(wallets[287]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //   console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //   await marketPlaceCollection.connect(wallets[287]).updateCollection(
   //     "ARPs",
@@ -9588,7 +9607,7 @@ async function main() {
   //     "https://i.ibb.co/tLsDs0x/315-2.jpg",
   //     "",
   //     "",
-  //     "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //     vaFSST.address,
   //     "All",
   //     "",
   //     ""
@@ -9596,7 +9615,7 @@ async function main() {
   //   console.log("287marketPlaceCollection.updateCollection===========> Done!")
 
   //   // 288
-  //   await marketPlaceCollection.connect(wallets[288]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //   await marketPlaceCollection.connect(wallets[288]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //   console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //   await marketPlaceCollection.connect(wallets[288]).updateCollection(
   //     "SSI",
@@ -9606,7 +9625,7 @@ async function main() {
   //     "https://i.ibb.co/mbFz3yP/311-2.jpg",
   //     "",
   //     "",
-  //     "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //     vaFSST.address,
   //     "All",
   //     "",
   //     ""
@@ -9614,7 +9633,7 @@ async function main() {
   //   console.log("288marketPlaceCollection.updateCollection===========> Done!")
 
   //   // 289
-  //   await marketPlaceCollection.connect(wallets[289]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //   await marketPlaceCollection.connect(wallets[289]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //   console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //   await marketPlaceCollection.connect(wallets[289]).updateCollection(
   //     "Marketplace",
@@ -9624,7 +9643,7 @@ async function main() {
   //     "https://i.ibb.co/tDFGphs/309-2.jpg",
   //     "",
   //     "",
-  //     "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //     vaFSST.address,
   //     "All",
   //     "",
   //     ""
@@ -9632,7 +9651,7 @@ async function main() {
   //   console.log("289marketPlaceCollection.updateCollection===========> Done!")
 
   //   // 290
-  //   await marketPlaceCollection.connect(wallets[290]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //   await marketPlaceCollection.connect(wallets[290]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //   console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //   await marketPlaceCollection.connect(wallets[290]).updateCollection(
   //     "Social Graph",
@@ -9642,7 +9661,7 @@ async function main() {
   //     "https://i.ibb.co/P6GZvMk/307-2.jpg",
   //     "",
   //     "",
-  //     "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //     vaFSST.address,
   //     "All",
   //     "",
   //     ""
@@ -9650,7 +9669,7 @@ async function main() {
   //   console.log("290marketPlaceCollection.updateCollection===========> Done!")
 
   //   // 291
-  //   await marketPlaceCollection.connect(wallets[291]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //   await marketPlaceCollection.connect(wallets[291]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //   console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //   await marketPlaceCollection.connect(wallets[291]).updateCollection(
   //     "PayCards",
@@ -9660,7 +9679,7 @@ async function main() {
   //     "https://i.ibb.co/s31v9Yh/305-2.jpg",
   //     "",
   //     "",
-  //     "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //     vaFSST.address,
   //     "All",
   //     "",
   //     ""
@@ -9668,7 +9687,7 @@ async function main() {
   //   console.log("291marketPlaceCollection.updateCollection===========> Done!")
 
   // // 292
-  // await marketPlaceCollection.connect(wallets[292]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[292]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[292]).updateCollection(
   //   "XBets",
@@ -9678,7 +9697,7 @@ async function main() {
   //   "https://i.ibb.co/HHk1ZxW/303-2.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -9686,7 +9705,7 @@ async function main() {
   // console.log("292marketPlaceCollection.updateCollection===========> Done!")
 
   // // 293
-  // await marketPlaceCollection.connect(wallets[293]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[293]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[293]).updateCollection(
   //   "SipServe",
@@ -9696,7 +9715,7 @@ async function main() {
   //   "https://i.ibb.co/xMwt58W/25-2.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -9704,7 +9723,7 @@ async function main() {
   // console.log("293marketPlaceCollection.updateCollection===========> Done!")
 
   // // 294
-  // await marketPlaceCollection.connect(wallets[283]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[283]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[283]).updateCollection(
   //   "NotyCall",
@@ -9714,7 +9733,7 @@ async function main() {
   //   "https://i.ibb.co/HCqK6C9/224.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -9722,7 +9741,7 @@ async function main() {
   // console.log("294marketPlaceCollection.updateCollection===========> Done!")
 
   // // 295
-  // await marketPlaceCollection.connect(wallets[294]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[294]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[294]).updateCollection(
   //   "FaithMate",
@@ -9732,7 +9751,7 @@ async function main() {
   //   "https://i.ibb.co/tP3b6tf/262.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9740,7 +9759,7 @@ async function main() {
   // console.log("295marketPlaceCollection.updateCollection===========> Done!")
 
   // // 296
-  // await marketPlaceCollection.connect(wallets[295]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[295]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[295]).updateCollection(
   //   "SpotMap",
@@ -9750,7 +9769,7 @@ async function main() {
   //   "https://i.ibb.co/wgF98tj/263.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -9758,7 +9777,7 @@ async function main() {
   // console.log("296marketPlaceCollection.updateCollection===========> Done!")
 
   // // 297
-  // await marketPlaceCollection.connect(wallets[296]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[296]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[296]).updateCollection(
   //   "HelpRise",
@@ -9768,7 +9787,7 @@ async function main() {
   //   "https://i.ibb.co/z7sMPYC/264.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -9776,7 +9795,7 @@ async function main() {
   // console.log("297marketPlaceCollection.updateCollection===========> Done!")
 
   // // 298
-  // await marketPlaceCollection.connect(wallets[297]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[297]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[297]).updateCollection(
   //   "ThriftSquad",
@@ -9786,7 +9805,7 @@ async function main() {
   //   "https://i.ibb.co/nBNqDxJ/265.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -9794,7 +9813,7 @@ async function main() {
   // console.log("298marketPlaceCollection.updateCollection===========> Done!")
 
   // // 299
-  // await marketPlaceCollection.connect(wallets[298]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[298]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[298]).updateCollection(
   //   "TodaysNews",
@@ -9804,7 +9823,7 @@ async function main() {
   //   "https://i.ibb.co/Ypx9FLR/266.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9812,7 +9831,7 @@ async function main() {
   // console.log("299marketPlaceCollection.updateCollection===========> Done!")
 
   // // 300
-  // await marketPlaceCollection.connect(wallets[299]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[299]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[299]).updateCollection(
   //   "PlaceHolder",
@@ -9822,7 +9841,7 @@ async function main() {
   //   "https://i.ibb.co/mq0gKYL/267.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -9830,7 +9849,7 @@ async function main() {
   // console.log("300marketPlaceCollection.updateCollection===========> Done!")
 
   // // 301
-  // await marketPlaceCollection.connect(wallets[300]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[300]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[300]).updateCollection(
   //   "NeighborInsight",
@@ -9840,7 +9859,7 @@ async function main() {
   //   "https://i.ibb.co/52pQ4m5/268.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -9848,7 +9867,7 @@ async function main() {
   // console.log("301marketPlaceCollection.updateCollection===========> Done!")
 
   // // 302
-  // await marketPlaceCollection.connect(wallets[301]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[301]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[301]).updateCollection(
   //   "Episcribe",
@@ -9858,7 +9877,7 @@ async function main() {
   //   "https://i.ibb.co/mq0gKYL/267.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9866,7 +9885,7 @@ async function main() {
   // console.log("302marketPlaceCollection.updateCollection===========> Done!")
 
   // // 303
-  // await marketPlaceCollection.connect(wallets[302]).addCollection(0, 0, 0, 0, 0, 0, "0x77B0e504900997eE937c0C10E027236aeCD386EF", false, false);
+  // await marketPlaceCollection.connect(wallets[302]).addCollection(0, 0, 0, 0, 0, 0, fbt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[302]).updateCollection(
   //   "AquaOptima",
@@ -9876,7 +9895,7 @@ async function main() {
   //   "https://i.ibb.co/Ypx9FLR/266.jpg",
   //   "",
   //   "",
-  //   "0xdC94F841AedDe3Bb8fD311a61c2b4Fe40a47393d",
+  //   vaFBT.address,
   //   "All",
   //   "",
   //   ""
@@ -9884,7 +9903,7 @@ async function main() {
   // console.log("303marketPlaceCollection.updateCollection===========> Done!")
 
   // // 304
-  // await marketPlaceCollection.connect(wallets[303]).addCollection(0, 0, 0, 0, 0, 0, "0xd1a7aB1a1E1aaDD5CD51F51570885c7896bb3139", false, false);
+  // await marketPlaceCollection.connect(wallets[303]).addCollection(0, 0, 0, 0, 0, 0, fet.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[303]).updateCollection(
   //   "Greenify",
@@ -9894,7 +9913,7 @@ async function main() {
   //   "https://i.ibb.co/nBNqDxJ/265.jpg",
   //   "",
   //   "",
-  //   "0xae6a2d4DbA638766bD3b522cD397cA90F173fDd2",
+  //   vaFET.address,
   //   "All",
   //   "",
   //   ""
@@ -9902,7 +9921,7 @@ async function main() {
   // console.log("304marketPlaceCollection.updateCollection===========> Done!")
 
   // // 305
-  // await marketPlaceCollection.connect(wallets[304]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[304]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[304]).updateCollection(
   //   "JeonseConnect",
@@ -9912,7 +9931,7 @@ async function main() {
   //   "https://i.ibb.co/z7sMPYC/264.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -9920,7 +9939,7 @@ async function main() {
   // console.log("305marketPlaceCollection.updateCollection===========> Done!")
 
   // // 306
-  // await marketPlaceCollection.connect(wallets[305]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // await marketPlaceCollection.connect(wallets[305]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[305]).updateCollection(
   //   "OrganDonor",
@@ -9930,7 +9949,7 @@ async function main() {
   //   "https://i.ibb.co/wgF98tj/263.jpg",
   //   "",
   //   "",
-  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   vaFHT.address,
   //   "All",
   //   "",
   //   ""
@@ -9938,7 +9957,7 @@ async function main() {
   // console.log("306marketPlaceCollection.updateCollection===========> Done!")
 
   // // 307
-  // await marketPlaceCollection.connect(wallets[306]).addCollection(0, 0, 0, 0, 0, 0, "0xd17C814f5609889609720D95e1A7369f9F798aB4", false, false);
+  // await marketPlaceCollection.connect(wallets[306]).addCollection(0, 0, 0, 0, 0, 0, fabt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[306]).updateCollection(
   //   "Wardrobe",
@@ -9948,7 +9967,7 @@ async function main() {
   //   "https://i.ibb.co/tP3b6tf/262.jpg",
   //   "",
   //   "",
-  //   "0xC853D1c9B60962a5CDB361379595BC6400aaE722",
+  //   vaFABT.address,
   //   "All",
   //   "",
   //   ""
@@ -9956,7 +9975,7 @@ async function main() {
   // console.log("307marketPlaceCollection.updateCollection===========> Done!")
 
   // // 308
-  // await marketPlaceCollection.connect(wallets[307]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[307]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[307]).updateCollection(
   //   "DDay",
@@ -9966,7 +9985,7 @@ async function main() {
   //   "https://i.ibb.co/HG35ztb/261.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -9974,7 +9993,7 @@ async function main() {
   // console.log("308marketPlaceCollection.updateCollection===========> Done!")
 
   // // 309
-  // await marketPlaceCollection.connect(wallets[308]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[308]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[308]).updateCollection(
   //   "YardShare",
@@ -9984,7 +10003,7 @@ async function main() {
   //   "https://i.ibb.co/MnC3702/260.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -9992,7 +10011,7 @@ async function main() {
   // console.log("309marketPlaceCollection.updateCollection===========> Done!")
 
   // // 310
-  // await marketPlaceCollection.connect(wallets[309]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[309]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[309]).updateCollection(
   //   "fIOU",
@@ -10002,7 +10021,7 @@ async function main() {
   //   "https://i.ibb.co/ZMnLyS1/259.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -10010,7 +10029,7 @@ async function main() {
   // console.log("310marketPlaceCollection.updateCollection===========> Done!")
 
   // // 311
-  // await marketPlaceCollection.connect(wallets[310]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[310]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[310]).updateCollection(
   //   "LegalFounders",
@@ -10020,7 +10039,7 @@ async function main() {
   //   "https://i.ibb.co/0Jg0twR/258.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -10028,7 +10047,7 @@ async function main() {
   // console.log("311marketPlaceCollection.updateCollection===========> Done!")
 
   // // 312
-  // await marketPlaceCollection.connect(wallets[311]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // await marketPlaceCollection.connect(wallets[311]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[311]).updateCollection(
   //   "SurgeryAbroad",
@@ -10038,7 +10057,7 @@ async function main() {
   //   "https://i.ibb.co/0qS11Tt/257.jpg",
   //   "",
   //   "",
-  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   vaFHT.address,
   //   "All",
   //   "",
   //   ""
@@ -10046,7 +10065,7 @@ async function main() {
   // console.log("312marketPlaceCollection.updateCollection===========> Done!")
 
   // // 313
-  // await marketPlaceCollection.connect(wallets[312]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[312]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[312]).updateCollection(
   //   "StudyGroups",
@@ -10056,7 +10075,7 @@ async function main() {
   //   "https://i.ibb.co/yP1b15F/256.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -10064,7 +10083,7 @@ async function main() {
   // console.log("313marketPlaceCollection.updateCollection===========> Done!")
 
   // // 314
-  // await marketPlaceCollection.connect(wallets[313]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  // await marketPlaceCollection.connect(wallets[313]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[313]).updateCollection(
   //   "GetGo",
@@ -10074,7 +10093,7 @@ async function main() {
   //   "https://i.ibb.co/YcxgXf6/255.jpg",
   //   "",
   //   "",
-  //   "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //   vaFTT.address,
   //   "All",
   //   "",
   //   ""
@@ -10082,7 +10101,7 @@ async function main() {
   // console.log("314marketPlaceCollection.updateCollection===========> Done!")
 
   // // 316
-  // await marketPlaceCollection.connect(wallets[315]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[315]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[315]).updateCollection(
   //   "TrashCompress",
@@ -10092,7 +10111,7 @@ async function main() {
   //   "https://i.ibb.co/rm9ghLY/254.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -10100,7 +10119,7 @@ async function main() {
   // console.log("316marketPlaceCollection.updateCollection===========> Done!")
 
   // // 317
-  // await marketPlaceCollection.connect(wallets[316]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[316]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[316]).updateCollection(
   //   "CoParent",
@@ -10110,7 +10129,7 @@ async function main() {
   //   "https://i.ibb.co/hyQ4xjW/253.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -10118,7 +10137,7 @@ async function main() {
   // console.log("317marketPlaceCollection.updateCollection===========> Done!")
 
   // // 318
-  // await marketPlaceCollection.connect(wallets[317]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  // await marketPlaceCollection.connect(wallets[317]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[317]).updateCollection(
   //   "LoadLink",
@@ -10128,7 +10147,7 @@ async function main() {
   //   "https://i.ibb.co/PQNhbf2/252.jpg",
   //   "",
   //   "",
-  //   "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //   vaFTT.address,
   //   "All",
   //   "",
   //   ""
@@ -10136,7 +10155,7 @@ async function main() {
   // console.log("318marketPlaceCollection.updateCollection===========> Done!")
 
   // // 319
-  // await marketPlaceCollection.connect(wallets[318]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[318]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[318]).updateCollection(
   //   "TarzanPal",
@@ -10146,7 +10165,7 @@ async function main() {
   //   "https://i.ibb.co/Ky6gWQn/251.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -10154,7 +10173,7 @@ async function main() {
   // console.log("319marketPlaceCollection.updateCollection===========> Done!")
 
   // // 320
-  // await marketPlaceCollection.connect(wallets[319]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[319]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[319]).updateCollection(
   //   "StarShot",
@@ -10164,7 +10183,7 @@ async function main() {
   //   "https://i.ibb.co/RCZHGMj/250.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -10172,7 +10191,7 @@ async function main() {
   // console.log("320marketPlaceCollection.updateCollection===========> Done!")
 
   // // 321
-  // await marketPlaceCollection.connect(wallets[320]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[320]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[320]).updateCollection(
   //   "DrAAS",
@@ -10182,7 +10201,7 @@ async function main() {
   //   "https://i.ibb.co/YTgvmx7/249.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -10190,7 +10209,7 @@ async function main() {
   // console.log("3201marketPlaceCollection.updateCollection===========> Done!")
 
   // // 322
-  // await marketPlaceCollection.connect(wallets[321]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[321]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[321]).updateCollection(
   //   "WhatchParty",
@@ -10200,7 +10219,7 @@ async function main() {
   //   "https://i.ibb.co/G3Q4jgY/248.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -10208,7 +10227,7 @@ async function main() {
   // console.log("322marketPlaceCollection.updateCollection===========> Done!")
 
   // // 323
-  // await marketPlaceCollection.connect(wallets[322]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[322]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[322]).updateCollection(
   //   "JobShare",
@@ -10218,7 +10237,7 @@ async function main() {
   //   "https://i.ibb.co/0KBLkbY/247.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -10226,7 +10245,7 @@ async function main() {
   // console.log("323marketPlaceCollection.updateCollection===========> Done!")
 
   // // 324
-  // await marketPlaceCollection.connect(wallets[323]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // await marketPlaceCollection.connect(wallets[323]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[323]).updateCollection(
   //   "CareMate",
@@ -10236,7 +10255,7 @@ async function main() {
   //   "https://i.ibb.co/VCSygQV/246.jpg",
   //   "",
   //   "",
-  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   vaFHT.address,
   //   "All",
   //   "",
   //   ""
@@ -10244,7 +10263,7 @@ async function main() {
   // console.log("324marketPlaceCollection.updateCollection===========> Done!")
 
   // // 325
-  // await marketPlaceCollection.connect(wallets[324]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[324]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[324]).updateCollection(
   //   "MatchBounty",
@@ -10254,7 +10273,7 @@ async function main() {
   //   "https://i.ibb.co/K0rSK8y/245.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -10262,7 +10281,7 @@ async function main() {
   // console.log("325marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 326
-  //  await marketPlaceCollection.connect(wallets[325]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[325]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[325]).updateCollection(
   //    "CSAAS",
@@ -10272,7 +10291,7 @@ async function main() {
   //    "https://i.ibb.co/Khhk0wg/244.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10280,7 +10299,7 @@ async function main() {
   //  console.log("326marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 327
-  //  await marketPlaceCollection.connect(wallets[326]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[326]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[326]).updateCollection(
   //    "AirConnect",
@@ -10290,7 +10309,7 @@ async function main() {
   //    "https://i.ibb.co/vvNBkvM/243.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10298,7 +10317,7 @@ async function main() {
   //  console.log("327marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 328
-  //  await marketPlaceCollection.connect(wallets[327]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[327]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[327]).updateCollection(
   //    "MarketLink",
@@ -10308,7 +10327,7 @@ async function main() {
   //    "https://i.ibb.co/xMtBGQW/242.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10316,7 +10335,7 @@ async function main() {
   //  console.log("328marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 329
-  //  await marketPlaceCollection.connect(wallets[328]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[328]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[328]).updateCollection(
   //    "PartyStream",
@@ -10326,7 +10345,7 @@ async function main() {
   //    "https://i.ibb.co/WVSDKVK/241.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -10334,7 +10353,7 @@ async function main() {
   //  console.log("329marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 330
-  //  await marketPlaceCollection.connect(wallets[329]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[329]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[329]).updateCollection(
   //    "DreamTales",
@@ -10344,7 +10363,7 @@ async function main() {
   //    "https://i.ibb.co/dgG19rS/240.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -10352,7 +10371,7 @@ async function main() {
   //  console.log("330marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 331
-  //  await marketPlaceCollection.connect(wallets[330]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  //  await marketPlaceCollection.connect(wallets[330]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[330]).updateCollection(
   //    "Tourify",
@@ -10362,7 +10381,7 @@ async function main() {
   //    "https://i.ibb.co/5Bhg9F5/239.jpg",
   //    "",
   //    "",
-  //    "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //    vaFRET.address,
   //    "All",
   //    "",
   //    ""
@@ -10370,7 +10389,7 @@ async function main() {
   //  console.log("331marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 332
-  //  await marketPlaceCollection.connect(wallets[331]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[331]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[331]).updateCollection(
   //    "MicroLendPro",
@@ -10380,7 +10399,7 @@ async function main() {
   //    "https://i.ibb.co/8z5NKck/238.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10388,7 +10407,7 @@ async function main() {
   //  console.log("332marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 333
-  //  await marketPlaceCollection.connect(wallets[332]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[332]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[332]).updateCollection(
   //    "DateVote",
@@ -10398,7 +10417,7 @@ async function main() {
   //    "https://i.ibb.co/rsPyb2F/237.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -10406,7 +10425,7 @@ async function main() {
   //  console.log("333marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 334
-  //  await marketPlaceCollection.connect(wallets[333]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[333]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[333]).updateCollection(
   //    "NaTours",
@@ -10416,7 +10435,7 @@ async function main() {
   //    "https://i.ibb.co/sWRfbhZ/236.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -10424,7 +10443,7 @@ async function main() {
   //  console.log("334marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 335
-  //  await marketPlaceCollection.connect(wallets[334]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[334]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[334]).updateCollection(
   //    "InsuranceMatch",
@@ -10434,7 +10453,7 @@ async function main() {
   //    "https://i.ibb.co/ZHzpFpB/235.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10442,7 +10461,7 @@ async function main() {
   //  console.log("335marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 336
-  //  await marketPlaceCollection.connect(wallets[335]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[335]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[335]).updateCollection(
   //    "ATherapy",
@@ -10452,7 +10471,7 @@ async function main() {
   //    "https://i.ibb.co/BKMrjRm/234.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -10460,7 +10479,7 @@ async function main() {
   //  console.log("336marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 337
-  //  await marketPlaceCollection.connect(wallets[336]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  //  await marketPlaceCollection.connect(wallets[336]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[336]).updateCollection(
   //    "TruthTip",
@@ -10470,7 +10489,7 @@ async function main() {
   //    "https://i.ibb.co/yhxBQLY/233.jpg",
   //    "",
   //    "",
-  //    "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //    vaFLOT.address,
   //    "All",
   //    "",
   //    ""
@@ -10478,7 +10497,7 @@ async function main() {
   //  console.log("337marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 338
-  //  await marketPlaceCollection.connect(wallets[337]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  //  await marketPlaceCollection.connect(wallets[337]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[337]).updateCollection(
   //    "Shield",
@@ -10488,7 +10507,7 @@ async function main() {
   //    "https://i.ibb.co/TvvmDnv/232.jpg",
   //    "",
   //    "",
-  //    "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //    vaFLOT.address,
   //    "All",
   //    "",
   //    ""
@@ -10496,7 +10515,7 @@ async function main() {
   //  console.log("338marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 339
-  //  await marketPlaceCollection.connect(wallets[338]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  //  await marketPlaceCollection.connect(wallets[338]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[338]).updateCollection(
   //    "Lease2Own",
@@ -10506,7 +10525,7 @@ async function main() {
   //    "https://i.ibb.co/5hZTrBZ/231.jpg",
   //    "",
   //    "",
-  //    "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //    vaFRET.address,
   //    "All",
   //    "",
   //    ""
@@ -10514,7 +10533,7 @@ async function main() {
   //  console.log("339marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 340
-  //  await marketPlaceCollection.connect(wallets[339]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[339]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[339]).updateCollection(
   //    "QuizMatch",
@@ -10524,7 +10543,7 @@ async function main() {
   //    "https://i.ibb.co/L9Br6k0/230.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10532,7 +10551,7 @@ async function main() {
   //  console.log("340marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 341
-  //  await marketPlaceCollection.connect(wallets[340]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  //  await marketPlaceCollection.connect(wallets[340]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[340]).updateCollection(
   //    "Chef@Home",
@@ -10542,7 +10561,7 @@ async function main() {
   //    "https://i.ibb.co/DVZ9bpp/229.jpg",
   //    "",
   //    "",
-  //    "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //    vaFFT.address,
   //    "All",
   //    "",
   //    ""
@@ -10550,7 +10569,7 @@ async function main() {
   //  console.log("341marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 342
-  //  await marketPlaceCollection.connect(wallets[341]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  //  await marketPlaceCollection.connect(wallets[341]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[341]).updateCollection(
   //    "Plateful",
@@ -10560,7 +10579,7 @@ async function main() {
   //    "https://i.ibb.co/sRwTxr5/228.jpg",
   //    "",
   //    "",
-  //    "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //    vaFFT.address,
   //    "All",
   //    "",
   //    ""
@@ -10568,7 +10587,7 @@ async function main() {
   //  console.log("342marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 343
-  //  await marketPlaceCollection.connect(wallets[342]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[342]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[342]).updateCollection(
   //    "ToiletFinder",
@@ -10578,7 +10597,7 @@ async function main() {
   //    "https://i.ibb.co/5G434QR/227.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10586,7 +10605,7 @@ async function main() {
   //  console.log("343marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 344
-  //  await marketPlaceCollection.connect(wallets[343]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[343]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[343]).updateCollection(
   //    "PetTrainer",
@@ -10596,7 +10615,7 @@ async function main() {
   //    "https://i.ibb.co/0XTcvxJ/226.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10604,7 +10623,7 @@ async function main() {
   //  console.log("344marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 345
-  //  await marketPlaceCollection.connect(wallets[344]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  //  await marketPlaceCollection.connect(wallets[344]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[344]).updateCollection(
   //    "MobileMed",
@@ -10614,7 +10633,7 @@ async function main() {
   //    "https://i.ibb.co/HCqK6C9/224.jpg",
   //    "",
   //    "",
-  //    "0xdE46100D142FD66f50697dF99c296796100983de",
+  //    vaFHT.address,
   //    "All",
   //    "",
   //    ""
@@ -10622,7 +10641,7 @@ async function main() {
   //  console.log("345marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 346
-  //  await marketPlaceCollection.connect(wallets[345]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[345]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[345]).updateCollection(
   //    "HeroSphere",
@@ -10632,7 +10651,7 @@ async function main() {
   //    "https://i.ibb.co/44SXFQM/223.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -10640,7 +10659,7 @@ async function main() {
   //  console.log("346marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 347
-  //  await marketPlaceCollection.connect(wallets[346]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  //  await marketPlaceCollection.connect(wallets[346]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[346]).updateCollection(
   //    "DeliveryDuel",
@@ -10650,7 +10669,7 @@ async function main() {
   //    "https://i.ibb.co/HFrZnbw/222.jpg",
   //    "",
   //    "",
-  //    "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //    vaFTT.address,
   //    "All",
   //    "",
   //    ""
@@ -10658,7 +10677,7 @@ async function main() {
   //  console.log("347marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 348
-  //  await marketPlaceCollection.connect(wallets[347]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  //  await marketPlaceCollection.connect(wallets[347]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[347]).updateCollection(
   //    "Farmify",
@@ -10668,7 +10687,7 @@ async function main() {
   //    "https://i.ibb.co/bs9B2mg/221.jpg",
   //    "",
   //    "",
-  //    "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //    vaFFT.address,
   //    "All",
   //    "",
   //    ""
@@ -10676,7 +10695,7 @@ async function main() {
   //  console.log("348marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 349
-  //  await marketPlaceCollection.connect(wallets[348]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[348]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[348]).updateCollection(
   //    "Insight",
@@ -10686,7 +10705,7 @@ async function main() {
   //    "https://i.ibb.co/KD398kB/220.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10694,7 +10713,7 @@ async function main() {
   //  console.log("349marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 350
-  //  await marketPlaceCollection.connect(wallets[349]).addCollection(0, 0, 0, 0, 0, 0, "0xd1a7aB1a1E1aaDD5CD51F51570885c7896bb3139", false, false);
+  //  await marketPlaceCollection.connect(wallets[349]).addCollection(0, 0, 0, 0, 0, 0, fet.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[349]).updateCollection(
   //    "Energify",
@@ -10704,7 +10723,7 @@ async function main() {
   //    "https://i.ibb.co/GT87pBX/219.jpg",
   //    "",
   //    "",
-  //    "0xae6a2d4DbA638766bD3b522cD397cA90F173fDd2",
+  //    vaFET.address,
   //    "All",
   //    "",
   //    ""
@@ -10712,7 +10731,7 @@ async function main() {
   //  console.log("350marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 351
-  //  await marketPlaceCollection.connect(wallets[350]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[350]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[350]).updateCollection(
   //    "Jobet",
@@ -10722,7 +10741,7 @@ async function main() {
   //    "https://i.ibb.co/D1Q5Zbk/218.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10730,7 +10749,7 @@ async function main() {
   //  console.log("351marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 352
-  //  await marketPlaceCollection.connect(wallets[351]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[351]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[351]).updateCollection(
   //    "SkillSphere",
@@ -10740,7 +10759,7 @@ async function main() {
   //    "https://i.ibb.co/mRryjPD/217.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10748,7 +10767,7 @@ async function main() {
   //  console.log("352marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 353
-  //  await marketPlaceCollection.connect(wallets[352]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[352]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[352]).updateCollection(
   //    "MelodicMentors",
@@ -10758,7 +10777,7 @@ async function main() {
   //    "https://i.ibb.co/w7DTrnC/216.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10766,7 +10785,7 @@ async function main() {
   //  console.log("353marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 354
-  //  await marketPlaceCollection.connect(wallets[353]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[353]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[353]).updateCollection(
   //    "StudySmart",
@@ -10776,7 +10795,7 @@ async function main() {
   //    "https://i.ibb.co/YX89X0R/215.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10784,7 +10803,7 @@ async function main() {
   //  console.log("354marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 355
-  //  await marketPlaceCollection.connect(wallets[354]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[354]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[354]).updateCollection(
   //    "Connectify",
@@ -10794,7 +10813,7 @@ async function main() {
   //    "https://i.ibb.co/0Q7YJBC/214.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10802,7 +10821,7 @@ async function main() {
   //  console.log("355marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 356
-  //  await marketPlaceCollection.connect(wallets[355]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[355]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[355]).updateCollection(
   //    "SpeakerScope",
@@ -10812,7 +10831,7 @@ async function main() {
   //    "https://i.ibb.co/vj7vcSh/213.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -10820,7 +10839,7 @@ async function main() {
   //  console.log("356marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 357
-  //  await marketPlaceCollection.connect(wallets[356]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[356]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[356]).updateCollection(
   //    "PartyGirls",
@@ -10830,7 +10849,7 @@ async function main() {
   //    "https://i.ibb.co/ZKp73zV/212.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -10838,7 +10857,7 @@ async function main() {
   //  console.log("357marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 358
-  //  await marketPlaceCollection.connect(wallets[357]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  //  await marketPlaceCollection.connect(wallets[357]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[357]).updateCollection(
   //    "AdVoyage",
@@ -10848,7 +10867,7 @@ async function main() {
   //    "https://i.ibb.co/Pw5GB8c/211.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10856,7 +10875,7 @@ async function main() {
   //  console.log("358marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 359
-  //  await marketPlaceCollection.connect(wallets[358]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  //  await marketPlaceCollection.connect(wallets[358]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[358]).updateCollection(
   //    "RouteSub",
@@ -10866,7 +10885,7 @@ async function main() {
   //    "https://i.ibb.co/sv7nQ0F/210.jpg",
   //    "",
   //    "",
-  //    "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //    vaFTT.address,
   //    "All",
   //    "",
   //    ""
@@ -10874,7 +10893,7 @@ async function main() {
   //  console.log("359marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 360
-  //  await marketPlaceCollection.connect(wallets[359]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  //  await marketPlaceCollection.connect(wallets[359]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[359]).updateCollection(
   //    "MedsOnDemand",
@@ -10884,7 +10903,7 @@ async function main() {
   //    "https://i.ibb.co/RvSSybP/209.jpg",
   //    "",
   //    "",
-  //    "0xdE46100D142FD66f50697dF99c296796100983de",
+  //    vaFHT.address,
   //    "All",
   //    "",
   //    ""
@@ -10892,7 +10911,7 @@ async function main() {
   //  console.log("360marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 361
-  //  await marketPlaceCollection.connect(wallets[360]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  //  await marketPlaceCollection.connect(wallets[360]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[360]).updateCollection(
   //    "GhostKitchen",
@@ -10902,7 +10921,7 @@ async function main() {
   //    "https://i.ibb.co/D7m32qZ/208.jpg",
   //    "",
   //    "",
-  //    "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //    vaFFT.address,
   //    "All",
   //    "",
   //    ""
@@ -10910,7 +10929,7 @@ async function main() {
   //  console.log("361marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 362
-  //  await marketPlaceCollection.connect(wallets[361]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[361]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[361]).updateCollection(
   //    "GameFinder",
@@ -10920,7 +10939,7 @@ async function main() {
   //    "https://i.ibb.co/SxCtmx5/207.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10928,7 +10947,7 @@ async function main() {
   //  console.log("362marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 363
-  //  await marketPlaceCollection.connect(wallets[362]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[362]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[362]).updateCollection(
   //    "TeamToken",
@@ -10938,7 +10957,7 @@ async function main() {
   //    "https://i.ibb.co/PGS08rk/206.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -10946,7 +10965,7 @@ async function main() {
   //  console.log("363marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 364
-  //  await marketPlaceCollection.connect(wallets[363]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[363]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[363]).updateCollection(
   //    "AdminGuru",
@@ -10956,7 +10975,7 @@ async function main() {
   //    "https://i.ibb.co/nRY33tn/205.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -10964,7 +10983,7 @@ async function main() {
   //  console.log("364marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 365
-  //  await marketPlaceCollection.connect(wallets[364]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  //  await marketPlaceCollection.connect(wallets[364]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[364]).updateCollection(
   //    "BordersUnited",
@@ -10974,7 +10993,7 @@ async function main() {
   //    "https://i.ibb.co/Smr3X1b/204.jpg",
   //    "",
   //    "",
-  //    "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //    vaFTT.address,
   //    "All",
   //    "",
   //    ""
@@ -10982,7 +11001,7 @@ async function main() {
   //  console.log("365marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 366
-  //  await marketPlaceCollection.connect(wallets[365]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[365]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[365]).updateCollection(
   //    "Declut",
@@ -10992,7 +11011,7 @@ async function main() {
   //    "https://i.ibb.co/5LqVjTh/203.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11000,7 +11019,7 @@ async function main() {
   //  console.log("366marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 367
-  //  await marketPlaceCollection.connect(wallets[366]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[366]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[366]).updateCollection(
   //    "Umogy",
@@ -11010,7 +11029,7 @@ async function main() {
   //    "https://i.ibb.co/sWGRP6j/202.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11018,7 +11037,7 @@ async function main() {
   //  console.log("367marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 368
-  //  await marketPlaceCollection.connect(wallets[367]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[367]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[367]).updateCollection(
   //    "DebtForSale",
@@ -11028,7 +11047,7 @@ async function main() {
   //    "https://i.ibb.co/tJ0GsZg/201.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11036,7 +11055,7 @@ async function main() {
   //  console.log("368marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 369
-  //  await marketPlaceCollection.connect(wallets[368]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[368]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[368]).updateCollection(
   //    "LanguageData",
@@ -11046,7 +11065,7 @@ async function main() {
   //    "https://i.ibb.co/Gs7g9dw/439-2.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11054,7 +11073,7 @@ async function main() {
   //  console.log("369marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 370
-  //  await marketPlaceCollection.connect(wallets[369]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[369]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[369]).updateCollection(
   //    "LiveTranslate",
@@ -11064,7 +11083,7 @@ async function main() {
   //    "https://i.ibb.co/k11SX3n/438-2.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11072,7 +11091,7 @@ async function main() {
   //  console.log("370marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 371
-  //  await marketPlaceCollection.connect(wallets[370]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[370]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[370]).updateCollection(
   //    "ToyShare",
@@ -11082,7 +11101,7 @@ async function main() {
   //    "https://i.ibb.co/7YLFb81/437-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11090,7 +11109,7 @@ async function main() {
   //  console.log("371marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 372
-  //  await marketPlaceCollection.connect(wallets[371]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[371]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[371]).updateCollection(
   //    "RentAPet",
@@ -11100,7 +11119,7 @@ async function main() {
   //    "https://i.ibb.co/PTzWnV4/436-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11108,7 +11127,7 @@ async function main() {
   //  console.log("372marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 373
-  //  await marketPlaceCollection.connect(wallets[372]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[372]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[372]).updateCollection(
   //    "InflationHedge",
@@ -11118,7 +11137,7 @@ async function main() {
   //    "https://i.ibb.co/Hdz5c4Y/435-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11126,7 +11145,7 @@ async function main() {
   //  console.log("373marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 374
-  //  await marketPlaceCollection.connect(wallets[373]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  //  await marketPlaceCollection.connect(wallets[373]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[373]).updateCollection(
   //    "FamCare",
@@ -11136,7 +11155,7 @@ async function main() {
   //    "https://i.ibb.co/Mc1WdgB/434-2.jpg",
   //    "",
   //    "",
-  //    "0xdE46100D142FD66f50697dF99c296796100983de",
+  //    vaFHT.address,
   //    "All",
   //    "",
   //    ""
@@ -11144,7 +11163,7 @@ async function main() {
   //  console.log("374marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 375
-  //  await marketPlaceCollection.connect(wallets[374]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[374]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[374]).updateCollection(
   //    "ShopWall",
@@ -11154,7 +11173,7 @@ async function main() {
   //    "https://i.ibb.co/VSkbQTj/433-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11162,7 +11181,7 @@ async function main() {
   //  console.log("375marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 376
-  //  await marketPlaceCollection.connect(wallets[375]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[375]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[375]).updateCollection(
   //    "RentAFamily",
@@ -11172,7 +11191,7 @@ async function main() {
   //    "https://i.ibb.co/p222Jr2/432-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11180,7 +11199,7 @@ async function main() {
   //  console.log("376marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 377
-  //  await marketPlaceCollection.connect(wallets[376]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[376]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[376]).updateCollection(
   //    "Clubify",
@@ -11190,7 +11209,7 @@ async function main() {
   //    "https://i.ibb.co/nzgT3nX/431-2.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11198,7 +11217,7 @@ async function main() {
   //  console.log("377marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 378
-  //  await marketPlaceCollection.connect(wallets[377]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  //  await marketPlaceCollection.connect(wallets[377]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[377]).updateCollection(
   //    "HomeTest",
@@ -11208,7 +11227,7 @@ async function main() {
   //    "https://i.ibb.co/87JCtgL/430-2.jpg",
   //    "",
   //    "",
-  //    "0xdE46100D142FD66f50697dF99c296796100983de",
+  //    vaFHT.address,
   //    "All",
   //    "",
   //    ""
@@ -11216,7 +11235,7 @@ async function main() {
   //  console.log("378marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 379
-  //  await marketPlaceCollection.connect(wallets[378]).addCollection(0, 0, 0, 0, 0, 0, "0xd17C814f5609889609720D95e1A7369f9F798aB4", false, false);
+  //  await marketPlaceCollection.connect(wallets[378]).addCollection(0, 0, 0, 0, 0, 0, fabt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[378]).updateCollection(
   //    "CustomTailor",
@@ -11226,7 +11245,7 @@ async function main() {
   //    "https://i.ibb.co/cF4HV7C/429-2.jpg",
   //    "",
   //    "",
-  //    "0xC853D1c9B60962a5CDB361379595BC6400aaE722",
+  //    vaFABT.address,
   //    "All",
   //    "",
   //    ""
@@ -11234,7 +11253,7 @@ async function main() {
   //  console.log("379marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 380
-  //  await marketPlaceCollection.connect(wallets[379]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  //  await marketPlaceCollection.connect(wallets[379]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[379]).updateCollection(
   //    "HourRoom",
@@ -11244,7 +11263,7 @@ async function main() {
   //    "https://i.ibb.co/TPdRtjB/428-2.jpg",
   //    "",
   //    "",
-  //    "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //    vaFRET.address,
   //    "All",
   //    "",
   //    ""
@@ -11252,7 +11271,7 @@ async function main() {
   //  console.log("380marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 381
-  //  await marketPlaceCollection.connect(wallets[380]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[380]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[380]).updateCollection(
   //    "BarterBarter",
@@ -11262,7 +11281,7 @@ async function main() {
   //    "https://i.ibb.co/983xqvS/427-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11270,7 +11289,7 @@ async function main() {
   //  console.log("381marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 382
-  //  await marketPlaceCollection.connect(wallets[381]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[381]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[381]).updateCollection(
   //    "FlexClass",
@@ -11280,7 +11299,7 @@ async function main() {
   //    "https://i.ibb.co/6gNvDMd/426-2.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11288,7 +11307,7 @@ async function main() {
   //  console.log("382marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 383
-  //  await marketPlaceCollection.connect(wallets[382]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[382]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[382]).updateCollection(
   //    "FounderVlog",
@@ -11298,7 +11317,7 @@ async function main() {
   //    "https://i.ibb.co/0CYF5Jy/425-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11306,7 +11325,7 @@ async function main() {
   //  console.log("383marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 384
-  //  await marketPlaceCollection.connect(wallets[383]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[383]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[383]).updateCollection(
   //    "FireFy",
@@ -11316,7 +11335,7 @@ async function main() {
   //    "https://i.ibb.co/X4KTjZ2/424-2.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11324,7 +11343,7 @@ async function main() {
   //  console.log("384marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 385
-  //  await marketPlaceCollection.connect(wallets[384]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  //  await marketPlaceCollection.connect(wallets[384]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[384]).updateCollection(
   //    "FlyCrew",
@@ -11334,7 +11353,7 @@ async function main() {
   //    "https://i.ibb.co/yhSz2pj/423-2.jpg",
   //    "",
   //    "",
-  //    "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //    vaFTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11342,7 +11361,7 @@ async function main() {
   //  console.log("385marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 386
-  //  await marketPlaceCollection.connect(wallets[385]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  //  await marketPlaceCollection.connect(wallets[385]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[385]).updateCollection(
   //    "EZTickets",
@@ -11352,7 +11371,7 @@ async function main() {
   //    "https://i.ibb.co/Sxq1KZp/422-2.jpg",
   //    "",
   //    "",
-  //    "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //    vaFTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11360,7 +11379,7 @@ async function main() {
   //  console.log("386marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 387
-  //  await marketPlaceCollection.connect(wallets[386]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[386]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[386]).updateCollection(
   //    "VisaExpert",
@@ -11370,7 +11389,7 @@ async function main() {
   //    "https://i.ibb.co/tBdXyV1/421-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11378,7 +11397,7 @@ async function main() {
   //  console.log("387marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 388
-  //  await marketPlaceCollection.connect(wallets[387]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[387]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[387]).updateCollection(
   //    "ContentBids",
@@ -11388,7 +11407,7 @@ async function main() {
   //    "https://i.ibb.co/L55v3Ln/420-2.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11396,7 +11415,7 @@ async function main() {
   //  console.log("388marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 389
-  //  await marketPlaceCollection.connect(wallets[388]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[388]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[388]).updateCollection(
   //    "ShiftSwap",
@@ -11406,7 +11425,7 @@ async function main() {
   //    "https://i.ibb.co/ZH9KrYt/419-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11414,7 +11433,7 @@ async function main() {
   //  console.log("389marketPlaceCollection.updateCollection===========> Done!")
 
   // //  390
-  // await marketPlaceCollection.connect(wallets[389]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[389]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[389]).updateCollection(
   //    "XChats",
@@ -11424,7 +11443,7 @@ async function main() {
   //    "https://i.ibb.co/T16vJ2w/418-2.jpg",
   //    "",
   //    "",
-  //    "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //    vaFNT.address,
   //    "All",
   //    "",
   //    ""
@@ -11432,7 +11451,7 @@ async function main() {
   //  console.log("390marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 391
-  //  await marketPlaceCollection.connect(wallets[390]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  //  await marketPlaceCollection.connect(wallets[390]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[390]).updateCollection(
   //    "SexedIn",
@@ -11442,7 +11461,7 @@ async function main() {
   //    "https://i.ibb.co/xCGhCLK/417-2.jpg",
   //    "",
   //    "",
-  //    "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //    vaFNT.address,
   //    "All",
   //    "",
   //    ""
@@ -11450,7 +11469,7 @@ async function main() {
   //  console.log("391marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 392
-  //  await marketPlaceCollection.connect(wallets[391]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  //  await marketPlaceCollection.connect(wallets[391]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[391]).updateCollection(
   //    "AffluentShelves",
@@ -11460,7 +11479,7 @@ async function main() {
   //    "https://i.ibb.co/JkcKb5b/416-2.jpg",
   //    "",
   //    "",
-  //    "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //    vaFRET.address,
   //    "All",
   //    "",
   //    ""
@@ -11468,7 +11487,7 @@ async function main() {
   //  console.log("392marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 393
-  //  await marketPlaceCollection.connect(wallets[392]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  //  await marketPlaceCollection.connect(wallets[392]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[392]).updateCollection(
   //    "JungleShares",
@@ -11478,7 +11497,7 @@ async function main() {
   //    "https://i.ibb.co/ynrtwMD/415-2.jpg",
   //    "",
   //    "",
-  //    "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //    vaFFT.address,
   //    "All",
   //    "",
   //    ""
@@ -11486,7 +11505,7 @@ async function main() {
   //  console.log("393marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 394
-  //  await marketPlaceCollection.connect(wallets[393]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  //  await marketPlaceCollection.connect(wallets[393]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[393]).updateCollection(
   //    "CropShares",
@@ -11496,7 +11515,7 @@ async function main() {
   //    "https://i.ibb.co/HVtD5gY/414-2.jpg",
   //    "",
   //    "",
-  //    "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //    vaFFT.address,
   //    "All",
   //    "",
   //    ""
@@ -11504,7 +11523,7 @@ async function main() {
   //  console.log("394marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 395
-  //  await marketPlaceCollection.connect(wallets[394]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[394]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[394]).updateCollection(
   //    "Glampers",
@@ -11514,7 +11533,7 @@ async function main() {
   //    "https://i.ibb.co/X7Ws5pg/413-2.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11522,7 +11541,7 @@ async function main() {
   //  console.log("395marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 396
-  //  await marketPlaceCollection.connect(wallets[395]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  //  await marketPlaceCollection.connect(wallets[395]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[395]).updateCollection(
   //    "CreditCounselors",
@@ -11532,7 +11551,7 @@ async function main() {
   //    "https://i.ibb.co/y0FQ9m6/412-2.jpg",
   //    "",
   //    "",
-  //    "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //    vaFLOT.address,
   //    "All",
   //    "",
   //    ""
@@ -11540,7 +11559,7 @@ async function main() {
   //  console.log("396marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 397
-  //  await marketPlaceCollection.connect(wallets[396]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  //  await marketPlaceCollection.connect(wallets[396]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[396]).updateCollection(
   //    "DatingVacation",
@@ -11550,7 +11569,7 @@ async function main() {
   //    "https://i.ibb.co/BVXSv6c/411-2.jpg",
   //    "",
   //    "",
-  //    "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //    vaFRET.address,
   //    "All",
   //    "",
   //    ""
@@ -11558,7 +11577,7 @@ async function main() {
   //  console.log("397marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 398
-  //  await marketPlaceCollection.connect(wallets[397]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  //  await marketPlaceCollection.connect(wallets[397]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[397]).updateCollection(
   //    "Sexperience",
@@ -11568,7 +11587,7 @@ async function main() {
   //    "https://i.ibb.co/cXxSVLC/410-2.jpg",
   //    "",
   //    "",
-  //    "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //    vaFNT.address,
   //    "All",
   //    "",
   //    ""
@@ -11576,7 +11595,7 @@ async function main() {
   //  console.log("398marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 395
-  //  await marketPlaceCollection.connect(wallets[314]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[314]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[314]).updateCollection(
   //    "SlimmerGames",
@@ -11586,7 +11605,7 @@ async function main() {
   //    "https://i.ibb.co/vBrM4jf/409-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11594,7 +11613,7 @@ async function main() {
   //  console.log("395marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 399
-  //  await marketPlaceCollection.connect(wallets[398]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[398]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[398]).updateCollection(
   //    "HackathonHub",
@@ -11604,7 +11623,7 @@ async function main() {
   //    "https://i.ibb.co/4YSV8hM/408-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11612,7 +11631,7 @@ async function main() {
   //  console.log("399marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 400
-  //  await marketPlaceCollection.connect(wallets[399]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[399]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[399]).updateCollection(
   //    "LandscapeLink",
@@ -11622,7 +11641,7 @@ async function main() {
   //    "https://i.ibb.co/3CXYKZM/407-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11630,7 +11649,7 @@ async function main() {
   //  console.log("400marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 401
-  //  await marketPlaceCollection.connect(wallets[400]).addCollection(0, 0, 0, 0, 0, 0, "0x7D797d2D96EA6187E85008B8B2F386a552C86d6b", false, false);
+  //  await marketPlaceCollection.connect(wallets[400]).addCollection(0, 0, 0, 0, 0, 0, fft.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[400]).updateCollection(
   //    "MisFarms",
@@ -11640,7 +11659,7 @@ async function main() {
   //    "https://i.ibb.co/NNZVjBf/406-2.jpg",
   //    "",
   //    "",
-  //    "0x2cc1F3A5A27ef2985768ff98526337db6E05C847",
+  //    vaFFT.address,
   //    "All",
   //    "",
   //    ""
@@ -11648,7 +11667,7 @@ async function main() {
   //  console.log("401marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 402
-  //  await marketPlaceCollection.connect(wallets[401]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  //  await marketPlaceCollection.connect(wallets[401]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[401]).updateCollection(
   //    "UsedOnes",
@@ -11658,7 +11677,7 @@ async function main() {
   //    "https://i.ibb.co/bdtXHnV/405-2.jpg",
   //    "",
   //    "",
-  //    "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //    vaFTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11666,7 +11685,7 @@ async function main() {
   //  console.log("402marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 403
-  //  await marketPlaceCollection.connect(wallets[402]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  //  await marketPlaceCollection.connect(wallets[402]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[402]).updateCollection(
   //    "PlugNProp",
@@ -11676,7 +11695,7 @@ async function main() {
   //    "https://i.ibb.co/tqJ9HTM/322-2.jpg",
   //    "",
   //    "",
-  //    "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //    vaFRET.address,
   //    "All",
   //    "",
   //    ""
@@ -11684,7 +11703,7 @@ async function main() {
   //  console.log("403marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 404
-  //  await marketPlaceCollection.connect(wallets[403]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[403]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[403]).updateCollection(
   //    "Daycarify",
@@ -11694,7 +11713,7 @@ async function main() {
   //    "https://i.ibb.co/WVsqwMT/321-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11702,7 +11721,7 @@ async function main() {
   //  console.log("404marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 405
-  //  await marketPlaceCollection.connect(wallets[404]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  //  await marketPlaceCollection.connect(wallets[404]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[404]).updateCollection(
   //    "SurveillanceGuard",
@@ -11712,7 +11731,7 @@ async function main() {
   //    "https://i.ibb.co/wyWRV09/320-2.jpg",
   //    "",
   //    "",
-  //    "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //    vaFLOT.address,
   //    "All",
   //    "",
   //    ""
@@ -11720,7 +11739,7 @@ async function main() {
   //  console.log("405marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 406
-  //  await marketPlaceCollection.connect(wallets[405]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[405]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[405]).updateCollection(
   //    "Cleanup",
@@ -11730,7 +11749,7 @@ async function main() {
   //    "https://i.ibb.co/c6wR5Y8/316-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11738,7 +11757,7 @@ async function main() {
   //  console.log("406marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 407
-  //  await marketPlaceCollection.connect(wallets[406]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[406]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[406]).updateCollection(
   //    "GuaranteedHiring",
@@ -11748,7 +11767,7 @@ async function main() {
   //    "https://i.ibb.co/tLsDs0x/315-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11756,7 +11775,7 @@ async function main() {
   //  console.log("407marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 408
-  //  await marketPlaceCollection.connect(wallets[407]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[407]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[407]).updateCollection(
   //    "DojoFinder",
@@ -11766,7 +11785,7 @@ async function main() {
   //    "https://i.ibb.co/Khgv5Y5/314-2.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11774,7 +11793,7 @@ async function main() {
   //  console.log("408marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 409
-  //  await marketPlaceCollection.connect(wallets[408]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  //  await marketPlaceCollection.connect(wallets[408]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[408]).updateCollection(
   //    "NurseShift",
@@ -11784,7 +11803,7 @@ async function main() {
   //    "https://i.ibb.co/PYL3gZg/313-2.jpg",
   //    "",
   //    "",
-  //    "0xdE46100D142FD66f50697dF99c296796100983de",
+  //    vaFHT.address,
   //    "All",
   //    "",
   //    ""
@@ -11792,7 +11811,7 @@ async function main() {
   //  console.log("409marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 410
-  //  await marketPlaceCollection.connect(wallets[409]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[409]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[409]).updateCollection(
   //    "FuneralWiz",
@@ -11802,7 +11821,7 @@ async function main() {
   //    "https://i.ibb.co/4ZyCPxR/312-2.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11810,7 +11829,7 @@ async function main() {
   //  console.log("410marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 411
-  //  await marketPlaceCollection.connect(wallets[410]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[410]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[410]).updateCollection(
   //    "CallCenter",
@@ -11820,7 +11839,7 @@ async function main() {
   //    "https://i.ibb.co/mbFz3yP/311-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11828,7 +11847,7 @@ async function main() {
   //  console.log("411marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 412
-  //  await marketPlaceCollection.connect(wallets[411]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[411]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[411]).updateCollection(
   //    "KeyFree",
@@ -11838,7 +11857,7 @@ async function main() {
   //    "https://i.ibb.co/QkQBFRT/310-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11846,7 +11865,7 @@ async function main() {
   //  console.log("412marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 413
-  //  await marketPlaceCollection.connect(wallets[412]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[412]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[412]).updateCollection(
   //    "OpenCouple",
@@ -11856,7 +11875,7 @@ async function main() {
   //    "https://i.ibb.co/tDFGphs/309-2.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11864,7 +11883,7 @@ async function main() {
   //  console.log("413marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 414
-  //  await marketPlaceCollection.connect(wallets[413]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  //  await marketPlaceCollection.connect(wallets[413]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[413]).updateCollection(
   //    "OnDemandInterviews",
@@ -11874,7 +11893,7 @@ async function main() {
   //    "https://i.ibb.co/CQxbvnm/308-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -11882,7 +11901,7 @@ async function main() {
   //  console.log("414marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 415
-  //  await marketPlaceCollection.connect(wallets[414]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  //  await marketPlaceCollection.connect(wallets[414]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[414]).updateCollection(
   //    "DeathReport",
@@ -11892,7 +11911,7 @@ async function main() {
   //    "https://i.ibb.co/P6GZvMk/307-2.jpg",
   //    "",
   //    "",
-  //    "0xdE46100D142FD66f50697dF99c296796100983de",
+  //    vaFHT.address,
   //    "All",
   //    "",
   //    ""
@@ -11900,7 +11919,7 @@ async function main() {
   //  console.log("415marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 416
-  //  await marketPlaceCollection.connect(wallets[415]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[415]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[415]).updateCollection(
   //    "Mistiq",
@@ -11910,7 +11929,7 @@ async function main() {
   //    "https://i.ibb.co/cQ3qrST/306-2.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11918,7 +11937,7 @@ async function main() {
   //  console.log("416marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 417
-  //  await marketPlaceCollection.connect(wallets[416]).addCollection(0, 0, 0, 0, 0, 0, "0x023803056E3532348E8a6Deac35dafD4732F792b", false, false);
+  //  await marketPlaceCollection.connect(wallets[416]).addCollection(0, 0, 0, 0, 0, 0, ftt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[416]).updateCollection(
   //    "FlyMeOut",
@@ -11928,7 +11947,7 @@ async function main() {
   //    "https://i.ibb.co/s31v9Yh/305-2.jpg",
   //    "",
   //    "",
-  //    "0x4E53C05E933CE8281CfaBe75b456528d40fcBAFc",
+  //    vaFTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11936,7 +11955,7 @@ async function main() {
   //  console.log("417marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 418
-  //  await marketPlaceCollection.connect(wallets[417]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  //  await marketPlaceCollection.connect(wallets[417]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[417]).updateCollection(
   //    "TeerAbroad",
@@ -11946,7 +11965,7 @@ async function main() {
   //    "https://i.ibb.co/v1XTLCG/304-2.jpg",
   //    "",
   //    "",
-  //    "0xdE46100D142FD66f50697dF99c296796100983de",
+  //    vaFHT.address,
   //    "All",
   //    "",
   //    ""
@@ -11954,7 +11973,7 @@ async function main() {
   //  console.log("418marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 419
-  //  await marketPlaceCollection.connect(wallets[418]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  //  await marketPlaceCollection.connect(wallets[418]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[418]).updateCollection(
   //    "OpenRegulate",
@@ -11964,7 +11983,7 @@ async function main() {
   //    "https://i.ibb.co/HHk1ZxW/303-2.jpg",
   //    "",
   //    "",
-  //    "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //    vaFLOT.address,
   //    "All",
   //    "",
   //    ""
@@ -11972,7 +11991,7 @@ async function main() {
   //  console.log("419marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 420
-  //  await marketPlaceCollection.connect(wallets[419]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[419]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[419]).updateCollection(
   //    "WingBook",
@@ -11982,7 +12001,7 @@ async function main() {
   //    "https://i.ibb.co/Pj8PpKK/302-2.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -11990,7 +12009,7 @@ async function main() {
   //  console.log("420marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 421
-  //  await marketPlaceCollection.connect(wallets[420]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[420]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[420]).updateCollection(
   //    "DiasporaHub",
@@ -12000,7 +12019,7 @@ async function main() {
   //    "https://i.ibb.co/1zR3Kc1/301-2.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -12008,7 +12027,7 @@ async function main() {
   //  console.log("421marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 422
-  //  await marketPlaceCollection.connect(wallets[421]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  //  await marketPlaceCollection.connect(wallets[421]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   //  await marketPlaceCollection.connect(wallets[421]).updateCollection(
   //    "FutureEarn",
@@ -12018,7 +12037,7 @@ async function main() {
   //    "https://i.ibb.co/cwsnptG/300-2.jpg",
   //    "",
   //    "",
-  //    "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //    vaFSTT.address,
   //    "All",
   //    "",
   //    ""
@@ -12026,7 +12045,7 @@ async function main() {
   //  console.log("422marketPlaceCollection.updateCollection===========> Done!")
 
   //  // 423
-  // await marketPlaceCollection.connect(wallets[422]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[422]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[422]).updateCollection(
   //    "COM",
@@ -12036,7 +12055,7 @@ async function main() {
   //    "https://i.ibb.co/cwsnptG/300-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -12044,7 +12063,7 @@ async function main() {
   //  console.log("423marketPlaceCollection.updateCollection===========> Done!")
 
   //  424
-  // await marketPlaceCollection.connect(wallets[423]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[423]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   //  console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[423]).updateCollection(
   //   "PayrollDates",
@@ -12054,7 +12073,7 @@ async function main() {
   //    "https://i.ibb.co/1zR3Kc1/301-2.jpg",
   //    "",
   //    "",
-  //    "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //    vaFSST.address,
   //    "All",
   //    "",
   //    ""
@@ -12062,7 +12081,7 @@ async function main() {
   //  console.log("424marketPlaceCollection.updateCollection===========> Done!")
 
   // // 425
-  // await marketPlaceCollection.connect(wallets[424]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // await marketPlaceCollection.connect(wallets[424]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[424]).updateCollection(
   //   "HealthManager",
@@ -12072,7 +12091,7 @@ async function main() {
   //   "https://i.ibb.co/Pj8PpKK/302-2.jpg",
   //   "",
   //   "",
-  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   vaFHT.address,
   //   "All",
   //   "",
   //   ""
@@ -12080,7 +12099,7 @@ async function main() {
   // console.log("425marketPlaceCollection.updateCollection===========> Done!")
 
   // // 426
-  // await marketPlaceCollection.connect(wallets[425]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[425]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[425]).updateCollection(
   //   "RichDad",
@@ -12090,7 +12109,7 @@ async function main() {
   //   "https://i.ibb.co/HHk1ZxW/303-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12098,7 +12117,7 @@ async function main() {
   // console.log("426marketPlaceCollection.updateCollection===========> Done!")
 
   // // 427
-  // await marketPlaceCollection.connect(wallets[426]).addCollection(0, 0, 0, 0, 0, 0, "0x406BD6A54A4807E207823D28AB908b0E9466678E", false, false);
+  // await marketPlaceCollection.connect(wallets[426]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[426]).updateCollection(
   //   "NatDat",
@@ -12108,7 +12127,7 @@ async function main() {
   //   "https://i.ibb.co/v1XTLCG/304-2.jpg",
   //   "",
   //   "",
-  //   "0xb55A821877d473D972B4ECBB18E41739687c539f",
+  //   vaFSTT.address,
   //   "All",
   //   "",
   //   ""
@@ -12116,7 +12135,7 @@ async function main() {
   // console.log("427marketPlaceCollection.updateCollection===========> Done!")
 
   // // 428
-  // await marketPlaceCollection.connect(wallets[427]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[427]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[427]).updateCollection(
   //   "MentalMeet",
@@ -12126,7 +12145,7 @@ async function main() {
   //   "https://i.ibb.co/v1XTLCG/304-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12134,7 +12153,7 @@ async function main() {
   // console.log("428marketPlaceCollection.updateCollection===========> Done!")
 
   // // 429
-  // await marketPlaceCollection.connect(wallets[284]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[284]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[284]).updateCollection(
   //   "EmailList",
@@ -12144,7 +12163,7 @@ async function main() {
   //   "https://i.ibb.co/tqJ9HTM/322-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12152,7 +12171,7 @@ async function main() {
   // console.log("429marketPlaceCollection.updateCollection===========> Done!")
 
   // // 430
-  // await marketPlaceCollection.connect(wallets[231]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[231]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[231]).updateCollection(
   //   "Customersist",
@@ -12162,7 +12181,7 @@ async function main() {
   //   "https://i.ibb.co/bdtXHnV/405-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12170,7 +12189,7 @@ async function main() {
   // console.log("430marketPlaceCollection.updateCollection===========> Done!")
 
   // // 431
-  // await marketPlaceCollection.connect(wallets[428]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[428]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[428]).updateCollection(
   //   "Distraid",
@@ -12180,7 +12199,7 @@ async function main() {
   //   "https://i.ibb.co/NNZVjBf/406-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12188,7 +12207,7 @@ async function main() {
   // console.log("431marketPlaceCollection.updateCollection===========> Done!")
 
   // // 432
-  // await marketPlaceCollection.connect(wallets[429]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[429]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[429]).updateCollection(
   //   "HomeSchool",
@@ -12198,7 +12217,7 @@ async function main() {
   //   "https://i.ibb.co/nzgT3nX/431-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12206,7 +12225,7 @@ async function main() {
   // console.log("432marketPlaceCollection.updateCollection===========> Done!")
 
   // // 433
-  // await marketPlaceCollection.connect(wallets[430]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[430]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[430]).updateCollection(
   //   "InvestaWed",
@@ -12216,7 +12235,7 @@ async function main() {
   //   "https://i.ibb.co/p222Jr2/432-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12224,7 +12243,7 @@ async function main() {
   // console.log("433marketPlaceCollection.updateCollection===========> Done!")
 
   // // 434
-  // await marketPlaceCollection.connect(wallets[431]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[431]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[431]).updateCollection(
   //   "FitMe",
@@ -12234,7 +12253,7 @@ async function main() {
   //   "https://i.ibb.co/VSkbQTj/433-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12242,7 +12261,7 @@ async function main() {
   // console.log("434marketPlaceCollection.updateCollection===========> Done!")
 
   // // 435
-  // await marketPlaceCollection.connect(wallets[432]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[432]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[432]).updateCollection(
   //   "AnimalControl",
@@ -12252,7 +12271,7 @@ async function main() {
   //   "https://i.ibb.co/Mc1WdgB/434-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12260,7 +12279,7 @@ async function main() {
   // console.log("435marketPlaceCollection.updateCollection===========> Done!")
 
   // // 436
-  // await marketPlaceCollection.connect(wallets[433]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // await marketPlaceCollection.connect(wallets[433]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[433]).updateCollection(
   //   "Pegasus",
@@ -12270,7 +12289,7 @@ async function main() {
   //   "https://i.ibb.co/Hdz5c4Y/435-2.jpg",
   //   "",
   //   "",
-  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   vaFHT.address,
   //   "All",
   //   "",
   //   ""
@@ -12278,7 +12297,7 @@ async function main() {
   // console.log("436marketPlaceCollection.updateCollection===========> Done!")
 
   // // 437
-  // await marketPlaceCollection.connect(wallets[434]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[434]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[434]).updateCollection(
   //   "DateFeedback",
@@ -12288,7 +12307,7 @@ async function main() {
   //   "https://i.ibb.co/PTzWnV4/436-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12296,7 +12315,7 @@ async function main() {
   // console.log("437marketPlaceCollection.updateCollection===========> Done!")
 
   // // 438
-  // await marketPlaceCollection.connect(wallets[435]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[435]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[435]).updateCollection(
   //   "Neibor",
@@ -12306,7 +12325,7 @@ async function main() {
   //   "https://i.ibb.co/7YLFb81/437-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12314,7 +12333,7 @@ async function main() {
   // console.log("438marketPlaceCollection.updateCollection===========> Done!")
 
   // // 439
-  // await marketPlaceCollection.connect(wallets[436]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[436]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[436]).updateCollection(
   //   "GigDate",
@@ -12324,7 +12343,7 @@ async function main() {
   //   "https://i.ibb.co/k11SX3n/438-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12332,7 +12351,7 @@ async function main() {
   // console.log("439marketPlaceCollection.updateCollection===========> Done!")
 
   // // 440
-  // await marketPlaceCollection.connect(wallets[437]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[437]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[437]).updateCollection(
   //   "Leviathana",
@@ -12342,7 +12361,7 @@ async function main() {
   //   "https://i.ibb.co/k11SX3n/438-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12350,7 +12369,7 @@ async function main() {
   // console.log("440marketPlaceCollection.updateCollection===========> Done!")
 
   // // 441
-  // await marketPlaceCollection.connect(wallets[438]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[438]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[438]).updateCollection(
   //   "JobBet",
@@ -12360,7 +12379,7 @@ async function main() {
   //   "https://i.ibb.co/mRryjPD/217.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12368,7 +12387,7 @@ async function main() {
   // console.log("441marketPlaceCollection.updateCollection===========> Done!")
 
   // // 442
-  // await marketPlaceCollection.connect(wallets[439]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[439]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[439]).updateCollection(
   //   "ResCoach",
@@ -12378,7 +12397,7 @@ async function main() {
   //   "https://i.ibb.co/0Q7YJBC/214.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12386,7 +12405,7 @@ async function main() {
   // console.log("442marketPlaceCollection.updateCollection===========> Done!")
 
   // // 443
-  // await marketPlaceCollection.connect(wallets[440]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[440]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[440]).updateCollection(
   //   "LovePromotions",
@@ -12396,7 +12415,7 @@ async function main() {
   //   "https://i.ibb.co/vj7vcSh/213.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12404,7 +12423,7 @@ async function main() {
   // console.log("443marketPlaceCollection.updateCollection===========> Done!")
 
   // // 444
-  // await marketPlaceCollection.connect(wallets[441]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[441]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[441]).updateCollection(
   //   "StableGram",
@@ -12414,7 +12433,7 @@ async function main() {
   //   "https://i.ibb.co/ZKp73zV/212.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12422,7 +12441,7 @@ async function main() {
   // console.log("444marketPlaceCollection.updateCollection===========> Done!")
 
   // // 445
-  // await marketPlaceCollection.connect(wallets[442]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[442]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[442]).updateCollection(
   //   "FutureBrokers",
@@ -12432,7 +12451,7 @@ async function main() {
   //   "https://i.ibb.co/Pw5GB8c/211.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -12440,7 +12459,7 @@ async function main() {
   // console.log("445marketPlaceCollection.updateCollection===========> Done!")
 
   // // 447
-  // await marketPlaceCollection.connect(wallets[443]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[443]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[443]).updateCollection(
   //   "Tontines",
@@ -12450,7 +12469,7 @@ async function main() {
   //   "https://i.ibb.co/0Jg0twR/258.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12458,7 +12477,7 @@ async function main() {
   // console.log("446marketPlaceCollection.updateCollection===========> Done!")
 
   // // 447
-  // await marketPlaceCollection.connect(wallets[444]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[444]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[444]).updateCollection(
   //   "BNPL",
@@ -12468,7 +12487,7 @@ async function main() {
   //   "https://i.ibb.co/X7Ws5pg/413-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12476,7 +12495,7 @@ async function main() {
   // console.log("447marketPlaceCollection.updateCollection===========> Done!")
 
   // // 448
-  // await marketPlaceCollection.connect(wallets[445]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[445]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[445]).updateCollection(
   //   "GiveBets",
@@ -12486,7 +12505,7 @@ async function main() {
   //   "https://i.ibb.co/cXxSVLC/410-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12494,7 +12513,7 @@ async function main() {
   // console.log("448marketPlaceCollection.updateCollection===========> Done!")
 
   // // 449
-  // await marketPlaceCollection.connect(wallets[446]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[446]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[446]).updateCollection(
   //   "DiaryGram",
@@ -12504,7 +12523,7 @@ async function main() {
   //   "https://i.ibb.co/8DgzGWJ/291.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12512,7 +12531,7 @@ async function main() {
   // console.log("449marketPlaceCollection.updateCollection===========> Done!")
 
   // // 450
-  // await marketPlaceCollection.connect(wallets[447]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[447]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[447]).updateCollection(
   //   "Tutorly",
@@ -12522,7 +12541,7 @@ async function main() {
   //   "https://i.ibb.co/0Jg0twR/258.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12530,7 +12549,7 @@ async function main() {
   // console.log("450marketPlaceCollection.updateCollection===========> Done!")
 
   // // 451
-  // await marketPlaceCollection.connect(wallets[448]).addCollection(0, 0, 0, 0, 0, 0, "0xd17C814f5609889609720D95e1A7369f9F798aB4", false, false);
+  // await marketPlaceCollection.connect(wallets[448]).addCollection(0, 0, 0, 0, 0, 0, fabt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[448]).updateCollection(
   //   "Tattoo",
@@ -12540,7 +12559,7 @@ async function main() {
   //   "https://i.ibb.co/ZKp73zV/212.jpg",
   //   "",
   //   "",
-  //   "0xC853D1c9B60962a5CDB361379595BC6400aaE722",
+  //   vaFABT.address,
   //   "All",
   //   "",
   //   ""
@@ -12548,7 +12567,7 @@ async function main() {
   // console.log("451marketPlaceCollection.updateCollection===========> Done!")
 
   // // 452
-  // await marketPlaceCollection.connect(wallets[449]).addCollection(0, 0, 0, 0, 0, 0, "0xd17C814f5609889609720D95e1A7369f9F798aB4", false, false);
+  // await marketPlaceCollection.connect(wallets[449]).addCollection(0, 0, 0, 0, 0, 0, fabt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[449]).updateCollection(
   //   "Jewel",
@@ -12558,7 +12577,7 @@ async function main() {
   //   "https://i.ibb.co/mbFz3yP/311-2.jpg",
   //   "",
   //   "",
-  //   "0xC853D1c9B60962a5CDB361379595BC6400aaE722",
+  //   vaFABT.address,
   //   "All",
   //   "",
   //   ""
@@ -12566,7 +12585,7 @@ async function main() {
   // console.log("452marketPlaceCollection.updateCollection===========> Done!")
 
   // // 453
-  // await marketPlaceCollection.connect(wallets[450]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[450]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[450]).updateCollection(
   //   "Securitize",
@@ -12576,7 +12595,7 @@ async function main() {
   //   "https://i.ibb.co/Pw5GB8c/211.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12584,7 +12603,7 @@ async function main() {
   // console.log("453marketPlaceCollection.updateCollection===========> Done!")
 
   // // 454
-  // await marketPlaceCollection.connect(wallets[451]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[451]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[451]).updateCollection(
   //   "Futures",
@@ -12594,7 +12613,7 @@ async function main() {
   //   "https://i.ibb.co/44SXFQM/223.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12602,7 +12621,7 @@ async function main() {
   // console.log("454marketPlaceCollection.updateCollection===========> Done!")
 
   // // 455
-  // await marketPlaceCollection.connect(wallets[452]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[452]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[452]).updateCollection(
   //   "BookClub",
@@ -12612,7 +12631,7 @@ async function main() {
   //   "https://i.ibb.co/44SXFQM/223.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12620,7 +12639,7 @@ async function main() {
   // console.log("455marketPlaceCollection.updateCollection===========> Done!")
 
   // // 456
-  // await marketPlaceCollection.connect(wallets[453]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[453]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[453]).updateCollection(
   //   "DollarShop",
@@ -12630,7 +12649,7 @@ async function main() {
   //   "https://i.ibb.co/HCqK6C9/224.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12638,7 +12657,7 @@ async function main() {
   // console.log("456marketPlaceCollection.updateCollection===========> Done!")
 
   // // 457
-  // await marketPlaceCollection.connect(wallets[454]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[454]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[454]).updateCollection(
   //   "DeWare",
@@ -12648,7 +12667,7 @@ async function main() {
   //   "https://i.ibb.co/BKMrjRm/234.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12656,7 +12675,7 @@ async function main() {
   // console.log("457marketPlaceCollection.updateCollection===========> Done!")
 
   // // 458
-  // await marketPlaceCollection.connect(wallets[455]).addCollection(0, 0, 0, 0, 0, 0, "0x272D5d2E5Be74ec1216162D3418be7EDF929d2a9", false, false);
+  // await marketPlaceCollection.connect(wallets[455]).addCollection(0, 0, 0, 0, 0, 0, fht.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[455]).updateCollection(
   //   "Vanspital",
@@ -12666,7 +12685,7 @@ async function main() {
   //   "https://i.ibb.co/0XTcvxJ/226.jpg",
   //   "",
   //   "",
-  //   "0xdE46100D142FD66f50697dF99c296796100983de",
+  //   vaFHT.address,
   //   "All",
   //   "",
   //   ""
@@ -12674,7 +12693,7 @@ async function main() {
   // console.log("458marketPlaceCollection.updateCollection===========> Done!")
 
   // // 459
-  // await marketPlaceCollection.connect(wallets[456]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[456]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[456]).updateCollection(
   //   "LivePay",
@@ -12684,7 +12703,7 @@ async function main() {
   //   "https://i.ibb.co/s6cd4RT/31-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12692,7 +12711,7 @@ async function main() {
   // console.log("459marketPlaceCollection.updateCollection===========> Done!")
 
   // // 460
-  // await marketPlaceCollection.connect(wallets[457]).addCollection(0, 0, 0, 0, 0, 0, "0x05Da08335F8B187769E60F3D92254e69ed5dF3EE", false, false);
+  // await marketPlaceCollection.connect(wallets[457]).addCollection(0, 0, 0, 0, 0, 0, flot.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[457]).updateCollection(
   //   "LawPay",
@@ -12702,7 +12721,7 @@ async function main() {
   //   "https://i.ibb.co/0XmYrqL/289.jpg",
   //   "",
   //   "",
-  //   "0x06BF8AF06Bf883D8124EF7466ABc68Dd8036a5C6",
+  //   vaFLOT.address,
   //   "All",
   //   "",
   //   ""
@@ -12710,7 +12729,7 @@ async function main() {
   // console.log("460marketPlaceCollection.updateCollection===========> Done!")
 
   // // 461
-  // await marketPlaceCollection.connect(wallets[458]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[458]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[458]).updateCollection(
   //   "Groupany",
@@ -12720,7 +12739,7 @@ async function main() {
   //   "https://i.ibb.co/NV8X2H2/38-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12728,7 +12747,7 @@ async function main() {
   // console.log("461marketPlaceCollection.updateCollection===========> Done!")
 
   // // 462
-  // await marketPlaceCollection.connect(wallets[459]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[459]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[459]).updateCollection(
   //   "FreeXCredits",
@@ -12738,7 +12757,7 @@ async function main() {
   //   "https://i.ibb.co/DVZ9bpp/229.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -12746,7 +12765,7 @@ async function main() {
   // console.log("462marketPlaceCollection.updateCollection===========> Done!")
 
   // // 463
-  // await marketPlaceCollection.connect(wallets[460]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[460]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[460]).updateCollection(
   //   "CamLottery",
@@ -12756,7 +12775,7 @@ async function main() {
   //   "https://i.ibb.co/ZBV2VKT/30-2.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -12764,7 +12783,7 @@ async function main() {
   // console.log("463marketPlaceCollection.updateCollection===========> Done!")
 
   // // 464
-  // await marketPlaceCollection.connect(wallets[461]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[461]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[461]).updateCollection(
   //   "HornyGamers",
@@ -12774,7 +12793,7 @@ async function main() {
   //   "https://i.ibb.co/s1mDPGp/37-2.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -12782,7 +12801,7 @@ async function main() {
   // console.log("464marketPlaceCollection.updateCollection===========> Done!")
 
   // // 465
-  // await marketPlaceCollection.connect(wallets[462]).addCollection(0, 0, 0, 0, 0, 0, "0x7F52Da327C3a6bbFc1dF348994919a66dcAC33e0", false, false);
+  // await marketPlaceCollection.connect(wallets[462]).addCollection(0, 0, 0, 0, 0, 0, fnt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[462]).updateCollection(
   //   "XTwitch",
@@ -12792,7 +12811,7 @@ async function main() {
   //   "https://i.ibb.co/HFrZnbw/222.jpg",
   //   "",
   //   "",
-  //   "0x1a8e20B265A9D5D1Cd3BA0b157da15d5EfB8Ea62",
+  //   vaFNT.address,
   //   "All",
   //   "",
   //   ""
@@ -12800,7 +12819,7 @@ async function main() {
   // console.log("465marketPlaceCollection.updateCollection===========> Done!")
 
   // // 466
-  // await marketPlaceCollection.connect(wallets[463]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[463]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[463]).updateCollection(
   //   "Lotterelator",
@@ -12810,7 +12829,7 @@ async function main() {
   //   "https://i.ibb.co/HCqK6C9/224.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12818,7 +12837,7 @@ async function main() {
   // console.log("466marketPlaceCollection.updateCollection===========> Done!")
 
   // // 467
-  // await marketPlaceCollection.connect(wallets[464]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[464]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[464]).updateCollection(
   //   "MMarket",
@@ -12828,7 +12847,7 @@ async function main() {
   //   "https://i.ibb.co/4tBKnp7/292.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12836,7 +12855,7 @@ async function main() {
   // console.log("467marketPlaceCollection.updateCollection===========> Done!")
 
   // // 468
-  // await marketPlaceCollection.connect(wallets[465]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[465]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[465]).updateCollection(
   //   "PollMarket",
@@ -12846,7 +12865,7 @@ async function main() {
   //   "https://i.ibb.co/5G434QR/227.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12854,7 +12873,7 @@ async function main() {
   // console.log("468marketPlaceCollection.updateCollection===========> Done!")
 
   // // 469
-  // await marketPlaceCollection.connect(wallets[466]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[466]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[466]).updateCollection(
   //   "InfiniteBanking",
@@ -12864,7 +12883,7 @@ async function main() {
   //   "https://i.ibb.co/XkQfFPf/282.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12872,7 +12891,7 @@ async function main() {
   // console.log("469marketPlaceCollection.updateCollection===========> Done!")
 
   // // 470
-  // await marketPlaceCollection.connect(wallets[467]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[467]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[467]).updateCollection(
   //   "SelfCheckout",
@@ -12882,7 +12901,7 @@ async function main() {
   //   "https://i.ibb.co/935S3bf/278.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12890,7 +12909,7 @@ async function main() {
   // console.log("470marketPlaceCollection.updateCollection===========> Done!")
 
   // // 471
-  // await marketPlaceCollection.connect(wallets[468]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[468]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[468]).updateCollection(
   //   "BrainCredit",
@@ -12900,7 +12919,7 @@ async function main() {
   //   "https://i.ibb.co/HCqK6C9/224.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12908,7 +12927,7 @@ async function main() {
   // console.log("471marketPlaceCollection.updateCollection===========> Done!")
 
   // // 472
-  // await marketPlaceCollection.connect(wallets[469]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[469]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[469]).updateCollection(
   //   "NFTLottery",
@@ -12918,7 +12937,7 @@ async function main() {
   //   "https://i.ibb.co/s6cd4RT/31-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12926,7 +12945,7 @@ async function main() {
   // console.log("472marketPlaceCollection.updateCollection===========> Done!")
 
   // // 473
-  // await marketPlaceCollection.connect(wallets[470]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[470]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[470]).updateCollection(
   //   "SocialLoans",
@@ -12936,7 +12955,7 @@ async function main() {
   //   "https://i.ibb.co/Gs7g9dw/439-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12944,7 +12963,7 @@ async function main() {
   // console.log("473marketPlaceCollection.updateCollection===========> Done!")
 
   // // 474
-  // await marketPlaceCollection.connect(wallets[471]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[471]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[471]).updateCollection(
   //   "Awards",
@@ -12954,7 +12973,7 @@ async function main() {
   //   "https://i.ibb.co/bs9B2mg/221.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12962,7 +12981,7 @@ async function main() {
   // console.log("474marketPlaceCollection.updateCollection===========> Done!")
 
   // // 475
-  // await marketPlaceCollection.connect(wallets[472]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[472]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[472]).updateCollection(
   //   "ModelScouts",
@@ -12972,7 +12991,7 @@ async function main() {
   //   "https://i.ibb.co/0XmYrqL/289.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12980,7 +12999,7 @@ async function main() {
   // console.log("475marketPlaceCollection.updateCollection===========> Done!")
 
   // // 476
-  // await marketPlaceCollection.connect(wallets[473]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[473]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[473]).updateCollection(
   //   "Localize",
@@ -12990,7 +13009,7 @@ async function main() {
   //   "https://i.ibb.co/4tBKnp7/292.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -12998,7 +13017,7 @@ async function main() {
   // console.log("476marketPlaceCollection.updateCollection===========> Done!")
 
   // // 477
-  // await marketPlaceCollection.connect(wallets[474]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[474]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[474]).updateCollection(
   //   "WorkPools",
@@ -13008,7 +13027,7 @@ async function main() {
   //   "https://i.ibb.co/v1XTLCG/304-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -13016,7 +13035,7 @@ async function main() {
   // console.log("477marketPlaceCollection.updateCollection===========> Done!")
 
   // // 478
-  // await marketPlaceCollection.connect(wallets[475]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[475]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[475]).updateCollection(
   //   "SubStick",
@@ -13026,7 +13045,7 @@ async function main() {
   //   "https://i.ibb.co/BKMrjRm/234.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -13034,7 +13053,7 @@ async function main() {
   // console.log("478marketPlaceCollection.updateCollection===========> Done!")
 
   // // 479
-  // await marketPlaceCollection.connect(wallets[476]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[476]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[476]).updateCollection(
   //   "Indices",
@@ -13044,7 +13063,7 @@ async function main() {
   //   "https://i.ibb.co/ZBV2VKT/30-2.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -13052,7 +13071,7 @@ async function main() {
   // console.log("479marketPlaceCollection.updateCollection===========> Done!")
 
   // // 480
-  // await marketPlaceCollection.connect(wallets[476]).addCollection(0, 0, 0, 0, 0, 0, "0x6E91468E9685bF6Ddd9Ef0a7Cce5597698878E9D", false, false);
+  // await marketPlaceCollection.connect(wallets[476]).addCollection(0, 0, 0, 0, 0, 0, fret.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[476]).updateCollection(
   //   "PadPal",
@@ -13062,7 +13081,7 @@ async function main() {
   //   "https://i.ibb.co/s6cd4RT/31-2.jpg",
   //   "",
   //   "",
-  //   "0x0515c86e557cc59bB575A420B69aFdF41EA873b1",
+  //   vaFRET.address,
   //   "All",
   //   "",
   //   ""
@@ -13070,7 +13089,7 @@ async function main() {
   // console.log("480marketPlaceCollection.updateCollection===========> Done!")
 
   // // 481
-  // await marketPlaceCollection.connect(wallets[477]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[477]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[477]).updateCollection(
   //   "LegoManiac",
@@ -13080,7 +13099,7 @@ async function main() {
   //   "https://i.ibb.co/ZHzpFpB/235.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
@@ -13089,7 +13108,7 @@ async function main() {
 
 
   // // 482
-  // await marketPlaceCollection.connect(wallets[478]).addCollection(0, 0, 0, 0, 0, 0, "0x59013988E3730A66A9A973a812fb94056E6e7855", false, false);
+  // await marketPlaceCollection.connect(wallets[478]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
   // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
   // await marketPlaceCollection.connect(wallets[478]).updateCollection(
   //   "Grooming",
@@ -13099,12 +13118,121 @@ async function main() {
   //   "https://i.ibb.co/L9Br6k0/230.jpg",
   //   "",
   //   "",
-  //   "0x6f491e004Df2e5797F9355F89E4fa4Ae6592e89f",
+  //   vaFSST.address,
   //   "All",
   //   "",
   //   ""
   // );
   // console.log("482marketPlaceCollection.updateCollection===========> Done!")
+
+
+  // // 483
+  // await marketPlaceCollection.connect(wallets[479]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[479]).updateCollection(
+  //   "InsureJob",
+  //   "Find and join valuepools that offer to pay for the first x months of an employee's job in exchange for getting a percentage of the employee's salary in case the company decides to keep him/her after the first x months. Anyone and any company willing to be insured can apply through a proposal.",
+  //   "https://i.ibb.co/hHRBbT9/493.jpg",
+  //   "https://i.ibb.co/hHRBbT9/493.jpg",
+  //   "https://i.ibb.co/zfjjqnD/285.jpg",
+  //   "",
+  //   "",
+  //   vaFSST.address,
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("483marketPlaceCollection.updateCollection===========> Done!")
+
+    // // 484
+  // await marketPlaceCollection.connect(wallets[480]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[480]).updateCollection(
+  //   "OpenWrite",
+  //   "Write your book in public by publishing chapters/pages of its early drafts as articles that users might read and give feedback on. You can also submit requests to get an editor/publisher for your book, money to keep writing, etc.",
+  //   "https://i.ibb.co/BrLzdYN/132.jpg",
+  //   "https://i.ibb.co/BrLzdYN/132.jpg",
+  //   "https://i.ibb.co/44SXFQM/223.jpg",
+  //   "",
+  //   "",
+  //   vaFSST.address,
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("484marketPlaceCollection.updateCollection===========> Done!")
+
+  // // 485
+  // await marketPlaceCollection.connect(wallets[481]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[481]).updateCollection(
+  //   "OpenJob",
+  //   "Find and pick a job listed by companies, no interview necessary and in case 2 people pick the same job, the company that listed the job picks one. The work is not paid but enables job seekers to get experience and also apply to be insured by the channel's valuepool. An insurance by the valuepool will reimburse any company that recruits the job seeker the first x months of salary in case they were to get first before the x months on the job (x depends on the valuepool's vote can can be 1, 2, 3, etc). To list a job, companies need to join the valuepool, the more they contribute to the valuepool, the more chance they have of getting job seekers to fill the positions they list on the platform.",
+  //   "https://i.ibb.co/9NWcqGP/476.jpg",
+  //   "https://i.ibb.co/9NWcqGP/476.jpg",
+  //   "https://i.ibb.co/DVZ9bpp/229.jpg",
+  //   "",
+  //   "",
+  //   vaFSST.address,
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("485marketPlaceCollection.updateCollection===========> Done!")
+
+   // // 486
+  // await marketPlaceCollection.connect(wallets[482]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[482]).updateCollection(
+  //   "NetGrow",
+  //   "Find and join valuepools that aim to help professionals grow their network. There are valuepools targeted towards professionals in the music/film/engineering/healthcare/etc. industry and each one organises weekly events (dinners, meetups, etc.) to get their members to get to know each other and network. Each valuepool has a different entry price ticket and organisation which is entirely dependent on its members or its admins.",
+  //   "https://i.ibb.co/NFRtCvs/143.jpg",
+  //   "https://i.ibb.co/NFRtCvs/143.jpg",
+  //   "https://i.ibb.co/yhxBQLY/233.jpg",
+  //   "",
+  //   "",
+  //   vaFSST.address,
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("486marketPlaceCollection.updateCollection===========> Done!")
+
+     // // 487
+  // await marketPlaceCollection.connect(wallets[483]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[483]).updateCollection(
+  //   "PayBack",
+  //   "PayBack is a debt collection platform that helps user reimburse their loans. It uses a valuepool to earn enough money and makes the decision on whose loan to reimburse through its users votes which take into consideration various factor pertaining to the specific loan: is the lender a subscriber to PayBack, which subscription tier is the lender part of, is the lender/borrower a member of the valuepool, what weight does the lender/borrower have in the valuepool, how much is the debt, when is it due, etc. The valuepool makes money through 5 essentials means: members' deposits, valuepool sponsors, lenders' subscriptions, investing part of its balance, debt jobs. A debt job is a job listed on the platform that members of the valuepool apply to in order to get enough money to pay back their loans, the salary is paid to the valuepool (instead of the borrower) as a deposit on the borrower's account (which increases his/her weight). Proposals for debt reimbursement are written by the lenders, not the borrowers. Borrowers weight can be used as credit score to borrow even more in the future. PayBack supports typical loans, rents, etc.",
+  //   "https://i.ibb.co/YXCrQJN/145.jpg",
+  //   "https://i.ibb.co/YXCrQJN/145.jpg",
+  //   "https://i.ibb.co/DVZ9bpp/229.jpg",
+  //   "",
+  //   "",
+  //   vaFSST.address,
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("487marketPlaceCollection.updateCollection===========> Done!")
+
+       // // 488
+  // await marketPlaceCollection.connect(wallets[484]).addCollection(0, 0, 0, 0, 0, 0, fstt.address, false, false);
+  // console.log("marketPlaceCollection.addCollonnect(wallets[0]).addCollection===========> Done!")
+  // await marketPlaceCollection.connect(wallets[484]).updateCollection(
+  //   "Divorces",
+  //   "Find and date other divorces or learn from them. Learn why and how they got divorced and what to look out for in a partner.",
+  //   "https://i.ibb.co/YXCrQJN/145.jpg",
+  //   "https://i.ibb.co/YXCrQJN/145.jpg",
+  //   "https://i.ibb.co/DVZ9bpp/229.jpg",
+  //   "",
+  //   "",
+  //   vaFSST.address,
+  //   "All",
+  //   "",
+  //   ""
+  // );
+  // console.log("488marketPlaceCollection.updateCollection===========> Done!")
 
   }
   

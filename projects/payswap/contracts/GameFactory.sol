@@ -568,11 +568,21 @@ contract GameMinter {
         gameInfo_[_tokenId].won += _reward;
     }
 
-    function updateScoreNDeadline(uint _tokenId, uint _score, uint _deadline) external {
+    function _checkIdentityProof(uint _tokenId, uint _identityTokenId) internal {
+        IMarketPlace(IContract(contractAddress).marketHelpers2())
+        .checkPartnerIdentityProof(tokenIdToCollectionId[_tokenId], _identityTokenId, msg.sender);
+    }
+
+    function updateScoreNDeadline(uint _tokenId, uint _score, uint _deadline, uint _identityTokenId) external {
         address gameFactory = IContract(contractAddress).gameFactory();
          (,,address _gameContract,,,,,,,,) = IGameNFT(gameFactory).ticketInfo_(tokenIdToCollectionId[_tokenId]);
+        if (_gameContract == address(0x0)) {
+            IMarketPlace(IContract(contractAddress).marketHelpers2())
+            .checkPartnerIdentityProof(tokenIdToCollectionId[_tokenId], _identityTokenId, msg.sender);
+            _gameContract = msg.sender;
+        }
         require(
-            msg.sender == _gameContract && 
+            msg.sender == _gameContract &&
             (gameInfo_[_tokenId].gameMinutes >= _deadline || _deadline == 0), 
             "GM5"
         );
@@ -587,7 +597,7 @@ contract GameMinter {
         _deadline = _deadline == 0 ? block.timestamp : _deadline;
         gameInfo_[_tokenId].score = _score;
         gameInfo_[_tokenId].deadline = _deadline;
-        gameInfo_[_tokenId].gameMinutes = _deadline + 60;
+        // gameInfo_[_tokenId].gameMinutes = _deadline + 60;
     }
     
     function updatePricePercentile(uint _collectionId, uint _tokenId, uint _value) external {

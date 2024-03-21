@@ -286,9 +286,9 @@ contract Ramp {
     function mint(address _token, address to, uint _amount, uint _identityTokenId, string memory _sessionId) external {
         checkIdentityProof(to, _identityTokenId);
         require(IAuth(contractAddress).devaddr_() == msg.sender || isAdmin[msg.sender], "R1");
-        require(protocolInfo[_token].status == RampStatus.Open, "R2");
+        require(protocolInfo[_token].status == RampStatus.Open);
         (uint _mintable,, CollateralStatus _status) = IRamp(IContract(contractAddress).rampAds()).mintAvailable(address(this), _token);
-        require(_mintable >= _amount, "R3");
+        require(_mintable >= _amount);
         if (_status == CollateralStatus.OverCollateralized) {
             uint _toMint = Math.min(_mintable, _amount);
             uint _fee;
@@ -366,7 +366,7 @@ contract Ramp {
         protocolInfo[_token].bountyId = 0;
     }
 
-    function deleteProtocol(address _token) public onlyAdmin {
+    function deleteProtocol(address _token) external onlyAdmin {
         require(protocolInfo[_token].minted <= protocolInfo[_token].burnt);
         require(protocolInfo[_token].bountyId == 0);
         delete protocolInfo[_token];
@@ -378,6 +378,20 @@ contract Ramp {
     function withdraw(address _token, uint amount) external onlyAdmin {
         require(!AllProtocols.contains(_token));
         IERC20(_token).safeTransfer(msg.sender, amount);
+    }
+
+    function addBalanceETH() external payable {
+        IWETH(address(this)).deposit{value: msg.value}();
+    }
+
+    function deposit() public payable returns (uint256) {}
+
+
+    function buyNative(address to, uint _amount) public payable {
+        require(isAdmin[msg.sender] || msg.sender == IAuth(contractAddress).devaddr_());
+        
+        (bool success, ) = to.call{value: _amount}(new bytes(0));
+        require(success, "T42");
     }
 }
 
@@ -1267,7 +1281,7 @@ contract ExtraTokenFactory {
 }
 
 contract RampFactory {
-    address public contractAddress;
+    address contractAddress;
 
     function setContractAddress(address _contractAddress) external {
         require(contractAddress == address(0x0) || IAuth(contractAddress).devaddr_() == msg.sender);
