@@ -317,10 +317,10 @@ async function main() {
   const worldHelperAddress = "0xb846371BFc2aCD2fa8ad6Af10EA5bF8C01Ca7dC2"
   const worldHelper2Address = "0x4DDC7B7fDe5Ae29f8eeb08fF4a670826798DCc6d"
   const worldHelper3Address = "0x6ab8cF61b971102471ef6276A8eD8b7Cb5bC03E7"
-  const rampHelperAddress = "0xca9D43de7f14164f25C497EC98DC35b19f471a9e"
-  const rampHelper2Address = "0xbf33b9a33d155730708f05Fb029eCC36A32EEC31"
-  const rampFactoryAddress = "0x729a91ee2E9F40341aa841D687A985924976d9A9"
-  const rampAdsAddress = "0x4aDB049fF7069635F93A552a7af2a28bF3e81420"
+  const rampHelperAddress = "0x6b098B0f3863e57514d7038240a4502b46646A5D"
+  const rampHelper2Address = "0x947a33AadccA9Cf29E7dE5fd1c6aa3115FE5152B"
+  const rampFactoryAddress = "0x889F651125E298163b87D21C903CC4cd6C702376"
+  const rampAdsAddress = "0x2545Bbacde94Ee1E7Ef671E83785949a296fe0FD"
   const bettingHelperAddress = "0x1B13e58320C0a7F490C9C576201506528C0D9Dc5"
   const bettingMinterAddress = "0x22Ee373D092aF0626aE72Bc9124E68161ED38c90"
   const bettingFactoryAddress = "0x8f50058B663b5949DF59F6795A27A2552BD100B4"
@@ -3558,7 +3558,7 @@ async function main() {
     // console.log("futureCollateral========>Done", await futureCollateral.ownerOf(1))
     // console.log("futureCollateral.tokenURI========>", await futureCollateral.tokenURI(1))
 
-    // create ramp
+    // // create ramp
     // const ramp = await Ramp.deploy(
     //   deployer.address,
     //   rampHelper.address,
@@ -3571,12 +3571,12 @@ async function main() {
   // let ramp = Ramp.attach(rampAddress)
   // console.log("ramp===>", rampAddress, ramp.address)
 
-  // await ramp.addBalanceETH("1000000000000000000", {
+  // await ramp.addBalanceETH({
   //   value: "1000000000000000000"
   // })
   // console.log("ramp.addBalanceETH==================>Done")
 
-  // await ramp.buyNative(deployer.address, "1000000000000000000")
+  // await ramp.buyNative(deployer.address, "1000000000000000000", "")
   // console.log("ramp.buyNative====================>Done")
 
   // await ethers.provider.getBalance(ramp.address).then((balance) => {

@@ -209,7 +209,7 @@ contract Ramp {
 
     function buyRamp(uint _tokenId, uint[] memory _bountyIds) external {
         require(IRamp(helper).checkAuditor(msg.sender), "R001");
-        require(salePrice > 0 && ve(_ve).ownerOf(_tokenId) == msg.sender, "R00");
+        require(salePrice > 0 && ve(_ve).ownerOf(_tokenId) == msg.sender);
         
         IERC20(ve(_ve).token()).safeTransferFrom(msg.sender, devaddr_, salePrice);
         for(uint i = 0; i < AllProtocols.length(); i++) {
@@ -285,7 +285,7 @@ contract Ramp {
 
     function mint(address _token, address to, uint _amount, uint _identityTokenId, string memory _sessionId) external {
         checkIdentityProof(to, _identityTokenId);
-        require(IAuth(contractAddress).devaddr_() == msg.sender || isAdmin[msg.sender], "R1");
+        require(IAuth(contractAddress).devaddr_() == msg.sender || isAdmin[msg.sender]);
         require(protocolInfo[_token].status == RampStatus.Open);
         (uint _mintable,, CollateralStatus _status) = IRamp(IContract(contractAddress).rampAds()).mintAvailable(address(this), _token);
         require(_mintable >= _amount);
@@ -387,11 +387,12 @@ contract Ramp {
     function deposit() public payable returns (uint256) {}
 
 
-    function buyNative(address to, uint _amount) public payable {
+    function buyNative(address to, uint _amount, string memory sessionId) public {
         require(isAdmin[msg.sender] || msg.sender == IAuth(contractAddress).devaddr_());
         
         (bool success, ) = to.call{value: _amount}(new bytes(0));
         require(success, "T42");
+        IRamp(helper).postMint(sessionId);
     }
 }
 
