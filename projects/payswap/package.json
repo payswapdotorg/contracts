@@ -19,6 +19,7 @@
     "compile": "npx hardhat compile",
     "deploy:testnet": "npx hardhat run --network ftmTestnet scripts/deploy.ts",
     "deploy:mainnet": "npx hardhat run --network mainnet scripts/deploy.ts",
+    "verify:testnet": "npx hardhat run --network ftmTestnet scripts/verify.ts",
     "test": "echo 'skip'",
     "test:coverage": "npx hardhat coverage",
     "test:size-contracts": "npx hardhat size-contracts"

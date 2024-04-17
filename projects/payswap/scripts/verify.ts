@@ -70,10 +70,10 @@ async function main() {
   // await verifyContract(payswap_contracts.referralBribeFactoryAddress)
   // await sleep(10000)
 
-  // // Verify acceleratorVoterAddress
-  // console.log('Verify acceleratorVoterAddress')
-  // await verifyContract(payswap_contracts.acceleratorVoterAddress)
-  // await sleep(10000)
+  // Verify acceleratorVoterAddress
+  console.log('Verify acceleratorVoterAddress')
+  await verifyContract("0x4Ed4a8EB0e10f62a3154a49c5E81338aEa715e51")
+  await sleep(10000)
 
   // // Verify contributorVoterAddress
   // console.log('Verify contributorVoterAddress')
@@ -186,10 +186,10 @@ async function main() {
   // ])
   // await sleep(10000)
 
-  // Verify worldFactoryAddress
-  console.log('Verify worldFactoryAddress')
-  await verifyContract(payswap_contracts.worldFactoryAddress)
-  await sleep(10000)
+  // // Verify worldFactoryAddress
+  // console.log('Verify worldFactoryAddress')
+  // await verifyContract(payswap_contracts.worldFactoryAddress)
+  // await sleep(10000)
 
   // // Verify bettingFactoryAddress
   // console.log('Verify bettingFactoryAddress')
